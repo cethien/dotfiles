@@ -111,7 +111,8 @@
       update = "source $HOME/scripts/update.sh";
       reload = "(cd $HOME && source .profile) && sudo mount -t drvfs K: /mnt/k && clear";
       init = "source $HOME/scripts/init.sh";
-      sync = "(cd $HOME && git pull && home-manager switch)";
+      sync = "(cd $HOME && git pull)";
+      rebuild = "(cd $HOME && home-manager switch)";
       clean = "nix-store --gc";
 
       devenv-up = "docker compose -f $HOME/compose-devenv.yml -p dev-env up --remove-orphans -d";
