@@ -42,6 +42,7 @@
     pkgs.lua
 
     pkgs.ansible
+    pkgs.sshpass
 
     # pkgs.warp-terminal
     pkgs.gimp
