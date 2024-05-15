@@ -42,6 +42,7 @@
     pkgs.lua
 
     pkgs.ansible
+    pkgs.ansible-lint
     pkgs.sshpass
 
     # pkgs.warp-terminal
