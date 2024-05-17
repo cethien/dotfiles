@@ -8,47 +8,47 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
-  home.packages = [
-    pkgs.nil
+  home.packages = with pkgs; [
+    nil
 
-    pkgs.procs
-    pkgs.bat
-    pkgs.eza
-    pkgs.fd
-    pkgs.ripgrep
-    pkgs.curl
-    pkgs.zip
-    pkgs.unzip
-    pkgs.wget
-    pkgs.fzf
-    pkgs.duf
+    procs
+    bat
+    eza
+    fd
+    ripgrep
+    curl
+    zip
+    unzip
+    wget
+    fzf
+    duf
 
-    pkgs.oh-my-posh
+    oh-my-posh
 
-    pkgs.gnumake
-    pkgs.wgo
-    pkgs.quicktype
+    gnumake
+    wgo
+    quicktype
 
-    pkgs.act
+    act
 
-    pkgs.gopls
-    pkgs.go-tools
-    pkgs.delve
-    pkgs.goreleaser
-    pkgs.hugo
+    gopls
+    go-tools
+    delve
+    goreleaser
+    hugo
 
-    pkgs.bun
-    pkgs.jdk8
-    pkgs.lua
+    bun
+    jdk8
+    lua
 
-    pkgs.ansible
-    pkgs.ansible-lint
-    pkgs.sshpass
+    ansible
+    ansible-lint
+    sshpass
 
-    # pkgs.warp-terminal
-    pkgs.gimp
-    pkgs.inkscape
-    # pkgs.ocenaudio
+    # warp-terminal
+    gimp
+    inkscape
+    # ocenaudio
   ];
 
   home.activation.checkEnvVars = lib.hm.dag.entryAfter ["writeBoundary"] ''
