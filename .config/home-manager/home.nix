@@ -8,6 +8,13 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
+  nixpkgs = {
+    config = {
+      allowUnfree = true;
+      allowUnfreePredicate = (_: true);
+    };
+  };
+
   home.packages = with pkgs; [
     nil
 
@@ -45,10 +52,9 @@
     ansible-lint
     sshpass
 
-    # warp-terminal
     gimp
     inkscape
-    # ocenaudio
+    ocenaudio
   ];
 
   home.activation.checkEnvVars = lib.hm.dag.entryAfter ["writeBoundary"] ''
