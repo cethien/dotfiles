@@ -130,7 +130,7 @@
         . "$HOME"/.nix-profile/etc/profile.d/nix.sh;
       fi
 
-      sudo mount -t drvfs K: /mnt/k
+      # sudo mount -t drvfs K: /mnt/k
     '';
 
     initExtra = ''
@@ -145,10 +145,10 @@
     forwardAgent = true;
     addKeysToAgent = "yes";
 
-    extraConfig = ''
-    Host *
-      IdentityFile /mnt/k/.ssh/id_ed25519
-    '';
+    # extraConfig = ''
+    # Host *
+    #   IdentityFile /mnt/k/.ssh/id_ed25519
+    # '';
   };
 
   programs.git = {
