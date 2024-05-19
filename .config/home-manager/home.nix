@@ -75,19 +75,6 @@
   };
 
   home.shellAliases = {
-      commandNotFound = ''
-        if [ -x "$(command -v nix-env)" ]; then
-            function command_not_found_handle {
-                if nix-env --query --available "$1" >/dev/null; then
-                    echo "Command '$1' not found, but can be installed with:"
-                    echo "nix-env -iA nixpkgs.$1"
-                else
-                    echo "Command '$1' not found, and no corresponding package found in Nixpkgs."
-                fi
-            }
-        fi
-      '';
-
       sudo = "sudo ";
       apt = "nala";
       ps = "proc";
