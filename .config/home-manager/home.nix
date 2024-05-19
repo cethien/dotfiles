@@ -18,6 +18,8 @@
   home.packages = with pkgs; [
     nil
 
+    socat
+
     procs
     bat
     eza
@@ -29,6 +31,7 @@
     wget
     fzf
     duf
+
 
     oh-my-posh
 
@@ -117,7 +120,7 @@
 
       # commands
       update = "source $HOME/scripts/update.sh";
-      reload = "(cd $HOME && source .profile) && sudo mount -t drvfs K: /mnt/k && clear";
+      reload = "(cd $HOME && source .profile) && clear";
       init = "source $HOME/scripts/init.sh";
       sync = "(cd $HOME && git pull)";
       rebuild = "(cd $HOME && home-manager switch)";
@@ -133,10 +136,12 @@
 
     profileExtra = ''
       if [ -e "$HOME"/.nix-profile/etc/profile.d/nix.sh ]; then
-        . "$HOME"/.nix-profile/etc/profile.d/nix.sh;
+        source "$HOME"/.nix-profile/etc/profile.d/nix.sh;
       fi
 
-      # sudo mount -t drvfs K: /mnt/k
+      if [ -e /usr/local/bin/ssh-agent-pipe ]; then
+        source /usr/local/bin/ssh-agent-pipe;
+      fi
     '';
 
     initExtra = ''
@@ -149,12 +154,6 @@
     enable = true;
     package = pkgs.openssh;
     forwardAgent = true;
-    addKeysToAgent = "yes";
-
-    # extraConfig = ''
-    # Host *
-    #   IdentityFile /mnt/k/.ssh/id_ed25519
-    # '';
   };
 
   programs.git = {
