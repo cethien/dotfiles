@@ -45,7 +45,10 @@
     go-tools
     delve
     goreleaser
+
+
     hugo
+    nodejs
 
     bun
     jdk8
