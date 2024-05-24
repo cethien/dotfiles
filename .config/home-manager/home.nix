@@ -32,7 +32,6 @@
     fzf
     duf
 
-
     oh-my-posh
 
     gnumake
@@ -45,7 +44,6 @@
     go-tools
     delve
     goreleaser
-
 
     hugo
     nodejs
@@ -93,6 +91,8 @@
       gs = "git status";
       gd = "git diff";
       ga = "git add";
+      gaa = "git add .";
+      gaf = "git add -f";
 
       gc = "git commit";
       gcm = "git commit -m";
