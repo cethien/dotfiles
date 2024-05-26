@@ -79,7 +79,7 @@
       duf = "df";
       cd = "z";
       ll = "eza -la --icons --group-directories-first --git";
-      ls = "eza -a --icons --group-directories-first --git";
+      ls = "eza -1a --icons --group-directories-first --git";
       tree = "eza -T --icons";
       grep = "rg";
       cat = "bat -p";
