@@ -20,6 +20,7 @@
 
     socat
 
+    blesh
     procs
     bat
     eza
@@ -35,15 +36,11 @@
     oh-my-posh
 
     gnumake
-    wgo
     quicktype
 
     act
 
     gopls
-    go-tools
-    delve
-    goreleaser
 
     hugo
     nodejs
@@ -84,8 +81,6 @@
       grep = "rg";
       cat = "bat -p";
       find = "fd";
-      vi = "nvim";
-      vim = "nvim";
 
       # git
       gs = "git status";
@@ -148,6 +143,7 @@
     initExtra = ''
       export PATH=$GOBIN:$PATH
       eval "$(oh-my-posh init bash --config $POSH_THEMES_PATH/custom/negligible.omp.json)"
+      source $(blesh-share)/ble.sh
     '';
   };
 
@@ -187,6 +183,9 @@
 
   programs.neovim = {
     enable = true;
+    defaultEditor = true;
+    vimAlias = true;
+    viAlias = true;
     extraConfig = ''
       set number
     '';
