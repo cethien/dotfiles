@@ -37,10 +37,12 @@
 
     gnumake
     quicktype
+    sqls
 
     act
 
     gopls
+    delve
 
     hugo
     nodejs
