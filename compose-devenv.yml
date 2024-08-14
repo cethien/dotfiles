@@ -1,9 +1,7 @@
-version: '3'
-
 volumes:
   postgres16-data:
   pgadmin-data:
-  redis-data:
+  valkey-data:
   mailpit-data:
 
 services:
@@ -18,17 +16,6 @@ services:
       - '5432:5432'
     volumes:
       - postgres16-data:/var/lib/postgresql/data
-
-  pgadmin:
-    image: dpage/pgadmin4:latest
-    restart: unless-stopped
-    environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
-    ports:
-      - '5050:80'
-    volumes:
-      - pgadmin-data:/var/lib/pgadmin
 
   mailpit:
     image: axllent/mailpit:latest
