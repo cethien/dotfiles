@@ -24,8 +24,13 @@ if [ $# -eq 1 ]; then
     if [ "$1" = "go" ]; then
         echo "no module name provided"
         return 1
+    elif [ "$1" = "svelte" ]; then
+        echo "no project name provided"
+        return 1
     else
-        mkdir "$1" && cd "$_" && touch README.md .gitignore &&
+        mkdir "$1" && cd "$_" &&
+            git clone https://github.com/cethien/template.git . &> /dev/null &&
+            rm -rf .git &&
             edit README.md &&
             git_init
         return 0
@@ -47,6 +52,13 @@ elif [ $# -eq 2 ]; then
             command find . -type f -exec sed -i "s/templatego/$trimmed_module_name/g" {} + &&
             mv cmd/template-go cmd/"$module_name" &&
             edit README.md .goreleaser.yml &&
+            git_init
+        return 0
+    elif [ "$1" = "svelte" ]; then
+        git clone https://github.com/cethien/template-sveltekit.git "$2" &&
+            command cd "$2" || exit
+
+        edit README.md &&
             git_init
         return 0
     else
