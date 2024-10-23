@@ -1,0 +1,28 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "properties": {
+        "username": {
+            "type": "string"
+        },
+        "git": {
+            "properties": {
+                "username": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "username",
+                "email"
+            ],
+            "type": "object"
+        }
+    },
+    "required": [
+        "username",
+        "git"
+    ],
+    "type": "object"
+}

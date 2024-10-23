@@ -1,8 +1,10 @@
 { config, pkgs, lib, ... }:
-
+let
+  config = builtins.fromJSON (builtins.readFile ./config.json);
+in
 {
-  home.username = "cethien";
-  home.homeDirectory = "/home/cethien";
+  home.username = config.username;
+  home.homeDirectory = "/home/${config.username}";
   home.stateVersion = "23.05"; # dont change
 
   # Let Home Manager install and manage itself.
@@ -37,7 +39,6 @@
 
     gnumake
     quicktype
-    sqls
 
     act
 
@@ -159,8 +160,13 @@
     enable = true;
     diff-so-fancy.enable = true;
 
-    userName = "cethien";
-    aliases.ignore = "!gi() { curl -fsSL https://www.toptal.com/developers/gitignore/api/$@ ;}; gi";
+    userName = config.git.username;
+    userEmail = config.git.email;
+
+    aliases = {
+      ignore = "!gi() { curl -fsSL https://www.toptal.com/developers/gitignore/api/$@ ;}; gi";
+    };
+
     extraConfig = {
       core = {
         eol = "lf";
