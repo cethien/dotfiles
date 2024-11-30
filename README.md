@@ -1,0 +1,1 @@
+# dotfiles (managed with nix)
