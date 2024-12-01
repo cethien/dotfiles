@@ -37,12 +37,4 @@
     style.package = pkgs.catppuccin-qt5ct;
   };
 
-  home.packages = with pkgs; [
-    roboto
-    open-sans
-    
-    nerd-fonts.fira-code
-    nerd-fonts.code-new-roman
-  ];
-
 }

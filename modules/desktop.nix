@@ -59,4 +59,13 @@
     enable = true;
     package = pkgs.gnomeExtensions.gsconnect;
   };
+
+  fonts.packages = with pkgs; [
+    roboto
+    open-sans
+    
+    nerd-fonts.fira-code
+    nerd-fonts.fira-mono
+    nerd-fonts.code-new-roman
+  ];
 }
