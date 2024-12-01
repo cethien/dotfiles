@@ -13,4 +13,9 @@
     theme = spicePkgs.themes.catppuccin;
     colorScheme = "mauve";
   };
+
+
+  home.packages = with pkgs.gnomeExtensions; [
+    spotify-controls    
+  ];
 }

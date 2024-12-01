@@ -6,11 +6,7 @@
     excludePackages = [ pkgs.xterm ];
   };
 
-  catppuccin = {
-    enable = true;
-    flavor = "mocha";
-    accent = "mauve";
-  };
+  catppuccin.enable = true;
 
   services.displayManager.sddm = {
     enable = true;
@@ -28,8 +24,6 @@
     yelp # help
     seahorse # password manager
   ]);
-
-  programs.dconf.enable = true;
 
   environment.systemPackages = with pkgs; [
     gnome-tweaks
@@ -51,8 +45,6 @@
     do-not-disturb-while-screen-sharing-or-recording
     blur-my-shell
     tiling-shell
-
-    spotify-controls    
   ]);
 
   programs.kdeconnect = {

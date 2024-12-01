@@ -6,6 +6,7 @@
     ./spotify.nix
     ./vscode.nix
     ./obs-studio.nix
+    ./flameshot.nix
   ];
 
   home.packages = with pkgs; [
