@@ -11,7 +11,7 @@
     ./audio.nix
     ./desktop.nix
     ./docker.nix
-    ./gaming.nix
+    ./gaming
     ./peripherals.nix
     ./virtualization.nix
   ];
