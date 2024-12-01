@@ -1,31 +1,21 @@
-{ config, pkgs, ... }:
+{ inputs, user, ... }:
 
 {
+  home.username = "${user.username}";
+  home.homeDirectory = "/home/${user.username}";
 
-  home.username = "cethien";
-  home.homeDirectory = "/home/cethien";
-
-  home.stateVersion = "25.05";
+  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowUnfreePredicate = (_: true);
 
   programs.home-manager.enable = true;
 
-  programs = {
-    git = {
-     enable = true;
-     userName = "cethien";
-     userEmail = "borislaw.sotnikow@gmx.de";
-    };
-    tmux.enable = true;
-    eza.enable = true;
-    bat.enable = true;
-    oh-my-posh = {
-      enable = true;
-      useTheme = "catppuccin_mocha";
-    };
-  };
-  
-  home.packages = with pkgs; [
-    cowsay
-    lolcat
+  imports = [
+    ./modules/home
+
+    inputs.nur.hmModules.nur
+    inputs.catppuccin.homeManagerModules.catppuccin
+    inputs.spicetify-nix.homeManagerModules.default
   ];
+
+  home.stateVersion = "24.05"; # DO NOT CHANGE IF YOU DON'T KNOW WHAT YOU ARE DOING
 }

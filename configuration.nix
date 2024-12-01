@@ -1,31 +1,28 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
+{ inputs, system, user, ... }: 
 
-{ inputs, config, pkgs, ... }:
-
-{
-imports =
+ {
+  imports =
     [ 
-      ./hardware-configuration.nix
+      ./hosts/${system.host}/hardware-configuration.nix
+      ./modules
+      
       inputs.home-manager.nixosModules.home-manager
     ];
 
+  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowUnfreePredicate = (_: true);
+
   home-manager = {
-    extraSpecialArgs = { inherit inputs; };
-    users.cethien = import ./home.nix; 
+    extraSpecialArgs = { inherit inputs user system; };
+    users."${user.username}" = import ./home.nix;
+    backupFileExtension = "hm-backup-$(date +%Y%m%d_%H%M%S)";
   };
 
-  catppuccin.enable = true;
-  catppuccin.flavor = "mocha";
-  catppuccin.accent = "mauve";
-
-  # Bootloader.
   boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/vda";
+  boot.loader.grub.device = "/dev/nvme0n1";
   boot.loader.grub.useOSProber = true;
 
-  networking.hostName = "nixos";
+  networking.hostName = system.host;
 
   networking.networkmanager.enable = true;
 
@@ -51,26 +48,5 @@ imports =
 
   console.keyMap = "de-latin1-nodeadkeys";
 
-  users.users.cethien = {
-    isNormalUser = true;
-    description = "Boris";
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [];
-  };
-
-  environment.systemPackages = with pkgs; [
-    
-  ];
-
-  programs.bash.blesh.enable = true;
-  
-  programs.nano.enable = true;
-  programs.nano.syntaxHighlight = true;
-  programs.nano.nanorc = ''
-    set tabstospaces
-    set tabsize 2
-    set constantshow
-  '';
-
-  system.stateVersion = "25.05"; # Did you read the comment?
+  system.stateVersion = "25.05"; # DO NOT CHANGE IF YOU DON'T KNOW WHAT YOU ARE DOING
 }

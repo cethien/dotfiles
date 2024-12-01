@@ -1,0 +1,62 @@
+{ pkgs,... }:
+
+{
+  services.xserver = {
+    enable = true;
+    excludePackages = [ pkgs.xterm ];
+  };
+
+  catppuccin = {
+    enable = true;
+    flavor = "mocha";
+    accent = "mauve";
+  };
+
+  services.displayManager.sddm = {
+    enable = true;
+    package = pkgs.kdePackages.sddm;
+  };
+
+  services.xserver.desktopManager.gnome.enable = true;
+
+  environment.gnome.excludePackages = (with pkgs; [
+    gnome-photos
+    gnome-tour
+    gnome-music
+    gnome-text-editor
+    epiphany # web browser
+    yelp # help
+    seahorse # password manager
+  ]);
+
+  programs.dconf.enable = true;
+
+  environment.systemPackages = with pkgs; [
+    gnome-tweaks
+
+    sushi # gnome file manager previewer
+    decibels # gnome audio player
+    video-trimmer # gnome video editor
+    pika-backup # gnome backup tool
+    drawing # gnome image editor
+
+  ] ++ (with pkgs.gnomeExtensions; [
+    legacy-gtk3-theme-scheme-auto-switcher
+    tweaks-in-system-menu
+    quick-settings-audio-devices-hider
+    quick-settings-audio-panel
+    bluetooth-battery-meter
+    system-monitor
+    appindicator
+    do-not-disturb-while-screen-sharing-or-recording
+    blur-my-shell
+    tiling-shell
+
+    spotify-controls    
+  ]);
+
+  programs.kdeconnect = {
+    enable = true;
+    package = pkgs.gnomeExtensions.gsconnect;
+  };
+}
