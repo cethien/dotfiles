@@ -1,7 +1,8 @@
-{ ... }:
+{ system, ... }:
 
 {
   imports = [
+    ./nvidia.nix
     ./steam.nix
   ];
 
@@ -10,7 +11,6 @@
     enable32Bit = true;
   };
 
-  hardware.nvidia.modesetting.enable = true;
-  hardware.nvidia.open = true;
-  services.xserver.videoDrivers = ["nvidia"];
+  steam.enable = !system.profile.isPortableDevice;
+  nvidia.enable = !system.profile.isPortableDevice;
 }

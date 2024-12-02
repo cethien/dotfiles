@@ -1,4 +1,4 @@
-{ inputs, system, user, ... }: 
+{ inputs, system, user,... }: 
 
  {
   imports =
@@ -13,12 +13,6 @@
 
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.allowUnfreePredicate = (_: true);
-
-  home-manager = {
-    extraSpecialArgs = { inherit inputs user system; };
-    users."${user.username}" = import ./home.nix;
-    backupFileExtension = "hm-backup-$(date +%Y%m%d_%H%M%S)";
-  };
 
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/nvme0n1";
@@ -49,6 +43,12 @@
   };
 
   console.keyMap = "de-latin1-nodeadkeys";
+
+    home-manager = {
+    extraSpecialArgs = { inherit inputs user system; };
+    users."${user.username}" = import ./home.nix;
+    backupFileExtension = "hm-backup-$(date +%Y%m%d_%H%M%S)";
+  };
 
   system.stateVersion = "25.05"; # DO NOT CHANGE IF YOU DON'T KNOW WHAT YOU ARE DOING
 }

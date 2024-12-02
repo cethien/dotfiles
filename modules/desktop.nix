@@ -1,11 +1,6 @@
 { pkgs,... }:
 
 {
-  services.xserver = {
-    enable = true;
-    excludePackages = [ pkgs.xterm ];
-  };
-
   catppuccin.enable = true;
 
   services.displayManager.sddm = {
@@ -13,9 +8,14 @@
     package = pkgs.kdePackages.sddm;
   };
 
-  services.xserver.desktopManager.gnome.enable = true;
+  services.xserver = {
+    enable = true;
+    excludePackages = [ pkgs.xterm ];
 
-  environment.gnome.excludePackages = (with pkgs; [
+    desktopManager.gnome.enable = true;
+  };
+
+  environment.gnome.excludePackages = with pkgs; [
     gnome-photos
     gnome-tour
     gnome-music
@@ -23,7 +23,7 @@
     epiphany # web browser
     yelp # help
     seahorse # password manager
-  ]);
+  ];
 
   environment.systemPackages = with pkgs; [
     gnome-tweaks
