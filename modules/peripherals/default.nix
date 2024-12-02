@@ -8,7 +8,7 @@
     ./stream-deck.nix
   ];
 
-  logitech.enable = !system.profile.isPortableDevice;
-  xbox.enable = !system.profile.isPortableDevice;
-  streamdeck.enable = !system.profile.isPortableDevice;
+  logitech.enable = !system.profile.isSurface;
+  xbox.enable = !system.profile.isSurface;
+  streamdeck.enable = !system.profile.isSurface;
 }

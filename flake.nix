@@ -26,11 +26,10 @@
     system = {
       profile = {
         isNixos = builtins.elem system.host [ "holzrussen-hq" "surface-7" ];
-        isPortableDevice = builtins.elem system.host [ "surface-7" ];
-        isDrawingDevice = builtins.elem system.host [ "surface-7" ];
+        isHomePC = builtins.elem system.host [ "holzrussen-hq" ];
+        isSurface = builtins.elem system.host [ "surface-7" ];
         isWSL = builtins.elem system.host [ "PC-SOTNIKOW" "LTP-SOTNIKOW" ];
       };
-
 
       system = "x86_64-linux";
 
@@ -90,7 +89,6 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     nixos-hardware.url = "github:nixos/nixos-hardware";
-    nixos-hardware.inputs.nixpkgs.follows = "nixpkgs";
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";

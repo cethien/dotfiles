@@ -11,6 +11,6 @@
     enable32Bit = true;
   };
 
-  steam.enable = !system.profile.isPortableDevice;
-  nvidia.enable = !system.profile.isPortableDevice;
+  steam.enable = !system.profile.isSurface;
+  nvidia.enable = !system.profile.isSurface;
 }

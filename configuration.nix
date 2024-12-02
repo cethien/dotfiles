@@ -7,7 +7,10 @@
       ./modules
       
       inputs.home-manager.nixosModules.home-manager
-    ];
+      
+    ] ++ (if system.profile.isSurface then [
+      inputs.nixos-hardware.nixosModules.microsoft-surface-pro-intel
+    ] else []);
 
   nix.settings.experimental-features = "nix-command flakes";
 

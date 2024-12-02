@@ -9,8 +9,6 @@
     ./gaming.nix
   ];
 
-  user.gaming.enable = !system.profile.isPortableDevice;
-  user.apps = {
-    enable = !system.profile.isWSL;
-  };
+  user.gaming.enable = system.profile.isHomePC; 
+  user.apps.enable = system.profile.isNixos;
 }
