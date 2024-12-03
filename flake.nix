@@ -74,7 +74,7 @@
         inherit pkgs;
       
         extraSpecialArgs = {
-          inherit inputs user;
+          inherit inputs system user;
         };
 
         modules = [
