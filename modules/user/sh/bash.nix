@@ -8,10 +8,6 @@
       if [ -e "$HOME"/.nix-profile/etc/profile.d/nix.sh ]; then
         source "$HOME"/.nix-profile/etc/profile.d/nix.sh;
       fi
-
-      if [ -e /usr/local/bin/ssh-agent-pipe ]; then
-        source /usr/local/bin/ssh-agent-pipe;
-      fi
     '' else "";
 
     initExtra = ''

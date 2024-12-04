@@ -4,7 +4,7 @@
   home.shellAliases = {
     rebuild = ''
       ${if system.profile.isNixos then "sudo nixos-rebuild switch --flake $HOME/.files#${system.host}" else ""}
-      ${if system.profile.isWSL then "home-manager switch --flake $HOME/.files#${user.username}" else ""}
+      ${if system.profile.isWSL then "home-manager switch --flake $HOME/.files#${user.username} -b bak-$(date +%y%m%d%H%M%S)" else ""}
     '';
 
     update = ''
