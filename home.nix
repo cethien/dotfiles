@@ -17,5 +17,5 @@
     inputs.spicetify-nix.homeManagerModules.default
   ];
 
-  home.stateVersion = "24.05"; # DO NOT CHANGE IF YOU DON'T KNOW WHAT YOU ARE DOING
+  home.stateVersion = "25.05"; # DO NOT CHANGE IF YOU DON'T KNOW WHAT YOU ARE DOING
 }
