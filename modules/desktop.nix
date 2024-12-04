@@ -37,7 +37,6 @@
   ] ++ (with pkgs.gnomeExtensions; [
     legacy-gtk3-theme-scheme-auto-switcher
     tweaks-in-system-menu
-    quick-settings-audio-devices-hider
     quick-settings-audio-panel
     bluetooth-battery-meter
     system-monitor
