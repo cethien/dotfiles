@@ -5,16 +5,19 @@
 
   imports = [
     ./audio.nix
-    ./bitwarden-desktop.nix
-    ./discord.nix
-    ./drawio.nix
+
     ./firefox.nix
-    ./media-editing.nix
-    ./obs-studio.nix
-    ./rnote.nix
-    ./spotify.nix
     ./vscode.nix
-    ./whatsapp.nix
+    ./media-editing.nix
+    
+    ./discord.nix
+    ./spotify.nix
+    
+    ./drawio.nix
+    ./rnote.nix
+    
+    ./obs-studio.nix
+    
   ];
 
   config = lib.mkIf config.user.apps.enable {
@@ -24,8 +27,6 @@
     user.apps.vscode.enable = true;
     user.apps.media-editing.enable = true;
     
-    user.apps.bitwarden-desktop.enable = !system.profile.isSurface;
-    user.apps.whatsapp.enable = !system.profile.isSurface;
     user.apps.discord.enable = !system.profile.isSurface;
     user.apps.spotify.enable = !system.profile.isSurface;
     
