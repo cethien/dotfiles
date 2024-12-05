@@ -15,6 +15,7 @@
         hidePodcasts
       ];
       theme = spicePkgs.themes.catppuccin;
+      colorScheme = "mocha";
     };
 
     home.packages = with pkgs; [
