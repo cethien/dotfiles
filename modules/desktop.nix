@@ -1,5 +1,4 @@
 { pkgs,... }:
-
 {
   catppuccin.enable = true;
 
@@ -35,15 +34,17 @@
     drawing # gnome image editor
 
   ] ++ (with pkgs.gnomeExtensions; [
-    legacy-gtk3-theme-scheme-auto-switcher
     tweaks-in-system-menu
     bluetooth-battery-meter
-    window-state-manager    
     system-monitor
     appindicator
-    do-not-disturb-while-screen-sharing-or-recording
     blur-my-shell
+    
+    another-window-session-manager
+    pip-on-top
+    do-not-disturb-while-screen-sharing-or-recording
     tiling-shell
+    color-picker
   ]);
 
   programs.kdeconnect = {

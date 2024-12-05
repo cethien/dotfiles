@@ -45,7 +45,7 @@
 
       "org/gnome/desktop/interface" = {
         color-scheme = "prefer-dark";
-        # gtk-theme = "catppuccin-mocha-mauve-standard+normal";
+        gtk-theme = "catppuccin-mocha-mauve-standard+normal";
         clock-show-weekday = true;
         enable-hot-corners = false;
         font-antialiasing = "grayscale";
@@ -96,13 +96,13 @@
       "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = { 
         name = "Open Gnome Terminal";
         binding = "<Super>t";
-        command = "kgx kgx -e tmux";
+        command = "kgx";
       };
 
       "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
         name = "Open Gnome Terminal";
         binding = "<Shift><Alt>t";
-        command = "kgx -e tmux";
+        command = "kgx";
       };
         
       "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2" = {
@@ -114,7 +114,7 @@
       "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3" = {
         name = "Screenshot with Flameshot";
         binding = "<Super><Shift>s";
-        command = "flameshot gui";
+        command = "script --command \"flameshot gui\" /dev/null";
       };
 
       "org/gnome/shell" = {
@@ -136,19 +136,22 @@
         ];
 
         enabled-extensions = [
-          "legacyschemeautoswitcher@joshimukul29.gmail.com"
+          "user-theme@gnome-shell-extensions.gcampax.github.com"
+          
+          "gsconnect@andyholmes.github.io"
+
           "tweaks-system-menu@extensions.gnome-shell.fifi.org"
-          "quicksettings-audio-devices-hider@marcinjahn.com"
-          "quick-settings-audio-panel@rayzeq.github.io"
           "Bluetooth-Battery-Meter@maniacx.github.com"
           "system-monitor@gnome-shell-extensions.gcampax.github.com"
-          "do-not-disturb-while-screen-sharing-or-recording@marcinjahn.com"
-          "blur-my-shell@aunetx"
-          "tilingshell@ferrarodomenico.com"
           "appindicatorsupport@rgcjonas.gmail.com"
-          "gsconnect@andyholmes.github.io"
-          "user-theme@gnome-shell-extensions.gcampax.github.com"
-
+          "blur-my-shell@aunetx"
+          
+          "another-window-session-manager@gmail.com"
+          "pip-on-top@rafostar.github.com"
+          "do-not-disturb-while-screen-sharing-or-recording@marcinjahn.com"
+          "tilingshell@ferrarodomenico.com"
+          "color-picker@tuberry"
+          
           "docker@stickman_0x00.com"
           "spotify-controls@Sonath21"
         ];
@@ -158,7 +161,39 @@
         use-system-font = false;
         font = "CodeNewRoman Nerd Font Mono 12";
       };
-    };
-  };
 
+      "org/gnome/shell/extensions/color-picker" = {
+          enable-systray = false;
+          enable-sound = false;
+          enable-shortcut = true;
+          color-picker-shortcuts = "<Shift><Super>c";
+      };
+
+      "org/gnome/shell/extensions/blur-my-shell" = {
+        hacks-level = 2;
+      };
+      
+      "org/gnome/shell/extensions/blur-my-shell/panel" = {
+        blur = false;
+      };
+
+      "org/gnome/shell/extensions/blur-my-shell/applications" = {
+        blur = true;
+        brightness = 0.50;
+        opacity = 150;     
+        blur-on-overview = false;
+        dynamic-opacity = true;
+        enable-all = true;
+      };
+
+    };      
+
+    home.sessionVariables = {
+      QT_QPA_PLATFORM = "wayland";
+    };
+
+    home.packages = with pkgs; [     
+      (flameshot.override { enableWlrSupport = true; })
+    ];
+  };  
 }
