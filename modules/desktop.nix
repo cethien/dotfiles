@@ -37,8 +37,8 @@
   ] ++ (with pkgs.gnomeExtensions; [
     legacy-gtk3-theme-scheme-auto-switcher
     tweaks-in-system-menu
-    quick-settings-audio-panel
     bluetooth-battery-meter
+    window-state-manager    
     system-monitor
     appindicator
     do-not-disturb-while-screen-sharing-or-recording
