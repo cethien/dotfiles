@@ -124,6 +124,8 @@
           "spotify.desktop" 
           "vesktop.desktop" 
           "code.desktop" 
+          "drawio.desktop"
+          "steam.desktop"
           "org.prismlauncher.PrismLauncher.desktop"
         ];
 
@@ -162,6 +164,14 @@
         font = "CodeNewRoman Nerd Font Mono 12";
       };
 
+      "org/gnome/shell/extensions/system-monitor" = {
+        show-swap = false;
+      };
+
+      "org/gnome/shell/extensions/appindicator" = {
+        tray-pos = "center";
+      };
+
       "org/gnome/shell/extensions/color-picker" = {
           enable-systray = false;
           enable-sound = false;
@@ -186,14 +196,39 @@
         enable-all = true;
       };
 
-    };      
+      "org/gnome/shell/extensions/spotify-controls" = {
+        controls-position = "left";
+        position = "rightmost-left";
+      };
 
-    home.sessionVariables = {
-      QT_QPA_PLATFORM = "wayland";
-    };
+      "org/gnome/shell/extensions/docker" = {
+        logo = "default";
+      };
+
+      "org/gnome/shell/extensions/tilingshell" = {
+        enable-snap-assist = false;
+        override-window-menu = false;
+        restore-window-original-size = false;
+        active-screen-edges = false;
+        overridden-settings = "{}";
+      };
+    };      
 
     home.packages = with pkgs; [     
       (flameshot.override { enableWlrSupport = true; })
-    ];
+    ] ++ (with pkgs.gnomeExtensions; [
+      tweaks-in-system-menu
+      bluetooth-battery-meter
+      system-monitor
+      appindicator
+      blur-my-shell
+
+      another-window-session-manager
+      pip-on-top
+      do-not-disturb-while-screen-sharing-or-recording
+      tiling-shell
+      color-picker
+    ]);
+        
   };  
 }

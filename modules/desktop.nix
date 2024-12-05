@@ -33,19 +33,7 @@
     pika-backup # gnome backup tool
     drawing # gnome image editor
 
-  ] ++ (with pkgs.gnomeExtensions; [
-    tweaks-in-system-menu
-    bluetooth-battery-meter
-    system-monitor
-    appindicator
-    blur-my-shell
-    
-    another-window-session-manager
-    pip-on-top
-    do-not-disturb-while-screen-sharing-or-recording
-    tiling-shell
-    color-picker
-  ]);
+  ];
 
   programs.kdeconnect = {
     enable = true;
