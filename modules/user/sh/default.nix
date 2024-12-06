@@ -8,6 +8,7 @@
     ./tmux.nix
     ./neovim.nix
     ./git.nix
+    ./fastfetch.nix
   ];
 
   programs = {
@@ -21,11 +22,11 @@
   };
 
   home.packages = with pkgs; [
-      procs
-      duf
-      curl
-      wget
-      zip
-      unzip
+    procs
+    duf
+    curl
+    wget
+    zip
+    unzip
   ];
 }
