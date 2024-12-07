@@ -1,7 +1,10 @@
 { system, ... }:
 
 {
-  imports = [ ./gnome.nix ];
+  imports = [ 
+    ./gnome.nix
+    ./wallpaper.nix
+  ];
 
   catppuccin.enable = true;
 
