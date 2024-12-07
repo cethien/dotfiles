@@ -2,15 +2,11 @@
 {
   catppuccin.enable = true;
 
-  services.displayManager.sddm = {
-    enable = true;
-    package = pkgs.kdePackages.sddm;
-  };
-
   services.xserver = {
     enable = true;
     excludePackages = [ pkgs.xterm ];
 
+    displayManager.gdm.enable = true;
     desktopManager.gnome.enable = true;
   };
 
@@ -29,10 +25,9 @@
 
     sushi # gnome file manager previewer
     decibels # gnome audio player
+    drawing # gnome image editor
     video-trimmer # gnome video editor
     pika-backup # gnome backup tool
-    drawing # gnome image editor
-
   ];
 
   programs.kdeconnect = {

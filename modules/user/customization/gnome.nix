@@ -10,7 +10,7 @@
         enable = true;
         gnomeShellTheme = true;
 
-        tweaks = [ "normal" ];
+        tweaks = [ "rimless" ];
       };
 
       iconTheme = {
@@ -45,7 +45,6 @@
 
       "org/gnome/desktop/interface" = {
         color-scheme = "prefer-dark";
-        gtk-theme = "catppuccin-mocha-mauve-standard+normal";
         clock-show-weekday = true;
         enable-hot-corners = false;
         font-antialiasing = "grayscale";
@@ -119,10 +118,12 @@
 
       "org/gnome/shell" = {
         favorite-apps = [
+          "org.gnome.Console.desktop"
           "firefox.desktop" 
           "org.gnome.Geary.desktop" 
           "spotify.desktop" 
           "vesktop.desktop" 
+          "StreamController.desktop"
           "code.desktop" 
           "drawio.desktop"
           "steam.desktop"
@@ -130,7 +131,7 @@
         ];
 
         disable-user-extensions = false;
-      
+
         disabled-extensions = [ 
           "apps-menu@gnome-shell-extensions.gcampax.github.com"
           "light-style@gnome-shell-extensions.gcampax.github.com"
@@ -188,7 +189,7 @@
       };
 
       "org/gnome/shell/extensions/blur-my-shell/applications" = {
-        blur = true;
+        blur = false;
         brightness = 0.50;
         opacity = 150;     
         blur-on-overview = false;
@@ -229,6 +230,6 @@
       tiling-shell
       color-picker
     ]);
-        
+
   };  
 }
