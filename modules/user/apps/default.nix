@@ -12,6 +12,7 @@
     
     ./discord.nix
     ./spotify.nix
+    ./keepassxc.nix
     
     ./drawio.nix
     ./rnote.nix
@@ -29,6 +30,7 @@
     
     user.apps.discord.enable = !system.profile.isSurface;
     user.apps.spotify.enable = !system.profile.isSurface;
+    user.apps.keepassxc.enable = true;
     
     user.apps.drawio.enable = !system.profile.isSurface;
     user.apps.rnote.enable = system.profile.isSurface;
