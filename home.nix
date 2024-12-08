@@ -10,7 +10,7 @@
   programs.home-manager.enable = true;
 
   imports = [
-    ./modules/user
+    ./modules/users/${user.username}
 
     inputs.nur.hmModules.nur
     inputs.catppuccin.homeManagerModules.catppuccin
