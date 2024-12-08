@@ -111,7 +111,7 @@
       };
 
       "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3" = {
-        name = "Screenshot with Flameshot";
+        name = "Screenshot";
         binding = "<Super><Shift>s";
         command = "script --command \"flameshot gui\" /dev/null";
       };
