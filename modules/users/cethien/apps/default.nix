@@ -28,13 +28,13 @@
     user.apps.vscode.enable = true;
     user.apps.media-editing.enable = true;
     
-    user.apps.discord.enable = !system.profile.isSurface;
-    user.apps.spotify.enable = !system.profile.isSurface;
+    user.apps.discord.enable = system.profile.isHomePC;
+    user.apps.spotify.enable = system.profile.isHomePC;
     user.apps.keepassxc.enable = true;
     
-    user.apps.drawio.enable = !system.profile.isSurface;
+    user.apps.drawio.enable = system.profile.isHomePC;
     user.apps.rnote.enable = system.profile.isSurface;
     
-    user.apps.obs-studio.enable = !system.profile.isSurface;
+    user.apps.obs-studio.enable = system.profile.isHomePC;
   };
 }

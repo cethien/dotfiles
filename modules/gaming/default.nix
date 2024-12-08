@@ -12,7 +12,8 @@
     enable32Bit = true;
   };
 
-  gaming.steam.enable = !system.profile.isSurface;
-  gaming.nvidia.enable = !system.profile.isSurface;
-  gaming.retroarch.enable = !system.profile.isSurface;
+  gaming.nvidia.enable = system.profile.isHomePC;
+  
+  gaming.steam.enable = system.profile.isHomePC;
+  gaming.retroarch.enable = system.profile.isHomePC;
 }
