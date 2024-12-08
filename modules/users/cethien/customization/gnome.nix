@@ -97,6 +97,7 @@
             "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/"
             "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/"
             "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/"
+            "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/"
           ];
         };
 
@@ -122,6 +123,12 @@
         name = "Screenshot";
         binding = "<Super><Shift>s";
         command = "script --command \"flameshot gui\" /dev/null";
+      };
+
+      "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4" = {
+        name = "Open System Monitor";
+        binding = "<Shift><Control>Escape";
+        command = "gnome-system-monitor";
       };
 
       "org/gnome/shell" = {
