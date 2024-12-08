@@ -4,7 +4,7 @@
   imports = [
     ./user.nix
     ./ssh.nix
-    ./audio.nix    
+    ./audio    
 
     ./docker.nix
     ./virtualization.nix
