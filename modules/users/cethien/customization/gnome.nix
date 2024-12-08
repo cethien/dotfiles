@@ -184,20 +184,7 @@
         font = "CodeNewRoman Nerd Font Mono 12";
       };
 
-      "org/gnome/shell/extensions/system-monitor" = {
-        show-swap = false;
-      };
 
-      "org/gnome/shell/extensions/appindicator" = {
-        tray-pos = "left";
-      };
-
-      "org/gnome/shell/extensions/color-picker" = {
-          enable-systray = false;
-          enable-sound = false;
-          enable-shortcut = true;
-          color-picker-shortcuts = "<Shift><Super>c";
-      };
 
       "org/gnome/shell/extensions/blur-my-shell" = {
         hacks-level = 2;
@@ -216,9 +203,24 @@
         enable-all = true;
       };
 
+      "org/gnome/shell/extensions/system-monitor" = {
+        show-swap = false;
+      };
+
+      "org/gnome/shell/extensions/appindicator" = {
+        tray-pos = "right";
+      };
+
+      "org/gnome/shell/extensions/color-picker" = {
+          enable-systray = false;
+          enable-sound = false;
+          enable-shortcut = true;
+          color-picker-shortcuts = "<Shift><Super>c";
+      };
+
       "org/gnome/shell/extensions/spotify-controls" = {
         controls-position = "left";
-        position = "middle-right";
+        position = "rightmost-left";
       };
 
       "org/gnome/shell/extensions/docker" = {
