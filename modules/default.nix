@@ -2,7 +2,8 @@
 
 {
   imports = [
-    ./user.nix    
+    ./user.nix
+    ./ssh.nix
     ./audio.nix    
 
     ./docker.nix
