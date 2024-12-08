@@ -7,6 +7,7 @@
       ./modules
       
       inputs.home-manager.nixosModules.home-manager
+      inputs.catppuccin.nixosModules.catppuccin
       
     ] ++ (if system.profile.isSurface then [
       inputs.nixos-hardware.nixosModules.microsoft-surface-pro-intel

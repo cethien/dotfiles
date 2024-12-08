@@ -38,9 +38,8 @@
           inherit inputs system user; 
         };
 
-        modules = with inputs; [
+        modules = [
          ./configuration.nix
-         catppuccin.nixosModules.catppuccin
         ];
       }; 
    } else {};
