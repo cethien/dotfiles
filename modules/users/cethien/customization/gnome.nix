@@ -167,7 +167,6 @@
           "blur-my-shell@aunetx"
           
           "another-window-session-manager@gmail.com"
-          "fullscreen-notifications@sorrow.about.alice.pm.me"
           "fullscreen-avoider@noobsai.github.com"
           "pip-on-top@rafostar.github.com"
           "do-not-disturb-while-screen-sharing-or-recording@marcinjahn.com"
@@ -246,7 +245,6 @@
       blur-my-shell
 
       another-window-session-manager
-      fullscreen-notifications
       fullscreen-avoider
       pip-on-top
       do-not-disturb-while-screen-sharing-or-recording
