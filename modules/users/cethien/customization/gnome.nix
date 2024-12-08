@@ -143,6 +143,7 @@
           "drawio.desktop"
           "steam.desktop"
           "org.prismlauncher.PrismLauncher.desktop"
+          "org.libretro.RetroArch.desktop"
           "com.obsproject.Studio.desktop"
         ];
 
