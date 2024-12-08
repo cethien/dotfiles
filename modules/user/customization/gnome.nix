@@ -93,13 +93,13 @@
         };
 
       "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = { 
-        name = "Open Gnome Terminal";
+        name = "Open Terminal";
         binding = "<Super>t";
         command = "kgx";
       };
 
       "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
-        name = "Open Gnome Terminal";
+        name = "Open Terminal";
         binding = "<Shift><Alt>t";
         command = "kgx";
       };
