@@ -128,6 +128,7 @@
           "drawio.desktop"
           "steam.desktop"
           "org.prismlauncher.PrismLauncher.desktop"
+          "com.obsproject.Studio.desktop"
         ];
 
         disable-user-extensions = false;
@@ -150,6 +151,8 @@
           "blur-my-shell@aunetx"
           
           "another-window-session-manager@gmail.com"
+          "fullscreen-notifications@sorrow.about.alice.pm.me"
+          "fullscreen-avoider@noobsai.github.com"
           "pip-on-top@rafostar.github.com"
           "do-not-disturb-while-screen-sharing-or-recording@marcinjahn.com"
           "tilingshell@ferrarodomenico.com"
@@ -170,7 +173,7 @@
       };
 
       "org/gnome/shell/extensions/appindicator" = {
-        tray-pos = "center";
+        tray-pos = "left";
       };
 
       "org/gnome/shell/extensions/color-picker" = {
@@ -199,7 +202,7 @@
 
       "org/gnome/shell/extensions/spotify-controls" = {
         controls-position = "left";
-        position = "rightmost-left";
+        position = "middle-right";
       };
 
       "org/gnome/shell/extensions/docker" = {
@@ -225,6 +228,8 @@
       blur-my-shell
 
       another-window-session-manager
+      fullscreen-notifications
+      fullscreen-avoider
       pip-on-top
       do-not-disturb-while-screen-sharing-or-recording
       tiling-shell
