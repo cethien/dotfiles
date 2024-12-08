@@ -4,6 +4,7 @@
   imports = [
     ./nvidia.nix
     ./steam.nix
+    ./retroarch.nix
   ];
 
   hardware.graphics = {
@@ -11,6 +12,7 @@
     enable32Bit = true;
   };
 
-  steam.enable = !system.profile.isSurface;
-  nvidia.enable = !system.profile.isSurface;
+  gaming.steam.enable = !system.profile.isSurface;
+  gaming.nvidia.enable = !system.profile.isSurface;
+  gaming.retroarch.enable = !system.profile.isSurface;
 }
