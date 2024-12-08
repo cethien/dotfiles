@@ -33,9 +33,17 @@
       platformTheme.name = "kvantum";
     };
 
-    dconf.settings = {
+    dconf.settings = with lib.hm.gvariant; {
+      "org/gnome/desktop/peripherals/mouse" = {
+        accel-profile = "flat";
+      };
+
       "org/gnome/desktop/session" = {
-        idle-delay = "uint32 0";
+        idle-delay = mkUint32 0;
+      };
+
+      "org/gnome/desktop/screensaver" = {
+        lock-enabled = false;
       };
 
       "org/gnome/settings-daemon/plugins/power" = {
