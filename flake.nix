@@ -29,6 +29,7 @@
     pkgs = import nixpkgs {
       system = system.system;
       config.allowUnfree = true;
+      overlays = [ inputs.nur.overlay ];
     };
   in
   {
@@ -67,11 +68,12 @@
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-
-    nur.url = "github:nix-community/NUR";
     
     catppuccin.url = "github:catppuccin/nix";
 
+    nur.url = "github:nix-community/NUR";
+    nur.inputs.nixpkgs.follows = "nixpkgs";
+    
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     spicetify-nix.inputs.nixpkgs.follows = "nixpkgs";
   };

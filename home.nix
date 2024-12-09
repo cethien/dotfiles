@@ -12,7 +12,7 @@
   imports = [
     ./modules/users/${user.username}
 
-    inputs.nur.hmModules.nur
+    inputs.nur.modules.homeManager.default
     inputs.catppuccin.homeManagerModules.catppuccin
     inputs.spicetify-nix.homeManagerModules.default
   ];

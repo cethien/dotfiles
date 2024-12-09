@@ -1,4 +1,4 @@
-{ lib, config, user,... }:
+{ lib, config, user, pkgs,... }:
 
 {
   options.user.apps.firefox.enable = lib.mkEnableOption "Enable Firefox";
@@ -27,7 +27,7 @@
           "privacy.globalprivacycontrol.enabled" = true;
         };
 
-        extensions = with config.nur.repos.rycee.firefox-addons; [
+        extensions = with pkgs.nur.repos.rycee.firefox-addons; [
           multi-account-containers
 
           stylus
