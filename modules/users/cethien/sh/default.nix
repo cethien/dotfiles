@@ -9,6 +9,8 @@
     ./neovim.nix
     ./git.nix
     ./fastfetch.nix
+
+    ./gh.nix
   ];
 
   programs = {
