@@ -1,14 +1,15 @@
-{ lib, config, ... }:
+{ lib, config, pkgs, ... }:
 
 {
   options.gaming.steam.enable = lib.mkEnableOption "Enable Steam";
 
   config = lib.mkIf config.gaming.steam.enable {
-    programs = {
-      steam.enable = true;
-      steam.gamescopeSession.enable = true;
+      programs.steam = {
+        enable = true;
+        protontricks.enable = true;
+        gamescopeSession.enable = true;
+      };
 
-      gamemode.enable = true;
-    };
+      programs.gamemode.enable = true;
   };
 }
