@@ -28,9 +28,14 @@
         };
 
         extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-          multi-account-containers
+          gsconnect
 
+          multi-account-containers
+          side-view
+
+          firefox-color
           stylus
+
           ublock-origin
           unpaywall
           i-dont-care-about-cookies
