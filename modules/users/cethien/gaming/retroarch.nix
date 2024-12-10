@@ -1,10 +1,10 @@
 { lib, config, pkgs, ... }:
 
 {
-  options.gaming.retroarch.enable = lib.mkEnableOption "Enable retroarch";
+  options.user.gaming.retroarch.enable = lib.mkEnableOption "Enable retroarch";
 
-  config = lib.mkIf config.gaming.retroarch.enable {
-    environment.systemPackages = 
+  config = lib.mkIf config.user.gaming.retroarch.enable {
+    home.packages = 
     let
       retroarchWithCores = (pkgs.retroarch.withCores (cores: with cores; [
           mesen #NES

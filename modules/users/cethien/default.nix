@@ -6,7 +6,7 @@
     ./dev    
     ./customization
     ./apps
-    ./gaming.nix
+    ./gaming
   ];
 
   user.apps.enable = system.profile.isNixos;
