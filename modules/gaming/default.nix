@@ -4,6 +4,7 @@
   imports = [
     ./nvidia.nix
     ./steam.nix
+    ./r2modman.nix
     ./retroarch.nix
   ];
 
@@ -15,5 +16,6 @@
   gaming.nvidia.enable = system.profile.isHomePC;
   
   gaming.steam.enable = system.profile.isHomePC;
+  gaming.r2modman.enable = system.profile.isHomePC;
   gaming.retroarch.enable = system.profile.isHomePC;
 }
