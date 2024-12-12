@@ -22,7 +22,7 @@
         name  = "Nordzy-cursors";
         package = pkgs.nordzy-cursor-theme;
       };
-    
+
     };
 
     qt = {
@@ -173,7 +173,6 @@
           "tilingshell@ferrarodomenico.com"
           "color-picker@tuberry"
           
-          "docker@stickman_0x00.com"
           "spotify-controls@Sonath21"
         ];
       };
@@ -182,8 +181,6 @@
         use-system-font = false;
         font = "CodeNewRoman Nerd Font Mono 12";
       };
-
-
 
       "org/gnome/shell/extensions/blur-my-shell" = {
         hacks-level = 2;
@@ -220,10 +217,6 @@
       "org/gnome/shell/extensions/spotify-controls" = {
         controls-position = "left";
         position = "rightmost-left";
-      };
-
-      "org/gnome/shell/extensions/docker" = {
-        logo = "default";
       };
 
       "org/gnome/shell/extensions/tilingshell" = {
