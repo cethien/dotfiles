@@ -4,19 +4,19 @@
   imports = [
     ./aliases.nix
     ./bash.nix
-    ./oh-my-posh.nix
+    ./ssh.nix
+    ./git.nix
     ./tmux.nix
     ./neovim.nix
-    ./git.nix
+    
+    ./oh-my-posh.nix
     ./fastfetch.nix
 
     ./gh.nix
     ./lazydocker.nix
   ];
 
-  programs = {
-    ssh.enable = true;
-    
+  programs = {  
     zoxide.enable = true;
     bat.enable = true;
     eza.enable = true;
