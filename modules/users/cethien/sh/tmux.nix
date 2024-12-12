@@ -7,6 +7,10 @@
     plugins = with pkgs.tmuxPlugins; [
       sensible
       yank
+      tmux-fzf
+      resurrect
+      better-mouse-mode
+      prefix-highlight
     ];
 
     extraConfig = ''
