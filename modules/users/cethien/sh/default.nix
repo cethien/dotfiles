@@ -4,34 +4,28 @@
   imports = [
     ./aliases.nix
     ./bash.nix
-    ./ssh.nix
-    ./git.nix
-    ./tmux.nix
-    ./neovim.nix
-    
-    ./oh-my-posh.nix
+    ./bat.nix
+    ./duf.nix
+    ./eza.nix
     ./fastfetch.nix
-
+    ./fd.nix
+    ./fzf.nix
     ./gh.nix
+    ./git.nix
     ./lazydocker.nix
+    ./neovim.nix
+    ./oh-my-posh.nix
+    ./procs.nix
+    ./ripgrep.nix
+    ./ssh.nix
+    ./tmux.nix
+    ./zoxide.nix
   ];
-
-  programs = {  
-    zoxide.enable = true;
-    bat.enable = true;
-    eza.enable = true;
-    fd.enable = true;
-    ripgrep.enable = true;
-    fzf.enable = true;
-  };
 
   home.packages = with pkgs; [
     curl
     wget
     zip
     unzip
-
-    procs
-    duf
   ];
 }
