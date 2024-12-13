@@ -4,15 +4,15 @@
 
   outputs = inputs @ { nixpkgs, home-manager, ... }: 
   let    
-    allowedHosts = [ "holzrussen-hq" "PC-SOTNIKOW" "LTP-SOTNIKOW" "surface-7"];
+    allowedHosts = [ "tower-of-power" "PC-SOTNIKOW" "LTP-SOTNIKOW" "surface-7"];
     
     system = {
-      host = "holzrussen-hq";
+      host = "tower-of-power";
 
       system = "x86_64-linux";
       profile = {
-        isNixos = builtins.elem system.host [ "holzrussen-hq" "surface-7" ];
-        isHomePC = builtins.elem system.host [ "holzrussen-hq" ];
+        isNixos = builtins.elem system.host [ "tower-of-power" "surface-7" ];
+        isHomePC = builtins.elem system.host [ "tower-of-power" ];
         isSurface = builtins.elem system.host [ "surface-7" ];
         isWSL = builtins.elem system.host [ "PC-SOTNIKOW" "LTP-SOTNIKOW" ];
       };
@@ -64,8 +64,6 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    nixos-hardware.url = "github:nixos/nixos-hardware";
-
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     
@@ -76,5 +74,7 @@
     
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     spicetify-nix.inputs.nixpkgs.follows = "nixpkgs";
+
+    nixos-hardware.url = "github:nixos/nixos-hardware";
   };
 }
