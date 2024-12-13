@@ -1,6 +1,6 @@
 { inputs, system, user,... }: 
 
- {
+{
   imports =
     [ 
       ./hosts/${system.host}/hardware-configuration.nix
@@ -48,7 +48,7 @@
 
   console.keyMap = "de-latin1-nodeadkeys";
 
-    home-manager = {
+  home-manager = {
     extraSpecialArgs = { inherit inputs user system; };
     users."${user.username}" = import ./home.nix;
     backupFileExtension = "hm-backup-$(date +%Y%m%d_%H%M%S)";
