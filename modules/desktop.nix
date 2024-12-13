@@ -11,10 +11,9 @@
   };
 
   environment.gnome.excludePackages = with pkgs; [
-    gnome-photos
     gnome-tour
+    gnome-photos
     gnome-music
-    gnome-text-editor
     epiphany # web browser
     yelp # help
     seahorse # password manager
