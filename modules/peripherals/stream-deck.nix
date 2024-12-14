@@ -1,9 +1,9 @@
 { pkgs, lib, config, ... }:
 
 {
-  options.streamdeck.enable = lib.mkEnableOption "Enable Streamdeck peripherals";
+  options.peripherals.streamdeck.enable = lib.mkEnableOption "Enable Streamdeck peripherals";
 
-  config = lib.mkIf config.streamdeck.enable {
+  config = lib.mkIf config.peripherals.streamdeck.enable {
         environment.systemPackages = with pkgs; [      
         streamcontroller
     ];

@@ -1,4 +1,4 @@
-{ system, ... }:
+{ ... }:
 
 {
   imports = [
@@ -7,8 +7,4 @@
     ./xbox-controller.nix
     ./stream-deck.nix
   ];
-
-  logitech.enable = system.profile.isHomePC;
-  xbox.enable = system.profile.isHomePC;
-  streamdeck.enable = system.profile.isHomePC;
 }

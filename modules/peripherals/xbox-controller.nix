@@ -1,9 +1,9 @@
 { lib,config, ... }:
 
 {
-  options.xbox.enable = lib.mkEnableOption "Enable Xbox controller support";
+  options.peripherals.xbox-controller.enable = lib.mkEnableOption "Enable Xbox controller support";
 
-  config = lib.mkIf config.xbox.enable {
+  config = lib.mkIf config.peripherals.xbox-controller.enable {
     hardware.xpadneo.enable = true;
   };
 }
