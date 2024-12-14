@@ -9,6 +9,8 @@
     system = {
       host = "tower-of-power";
 
+      grubDevice = "/dev/nvme0n1";
+
       system = "x86_64-linux";
       profile = {
         isNixos = builtins.elem system.host [ "tower-of-power" "surface-7" ];
