@@ -6,6 +6,8 @@
   imports = [
     ./audio.nix
 
+    ./flameshot.nix
+
     ./firefox.nix
     ./spotify.nix
     ./keepassxc.nix
@@ -21,6 +23,8 @@
 
   config = lib.mkIf config.user.apps.enable {
     user.apps.audio.enable = true;
+
+    user.apps.flameshot.enable = true;
 
     user.apps.firefox.enable = true;
     user.apps.spotify.enable = true;
