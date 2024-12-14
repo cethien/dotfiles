@@ -2,7 +2,7 @@
 
 {
   imports = [ 
-    ./gnome.nix
+    ./gnome
     ./wallpaper.nix
   ];
 
