@@ -1,9 +1,13 @@
-{ pkgs,  ... }:
+{ lib, config, pkgs, ... }:
 
 {
-  home.packages = with pkgs; [
-    ansible
-    ansible-lint
-    sshpass
-  ];
+  options.user.dev.ansible.enable = lib.mkEnableOption "Enable ansible";
+
+  config = lib.mkIf config.user.dev.ansible.enable {
+    home.packages = with pkgs; [
+      ansible
+      ansible-lint
+      sshpass
+    ];
+  };
 }

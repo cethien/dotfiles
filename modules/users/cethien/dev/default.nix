@@ -1,18 +1,35 @@
-{ pkgs,... }:
+{ lib, config, ... }:
 
 {
   imports = [
+    ./nix-dev.nix
+
+    ./make.nix
+    ./just.nix
+    ./quicktype.nix
+
     ./go.nix
     ./bun.nix
+
     ./ansible.nix
+
+    ./act.nix
   ];
 
-  home.packages = with pkgs; [
-    nil
-    nixpkgs-fmt
+  options.user.dev.enable = lib.mkEnableOption "Enable dev";
 
-    quicktype
+  config = lib.mkIf config.user.dev.enable {
+    user.dev.nix-dev.enable = true;
 
-    act
-  ];
+    user.dev.make.enable = true;
+    user.dev.just.enable = true;
+    user.dev.quicktype.enable = true;
+
+    user.dev.go.enable = true;
+    user.dev.bun.enable = true;
+
+    user.dev.ansible.enable = true;
+
+    user.dev.act.enable = true;
+  };
 }

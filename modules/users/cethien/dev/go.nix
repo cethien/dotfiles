@@ -1,16 +1,19 @@
-{ pkgs, ... }:
+{ lib, config, pkgs, ... }:
 
 {
-  programs.go = {
-    enable = true;
+  options.user.dev.go.enable = lib.mkEnableOption "Enable go";
 
-    goPath = "go";
-    goBin = "go/bin";      
+  config = lib.mkIf config.user.dev.go.enable {
+    programs.go = {
+      enable = true;
+
+      goPath = "go";
+      goBin = "go/bin";      
+    };
+
+    home.packages = with pkgs; [
+      gopls
+      delve
+    ];
   };
-
-  home.packages = with pkgs; [
-    gnumake
-    gopls
-    delve
-  ];
 }
