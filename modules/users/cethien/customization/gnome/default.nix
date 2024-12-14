@@ -6,6 +6,8 @@
   options.user.customization.gnome.enable = lib.mkEnableOption "Enable gnome customization";
 
   config = lib.mkIf config.user.customization.gnome.enable {
+    programs.gnome-shell.enable = true;
+
     user.customization.gnome.extensions.enable = true;
     user.customization.gnome.keybindings.enable = true;
     user.customization.gnome.dconf-settings.enable = true;

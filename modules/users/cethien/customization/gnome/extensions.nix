@@ -4,20 +4,20 @@
   options.user.customization.gnome.extensions.enable = lib.mkEnableOption "Enable gnome extensions";
 
   config = lib.mkIf config.user.customization.gnome.extensions.enable {
-    
-    home.packages = with pkgs.gnomeExtensions; [
-      tweaks-in-system-menu
-      bluetooth-battery-meter
-      system-monitor
-      appindicator
-      blur-my-shell
+  
+    programs.gnome-shell.extensions = with pkgs.gnomeExtensions; [
+      { package = tweaks-in-system-menu; }
+      { package = bluetooth-battery-meter; }
+      { package = system-monitor; }
+      { package = appindicator; }
+      { package = blur-my-shell; }
 
-      another-window-session-manager
-      fullscreen-avoider
-      pip-on-top
-      do-not-disturb-while-screen-sharing-or-recording
-      tiling-shell
-      color-picker
+      { package = another-window-session-manager; }
+      { package = fullscreen-avoider; }
+      { package = pip-on-top; }
+      { package = do-not-disturb-while-screen-sharing-or-recording; }
+      { package = tiling-shell; } 
+      { package = color-picker; }
     ];
 
     dconf.settings = {
@@ -32,7 +32,7 @@
 
         enabled-extensions = [
           "user-theme@gnome-shell-extensions.gcampax.github.com"
-
+ 
           "gsconnect@andyholmes.github.io"
 
           "tweaks-system-menu@extensions.gnome-shell.fifi.org"
