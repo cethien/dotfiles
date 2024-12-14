@@ -1,7 +1,7 @@
 { system, ... }:
 
 {
-  imports = [ 
+  imports = [
     ./gnome
     ./wallpaper.nix
   ];

@@ -4,7 +4,7 @@
   options.user.customization.gnome.dconf-settings.enable = lib.mkEnableOption "Enable gnome dconf settings";
 
   config = lib.mkIf config.user.customization.gnome.dconf-settings.enable {
-    
+
     dconf.settings = with lib.hm.gvariant; {
       "org/gnome/desktop/peripherals/mouse" = {
         accel-profile = "flat";
@@ -48,12 +48,12 @@
       "org/gnome/shell" = {
         favorite-apps = [
           "org.gnome.Console.desktop"
-          "firefox.desktop" 
-          "org.gnome.Geary.desktop" 
-          "spotify.desktop" 
-          "vesktop.desktop" 
+          "firefox.desktop"
+          "org.gnome.Geary.desktop"
+          "spotify.desktop"
+          "vesktop.desktop"
           "StreamController.desktop"
-          "code.desktop" 
+          "code.desktop"
           "drawio.desktop"
           "steam.desktop"
           "org.prismlauncher.PrismLauncher.desktop"

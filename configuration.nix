@@ -1,17 +1,17 @@
-{ inputs, system, user,... }: 
+{ inputs, system, user, ... }:
 
 {
   imports =
-    [ 
+    [
       ./hosts/${system.host}/hardware-configuration.nix
       ./modules
-      
+
       inputs.home-manager.nixosModules.home-manager
       inputs.catppuccin.nixosModules.catppuccin
-      
+
     ] ++ (if system.profile.isSurface then [
       inputs.nixos-hardware.nixosModules.microsoft-surface-pro-intel
-    ] else []);
+    ] else [ ]);
 
   nix.settings.experimental-features = "nix-command flakes";
 

@@ -1,4 +1,4 @@
-{ lib, config,... }:
+{ lib, config, ... }:
 
 {
   options.user.gaming.enable = lib.mkEnableOption "Enable gaming";
@@ -7,7 +7,7 @@
     ./prism-launcher.nix
     ./r2modman.nix
     ./retroarch.nix
-    
+
     ./lutris.nix
 
     ./protonge.nix

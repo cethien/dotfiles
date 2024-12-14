@@ -1,4 +1,4 @@
-{ system, user,... }:
+{ system, user, ... }:
 
 {
   home.shellAliases = {
@@ -18,7 +18,7 @@
     '';
 
     reload = "source $HOME/.bashrc && clear";
-    
+
     init = "source $HOME/.user-scripts/init.sh";
   };
 

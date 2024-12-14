@@ -4,7 +4,7 @@
   options.user.customization.gnome.extensions.enable = lib.mkEnableOption "Enable gnome extensions";
 
   config = lib.mkIf config.user.customization.gnome.extensions.enable {
-  
+
     programs.gnome-shell.extensions = with pkgs.gnomeExtensions; [
       { package = tweaks-in-system-menu; }
       { package = bluetooth-battery-meter; }
@@ -16,7 +16,7 @@
       { package = fullscreen-avoider; }
       { package = pip-on-top; }
       { package = do-not-disturb-while-screen-sharing-or-recording; }
-      { package = tiling-shell; } 
+      { package = tiling-shell; }
       { package = color-picker; }
     ];
 
@@ -24,7 +24,7 @@
       "org/gnome/shell" = {
         disable-user-extensions = false;
 
-        disabled-extensions = [ 
+        disabled-extensions = [
           "apps-menu@gnome-shell-extensions.gcampax.github.com"
           "light-style@gnome-shell-extensions.gcampax.github.com"
           "status-icons@gnome-shell-extensions.gcampax.github.com"
@@ -32,7 +32,7 @@
 
         enabled-extensions = [
           "user-theme@gnome-shell-extensions.gcampax.github.com"
- 
+
           "gsconnect@andyholmes.github.io"
 
           "tweaks-system-menu@extensions.gnome-shell.fifi.org"
@@ -73,10 +73,10 @@
       };
 
       "org/gnome/shell/extensions/color-picker" = {
-          enable-systray = false;
-          enable-sound = false;
-          enable-shortcut = true;
-          color-picker-shortcuts = "<Shift><Super>c";
+        enable-systray = false;
+        enable-sound = false;
+        enable-shortcut = true;
+        color-picker-shortcuts = "<Shift><Super>c";
       };
 
       "org/gnome/shell/extensions/spotify-controls" = {
@@ -90,7 +90,7 @@
         restore-window-original-size = false;
         active-screen-edges = false;
         overridden-settings = "{}";
-      };       
+      };
     };
 
   };

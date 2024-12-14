@@ -7,8 +7,8 @@
     home.packages = with pkgs; [ protonup ];
 
     home.sessionVariables = {
-      STEAM_EXTRA_COMPAT_TOOLS_PATH = 
-      "\${HOME}/.stream/root/compatibilitytools.d";
+      STEAM_EXTRA_COMPAT_TOOLS_PATH =
+        "\${HOME}/.stream/root/compatibilitytools.d";
     };
   };
 }

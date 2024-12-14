@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./audio    
+    ./audio
     ./peripherals
     ./gaming
 
@@ -10,7 +10,7 @@
     ./ssh.nix
 
     ./virtualizing
-        
+
     ./desktop.nix
   ];
 

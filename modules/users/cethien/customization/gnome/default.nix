@@ -1,4 +1,4 @@
-{ lib, config, ...}: 
+{ lib, config, ... }:
 
 {
   imports = [ ./extensions.nix ./keybindings.nix ./dconf-settings.nix ./theming.nix ];
@@ -12,5 +12,5 @@
     user.customization.gnome.keybindings.enable = true;
     user.customization.gnome.dconf-settings.enable = true;
     user.customization.gnome.theming.enable = true;
-  };  
+  };
 }

@@ -1,4 +1,4 @@
-{ lib, config, user, pkgs,... }:
+{ lib, config, user, pkgs, ... }:
 
 {
   options.user.apps.firefox.enable = lib.mkEnableOption "Enable Firefox";
@@ -45,8 +45,8 @@
           untrap-for-youtube
 
           bitwarden
-        ];       
+        ];
       };
-    };  
+    };
   };
 }

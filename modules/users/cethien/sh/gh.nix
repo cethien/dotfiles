@@ -3,7 +3,7 @@
 {
   programs.gh.enable = true;
 
-  programs.gh.settings =  {
+  programs.gh.settings = {
     git_protocol = "ssh";
 
     prompt = "enable";

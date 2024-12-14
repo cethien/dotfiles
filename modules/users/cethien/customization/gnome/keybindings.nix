@@ -4,14 +4,14 @@
   options.user.customization.gnome.keybindings.enable = lib.mkEnableOption "Enable gnome customization";
 
   config = lib.mkIf config.user.customization.gnome.keybindings.enable {
- 
+
     dconf.settings = {
       "org/gnome/shell/keybindings" = {
         activate-window-menu = "disabled";
         toggle-message-tray = "disabled";
         close = "<Alt>F4";
         maximize = "disabled";
-        minimize = ["<Super>comma"];
+        minimize = [ "<Super>comma" ];
         move-to-monitor-down = "disabled";
         move-to-monitor-left = "disabled";
         move-to-monitor-right = "disabled";
@@ -25,16 +25,16 @@
       };
 
       "org/gnome/settings-daemon/plugins/media-keys" = {
-          custom-keybindings = [
-            "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
-            "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/"
-            "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/"
-            "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/"
-            "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/"
-          ];
-        };
+        custom-keybindings = [
+          "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
+          "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/"
+          "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/"
+          "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/"
+          "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/"
+        ];
+      };
 
-      "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = { 
+      "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
         name = "Open Terminal";
         binding = "<Super>t";
         command = "kgx";

@@ -8,7 +8,7 @@
       enable = true;
 
       goPath = "go";
-      goBin = "go/bin";      
+      goBin = "go/bin";
     };
 
     home.packages = with pkgs; [

@@ -1,4 +1,4 @@
-{ lib,config, ... }:
+{ lib, config, ... }:
 
 {
   options.peripherals.xbox-controller.enable = lib.mkEnableOption "Enable Xbox controller support";

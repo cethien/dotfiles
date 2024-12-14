@@ -6,4 +6,4 @@
   config = lib.mkIf config.user.dev.bun.enable {
     programs.bun.enable = true;
   };
-} 
+}

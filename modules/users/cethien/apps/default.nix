@@ -14,11 +14,11 @@
     ./vscode.nix
     ./drawio.nix
     ./rnote.nix
-    
+
     ./discord.nix
     ./ocenaudio.nix
-    ./inkscape.nix         
-    ./obs-studio.nix    
+    ./inkscape.nix
+    ./obs-studio.nix
   ];
 
   config = lib.mkIf config.user.apps.enable {
@@ -32,7 +32,7 @@
     user.apps.keepassxc.enable = true;
     user.apps.drawio.enable = true;
     user.apps.rnote.enable = system.profile.isSurface;
-    
+
     user.apps.discord.enable = system.profile.isHomePC;
     user.apps.ocenaudio.enable = system.profile.isHomePC;
     user.apps.inkscape.enable = system.profile.isHomePC;
