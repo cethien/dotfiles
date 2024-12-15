@@ -40,6 +40,21 @@
     };
   };
 
+  user.dev = {
+    nix-dev.enable = true;
+
+    make.enable = true;
+    just.enable = true;
+    quicktype.enable = true;
+
+    go.enable = true;
+    bun.enable = true;
+
+    ansible.enable = true;
+
+    act.enable = true;
+  };
+
   user.gaming = {
     mangohud.enable = system.profile.isHomePC || system.profile.isSurface;
     lutris.enable = system.profile.isHomePC;
