@@ -21,11 +21,4 @@
     ./tmux.nix
     ./zoxide.nix
   ];
-
-  home.packages = with pkgs; [
-    curl
-    wget
-    zip
-    unzip
-  ];
 }

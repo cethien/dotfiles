@@ -1,4 +1,4 @@
-{ pkgs, system, ... }:
+{ config, pkgs, system, ... }:
 
 {
   programs.bash = {
@@ -6,8 +6,8 @@
 
     profileExtra =
       if system.profile.isWSL then ''
-        if [ -e "$HOME"/.nix-profile/etc/profile.d/nix.sh ]; then
-          source "$HOME"/.nix-profile/etc/profile.d/nix.sh;
+        if [ -e "${config.home.homeDirectory}"/.nix-profile/etc/profile.d/nix.sh ]; then
+          source "${config.home.homeDirectory}"/.nix-profile/etc/profile.d/nix.sh;
         fi
       '' else "";
 

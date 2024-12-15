@@ -4,6 +4,7 @@
   options.user.customization.gnome.extensions.enable = lib.mkEnableOption "Enable gnome extensions";
 
   config = lib.mkIf config.user.customization.gnome.extensions.enable {
+    programs.gnome-shell.enable = true;
 
     programs.gnome-shell.extensions = with pkgs.gnomeExtensions; [
       { package = tweaks-in-system-menu; }

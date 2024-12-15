@@ -6,7 +6,7 @@
     ./peripherals
     ./gaming
 
-    ./users
+    ./users.nix
     ./ssh.nix
 
     ./virtualizing
