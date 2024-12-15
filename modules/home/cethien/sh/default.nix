@@ -1,10 +1,11 @@
-{ pkgs, ... }:
+{ ... }:
 
 {
   imports = [
     ./aliases.nix
     ./bash.nix
     ./bat.nix
+    ./direnv.nix
     ./duf.nix
     ./eza.nix
     ./fastfetch.nix
