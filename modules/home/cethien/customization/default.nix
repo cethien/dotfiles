@@ -2,8 +2,8 @@
 
 {
   imports = [
+    ./theming
     ./gnome
     ./wallpaper.nix
-    ./catppuccin.nix
   ];
 }

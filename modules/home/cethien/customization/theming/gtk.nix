@@ -1,10 +1,9 @@
 { lib, config, pkgs, ... }:
 
 {
-  options.user.customization.gnome.theming.enable = lib.mkEnableOption "Enable gnome customization";
+  options.user.customization.theming.gtk.enable = lib.mkEnableOption "Enable gtk theming";
 
-  config = lib.mkIf config.user.customization.gnome.theming.enable {
-
+  config = lib.mkIf config.user.customization.theming.gtk.enable {
     gtk = {
       enable = true;
 
@@ -25,14 +24,5 @@
         package = pkgs.nordzy-cursor-theme;
       };
     };
-
-    qt = {
-      enable = true;
-
-      style.catppuccin.enable = true;
-      style.name = "kvantum";
-      platformTheme.name = "kvantum";
-    };
-
   };
 }

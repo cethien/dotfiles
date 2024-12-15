@@ -1,5 +1,9 @@
 { ... }:
 
 {
-  imports = [ ./extensions.nix ./keybindings.nix ./dconf-settings.nix ./theming.nix ];
+  imports = [
+    ./dconf-settings.nix
+    ./extensions.nix
+    ./keybindings.nix
+  ];
 }

@@ -29,13 +29,18 @@
   };
 
   user.customization = {
-    catppuccin.enable = true;
+    theming = {
+      catppuccin.enable = true;
+      gtk.enable = true;
+      qt.enable = true;
+    };
+
+    wallpaper.enable = !system.profile.isWSL;
 
     gnome = {
       extensions.enable = !system.profile.isWSL;
       keybindings.enable = !system.profile.isWSL;
       dconf-settings.enable = !system.profile.isWSL;
-      theming.enable = !system.profile.isWSL;
     };
   };
 
