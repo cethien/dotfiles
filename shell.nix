@@ -7,4 +7,10 @@ pkgs.mkShell {
     nil
     nixpkgs-fmt
   ];
+
+  shellHook = ''
+    if [ ! -f .envrc ]; then
+      echo "use flake" > .envrc && direnv allow
+    fi
+  '';
 }
