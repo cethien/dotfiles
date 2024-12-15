@@ -3,6 +3,7 @@
 {
   imports = [
     ./audio
+    ./desktop
     ./peripherals
     ./gaming
 
@@ -11,12 +12,19 @@
 
     ./virtualizing
 
-    ./desktop.nix
   ];
 
   audio = {
     pipewire.enable = true;
     noisetorch.enable = true;
+  };
+
+  desktop = {
+    fonts.enable = !system.profile.isWSL;
+    theming.enable = !system.profile.isWSL;
+
+    gnome.enable = system.profile.isHomePC;
+    plasma.enable = false;
   };
 
   peripherals = {
