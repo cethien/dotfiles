@@ -35,6 +35,8 @@
       };
     in
     {
+      devShells.x86_64-linux.default = (import ./shell.nix { inherit inputs pkgs; });
+
       nixosConfigurations =
         if system.profile.isNixos then {
           "${system.host}" = nixpkgs.lib.nixosSystem {
@@ -62,6 +64,7 @@
             ];
           };
         } else { };
+
     };
 
 

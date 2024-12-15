@@ -1,10 +1,9 @@
-{ system, config, ... }:
+{ system, ... }:
 
 {
   imports = [
     ./apps
     ./customization
-    ./dev
     ./gaming
     ./sh
     ./user-scripts
@@ -40,21 +39,6 @@
     };
   };
 
-  user.dev = {
-    nix-dev.enable = true;
-
-    make.enable = true;
-    just.enable = true;
-    quicktype.enable = true;
-
-    go.enable = true;
-    bun.enable = true;
-
-    ansible.enable = true;
-
-    act.enable = true;
-  };
-
   user.gaming = {
     mangohud.enable = system.profile.isHomePC || system.profile.isSurface;
     lutris.enable = system.profile.isHomePC;
@@ -62,5 +46,5 @@
     r2modman.enable = system.profile.isHomePC;
     retroarch.enable = system.profile.isHomePC;
     prism-launcher.enable = system.profile.isHomePC || system.profile.isSurface;
-  };         
+  };
 }
