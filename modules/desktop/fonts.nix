@@ -1,7 +1,7 @@
 { lib, config, pkgs, ... }:
 
 {
-  options.desktop.fonts.enable = lib.mkEnableOption "Enable fonts";
+  options.desktop.fonts.enable = lib.mkEnableOption "Install fonts";
 
   config = lib.mkIf config.desktop.fonts.enable {
     fonts.packages = with pkgs; [

@@ -11,20 +11,20 @@
     ./ssh.nix
 
     ./virtualizing
-
   ];
 
+  hardware.bluetooth.enable = !system.profile.isWSL;
+
   audio = {
-    pipewire.enable = true;
-    noisetorch.enable = true;
+    pipewire.enable = !system.profile.isWSL;
+    noisetorch.enable = !system.profile.isWSL;
   };
 
   desktop = {
     fonts.enable = !system.profile.isWSL;
     theming.enable = !system.profile.isWSL;
 
-    gnome.enable = system.profile.isHomePC;
-    plasma.enable = false;
+    environment.gnome.enable = true;
   };
 
   peripherals = {
@@ -42,7 +42,9 @@
   };
 
   virtualizing = {
-    gnome-boxes.enable = system.profile.isHomePC;
+    vms.enable = system.profile.isHomePC;
+    vms.users = [ user.username ];
+
     docker.enable = !system.profile.isWSL;
     docker.users = [ user.username ];
   };

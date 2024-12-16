@@ -2,14 +2,16 @@
 
 {
   imports = [
+    ./desktop
     ./apps
-    ./customization
     ./gaming
     ./sh
     ./user-scripts
 
     ./hushlogin.nix
   ];
+
+  catppuccin.enable = true;
 
   user.apps = {
     audio.enable = !system.profile.isWSL;
@@ -28,9 +30,8 @@
     obs-studio.enable = system.profile.isHomePC;
   };
 
-  user.customization = {
+  user.desktop = {
     theming = {
-      catppuccin.enable = true;
       gtk.enable = true;
       qt.enable = true;
     };

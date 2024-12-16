@@ -1,9 +1,9 @@
 { lib, config, ... }:
 
 {
-  options.user.customization.gnome.dconf-settings.enable = lib.mkEnableOption "Enable gnome dconf settings";
+  options.user.desktop.gnome.dconf-settings.enable = lib.mkEnableOption "Enable gnome dconf settings";
 
-  config = lib.mkIf config.user.customization.gnome.dconf-settings.enable {
+  config = lib.mkIf config.user.desktop.gnome.dconf-settings.enable {
 
     dconf.settings = with lib.hm.gvariant; {
       "org/gnome/desktop/peripherals/mouse" = {

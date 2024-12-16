@@ -1,9 +1,9 @@
 { lib, config, pkgs, ... }:
 
 {
-  options.user.customization.gnome.extensions.enable = lib.mkEnableOption "Enable gnome extensions";
+  options.user.desktop.gnome.extensions.enable = lib.mkEnableOption "Enable gnome extensions";
 
-  config = lib.mkIf config.user.customization.gnome.extensions.enable {
+  config = lib.mkIf config.user.desktop.gnome.extensions.enable {
     programs.gnome-shell.enable = true;
 
     programs.gnome-shell.extensions = with pkgs.gnomeExtensions; [
@@ -67,10 +67,12 @@
 
       "org/gnome/shell/extensions/system-monitor" = {
         show-swap = false;
+        show-upload = false;
+        show-download = false;
       };
 
       "org/gnome/shell/extensions/appindicator" = {
-        tray-pos = "left";
+        tray-pos = "right";
       };
 
       "org/gnome/shell/extensions/color-picker" = {
@@ -81,8 +83,8 @@
       };
 
       "org/gnome/shell/extensions/spotify-controls" = {
-        controls-position = "left";
-        position = "rightmost-left";
+        controls-position = "right";
+        position = "leftmost-right";
       };
 
       "org/gnome/shell/extensions/tilingshell" = {

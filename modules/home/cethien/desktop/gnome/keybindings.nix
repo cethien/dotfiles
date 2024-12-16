@@ -1,9 +1,9 @@
 { lib, config, ... }:
 
 {
-  options.user.customization.gnome.keybindings.enable = lib.mkEnableOption "Enable gnome customization";
+  options.user.desktop.gnome.keybindings.enable = lib.mkEnableOption "Enable gnome customization";
 
-  config = lib.mkIf config.user.customization.gnome.keybindings.enable {
+  config = lib.mkIf config.user.desktop.gnome.keybindings.enable {
 
     dconf.settings = {
       "org/gnome/shell/keybindings" = {

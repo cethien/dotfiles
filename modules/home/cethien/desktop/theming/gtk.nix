@@ -1,9 +1,9 @@
 { lib, config, pkgs, ... }:
 
 {
-  options.user.customization.theming.gtk.enable = lib.mkEnableOption "Enable gtk theming";
+  options.user.desktop.theming.gtk.enable = lib.mkEnableOption "Enable gtk theming";
 
-  config = lib.mkIf config.user.customization.theming.gtk.enable {
+  config = lib.mkIf config.user.desktop.theming.gtk.enable {
     gtk = {
       enable = true;
 
@@ -15,7 +15,7 @@
       };
 
       iconTheme = {
-        name = "Tela-purple-dark";
+        name = "Tela-dracula-dark";
         package = pkgs.tela-icon-theme;
       };
 

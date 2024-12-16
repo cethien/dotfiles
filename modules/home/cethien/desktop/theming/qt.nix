@@ -1,9 +1,9 @@
 { lib, config, ... }:
 
 {
-  options.user.customization.theming.qt.enable = lib.mkEnableOption "Enable qt theming";
+  options.user.desktop.theming.qt.enable = lib.mkEnableOption "Enable qt theming";
 
-  config = lib.mkIf config.user.customization.theming.qt.enable {
+  config = lib.mkIf config.user.desktop.theming.qt.enable {
     qt = {
       enable = true;
 
