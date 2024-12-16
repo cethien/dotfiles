@@ -14,6 +14,7 @@
 
     clean = ''
       ${if system.profile.isWSL then "sudo nala autoremove" else ""}
+      nix-env --delete-generations 3d
       nix-store --gc
     '';
 
