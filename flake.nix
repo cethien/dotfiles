@@ -34,7 +34,7 @@
       };
     in
     {
-      
+
       nixosConfigurations =
         if system.profile.isNixos then {
           "${system.host}" = nixpkgs.lib.nixosSystem {
@@ -63,20 +63,20 @@
           };
         } else { };
 
-        devShells.x86_64-linux.default = pkgs.mkShell {
-          buildInputs = with pkgs; [
-            git
-            just
-            nil
-            nixpkgs-fmt
-          ];
-        
-          shellHook = ''
-            if [ ! -f .envrc ]; then
-              echo "use flake" > .envrc && direnv allow
-            fi
-          '';
-        };
+      devShells.x86_64-linux.default = pkgs.mkShell {
+        buildInputs = with pkgs; [
+          git
+          just
+          nil
+          nixpkgs-fmt
+        ];
+
+        shellHook = ''
+          if [ ! -f .envrc ]; then
+            echo "use flake" > .envrc && direnv allow
+          fi
+        '';
+      };
     };
 
 
