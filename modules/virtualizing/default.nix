@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./gnome-boxes.nix
+    ./vms.nix
     ./docker.nix
   ];
 }
