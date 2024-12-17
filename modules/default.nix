@@ -15,10 +15,7 @@
 
   hardware.bluetooth.enable = !system.profile.isWSL;
 
-  audio = {
-    pipewire.enable = !system.profile.isWSL;
-    noisetorch.enable = !system.profile.isWSL;
-  };
+  audio.pipewire.enable = !system.profile.isWSL;
 
   desktop = {
     fonts.enable = !system.profile.isWSL;

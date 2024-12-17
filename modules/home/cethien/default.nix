@@ -15,6 +15,7 @@
 
   user.apps = {
     audio.enable = !system.profile.isWSL;
+    easyeffects.enable = !system.profile.isWSL;
 
     kitty.enable = !system.profile.isWSL;
 
