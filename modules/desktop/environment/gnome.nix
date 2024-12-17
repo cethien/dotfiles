@@ -19,6 +19,7 @@
       epiphany # web browser
       yelp # help
       seahorse # password manager
+      gnome-console
     ];
 
     environment.systemPackages = with pkgs; [
@@ -30,5 +31,8 @@
       video-trimmer # gnome video editor
       pika-backup # gnome backup tool
     ];
+
+    programs.kdeconnect.enable = true;
+    programs.kdeconnect.package = pkgs.gnomeExtensions.gsconnect;
   };
 }

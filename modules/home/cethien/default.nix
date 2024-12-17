@@ -15,7 +15,9 @@
 
   user.apps = {
     audio.enable = !system.profile.isWSL;
-    flameshot.enable = !system.profile.isWSL;
+
+    kitty.enable = !system.profile.isWSL;
+
     firefox.enable = !system.profile.isWSL;
     spotify.enable = !system.profile.isWSL;
     vscode.enable = !system.profile.isWSL;
@@ -38,11 +40,11 @@
 
     wallpaper.enable = !system.profile.isWSL;
 
-    gnome = {
-      extensions.enable = !system.profile.isWSL;
-      keybindings.enable = !system.profile.isWSL;
-      dconf-settings.enable = !system.profile.isWSL;
-    };
+    # gnome = {
+    # extensions.enable = !system.profile.isWSL;
+    # keybindings.enable = !system.profile.isWSL;
+    # dconf-settings.enable = !system.profile.isWSL;
+    # };
   };
 
   user.gaming = {

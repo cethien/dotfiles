@@ -4,7 +4,7 @@
   imports = [
     ./audio.nix
 
-    ./flameshot.nix
+    ./kitty.nix
 
     ./firefox.nix
     ./spotify.nix

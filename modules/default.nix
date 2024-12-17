@@ -24,7 +24,7 @@
     fonts.enable = !system.profile.isWSL;
     theming.enable = !system.profile.isWSL;
 
-    environment.gnome.enable = true;
+    environment.plasma.enable = true;
   };
 
   peripherals = {
