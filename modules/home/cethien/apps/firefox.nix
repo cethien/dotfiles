@@ -8,10 +8,13 @@
       enable = true;
 
       profiles.${user.username} = {
-        isDefault = true;
+        id = 0;
+        name = user.username;
+
         search.default = "DuckDuckGo";
 
         settings = {
+          "browser.aboutwelcome.enabled" = false;
           "browser.crashReports.unsubmittedCheck.autoSubmit2" = true;
           "browser.discovery.enabled" = false;
           "browser.laterrun.enabled" = true;
@@ -25,6 +28,10 @@
           "extensions.formautofill.creditCards.enabled" = false;
           "privacy.donottrackheader.enabled" = true;
           "privacy.globalprivacycontrol.enabled" = true;
+          "browser.urlbar.suggest.quicksuggest.sponsored" = false;
+          "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
+          "browser.aboutConfig.showWarning" = false;
+          "browser.ssb.enabled" = true;
         };
 
         extensions = with pkgs.nur.repos.rycee.firefox-addons; [

@@ -2,7 +2,6 @@
 
 {
   imports = [
-    ./audio.nix
     ./easyeffects.nix
 
     ./kitty.nix

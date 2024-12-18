@@ -15,14 +15,13 @@
         eol = "lf";
         autocrlf = "input";
       };
-      init = {
-        defaultBranch = "main";
-      };
-      push = {
-        autoSetupRemote = true;
-      };
-      advice = {
-        addIgnoredFile = false;
+      init.defaultBranch = "main";
+      pull.rebase = true;
+      push.autoSetupRemote = true;
+      advice.addIgnoredFile = false;
+      url = {
+        "ssh://git@github.com".insteadOf = "https://github.com";
+        "ssh://git@gitlab.com".insteadOf = "https://gitlab.com";
       };
     };
 

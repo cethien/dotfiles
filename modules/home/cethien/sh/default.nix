@@ -5,6 +5,7 @@
     ./aliases.nix
     ./bash.nix
     ./bat.nix
+    ./bottom.nix
     ./direnv.nix
     ./duf.nix
     ./eza.nix
@@ -16,6 +17,7 @@
     ./git.nix
     ./jq.nix
     ./lazydocker.nix
+    ./lazygit.nix
     ./neovim.nix
     ./oh-my-posh.nix
     ./poppler.nix

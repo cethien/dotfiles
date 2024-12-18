@@ -5,7 +5,10 @@
 
   config = lib.mkIf config.user.apps.discord.enable {
     home.packages = with pkgs; [
-      vesktop
+      (discord-canary.override {
+        withOpenASAR = true;
+        withVencord = true;
+      })
     ];
   };
 }
