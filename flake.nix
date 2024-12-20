@@ -1,67 +1,26 @@
 {
   description = "cethien's dotfiles";
 
-  outputs = inputs @ { nixpkgs, home-manager, ... }:
+  outputs = inputs:
     let
-      allowedHosts = [ "tower-of-power" "PC-SOTNIKOW" "LTP-SOTNIKOW" "surface-7" ];
-
-      system = {
-        host = "tower-of-power";
-
-        grubDevice = "/dev/nvme0n1";
-
-        system = "x86_64-linux";
-        profile = {
-          isNixos = builtins.elem system.host [ "tower-of-power" "surface-7" ];
-          isHomePC = builtins.elem system.host [ "tower-of-power" ];
-          isSurface = builtins.elem system.host [ "surface-7" ];
-          isWSL = builtins.elem system.host [ "PC-SOTNIKOW" "LTP-SOTNIKOW" ];
-        };
-      };
-
-      user = {
-        username = "cethien";
-        name = "Boris";
-        authorizedKeys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKgrZmsUHZn7BAGAl83RUkNejlhJbmLr3lklrlVzy2Zz borislaw.sotnikow@gmx.de"
-        ];
-      };
-
-      pkgs = import nixpkgs {
-        system = system.system;
+      hostname = "tower-of-power";
+      system = "x86_64-linux";
+      pkgs = import inputs.nixpkgs {
+        inherit system;
         config.allowUnfree = true;
         overlays = [ inputs.nur.overlays.default ];
       };
     in
     {
+      nixosConfigurations."${hostname}" = inputs.nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          inherit inputs;
+        };
 
-      nixosConfigurations =
-        if system.profile.isNixos then {
-          "${system.host}" = nixpkgs.lib.nixosSystem {
-            specialArgs = {
-              inherit inputs system user;
-            };
-
-            modules = [
-              ./configuration.nix
-            ];
-          };
-        } else { };
-
-      homeConfigurations =
-        if !system.profile.isNixos then {
-          "${user.username}" = home-manager.lib.homeManagerConfiguration {
-            inherit pkgs;
-
-            extraSpecialArgs = {
-              inherit inputs system user;
-            };
-
-            modules = [
-              ./home.nix
-            ];
-          };
-        } else { };
+        modules = [
+          ./hosts/${hostname}/configuration.nix
+        ];
+      };
 
       devShells.x86_64-linux.default = pkgs.mkShell {
         buildInputs = with pkgs; [
