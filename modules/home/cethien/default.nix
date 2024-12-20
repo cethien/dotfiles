@@ -38,7 +38,7 @@
       qt.enable = true;
     };
 
-    wallpaper.enable = !system.profile.isWSL;
+    wallpapers.enable = !system.profile.isWSL;
 
     # gnome = {
     # extensions.enable = !system.profile.isWSL;

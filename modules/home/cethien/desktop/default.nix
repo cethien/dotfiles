@@ -3,7 +3,7 @@
 {
   imports = [
     ./theming
-    ./wallpaper.nix
+    ./wallpapers
     ./gnome
   ];
 }
