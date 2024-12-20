@@ -10,3 +10,9 @@ alias fmt := format
 
 @update:
     nix flake update
+
+@deploy profile hostname:
+    nix run nixpkgs#nixos-anywhere -- \
+    --flake .#{{profile}} \
+    --generate-hardware-config nixos-generate-config ./hosts/{{profile}}/hardware-configuration.nix \
+    {{hostname}}

@@ -3,7 +3,6 @@
 
   outputs = inputs:
     let
-      hostname = "tower-of-power";
       system = "x86_64-linux";
       pkgs = import inputs.nixpkgs {
         inherit system;
@@ -12,13 +11,26 @@
       };
     in
     {
-      nixosConfigurations."${hostname}" = inputs.nixpkgs.lib.nixosSystem {
+      nixosConfigurations."tower-of-power" = inputs.nixpkgs.lib.nixosSystem {
         specialArgs = {
           inherit inputs;
         };
 
         modules = [
-          ./hosts/${hostname}/configuration.nix
+          ./hosts/tower-of-power/configuration.nix
+        ];
+      };
+
+      nixosConfigurations."surface-7-pro" = inputs.nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          inherit inputs;
+        };
+
+        system = "x86_64-linux";
+        modules = [
+          inputs.disko.nixosModules.disko
+          { disko.devices.disk.disk1.device = "/dev/nvme0n1"; }
+          ./hosts/surface-7-pro/configuration.nix
         ];
       };
 
@@ -41,6 +53,9 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+
+    disko.url = "github:nix-community/disko";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";

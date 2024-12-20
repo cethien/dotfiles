@@ -1,4 +1,9 @@
-{ inputs, ... }:
+{ modulesPath
+, lib
+, pkgs
+, inputs
+, ...
+}:
 
 {
   imports =
@@ -6,11 +11,14 @@
       ./hardware-configuration.nix
       ../../modules/nixos
       inputs.nixos-hardware.nixosModules.microsoft-surface-pro-intel
+      (modulesPath + "/installer/scan/not-detected.nix")
+      ./disk-config.nix
     ];
 
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/nvme0n1";
-  boot.loader.grub.useOSProber = true;
+  boot.loader.grub = {
+    efiSupport = true;
+    efiInstallAsRemovable = true;
+  };
 
   networking.hostName = "surface-7-pro";
 
