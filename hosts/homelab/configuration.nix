@@ -1,5 +1,6 @@
 { modulesPath
 , inputs
+, pkgs
 , ...
 }:
 
@@ -7,16 +8,16 @@
   imports =
     [
       ../../modules/nixos
-
-      (modulesPath + "/installer/scan/not-detected.nix")
-
       ./disk-config.nix
+      (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
   boot.loader.grub = {
     efiSupport = true;
     efiInstallAsRemovable = true;
   };
+
+  users.cethien.enable = true;
 
   services.ssh.enable = true;
 

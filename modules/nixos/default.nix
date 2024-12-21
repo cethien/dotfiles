@@ -8,6 +8,7 @@
   nixpkgs.config.allowUnfreePredicate = (_: true);
 
   imports = [
+    ../shared
     ./apps
     ./desktop-environment
     ./hardware
@@ -15,7 +16,6 @@
     ./theming
     ./users
     ./virt
-    ../shared
     inputs.catppuccin.nixosModules.catppuccin
     inputs.home-manager.nixosModules.home-manager
   ];

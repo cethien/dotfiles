@@ -11,6 +11,10 @@
   boot.loader.grub.useOSProber = true;
   boot.loader.grub.device = "/dev/nvme0n1";
 
+  users = {
+    cethien.enable = true;
+  };
+
   hardware = {
     nvidia-gpu.enable = true;
 

@@ -6,12 +6,16 @@
 {
   imports =
     [
-      ./hardware-configuration.nix
       ../../modules/nixos
-      inputs.nixos-hardware.nixosModules.microsoft-surface-pro-intel
-      (modulesPath + "/installer/scan/not-detected.nix")
       ./disk-config.nix
+      ./hardware-configuration.nix
+      (modulesPath + "/installer/scan/not-detected.nix")
+      inputs.nixos-hardware.nixosModules.microsoft-surface-pro-intel
     ];
+
+  users = {
+    cethien.enable = true;
+  };
 
   boot.loader.grub = {
     enable = true;
