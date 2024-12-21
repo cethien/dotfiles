@@ -1,4 +1,4 @@
-{ inputs, meta, ... }:
+{ inputs, ... }:
 
 {
   imports =
