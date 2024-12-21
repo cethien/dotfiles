@@ -17,4 +17,12 @@
       set -g mouse on
     '';
   };
+
+  home.shellAliases = {
+    tm = "tmux";
+    tma = "tmux attach";
+    tmas = "tmux attach -t";
+    tml = "tmux ls";
+    tmn = "tmux new";
+  };
 }
