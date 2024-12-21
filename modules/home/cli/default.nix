@@ -3,6 +3,7 @@
 {
   imports = [
     ./shell
+    ./networking
 
     ./misc
 
@@ -40,6 +41,11 @@
           oh-my-posh.enable = true;
           bash.enable = true;
         };
+
+      networking = {
+        nmap.enable = true;
+        termshark.enable = true;
+      };
 
       misc.enable = true;
 
