@@ -40,6 +40,7 @@
     vms.users = [ "cethien" ];
 
     docker.enable = true;
+    docker.liveRestore = true;
     docker.users = [ "cethien" ];
   };
 
