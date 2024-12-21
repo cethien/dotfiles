@@ -1,6 +1,5 @@
 { modulesPath
-, lib
-, pkgs
+
 , inputs
 , ...
 }:
@@ -16,23 +15,28 @@
     ];
 
   boot.loader.grub = {
+    enable = true;
+    useOSProber = true;
     efiSupport = true;
     efiInstallAsRemovable = true;
   };
 
   networking.hostName = "surface-7-pro";
 
-  hardware.bluetooth.enable = true;
-  audio.pipewire.enable = true;
-
-  desktop = {
-    fonts.enable = true;
-    theming.enable = true;
-    environment.gnome.enable = true;
+  hardware = {
+    bluetooth.enable = true;
+    pipewire.enable = true;
   };
 
-  virtualizing = {
+  desktop-environment.gnome.enable = true;
+  theming = {
+    catppuccin.enable = true;
+    fonts.enable = true;
+  };
+
+  virt = {
     docker.enable = true;
+    docker.liveRestore = true;
     docker.users = [ "cethien" ];
   };
 

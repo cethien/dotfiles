@@ -1,9 +1,0 @@
-{ ... }:
-
-{
-  imports = [
-    ./theming
-    ./wallpapers
-    ./gnome
-  ];
-}

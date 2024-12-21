@@ -8,18 +8,16 @@
   nixpkgs.config.allowUnfreePredicate = (_: true);
 
   imports = [
-    inputs.home-manager.nixosModules.home-manager
+    ./apps
+    ./desktop-environment
+    ./hardware
+    ./services
+    ./theming
+    ./users
+    ./virt
+    ../shared
     inputs.catppuccin.nixosModules.catppuccin
-
-    ./audio
-    ./desktop
-    ./peripherals
-    ./gaming
-
-    ./users.nix
-    ./ssh.nix
-
-    ./virtualizing
+    inputs.home-manager.nixosModules.home-manager
   ];
 
   networking.networkmanager.enable = true;

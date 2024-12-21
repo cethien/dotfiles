@@ -8,40 +8,46 @@
     ];
 
   boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/nvme0n1";
   boot.loader.grub.useOSProber = true;
+  boot.loader.grub.device = "/dev/nvme0n1";
 
   networking.hostName = "tower-of-power";
 
-  hardware.bluetooth.enable = true;
-  audio.pipewire.enable = true;
+  hardware = {
+    nvidia-gpu.enable = true;
 
-  desktop = {
-    fonts.enable = true;
-    theming.enable = true;
-    environment.plasma.enable = true;
-  };
+    pipewire.enable = true;
 
-  peripherals = {
-    print.enable = true;
-    logitech.enable = true;
+    logitech-peripherals.enable = true;
+    stream-deck.enable = true;
     xbox-controller.enable = true;
-    streamdeck.enable = true;
+
+    bluetooth.enable = true;
   };
 
-  gaming = {
-    opengl.enable = true;
-    nvidia.enable = true;
+  services = {
+    ssh.enable = true;
+    print.enable = true;
+  };
+
+  desktop-environment.plasma.enable = true;
+
+  theming = {
+    catppuccin.enable = true;
+    fonts.enable = true;
+  };
+
+  apps = {
     steam.enable = true;
   };
 
-  virtualizing = {
-    vms.enable = true;
-    vms.users = [ "cethien" ];
-
+  virt = {
     docker.enable = true;
     docker.liveRestore = true;
     docker.users = [ "cethien" ];
+
+    kvm.enable = true;
+    kvm.users = [ "cethien" ];
   };
 
   home-manager = {

@@ -1,10 +1,7 @@
 {
   imports = [ ../../modules/home ];
 
-  home.username = "cethien";
-  home.homeDirectory = "/home/cethien";
-
-  catppuccin.enable = true;
+  cli.enable = true;
 
   apps = {
     easyeffects.enable = true;
@@ -18,18 +15,18 @@
     rnote.enable = true;
   };
 
-  desktop = {
-    theming = {
-      gtk.enable = true;
-      qt.enable = true;
-    };
-
+  desktop-environment = {
     gnome = {
       dconf-settings.enable = true;
-      keybindings.enable = true;
       extensions.enable = true;
+      keybindings.enable = true;
     };
+  };
 
+  theming = {
+    catppuccin.enable = true;
+    gtk.enable = true;
+    qt.enable = true;
     wallpapers.enable = true;
   };
 }
