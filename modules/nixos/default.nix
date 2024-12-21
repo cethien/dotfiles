@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, meta, ... }:
 
 {
   system.stateVersion = "25.05"; # DO NOT CHANGE IF YOU DON'T KNOW WHAT YOU ARE DOING
@@ -21,6 +21,7 @@
   ];
 
   networking.networkmanager.enable = true;
+  networking.hostName = meta.hostname;
 
   time.timeZone = "Europe/Berlin";
 

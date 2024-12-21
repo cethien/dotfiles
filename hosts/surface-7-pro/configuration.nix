@@ -1,5 +1,5 @@
 { modulesPath
-
+, meta
 , inputs
 , ...
 }:
@@ -20,8 +20,6 @@
     efiSupport = true;
     efiInstallAsRemovable = true;
   };
-
-  networking.hostName = "surface-7-pro";
 
   hardware = {
     bluetooth.enable = true;

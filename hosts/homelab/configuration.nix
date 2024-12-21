@@ -19,8 +19,6 @@
     efiInstallAsRemovable = true;
   };
 
-  networking.hostName = meta.hostname;
-
   services.ssh.enable = true;
 
   virt.docker = {
