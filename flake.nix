@@ -9,36 +9,12 @@
         config.allowUnfree = true;
         overlays = [ inputs.nur.overlays.default ];
       };
+
+      homelabNodes = [
+        "homelab-01"
+      ];
     in
     {
-      nixosConfigurations."tower-of-power" = inputs.nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit inputs;
-        };
-
-        modules = [
-          ./hosts/tower-of-power/configuration.nix
-        ];
-      };
-
-      nixosConfigurations."surface-7-pro" = inputs.nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit inputs;
-        };
-
-        system = "x86_64-linux";
-        modules = [
-          inputs.disko.nixosModules.disko
-          { disko.devices.disk.disk1.device = "/dev/nvme0n1"; }
-          ./hosts/surface-7-pro/configuration.nix
-        ];
-      };
-
-      homeConfigurations."cethien" = inputs.home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        modules = [ ./hosts/wsl/home.nix ];
-      };
-
       devShells.x86_64-linux.default = pkgs.mkShell {
         buildInputs = with pkgs; [
           git
@@ -53,6 +29,61 @@
           fi
         '';
       };
+
+      homeConfigurations."cethien" = inputs.home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        modules = [ ./hosts/wsl/home.nix ];
+      };
+
+      nixosConfigurations = {
+        "surface-7-pro" = inputs.nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            inherit inputs;
+            meta = {
+              hostname = "surface-7-pro";
+            };
+          };
+
+          system = "x86_64-linux";
+          modules = [
+            inputs.disko.nixosModules.disko
+            { disko.devices.disk.disk1.device = "/dev/nvme0n1"; }
+            ./hosts/surface-7-pro/configuration.nix
+          ];
+        };
+
+        "tower-of-power" = inputs.nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            inherit inputs;
+            meta = {
+              hostname = "tower-of-power";
+            };
+          };
+
+          modules = [
+            ./hosts/tower-of-power/configuration.nix
+          ];
+        };
+      } // builtins.listToAttrs (map
+        (node: {
+          name = node;
+          value = inputs.nixpkgs.lib.nixosSystem {
+            specialArgs = {
+              inherit inputs;
+              meta = {
+                hostname = node;
+              };
+            };
+            system = "x86_64-linux";
+            modules = [
+              inputs.disko.nixosModules.disko
+              ./hosts/${node}/hardware-configuration.nix
+              ./hosts/homelab/disk-config.nix
+              ./hosts/homelab/configuration.nix
+            ];
+          };
+        })
+        homelabNodes);
     };
 
 
