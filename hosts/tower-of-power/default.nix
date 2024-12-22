@@ -34,7 +34,11 @@
     cethien.enable = true;
   };
 
-  desktop.gnome.enable = true;
+  desktop = {
+    plasma.enable = true;
+    autoLogin.enable = true;
+    autoLogin.user = "cethien";
+  };
 
   theming = {
     catppuccin.enable = true;

@@ -27,7 +27,7 @@
     };
   };
 
-  desktop.gnome.enable = true;
+  # desktop.gnome.enable = true;
 
   theming = {
     catppuccin.enable = true;
