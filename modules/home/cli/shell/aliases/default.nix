@@ -1,19 +1,17 @@
-{ lib, config, ... }:
+{ lib, config, meta, ... }:
 
 {
   options.cli.shell.aliases.enable = lib.mkEnableOption "Enable shell aliases";
 
   config = lib.mkIf config.cli.shell.aliases.enable {
     home.shellAliases = {
+      rebuild-nixos = lib.mkIf meta.isNixOS
+        "sudo nixos-rebuild switch --flake ~/.files#${meta.nixos-config}";
       rebuild =
-        if config.isWSL then ''
-          home-manager switch --flake ~/.files#wsl
-        '' else ''
-          sudo nixos-rebuild switch --flake ~/.files#tower-of-power
-        '';
+        "home-manager switch --flake ~/.files#${meta.home-manager-config} -b hm-backup-$(date +%Y%m%d_%H%M%S)";
 
       update = ''
-        ${if config.isWSL then ''
+        ${if meta.isWSL then ''
         PM=apt
         # use nala if available
         if ! command -v nala &> /dev/null; then
@@ -26,7 +24,7 @@
       '';
 
       clean = ''
-        ${if config.isWSL then ''
+        ${if meta.isWSL then ''
         PM=apt
         # use nala if available
         if ! command -v nala &> /dev/null; then

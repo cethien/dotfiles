@@ -1,9 +1,0 @@
-{ ... }:
-
-{
-  imports = [
-    ./gnome
-    ./plasma
-    ./hyprland
-  ];
-}

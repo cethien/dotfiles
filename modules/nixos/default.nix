@@ -2,7 +2,11 @@
 
 {
   system.stateVersion = "25.05"; # DO NOT CHANGE IF YOU DON'T KNOW WHAT YOU ARE DOING
-  nix.settings.experimental-features = "nix-command flakes";
+
+  nix.settings = {
+    trusted-users = [ "@wheel" ];
+    experimental-features = "nix-command flakes";
+  };
 
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.allowUnfreePredicate = (_: true);
@@ -10,7 +14,7 @@
   imports = [
     ../shared
     ./apps
-    ./desktop-environment
+    ./desktop
     ./hardware
     ./services
     ./theming

@@ -9,10 +9,6 @@
         config.allowUnfree = true;
         overlays = [ inputs.nur.overlays.default ];
       };
-
-      homelabNodes = [
-        "homelab-01"
-      ];
     in
     {
       devShells.x86_64-linux.default = pkgs.mkShell {
@@ -29,61 +25,51 @@
           fi
         '';
       };
-
-      homeConfigurations."cethien" = inputs.home-manager.lib.homeManagerConfiguration {
+    }
+    // {
+      homeConfigurations."cethien@LPT-SOTNIKOW" = inputs.home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-        modules = [ ./hosts/wsl/home.nix ];
+        extraSpecialArgs = {
+          inherit inputs;
+          meta = {
+            home-manager-config = "cethien@LPT-SOTNIKOW";
+            isWSL = true;
+          };
+        };
+        modules = [
+          ./homes/cethien_LPT-SOTNIKOW
+        ];
       };
 
-      nixosConfigurations = {
-        "surface-7-pro" = inputs.nixpkgs.lib.nixosSystem {
-          specialArgs = {
-            inherit inputs;
-            meta = {
-              hostname = "surface-7-pro";
-            };
+      homeConfigurations."cethien@tower-of-power" = inputs.home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        extraSpecialArgs = {
+          inherit inputs;
+          meta = {
+            hostname = "tower-of-power";
+            nixos-config = "tower-of-power";
+            home-manager-config = "cethien@tower-of-power";
+            isNixOS = true;
+            isWSL = false;
           };
-
-          system = "x86_64-linux";
-          modules = [
-            inputs.disko.nixosModules.disko
-            { disko.devices.disk.disk1.device = "/dev/nvme0n1"; }
-            ./hosts/surface-7-pro/configuration.nix
-          ];
         };
-
-        "tower-of-power" = inputs.nixpkgs.lib.nixosSystem {
-          specialArgs = {
-            inherit inputs;
-            meta = {
-              hostname = "tower-of-power";
-            };
+        modules = [
+          ./homes/cethien_tower-of-power
+        ];
+      };
+    }
+    // {
+      nixosConfigurations."tower-of-power" = inputs.nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          inherit inputs;
+          meta = {
+            hostname = "tower-of-power";
           };
-
-          modules = [
-            ./hosts/tower-of-power/configuration.nix
-          ];
         };
-      } // builtins.listToAttrs (map
-        (node: {
-          name = node;
-          value = inputs.nixpkgs.lib.nixosSystem {
-            specialArgs = {
-              inherit inputs;
-              meta = {
-                hostname = node;
-              };
-            };
-            system = "x86_64-linux";
-            modules = [
-              inputs.disko.nixosModules.disko
-              ./hosts/${node}/hardware-configuration.nix
-              ./hosts/homelab/disk-config.nix
-              ./hosts/homelab/configuration.nix
-            ];
-          };
-        })
-        homelabNodes);
+        modules = [
+          ./hosts/tower-of-power
+        ];
+      };
     };
 
 

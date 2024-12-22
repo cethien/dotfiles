@@ -18,7 +18,7 @@
     ../shared
     ./apps
     ./cli
-    ./desktop-environment
+    ./desktop
     ./theming
     ./user-scripts
     inputs.catppuccin.homeManagerModules.catppuccin
