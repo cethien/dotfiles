@@ -17,7 +17,7 @@
 
       hotkeys.commands."launch-konsole" = {
         name = "Launch Konsole";
-        key = "Meta+Q";
+        key = "Crtl+Alt+T";
         command = "konsole";
       };
 
@@ -63,8 +63,8 @@
             }
             {
               digitalClock = {
-                calendar.firstDayOfWeek = "Monday";
                 time.format = "24h";
+                calendar.firstDayOfWeek = "monday";
               };
             }
           ];
