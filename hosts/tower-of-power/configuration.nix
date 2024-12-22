@@ -32,7 +32,7 @@
     print.enable = true;
   };
 
-  desktop-environment.plasma.enable = true;
+  desktop-environment.hyprland.enable = true;
 
   theming = {
     catppuccin.enable = true;

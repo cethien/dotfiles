@@ -30,6 +30,8 @@
     };
   };
 
+  desktop-environment.hyprland.enable = true;
+
   theming = {
     catppuccin.enable = true;
     gtk.enable = true;
