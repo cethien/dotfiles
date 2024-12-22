@@ -30,7 +30,7 @@
     };
   };
 
-  desktop-environment.hyprland.enable = true;
+  desktop-environment.gnome.enable = true;
 
   theming = {
     catppuccin.enable = true;

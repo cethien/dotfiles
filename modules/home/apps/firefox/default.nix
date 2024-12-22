@@ -35,22 +35,9 @@
         };
 
         extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-          gsconnect
-
           multi-account-containers
           side-view
-
-          firefox-color
-          stylus
-
           ublock-origin
-          unpaywall
-          i-dont-care-about-cookies
-          cookie-autodelete
-
-          sponsorblock
-          untrap-for-youtube
-
           bitwarden
         ];
       };
