@@ -6,8 +6,6 @@
   apps = {
     easyeffects.enable = true;
 
-    kitty.enable = true;
-
     firefox.enable = true;
     spotify.enable = true;
     vscode.enable = true;
