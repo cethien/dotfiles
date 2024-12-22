@@ -1,5 +1,18 @@
 { lib, inputs, config, ... }:
 {
+  imports = [
+    ../shared
+    ./apps
+    ./cli
+    ./desktop
+    ./theming
+    ./user-scripts
+    inputs.plasma-manager.homeManagerModules.plasma-manager
+    inputs.catppuccin.homeManagerModules.catppuccin
+    inputs.nur.modules.homeManager.default
+    inputs.spicetify-nix.homeManagerModules.default
+  ];
+
   options = {
     username = lib.mkOption {
       type = lib.types.str;
@@ -13,18 +26,6 @@
       description = "Whether the system is running in WSL";
     };
   };
-
-  imports = [
-    ../shared
-    ./apps
-    ./cli
-    ./desktop
-    ./theming
-    ./user-scripts
-    inputs.catppuccin.homeManagerModules.catppuccin
-    inputs.nur.modules.homeManager.default
-    inputs.spicetify-nix.homeManagerModules.default
-  ];
 
   config = {
     home.username = config.username;

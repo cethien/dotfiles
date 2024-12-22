@@ -27,7 +27,7 @@
     };
   };
 
-  # desktop.gnome.enable = true;
+  desktop.plasma6.enable = true;
 
   theming = {
     catppuccin.enable = true;

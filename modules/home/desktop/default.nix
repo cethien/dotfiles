@@ -1,8 +1,9 @@
-{ lib, config, ... }:
+{ ... }:
 
 {
   imports = [
     ./gnome
+    ./plasma
     ./hyprland
   ];
 }

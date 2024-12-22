@@ -46,6 +46,11 @@
 
       homeConfigurations."cethien@tower-of-power" = inputs.home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
+
+        modules = [
+          ./homes/cethien_tower-of-power
+        ];
+
         extraSpecialArgs = {
           inherit inputs;
           meta = {
@@ -56,9 +61,6 @@
             isWSL = false;
           };
         };
-        modules = [
-          ./homes/cethien_tower-of-power
-        ];
       };
     }
     // {
@@ -84,6 +86,12 @@
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    plasma-manager = {
+      url = "github:nix-community/plasma-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
 
     catppuccin.url = "github:catppuccin/nix";
 
