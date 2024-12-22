@@ -8,7 +8,7 @@
       rebuild-nixos = lib.mkIf meta.isNixOS
         "sudo nixos-rebuild switch --flake ~/.files#${meta.nixos-config}";
       rebuild =
-        "home-manager switch --flake ~/.files#${meta.home-manager-config} -b hm-backup-$(date +%Y%m%d_%H%M%S)";
+        "home-manager switch --flake github:cethien/.files#${meta.home-manager-config} -b hm-backup-$(date +%Y%m%d_%H%M%S)";
 
       update = ''
         ${if meta.isWSL then ''

@@ -32,7 +32,10 @@
         extraSpecialArgs = {
           inherit inputs;
           meta = {
+            hostname = "LPT-SOTNIKOW";
+            nixos-config = "";
             home-manager-config = "cethien@LPT-SOTNIKOW";
+            isNixOS = false;
             isWSL = true;
           };
         };
