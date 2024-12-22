@@ -11,6 +11,8 @@
       nerd-fonts.fira-code
       nerd-fonts.fira-mono
       nerd-fonts.code-new-roman
+
+      nerd-fonts.jetbrains-mono
     ];
   };
 }
