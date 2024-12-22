@@ -1,11 +1,7 @@
 { lib, config, pkgs, ... }:
 
 {
-  options.desktop-environment.gnome.extensions.enable = lib.mkEnableOption "Enable gnome extensions";
-
-  config = lib.mkIf config.desktop-environment.gnome.extensions.enable {
-    programs.gnome-shell.enable = true;
-
+  config = lib.mkIf config.desktop-environment.gnome.enable {
     programs.gnome-shell.extensions = with pkgs.gnomeExtensions; [
       { package = tweaks-in-system-menu; }
       { package = bluetooth-battery-meter; }

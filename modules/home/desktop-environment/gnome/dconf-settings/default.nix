@@ -1,10 +1,7 @@
 { lib, config, ... }:
 
 {
-  options.desktop-environment.gnome.dconf-settings.enable = lib.mkEnableOption "Enable gnome dconf settings";
-
-  config = lib.mkIf config.desktop-environment.gnome.dconf-settings.enable {
-
+  config = lib.mkIf config.desktop-environment.gnome.enable {
     dconf.settings = with lib.hm.gvariant; {
       "org/gnome/desktop/peripherals/mouse" = {
         accel-profile = "flat";

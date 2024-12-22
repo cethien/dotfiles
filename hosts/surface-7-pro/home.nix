@@ -15,13 +15,7 @@
     rnote.enable = true;
   };
 
-  desktop-environment = {
-    gnome = {
-      dconf-settings.enable = true;
-      extensions.enable = true;
-      keybindings.enable = true;
-    };
-  };
+  desktop-environment.gnome.enable = true;
 
   theming = {
     catppuccin.enable = true;

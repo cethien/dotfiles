@@ -1,10 +1,7 @@
 { lib, config, ... }:
 
 {
-  options.desktop-environment.gnome.keybindings.enable = lib.mkEnableOption "Enable gnome customization";
-
-  config = lib.mkIf config.desktop-environment.gnome.keybindings.enable {
-
+  config = lib.mkIf config.desktop-environment.gnome.enable {
     dconf.settings = {
       "org/gnome/shell/keybindings" = {
         activate-window-menu = "disabled";

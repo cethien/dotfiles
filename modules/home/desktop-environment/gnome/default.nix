@@ -1,4 +1,4 @@
-{ ... }:
+{ lib, config, ... }:
 
 {
   imports = [
@@ -6,4 +6,10 @@
     ./extensions
     ./keybindings
   ];
+
+  options.desktop-environment.gnome.enable = lib.mkEnableOption "Enable gnome desktop environment";
+
+  config = lib.mkIf config.desktop-environment.gnome.enable {
+    programs.gnome-shell.enable = true;
+  };
 }
