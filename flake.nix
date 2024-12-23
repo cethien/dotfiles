@@ -33,10 +33,6 @@
           inherit inputs;
           meta = {
             hostname = "LPT-SOTNIKOW";
-            nixos-config = "";
-            home-manager-config = "cethien@LPT-SOTNIKOW";
-            isNixOS = false;
-            isWSL = true;
           };
         };
         modules = [
@@ -53,13 +49,6 @@
 
         extraSpecialArgs = {
           inherit inputs;
-          meta = {
-            hostname = "tower-of-power";
-            nixos-config = "tower-of-power";
-            home-manager-config = "cethien@tower-of-power";
-            isNixOS = true;
-            isWSL = false;
-          };
         };
       };
     }

@@ -3,6 +3,13 @@
 
   cli.enable = true;
 
+  cli.shell.aliases = {
+    nixosRebuild.enable = true;
+    nixosRebuild.configName = "tower-of-power";
+
+    homeManagerConfigName = "cethien@tower-of-power";
+  };
+
   apps = {
     easyeffects.enable = true;
 
