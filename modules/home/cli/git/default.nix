@@ -51,9 +51,8 @@ in
       gaa = "git add .";
       gaf = "git add -f";
 
-      gc = "git commit";
-      gcm = "git commit -m";
-      gcam = "git commit -am";
+      gc = "git commit -m";
+      gca = "git commit -am";
 
       gco = "git checkout";
       gcob = "git checkout -b";
