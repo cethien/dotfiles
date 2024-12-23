@@ -10,8 +10,10 @@
       plugins = with pkgs.tmuxPlugins; [
         sensible
         yank
+        open
         tmux-fzf
         resurrect
+        continuum
         better-mouse-mode
         prefix-highlight
       ];
