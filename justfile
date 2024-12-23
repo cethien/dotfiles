@@ -8,21 +8,26 @@ alias fmt := format
 @lint:
     nixpkgs-fmt --check .
 
+alias u := update
 @update:
     nix flake update
 
+alias r := rebuild
+@rebuild profile:
+    home-manager switch --flake .#{{profile}}
+
+alias r-os := rebuild-nixos
+@rebuild-nixos profile:
+    sudo nixos-rebuild switch --flake .#{{profile}}
+
+alias i := install
 @install profile dest:
     nix run github:nix-community/nixos-anywhere -- \
     --flake .#{{profile}} \
     --generate-hardware-config nixos-generate-config ./hosts/{{profile}}/hardware-configuration.nix \
     {{dest}}
 
-@install-tower-vm ip:
-    nix run github:nix-community/nixos-anywhere -- \
-    --flake .#tower-of-power \
-    --generate-hardware-config nixos-generate-config ./hosts/tower-vm/hardware-configuration.nix \
-    nixos@{{ip}}
-
+alias d := deploy
 @deploy profile dest:
     nixos-rebuild switch \
     --flake .#{{profile}} \
