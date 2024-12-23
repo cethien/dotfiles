@@ -1,6 +1,7 @@
 {
-  "recommendations": [
-    "jeff-hykin.better-nix-syntax",
-    "pinage404.nix-extension-pack"
-  ]
+	"recommendations": [
+		"jeff-hykin.better-nix-syntax",
+		"pinage404.nix-extension-pack",
+		"nefrob.vscode-just-syntax"
+	]
 }
