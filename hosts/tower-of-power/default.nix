@@ -51,7 +51,7 @@
       steam.enable = true;
     };
 
-    virt = {
+    virtualisation = {
       docker.enable = true;
       docker.liveRestore = true;
       docker.users = [ "cethien" ];
