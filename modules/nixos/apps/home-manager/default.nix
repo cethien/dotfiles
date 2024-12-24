@@ -1,8 +1,8 @@
 { config, lib, pkgs, ... }:
 {
-  options.apps.home-manager.enable = lib.mkEnableOption "home-manager";
+  options.deeznuts.apps.home-manager.enable = lib.mkEnableOption "home-manager";
 
-  config = lib.mkIf config.apps.home-manager.enable {
+  config = lib.mkIf config.deeznuts.apps.home-manager.enable {
     environment.systemPackages = with pkgs; [ home-manager ];
   };
 }

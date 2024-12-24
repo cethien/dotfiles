@@ -1,9 +1,9 @@
 { lib, config, ... }:
 
 {
-  options.apps.terminals.kitty.enable = lib.mkEnableOption "Enable kitty terminal";
+  options.deeznuts.apps.terminals.kitty.enable = lib.mkEnableOption "Enable kitty terminal";
 
-  config = lib.mkIf config.apps.terminals.kitty.enable {
+  config = lib.mkIf config.deeznuts.apps.terminals.kitty.enable {
     programs.kitty.enable = true;
 
     programs.kitty = {

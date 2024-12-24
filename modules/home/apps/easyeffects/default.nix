@@ -1,9 +1,9 @@
 { lib, config, ... }:
 
 {
-  options.apps.easyeffects.enable = lib.mkEnableOption "Enable easyeffects";
+  options.deeznuts.apps.easyeffects.enable = lib.mkEnableOption "Enable easyeffects";
 
-  config = lib.mkIf config.apps.easyeffects.enable {
+  config = lib.mkIf config.deeznuts.apps.easyeffects.enable {
     services.easyeffects.enable = true;
   };
 }

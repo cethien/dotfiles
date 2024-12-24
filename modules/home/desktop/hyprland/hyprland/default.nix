@@ -5,7 +5,7 @@
     ./settings
   ];
 
-  config = lib.mkIf config.desktop.hyprland.enable {
+  config = lib.mkIf config.deeznuts.desktop.hyprland.enable {
     wayland.windowManager.hyprland = {
       enable = true;
 

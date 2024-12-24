@@ -1,9 +1,9 @@
 { lib, config, pkgs, ... }:
 
 {
-  options.theming.fonts.enable = lib.mkEnableOption "Install fonts";
+  options.deeznuts.theming.fonts.enable = lib.mkEnableOption "Install fonts";
 
-  config = lib.mkIf config.theming.fonts.enable {
+  config = lib.mkIf config.deeznuts.theming.fonts.enable {
     fonts.packages = with pkgs; [
       roboto
       open-sans

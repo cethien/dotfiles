@@ -1,7 +1,7 @@
 { lib, config, ... }:
 
 {
-  config = lib.mkIf config.desktop.hyprland.enable {
+  config = lib.mkIf config.deeznuts.desktop.hyprland.enable {
     wayland.windowManager.hyprland.settings.decoration = {
       rounding = 8;
       active_opacity = 1.0;

@@ -1,9 +1,9 @@
 { lib, config, ... }:
 
 {
-  options.cli.fd.enable = lib.mkEnableOption "Enable fd";
+  options.deeznuts.cli.fd.enable = lib.mkEnableOption "Enable fd";
 
-  config = lib.mkIf config.cli.fd.enable {
+  config = lib.mkIf config.deeznuts.cli.fd.enable {
     programs.fd.enable = true;
 
     home.shellAliases = {

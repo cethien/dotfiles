@@ -1,9 +1,9 @@
 { lib, config, pkgs, ... }:
 
 {
-  options.apps.rnote.enable = lib.mkEnableOption "Enable RNote";
+  options.deeznuts.apps.rnote.enable = lib.mkEnableOption "Enable RNote";
 
-  config = lib.mkIf config.apps.rnote.enable {
+  config = lib.mkIf config.deeznuts.apps.rnote.enable {
     home.packages = with pkgs; [
       rnote
     ];

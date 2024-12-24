@@ -1,9 +1,9 @@
 { lib, config, ... }:
 
 {
-  options.theming.qt.enable = lib.mkEnableOption "Enable qt theming";
+  options.deeznuts.theming.qt.enable = lib.mkEnableOption "Enable qt theming";
 
-  config = lib.mkIf config.theming.qt.enable {
+  config = lib.mkIf config.deeznuts.theming.qt.enable {
     qt = {
       enable = true;
 

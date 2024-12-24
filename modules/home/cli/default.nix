@@ -31,10 +31,10 @@
     ./zoxide
   ];
 
-  options.cli.enable = lib.mkEnableOption "Enable all cli tools";
+  options.deeznuts.cli.enable = lib.mkEnableOption "Enable all cli tools";
 
-  config = lib.mkIf config.cli.enable {
-    cli = {
+  config = lib.mkIf config.deeznuts.cli.enable {
+    deeznuts.cli = {
       shell =
         {
           aliases.enable = true;

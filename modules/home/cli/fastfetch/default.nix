@@ -1,9 +1,9 @@
 { lib, config, ... }:
 
 {
-  options.cli.fastfetch.enable = lib.mkEnableOption "Enable fastfetch";
+  options.deeznuts.cli.fastfetch.enable = lib.mkEnableOption "Enable fastfetch";
 
-  config = lib.mkIf config.cli.fastfetch.enable {
+  config = lib.mkIf config.deeznuts.cli.fastfetch.enable {
     programs.fastfetch.enable = true;
   };
 }

@@ -1,6 +1,6 @@
 { lib, config, ... }:
 {
-  config = lib.mkIf config.desktop.hyprland.enable {
+  config = lib.mkIf config.deeznuts.desktop.hyprland.enable {
     wayland.windowManager.hyprland.settings.exec-once = [
       "waybar"
       "spotify --minimized"

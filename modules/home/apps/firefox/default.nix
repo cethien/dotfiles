@@ -1,9 +1,9 @@
 { lib, config, pkgs, ... }:
 
 {
-  options.apps.firefox.enable = lib.mkEnableOption "Enable Firefox";
+  options.deeznuts.apps.firefox.enable = lib.mkEnableOption "Enable Firefox";
 
-  config = lib.mkIf config.apps.firefox.enable {
+  config = lib.mkIf config.deeznuts.apps.firefox.enable {
     programs.firefox = {
       enable = true;
 

@@ -1,7 +1,7 @@
 { lib, config, ... }:
 
 {
-  options.cli.shell.aliases = {
+  options.deeznuts.cli.shell.aliases = {
     enable = lib.mkEnableOption "Enable shell aliases";
 
     nixosRebuild = {
@@ -22,15 +22,15 @@
     };
   };
 
-  config = lib.mkIf config.cli.shell.aliases.enable {
+  config = lib.mkIf config.deeznuts.cli.shell.aliases.enable {
     home.shellAliases = {
-      rebuild-nixos = lib.mkIf config.cli.shell.aliases.nixosRebuild.enable
-        "sudo nixos-rebuild switch --flake github:cethien/.files#${config.cli.shell.aliases.nixosRebuild.configName}";
+      rebuild-nixos = lib.mkIf config.deeznuts.cli.shell.aliases.nixosRebuild.enable
+        "sudo nixos-rebuild switch --flake github:cethien/.files#${config.deeznuts.cli.shell.aliases.nixosRebuild.configName}";
       rebuild =
-        "home-manager switch --flake github:cethien/.files#${config.cli.shell.aliases.homeManagerConfigName}";
+        "home-manager switch --flake github:cethien/.files#${config.deeznuts.cli.shell.aliases.homeManagerConfigName}";
 
       update = ''
-        ${if config.cli.shell.aliases.apt.enable then ''
+        ${if config.deeznuts.cli.shell.aliases.apt.enable then ''
         PM=apt
         # use nala if available
         if ! command -v nala &> /dev/null; then
@@ -43,7 +43,7 @@
       '';
 
       clean = ''
-        ${if config.cli.shell.aliases.apt.enable then ''
+        ${if config.deeznuts.cli.shell.aliases.apt.enable then ''
         PM=apt
         # use nala if available
         if ! command -v nala &> /dev/null; then

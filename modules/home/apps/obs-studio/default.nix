@@ -1,9 +1,9 @@
 { lib, config, pkgs, ... }:
 
 {
-  options.apps.obs-studio.enable = lib.mkEnableOption "Enable OBS Studio";
+  options.deeznuts.apps.obs-studio.enable = lib.mkEnableOption "Enable OBS Studio";
 
-  config = lib.mkIf config.apps.obs-studio.enable {
+  config = lib.mkIf config.deeznuts.apps.obs-studio.enable {
     programs.obs-studio = {
       enable = true;
 

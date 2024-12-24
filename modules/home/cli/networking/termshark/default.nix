@@ -1,9 +1,9 @@
 { lib, config, pkgs, ... }:
 
 {
-  options.cli.networking.termshark.enable = lib.mkEnableOption "Enable termshark";
+  options.deeznuts.cli.networking.termshark.enable = lib.mkEnableOption "Enable termshark";
 
-  config = lib.mkIf config.cli.networking.termshark.enable {
+  config = lib.mkIf config.deeznuts.cli.networking.termshark.enable {
     home.packages = with pkgs; [
       tshark
       termshark

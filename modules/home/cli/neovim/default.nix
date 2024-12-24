@@ -1,9 +1,9 @@
 { lib, config, pkgs, ... }:
 
 {
-  options.cli.neovim.enable = lib.mkEnableOption "Enable neovim";
+  options.deeznuts.cli.neovim.enable = lib.mkEnableOption "Enable neovim";
 
-  config = lib.mkIf config.cli.neovim.enable {
+  config = lib.mkIf config.deeznuts.cli.neovim.enable {
     programs.neovim = {
       enable = true;
 

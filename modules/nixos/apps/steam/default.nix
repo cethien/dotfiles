@@ -1,9 +1,9 @@
 { lib, config, ... }:
 
 {
-  options.apps.steam.enable = lib.mkEnableOption "Enable Steam";
+  options.deeznuts.apps.steam.enable = lib.mkEnableOption "Enable Steam";
 
-  config = lib.mkIf config.apps.steam.enable {
+  config = lib.mkIf config.deeznuts.apps.steam.enable {
     programs.steam = {
       enable = true;
       protontricks.enable = true;

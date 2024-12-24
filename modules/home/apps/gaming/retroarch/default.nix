@@ -1,9 +1,9 @@
 { lib, config, pkgs, ... }:
 
 {
-  options.apps.gaming.retroarch.enable = lib.mkEnableOption "Enable retroarch";
+  options.deeznuts.apps.gaming.retroarch.enable = lib.mkEnableOption "Enable retroarch";
 
-  config = lib.mkIf config.apps.gaming.retroarch.enable {
+  config = lib.mkIf config.deeznuts.apps.gaming.retroarch.enable {
     home.packages =
       let
         retroarchWithCores = (pkgs.retroarch.withCores (cores: with cores; [

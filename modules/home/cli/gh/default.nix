@@ -1,9 +1,9 @@
 { lib, config, ... }:
 
 {
-  options.cli.gh.enable = lib.mkEnableOption "Enable gh";
+  options.deeznuts.cli.gh.enable = lib.mkEnableOption "Enable gh";
 
-  config = lib.mkIf config.cli.gh.enable {
+  config = lib.mkIf config.deeznuts.cli.gh.enable {
     programs.gh = {
       enable = true;
       settings = {

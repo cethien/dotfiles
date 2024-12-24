@@ -1,9 +1,9 @@
 { lib, config, pkgs, ... }:
 
 {
-  options.theming.gtk.enable = lib.mkEnableOption "Enable gtk theming";
+  options.deeznuts.theming.gtk.enable = lib.mkEnableOption "Enable gtk theming";
 
-  config = lib.mkIf config.theming.gtk.enable {
+  config = lib.mkIf config.deeznuts.theming.gtk.enable {
     gtk = {
       enable = true;
 

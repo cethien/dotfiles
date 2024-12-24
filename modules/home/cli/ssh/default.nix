@@ -1,9 +1,9 @@
 { lib, config, ... }:
 
 {
-  options.cli.ssh.enable = lib.mkEnableOption "Enable ssh";
+  options.deeznuts.cli.ssh.enable = lib.mkEnableOption "Enable ssh";
 
-  config = lib.mkIf config.cli.ssh.enable {
+  config = lib.mkIf config.deeznuts.cli.ssh.enable {
     programs.ssh = {
       enable = true;
 

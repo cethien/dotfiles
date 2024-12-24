@@ -1,6 +1,6 @@
 { lib, config, ... }:
 {
-  config = lib.mkIf config.desktop.hyprland.enable {
+  config = lib.mkIf config.deeznuts.desktop.hyprland.enable {
     services.hyprpaper = {
       enable = true;
 

@@ -1,9 +1,9 @@
 { lib, config, ... }:
 
 {
-  options.apps.gaming.mangohud.enable = lib.mkEnableOption "Enable mangohud";
+  options.deeznuts.apps.gaming.mangohud.enable = lib.mkEnableOption "Enable mangohud";
 
-  config = lib.mkIf config.apps.gaming.mangohud.enable {
+  config = lib.mkIf config.deeznuts.apps.gaming.mangohud.enable {
     programs.mangohud = {
       enable = true;
       settings = {

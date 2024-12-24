@@ -1,9 +1,9 @@
 { lib, config, pkgs, ... }:
 
 {
-  options.cli.tmux.enable = lib.mkEnableOption "Enable tmux";
+  options.deeznuts.cli.tmux.enable = lib.mkEnableOption "Enable tmux";
 
-  config = lib.mkIf config.cli.tmux.enable {
+  config = lib.mkIf config.deeznuts.cli.tmux.enable {
     programs.tmux = {
       enable = true;
       clock24 = true;

@@ -1,9 +1,9 @@
 { lib, config, pkgs, inputs, ... }:
 
 {
-  options.apps.spotify.enable = lib.mkEnableOption "Enable Spotify";
+  options.deeznuts.apps.spotify.enable = lib.mkEnableOption "Enable Spotify";
 
-  config = lib.mkIf config.apps.spotify.enable {
+  config = lib.mkIf config.deeznuts.apps.spotify.enable {
 
     programs.spicetify =
       let

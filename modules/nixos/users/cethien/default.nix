@@ -1,11 +1,11 @@
 { lib, config, ... }:
 
 {
-  options.users.cethien = {
+  options.deeznuts.users.cethien = {
     enable = lib.mkEnableOption "Enable cethien user";
   };
 
-  config = lib.mkIf config.users.cethien.enable {
+  config = lib.mkIf config.deeznuts.users.cethien.enable {
     users.users.cethien = {
       isNormalUser = true;
       description = "Boris";

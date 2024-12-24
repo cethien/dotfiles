@@ -1,9 +1,9 @@
 { lib, config, pkgs, ... }:
 
 {
-  options.desktop.plasma.enable = lib.mkEnableOption "Enable KDE Plasma Desktop";
+  options.deeznuts.desktop.plasma.enable = lib.mkEnableOption "Enable KDE Plasma Desktop";
 
-  config = lib.mkIf config.desktop.plasma.enable {
+  config = lib.mkIf config.deeznuts.desktop.plasma.enable {
     services.displayManager = {
       sddm = {
         enable = true;
@@ -12,8 +12,8 @@
       };
 
       autoLogin = {
-        enable = config.desktop.autoLogin.enable;
-        user = config.desktop.autoLogin.user;
+        enable = config.deeznuts.desktop.autoLogin.enable;
+        user = config.deeznuts.desktop.autoLogin.user;
       };
     };
 

@@ -1,9 +1,9 @@
 { lib, config, pkgs, ... }:
 
 {
-  options.hardware.pipewire.enable = lib.mkEnableOption "Enable pipewire audio support";
+  options.deeznuts.hardware.pipewire.enable = lib.mkEnableOption "Enable pipewire audio support";
 
-  config = lib.mkIf config.hardware.pipewire.enable {
+  config = lib.mkIf config.deeznuts.hardware.pipewire.enable {
     hardware.pulseaudio.enable = false;
     security.rtkit.enable = true;
     services.pipewire = {

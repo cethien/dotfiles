@@ -1,9 +1,9 @@
 { lib, config, pkgs, ... }:
 
 {
-  options.desktop.hyprland.enable = lib.mkEnableOption "Enable Hyprland desktop environment";
+  options.deeznuts.desktop.hyprland.enable = lib.mkEnableOption "Enable Hyprland desktop environment";
 
-  config = lib.mkIf config.desktop.hyprland.enable {
+  config = lib.mkIf config.deeznuts.desktop.hyprland.enable {
     services.displayManager = {
       sddm = {
         enable = true;
@@ -12,8 +12,8 @@
       };
 
       autoLogin = {
-        enable = config.desktop.autoLogin.enable;
-        user = config.desktop.autoLogin.user;
+        enable = config.deeznuts.desktop.autoLogin.enable;
+        user = config.deeznuts.desktop.autoLogin.user;
       };
     };
 

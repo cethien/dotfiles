@@ -13,50 +13,52 @@
     device = "/dev/nvme0n1";
   };
 
-  hardware = {
-    nvidia-gpu.enable = true;
+  deeznuts = {
+    hardware = {
+      nvidia-gpu.enable = true;
 
-    pipewire.enable = true;
+      pipewire.enable = true;
 
-    logitech-peripherals.enable = true;
-    stream-deck.enable = true;
-    xbox-controller.enable = true;
+      logitech-peripherals.enable = true;
+      stream-deck.enable = true;
+      xbox-controller.enable = true;
 
-    bluetooth.enable = true;
-  };
+      bluetooth.enable = true;
+    };
 
-  services = {
-    ssh.enable = true;
-    print.enable = true;
-  };
+    services = {
+      ssh.enable = true;
+      print.enable = true;
+    };
 
-  users = {
-    cethien.enable = true;
-  };
+    users = {
+      cethien.enable = true;
+    };
 
-  desktop = {
-    plasma.enable = true;
-    autoLogin.enable = true;
-    autoLogin.user = "cethien";
-  };
+    desktop = {
+      plasma.enable = true;
+      autoLogin.enable = true;
+      autoLogin.user = "cethien";
+    };
 
-  theming = {
-    catppuccin.enable = true;
-    fonts.enable = true;
-  };
+    theming = {
+      catppuccin.enable = true;
+      fonts.enable = true;
+    };
 
-  apps = {
-    home-manager.enable = true;
-    steam.enable = true;
-  };
+    apps = {
+      home-manager.enable = true;
+      steam.enable = true;
+    };
 
-  virt = {
-    docker.enable = true;
-    docker.liveRestore = true;
-    docker.users = [ "cethien" ];
+    virt = {
+      docker.enable = true;
+      docker.liveRestore = true;
+      docker.users = [ "cethien" ];
 
-    kvm.enable = true;
-    kvm.users = [ "cethien" ];
+      kvm.enable = true;
+      kvm.users = [ "cethien" ];
+    };
   };
 
   # home-manager = {

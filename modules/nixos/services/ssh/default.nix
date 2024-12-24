@@ -1,8 +1,8 @@
 { lib, config, ... }:
 {
-  options.services.ssh.enable = lib.mkEnableOption "Enable SSH Server";
+  options.deeznuts.services.ssh.enable = lib.mkEnableOption "Enable SSH Server";
 
-  config = lib.mkIf config.services.ssh.enable {
+  config = lib.mkIf config.deeznuts.services.ssh.enable {
     services.openssh = {
       enable = true;
 

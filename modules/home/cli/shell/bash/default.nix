@@ -1,7 +1,7 @@
 { lib, config, pkgs, ... }:
 
 {
-  options.cli.shell.bash = {
+  options.deeznuts.cli.shell.bash = {
     enable = lib.mkEnableOption "Enable bash";
     loadNixProfile = lib.mkOption {
       type = lib.types.bool;
@@ -11,12 +11,12 @@
       '';
     };
   };
-  config = lib.mkIf config.cli.shell.bash.enable {
+  config = lib.mkIf config.deeznuts.cli.shell.bash.enable {
     programs.bash = {
       enable = true;
 
       bashrcExtra = ''
-       ${if config.cli.shell.bash.loadNixProfile then ''
+       ${if config.deeznuts.cli.shell.bash.loadNixProfile then ''
          if [ -f ~/.nix-profile/etc/profile.d/nix.sh ]; then
            source ~/.nix-profile/etc/profile.d/nix.sh
          fi

@@ -1,9 +1,9 @@
 { lib, config, pkgs, ... }:
 
 {
-  options.apps.gaming.protonge.enable = lib.mkEnableOption "Enable protonge";
+  options.deeznuts.apps.gaming.protonge.enable = lib.mkEnableOption "Enable protonge";
 
-  config = lib.mkIf config.apps.gaming.protonge.enable {
+  config = lib.mkIf config.deeznuts.apps.gaming.protonge.enable {
     home.packages = with pkgs; [ protonup ];
 
     home.sessionVariables = {

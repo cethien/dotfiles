@@ -1,9 +1,9 @@
 { lib, config, ... }:
 
 {
-  options.cli.eza.enable = lib.mkEnableOption "Enable eza";
+  options.deeznuts.cli.eza.enable = lib.mkEnableOption "Enable eza";
 
-  config = lib.mkIf config.cli.eza.enable {
+  config = lib.mkIf config.deeznuts.cli.eza.enable {
     programs.eza.enable = true;
 
     home.shellAliases = {

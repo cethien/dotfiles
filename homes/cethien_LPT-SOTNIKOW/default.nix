@@ -1,15 +1,17 @@
 {
   imports = [ ../../modules/home ];
 
-  cli.enable = true;
-  cli.shell.bash = {
-    loadNixProfile = true;
-  };
+  deeznuts = {
+    cli.enable = true;
+    cli.shell.bash = {
+      loadNixProfile = true;
+    };
 
-  cli.shell.aliases = {
-    apt.enable = true;
-    homeManagerConfigName = "cethien@LPT-SOTNIKOW";
-  };
+    cli.shell.aliases = {
+      apt.enable = true;
+      homeManagerConfigName = "cethien@LPT-SOTNIKOW";
+    };
 
-  theming.catppuccin.enable = true;
+    theming.catppuccin.enable = true;
+  };
 }

@@ -1,9 +1,9 @@
 { lib, config, pkgs, ... }:
 
 {
-  options.apps.inkscape.enable = lib.mkEnableOption "Enable inkscape";
+  options.deeznuts.apps.inkscape.enable = lib.mkEnableOption "Enable inkscape";
 
-  config = lib.mkIf config.apps.inkscape.enable {
+  config = lib.mkIf config.deeznuts.apps.inkscape.enable {
     home.packages = with pkgs; [ inkscape ];
   };
 }

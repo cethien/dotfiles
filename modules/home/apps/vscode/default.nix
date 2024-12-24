@@ -1,9 +1,9 @@
 { lib, config, pkgs, ... }:
 
 {
-  options.apps.vscode.enable = lib.mkEnableOption "Enable VSCode";
+  options.deeznuts.apps.vscode.enable = lib.mkEnableOption "Enable VSCode";
 
-  config = lib.mkIf config.apps.vscode.enable {
+  config = lib.mkIf config.deeznuts.apps.vscode.enable {
     programs.vscode = {
       enable = true;
 

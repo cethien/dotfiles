@@ -1,9 +1,9 @@
 { lib, config, ... }:
 
 {
-  options.cli.bottom.enable = lib.mkEnableOption "Enable bottom";
+  options.deeznuts.cli.bottom.enable = lib.mkEnableOption "Enable bottom";
 
-  config = lib.mkIf config.cli.bottom.enable {
+  config = lib.mkIf config.deeznuts.cli.bottom.enable {
     programs.bottom = {
       enable = true;
 

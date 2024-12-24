@@ -1,7 +1,7 @@
 { lib, config, ... }:
 
 {
-  config = lib.mkIf config.desktop.gnome.enable {
+  config = lib.mkIf config.deeznuts.desktop.gnome.enable {
     dconf.settings = {
       "org/gnome/shell/keybindings" = {
         activate-window-menu = "disabled";

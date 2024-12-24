@@ -8,9 +8,9 @@
     ./waybar
   ];
 
-  options.desktop.hyprland.enable = lib.mkEnableOption "Enable Hyprland desktop environment";
+  options.deeznuts.desktop.hyprland.enable = lib.mkEnableOption "Enable Hyprland desktop environment";
 
-  config = lib.mkIf config.desktop.hyprland.enable {
+  config = lib.mkIf config.deeznuts.desktop.hyprland.enable {
     services.mako.enable = true;
     services.playerctld.enable = true;
   };

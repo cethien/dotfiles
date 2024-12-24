@@ -1,7 +1,7 @@
 { lib, config, ... }:
 
 {
-  config = lib.mkIf config.desktop.hyprland.enable {
+  config = lib.mkIf config.deeznuts.desktop.hyprland.enable {
     # https://wiki.hyprland.org/Configuring/Binds/
     wayland.windowManager.hyprland.settings = {
 

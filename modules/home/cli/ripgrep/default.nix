@@ -1,9 +1,9 @@
 { lib, config, ... }:
 
 {
-  options.cli.ripgrep.enable = lib.mkEnableOption "Enable ripgrep";
+  options.deeznuts.cli.ripgrep.enable = lib.mkEnableOption "Enable ripgrep";
 
-  config = lib.mkIf config.cli.ripgrep.enable {
+  config = lib.mkIf config.deeznuts.cli.ripgrep.enable {
     programs.ripgrep = {
       enable = true;
       arguments = [

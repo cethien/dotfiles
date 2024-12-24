@@ -1,9 +1,9 @@
 { lib, config, pkgs, ... }:
 
 {
-  options.desktop.plasma6.enable = lib.mkEnableOption "Enable Plasma desktop environment";
+  options.deeznuts.desktop.plasma6.enable = lib.mkEnableOption "Enable Plasma desktop environment";
 
-  config = lib.mkIf config.desktop.plasma6.enable {
+  config = lib.mkIf config.deeznuts.desktop.plasma6.enable {
     programs.plasma = {
       enable = true;
 

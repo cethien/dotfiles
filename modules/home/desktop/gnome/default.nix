@@ -7,9 +7,9 @@
     ./keybindings
   ];
 
-  options.desktop.gnome.enable = lib.mkEnableOption "Enable gnome desktop environment customization";
+  options.deeznuts.desktop.gnome.enable = lib.mkEnableOption "Enable gnome desktop environment customization";
 
-  config = lib.mkIf config.desktop.gnome.enable {
+  config = lib.mkIf config.deeznuts.desktop.gnome.enable {
     programs.gnome-shell.enable = true;
   };
 }

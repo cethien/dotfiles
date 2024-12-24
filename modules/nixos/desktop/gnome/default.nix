@@ -1,9 +1,9 @@
 { lib, config, pkgs, ... }:
 
 {
-  options.desktop.gnome.enable = lib.mkEnableOption "Enable GNOME Desktop";
+  options.deeznuts.desktop.gnome.enable = lib.mkEnableOption "Enable GNOME Desktop";
 
-  config = lib.mkIf config.desktop.gnome.enable {
+  config = lib.mkIf config.deeznuts.desktop.gnome.enable {
     services.xserver = {
       enable = true;
       excludePackages = [ pkgs.xterm ];

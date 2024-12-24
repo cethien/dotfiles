@@ -1,7 +1,7 @@
 { lib, config, ... }:
 
 {
-  options.virt.kvm = {
+  options.deeznuts.virt.kvm = {
     enable = lib.mkEnableOption "Enable VM Virtualization";
     users = lib.mkOption {
       type = with lib.types; listOf (passwdEntry str);
@@ -10,9 +10,9 @@
     };
   };
 
-  config = lib.mkIf config.virt.kvm.enable {
+  config = lib.mkIf config.deeznuts.virt.kvm.enable {
     virtualisation.libvirtd.enable = true;
-    users.groups.libvirt.members = config.virt.kvm.users;
+    users.groups.libvirt.members = config.deeznuts.virt.kvm.users;
     virtualisation.spiceUSBRedirection.enable = true;
 
     programs.virt-manager.enable = true;

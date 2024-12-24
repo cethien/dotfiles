@@ -8,8 +8,8 @@
     experimental-features = "nix-command flakes";
   };
 
-  nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.allowUnfreePredicate = (_: true);
+  nixpkgs.config.deeznuts.allowUnfree = true;
+  nixpkgs.config.deeznuts.allowUnfreePredicate = (_: true);
 
   imports = [
     ../shared

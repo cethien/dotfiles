@@ -8,7 +8,7 @@
     ./bindings.nix
   ];
 
-  config = lib.mkIf config.desktop.hyprland.enable {
+  config = lib.mkIf config.deeznuts.desktop.hyprland.enable {
     # https://wiki.hyprland.org/Configuring/
     wayland.windowManager.hyprland.settings = {
       # See https://wiki.hyprland.org/Configuring/Monitors/

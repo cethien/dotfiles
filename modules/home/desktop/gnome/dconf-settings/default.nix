@@ -1,7 +1,7 @@
 { lib, config, ... }:
 
 {
-  config = lib.mkIf config.desktop.gnome.enable {
+  config = lib.mkIf config.deeznuts.desktop.gnome.enable {
     dconf.settings = with lib.hm.gvariant; {
       "org/gnome/desktop/peripherals/mouse" = {
         accel-profile = "flat";
