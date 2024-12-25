@@ -7,7 +7,7 @@ in
     enable = lib.mkEnableOption "Enable git";
     userName = lib.mkOption {
       type = lib.types.str;
-      default = ${config.users.users.cethien.name};
+      default = "cethien";
       description = "The user name to use for git commits";
     };
     userEmail = lib.mkOption {
