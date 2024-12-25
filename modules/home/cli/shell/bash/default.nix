@@ -16,11 +16,11 @@
       enable = true;
 
       bashrcExtra = ''
-       ${if config.deeznuts.cli.shell.bash.loadNixProfile then ''
-         if [ -f ~/.nix-profile/etc/profile.d/nix.sh ]; then
-           source ~/.nix-profile/etc/profile.d/nix.sh
-         fi
-       '' else ""}
+        ${if config.deeznuts.cli.shell.bash.loadNixProfile then ''
+          if [ -f ~/.nix-profile/etc/profile.d/nix.sh ]; then
+            source ~/.nix-profile/etc/profile.d/nix.sh
+          fi
+        '' else ""}
       '';
 
       initExtra = ''

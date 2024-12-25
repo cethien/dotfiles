@@ -9,6 +9,5 @@
 
       defaultSopsFile = "../../secrets/secrets.yaml";
     };
-
   };
 }

@@ -1,4 +1,4 @@
-{ ... }:
+{ config, ... }:
 
 {
   imports = [
@@ -40,7 +40,7 @@
     desktop = {
       plasma.enable = true;
       autoLogin.enable = true;
-      autoLogin.user = "cethien";
+      autoLogin.user = config.users.users.cethien.name;
     };
 
     theming = {
@@ -56,16 +56,10 @@
     virtualisation = {
       docker.enable = true;
       docker.liveRestore = true;
-      docker.users = [ "cethien" ];
+      docker.users = [ config.users.users.cethien.name ];
 
       kvm.enable = true;
-      kvm.users = [ "cethien" ];
+      kvm.users = [ config.users.users.cethien.name ];
     };
   };
-
-  # home-manager = {
-  #   extraSpecialArgs = { inherit inputs; };
-  #   users."cethien" = import ./home.nix;
-  #   backupFileExtension = "hm-backup-$(date +%Y%m%d_%H%M%S)";
-  # };
 }
