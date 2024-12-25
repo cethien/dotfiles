@@ -39,6 +39,8 @@
         {
           aliases.enable = true;
           oh-my-posh.enable = true;
+          hushlogin.enable = true;
+
           bash.enable = true;
         };
 
