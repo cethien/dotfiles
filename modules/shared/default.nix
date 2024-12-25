@@ -1,5 +1,6 @@
 {
   imports = [
     ./theming
+    ./sops
   ];
 }

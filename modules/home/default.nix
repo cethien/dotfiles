@@ -7,6 +7,8 @@
     ./desktop
     ./theming
     ./user-scripts
+
+    inputs.sops-nix.homeManagerModules.sops
     inputs.plasma-manager.homeManagerModules.plasma-manager
     inputs.catppuccin.homeManagerModules.catppuccin
     inputs.nur.modules.homeManager.default
@@ -16,7 +18,7 @@
   options = {
     username = lib.mkOption {
       type = lib.types.str;
-      default = "cethien";
+      default = ${config.users.users.cethien.name};
       description = "The user name to use for home-manager";
     };
 

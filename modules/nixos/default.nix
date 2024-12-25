@@ -16,8 +16,9 @@
     ./theming
     ./users
     ./virtualisation
+
+    inputs.sops-nix.nixosModules.sops
     inputs.catppuccin.nixosModules.catppuccin
-    inputs.home-manager.nixosModules.home-manager
   ];
 
   networking.hostName = meta.hostname;
