@@ -14,6 +14,8 @@
   };
 
   deeznuts = {
+    nix.enable = true;
+
     hardware = {
       nvidia-gpu.enable = true;
 

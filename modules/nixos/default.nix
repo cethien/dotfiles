@@ -3,29 +3,25 @@
 {
   system.stateVersion = "25.05"; # DO NOT CHANGE IF YOU DON'T KNOW WHAT YOU ARE DOING
 
-  nix.settings = {
-    trusted-users = [ "@wheel" ];
-    experimental-features = "nix-command flakes";
-  };
-
-  nixpkgs.config.deeznuts.allowUnfree = true;
-  nixpkgs.config.deeznuts.allowUnfreePredicate = (_: true);
+  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowUnfreePredicate = (_: true);
 
   imports = [
     ../shared
     ./apps
     ./desktop
     ./hardware
+    ./nix
     ./services
     ./theming
     ./users
-    ./virt
+    ./virtualisation
     inputs.catppuccin.nixosModules.catppuccin
     inputs.home-manager.nixosModules.home-manager
   ];
 
-  networking.networkmanager.enable = true;
   networking.hostName = meta.hostname;
+  networking.networkmanager.enable = true;
 
   time.timeZone = "Europe/Berlin";
 
