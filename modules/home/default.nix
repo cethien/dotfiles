@@ -15,29 +15,24 @@
     inputs.spicetify-nix.homeManagerModules.default
   ];
 
-  options = {
+  options.deeznuts = {
     username = lib.mkOption {
       type = lib.types.str;
       default = "cethien";
       description = "The user name to use for home-manager";
     };
-
-    isWSL = lib.mkOption {
-      type = lib.types.bool;
-      default = false;
-      description = "Whether the system is running in WSL";
-    };
   };
 
   config = {
-    home.username = config.username;
-    home.homeDirectory = "/home/${config.username}";
-
     home.stateVersion = "25.05"; # DO NOT CHANGE IF YOU DON'T KNOW WHAT YOU ARE DOING
+
+    home.username = config.deeznuts.username;
+    home.homeDirectory = "/home/${config.deeznuts.username}";
 
     nixpkgs.config.allowUnfree = true;
     nixpkgs.config.allowUnfreePredicate = (_: true);
 
     programs.home-manager.enable = true;
+
   };
 }
