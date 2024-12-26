@@ -9,6 +9,7 @@
   imports = [
     ../shared
     ./apps
+    ./boot
     ./desktop
     ./hardware
     ./nix

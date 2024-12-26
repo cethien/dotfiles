@@ -6,14 +6,12 @@
     ./hardware-configuration.nix
   ];
 
-  boot.loader.grub = {
-    enable = true;
-
-    useOSProber = true;
-    device = "/dev/nvme0n1";
-  };
-
   deeznuts = {
+    boot.grub = {
+      enable = true;
+      device = "/dev/nvme0n1";
+    };
+
     nix.enable = true;
 
     hardware = {
