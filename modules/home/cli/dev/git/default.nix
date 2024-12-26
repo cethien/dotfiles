@@ -1,9 +1,9 @@
 { lib, config, ... }:
 let
-  cfg = config.deeznuts.cli.git;
+  cfg = config.deeznuts.cli.dev.git;
 in
 {
-  options.deeznuts.cli.git = {
+  options.deeznuts.cli.dev.git = {
     enable = lib.mkEnableOption "Enable git";
     userName = lib.mkOption {
       type = lib.types.str;

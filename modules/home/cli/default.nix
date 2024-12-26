@@ -4,6 +4,7 @@
   imports = [
     ./shell
     ./networking
+    ./dev
 
     ./misc
 
@@ -16,11 +17,6 @@
     ./fd
     ./ffmpeg
     ./fzf
-    ./gh
-    ./git
-    ./jq
-    ./lazydocker
-    ./lazygit
     ./neovim
     ./poppler
     ./procs
@@ -44,10 +40,8 @@
           bash.enable = true;
         };
 
-      networking = {
-        nmap.enable = true;
-        termshark.enable = true;
-      };
+      dev.enable = true;
+      networking.enable = true;
 
       misc.enable = true;
 
@@ -60,13 +54,6 @@
       fd.enable = true;
       ffmpeg.enable = true;
       fzf.enable = true;
-      gh.enable = true;
-      git = {
-        enable = true;
-      };
-      jq.enable = true;
-      lazydocker.enable = true;
-      lazygit.enable = true;
       neovim.enable = true;
       poppler.enable = true;
       procs.enable = true;
