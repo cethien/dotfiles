@@ -14,7 +14,7 @@ alias u := update
 
 alias r := rebuild
 @rebuild profile:
-    home-manager switch --flake .#{{profile}}
+    home-manager switch --flake .#{{profile}} -b bak-hm-$(date +%Y%m%d_%H%M%S)
 
 alias r-os := rebuild-nixos
 @rebuild-nixos profile:

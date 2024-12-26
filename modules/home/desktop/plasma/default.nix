@@ -10,22 +10,21 @@
       workspace = {
         clickItemTo = "select";
         lookAndFeel = "Catppuccin-Mocha-Mauve";
-        cursor.theme = "Nordzy-cursors";
         iconTheme = "Tela-dracula-dark";
+        cursor.theme = "Nordzy-cursors";
         wallpaper = "/home/cethien/Pictures/wallpapers/drippy-smiley-cute-5120x2880.jpg";
-      };
-
-      hotkeys.commands."launch-konsole" = {
-        name = "Launch Konsole";
-        key = "Crtl+Alt+T";
-        command = "konsole";
       };
 
       panels = [
         {
+          screen = 1;
           location = "top";
+          floating = true;
+
+          height = 42;
+
           widgets = [
-            "org.kde.plasma.appmenu"
+            "org.kde.plasma.kickoff"
             "org.kde.plasma.panelspacer"
             {
               plasmusicToolbar = {

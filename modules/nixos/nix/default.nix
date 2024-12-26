@@ -1,7 +1,7 @@
 { lib, config, pkgs, ... }:
 
 {
-  options.nix = {
+  options.deeznuts.nix = {
     enable = lib.mkEnableOption "Enable nix configuration";
     package = lib.mkOption {
       type = lib.types.package;
@@ -10,9 +10,9 @@
     };
   };
 
-  config = lib.mkIf config.nix.enable {
+  config = lib.mkIf config.deeznuts.nix.enable {
     nix = {
-      package = config.nix.package;
+      package = config.deeznuts.nix.package;
 
       gc = {
         automatic = true;

@@ -7,9 +7,9 @@
     programs.firefox = {
       enable = true;
 
-      profiles."${config.users.users.cethien.name}" = {
+      profiles."${config.home.username}" = {
         id = 0;
-        name = "${config.users.users.cethien.name}";
+        name = "${config.home.username}";
 
         search.default = "DuckDuckGo";
 

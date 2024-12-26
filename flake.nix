@@ -55,15 +55,16 @@
     }
     // {
       nixosConfigurations."tower-of-power" = inputs.nixpkgs.lib.nixosSystem {
+        modules = [
+          ./systems/tower-of-power
+        ];
+
         specialArgs = {
           inherit inputs;
           meta = {
             hostname = "tower-of-power";
           };
         };
-        modules = [
-          ./hosts/tower-of-power
-        ];
       };
     };
 
