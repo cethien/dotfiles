@@ -18,7 +18,7 @@
           nil
           nixpkgs-fmt
           sops
-          
+
           just
         ];
       };
