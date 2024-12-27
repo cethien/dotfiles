@@ -6,7 +6,6 @@
     ./cli
     ./desktop
     ./theming
-    ./user-scripts
 
     inputs.sops-nix.homeManagerModules.sops
     inputs.plasma-manager.homeManagerModules.plasma-manager
