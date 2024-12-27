@@ -62,7 +62,6 @@
             }
             {
               digitalClock = {
-                time.showDate = false;
                 time.format = "24h";
                 calendar.firstDayOfWeek = "monday";
                 calendar.showWeekNumbers = true;
