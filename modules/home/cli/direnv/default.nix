@@ -6,10 +6,14 @@
   config = lib.mkIf config.deeznuts.cli.direnv.enable {
     programs.direnv = {
       enable = true;
+      silent = true;
       nix-direnv.enable = true;
 
-      config.deeznuts.global = {
-        hide_env_diff = true;
+      config = {
+        global = {
+          hide_env_diff = true;
+          warn_timeout = 0;
+        };
       };
     };
   };
