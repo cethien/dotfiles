@@ -24,7 +24,6 @@
       '';
 
       initExtra = ''
-        export PATH=$GOBIN:$PATH
         source $(blesh-share)/ble.sh
       '';
     };
