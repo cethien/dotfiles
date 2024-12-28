@@ -1,11 +1,11 @@
 { lib, config, ... }:
 let
   inherit (lib) mkIf mkEnableOption mkBefore;
-  cfg = config.programs.bash.sourceNixProfile;
+  cfg = config.deeznuts.cli.shell.bash.sourceNixProfile;
 in
 {
   options = {
-    programs.bash.sourceNixProfile = {
+    deeznuts.cli.shell.bash.sourceNixProfile = {
       enable = mkEnableOption "Whether to add nix profile loading to bash init. for when on non-NixOS distro";
     };
   };
