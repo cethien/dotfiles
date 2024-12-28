@@ -1,4 +1,4 @@
-{ lib, config, meta, ... }:
+{ lib, config, ... }:
 let
   inherit (lib) mkIf mkEnableOption;
   cfg = config.deeznuts.cli.scripts;
@@ -17,8 +17,8 @@ in
     };
 
     home.shellAliases = {
-      rebuild = "~/scripts/rebuild.sh -c ${meta.configName}";
-      rebuild-nixos = "~/scripts/rebuild.sh -nc ${meta.hostname}";
+      rebuild = "~/scripts/rebuild.sh";
+      rebuild-nixos = "~/scripts/rebuild.sh -n";
       init = "~/scripts/init.sh";
       update = "~/scripts/update.sh";
       cleanup = "~/scripts/cleanup.sh";

@@ -31,14 +31,10 @@
       };
     }
     // {
-      homeConfigurations."cethien@LPT-SOTNIKOW" = inputs.home-manager.lib.homeManagerConfiguration {
+      homeConfigurations."cethien@lpt-sotnikow" = inputs.home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         extraSpecialArgs = {
           inherit inputs;
-          meta = {
-            hostname = "LPT-SOTNIKOW";
-            configName = "cethien@LPT-SOTNIKOW";
-          };
         };
         modules = [
           ./homes/cethien_LPT-SOTNIKOW
@@ -54,10 +50,6 @@
 
         extraSpecialArgs = {
           inherit inputs;
-          meta = {
-            hostname = "tower-of-power";
-            configName = "cethien@tower-of-power";
-          };
         };
       };
     }
