@@ -18,6 +18,7 @@
           nil
           nixpkgs-fmt
           sops
+          lua
 
           just
         ];
