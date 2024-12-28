@@ -14,7 +14,6 @@
     ./hardware
     ./nix
     ./services
-    ./theming
     ./users
     ./virtualisation
 

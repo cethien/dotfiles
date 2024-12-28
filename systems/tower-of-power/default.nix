@@ -35,15 +35,12 @@
       cethien.enable = true;
     };
 
+    catppuccin.enable = true;
+
     desktop = {
       plasma.enable = true;
       autoLogin.enable = true;
       autoLogin.user = config.users.users.cethien.name;
-    };
-
-    theming = {
-      catppuccin.enable = true;
-      fonts.enable = true;
     };
 
     apps = {

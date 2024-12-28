@@ -13,11 +13,14 @@ in
         splash = false;
         splash_offset = 2.0;
 
-        preload =
-          [ "/home/cethien/Pictures/wallpapers/drippy-smiley-cute-5120x2880.jpg" ];
+        preload = [
+          "/home/cethien/Pictures/wallpapers/drippy-smiley.jpg"
+          "/home/cethien/Pictures/wallpapers/drippy-smiley-solid-color.jpg"
+        ];
 
         wallpaper = [
-          ",/home/cethien/Pictures/wallpapers/drippy-smiley-cute-5120x2880.jpg"
+          "DP-1,/home/cethien/Pictures/wallpapers/drippy-smiley.jpg"
+          "DP-2,/home/cethien/Pictures/wallpapers/drippy-smiley-solid-color.jpg"
         ];
       };
     };

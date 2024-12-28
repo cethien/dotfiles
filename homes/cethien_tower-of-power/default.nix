@@ -2,9 +2,10 @@
   imports = [ ../../modules/home ];
 
   deeznuts = {
-    cli.enable = true;
-
+    catppuccin.enable = true;
     desktop.plasma6.enable = true;
+
+    cli.enable = true;
 
     apps = {
       easyeffects.enable = true;
@@ -33,12 +34,6 @@
         retroarch.enable = true;
         prismlauncher.enable = true;
       };
-    };
-
-    theming = {
-      catppuccin.enable = true;
-      gtk.enable = true;
-      qt.enable = true;
     };
   };
 }

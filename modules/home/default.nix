@@ -11,7 +11,6 @@ in
     ./services
     ./desktop
     ./apps
-    ./theming
 
     inputs.sops-nix.homeManagerModules.sops
     inputs.plasma-manager.homeManagerModules.plasma-manager

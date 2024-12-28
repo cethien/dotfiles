@@ -1,10 +1,10 @@
 { lib, config, ... }:
 let
   inherit (lib) mkIf mkEnableOption;
-  cfg = config.deeznuts.theming.catppuccin;
+  cfg = config.deeznuts.catppuccin;
 in
 {
-  options.deeznuts.theming.catppuccin = {
+  options.deeznuts.catppuccin = {
     enable = mkEnableOption "Enable catppuccin";
   };
 

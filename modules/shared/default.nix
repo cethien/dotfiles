@@ -1,6 +1,6 @@
 {
   imports = [
-    ./theming
+    ./catppuccin
     ./sops
   ];
 }

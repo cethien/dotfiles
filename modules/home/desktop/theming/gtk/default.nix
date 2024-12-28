@@ -1,14 +1,10 @@
 { lib, config, pkgs, ... }:
 let
-  inherit (lib) mkIf mkEnableOption;
-  cfg = config.deeznuts.theming.gtk;
+  inherit (lib) mkIf;
+  cfg = config.deeznuts.desktop;
 in
 {
-  options.deeznuts.theming.gtk = {
-    enable = mkEnableOption "Enable gtk theming";
-  };
-
-  config = mkIf cfg.enable {
+  config = mkIf (cfg.gnome.enable || cfg.plasma6.enable || cfg.hyprland.enable) {
     gtk = {
       enable = true;
 

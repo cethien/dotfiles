@@ -8,5 +8,10 @@
       }
     }
   },
+
+  "[lua]": {
+    "editor.defaultFormatter": "sumneko.lua"
+  },
+
   "direnv.restart.automatic": true
 }
