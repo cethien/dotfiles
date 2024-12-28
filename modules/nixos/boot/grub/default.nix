@@ -31,6 +31,7 @@
       efiInstallAsRemovable = config.deeznuts.boot.grub.efi;
 
       useOSProber = config.deeznuts.boot.grub.multiBoot;
+
       device = config.deeznuts.boot.grub.device;
     };
   };
