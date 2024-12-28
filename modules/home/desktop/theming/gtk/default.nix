@@ -8,13 +8,6 @@ in
     gtk = {
       enable = true;
 
-      catppuccin = {
-        enable = true;
-        gnomeShellTheme = true;
-
-        tweaks = [ "rimless" ];
-      };
-
       iconTheme = {
         name = "Tela-dracula-dark";
         package = pkgs.tela-icon-theme;
@@ -24,6 +17,13 @@ in
         name = "Nordzy-cursors";
         package = pkgs.nordzy-cursor-theme;
       };
+    };
+
+    catppuccin.gtk = {
+      enable = true;
+      gnomeShellTheme = true;
+
+      tweaks = [ "rimless" ];
     };
   };
 }

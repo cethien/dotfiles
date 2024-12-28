@@ -8,9 +8,10 @@ in
     qt = {
       enable = true;
 
-      style.catppuccin.enable = true;
-      style.name = "kvantum";
       platformTheme.name = "kvantum";
+      style.name = "kvantum";
     };
+
+    catppuccin.kvantum.enable = true;
   };
 }
