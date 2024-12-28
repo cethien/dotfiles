@@ -10,7 +10,7 @@ config.font = wezterm.font 'MesloLGM Nerd Font Mono'
 config.font_size = 14
 config.color_scheme = 'Catppuccin Mocha'
 
-config.animation_fps = 300
+config.animation_fps = 200
 
 config.default_cursor_style = 'BlinkingBar'
 config.cursor_blink_ease_in = 'Constant'

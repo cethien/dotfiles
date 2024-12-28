@@ -10,7 +10,6 @@ in
 
   config = mkIf cfg.enable {
     programs.wezterm.enable = true;
-
-    home.file.".wezterm.lua".source = ./.wezterm.lua;
+    home.file.".wezterm.lua".source = ./wezterm.lua;
   };
 }
