@@ -30,6 +30,7 @@
           inherit inputs;
           meta = {
             hostname = "LPT-SOTNIKOW";
+            configName = "cethien@LPT-SOTNIKOW";
           };
         };
         modules = [
@@ -46,6 +47,10 @@
 
         extraSpecialArgs = {
           inherit inputs;
+          meta = {
+            hostname = "tower-of-power";
+            configName = "cethien@tower-of-power";
+          };
         };
       };
     }

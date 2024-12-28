@@ -21,6 +21,7 @@
     ./poppler
     ./procs
     ./ripgrep
+    ./scripts
     ./ssh
     ./tmux
     ./yazi
@@ -39,6 +40,8 @@
 
           bash.enable = true;
         };
+
+      scripts.enable = true;
 
       dev.enable = true;
       networking.enable = true;

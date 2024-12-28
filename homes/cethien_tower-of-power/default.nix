@@ -4,12 +4,7 @@
   deeznuts = {
     cli.enable = true;
 
-    cli.shell.aliases = {
-      nixosRebuild.enable = true;
-      nixosRebuild.configName = "tower-of-power";
-
-      homeManagerConfigName = "cethien@tower-of-power";
-    };
+    desktop.plasma6.enable = true;
 
     apps = {
       easyeffects.enable = true;
@@ -34,8 +29,6 @@
         prismlauncher.enable = true;
       };
     };
-
-    desktop.plasma6.enable = true;
 
     theming = {
       catppuccin.enable = true;
