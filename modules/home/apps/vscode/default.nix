@@ -24,8 +24,11 @@ in
         redhat.vscode-yaml
         redhat.vscode-xml
 
+        arrterian.nix-env-selector
+        jnoortheen.nix-ide
+        mkhl.direnv
         jeff-hykin.better-nix-syntax
-        pinage404.nix-extension-pack
+
         nefrob.vscode-just-syntax
       ];
     };
