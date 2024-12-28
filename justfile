@@ -1,3 +1,4 @@
+[private]
 @default:
     just --list
 
@@ -5,6 +6,7 @@ alias fmt := format
 @format:
     nixpkgs-fmt .
 
+alias l := lint
 @lint:
     nixpkgs-fmt --check .
 
