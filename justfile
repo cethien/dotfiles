@@ -1,3 +1,5 @@
+set dotenv-load
+
 [private]
 @default:
     just --list
@@ -15,11 +17,11 @@ alias u := update
     nix flake update
 
 alias r := rebuild
-@rebuild profile:
+@rebuild profile='$HOMEMANAGER_CONFIG':
     home-manager switch --flake .#{{profile}} -b bak-hm-$(date +%Y%m%d_%H%M%S)
 
-alias r-os := rebuild-nixos
-@rebuild-nixos profile:
+alias rn := rebuild-nixos
+@rebuild-nixos profile='$NIXOS_CONFIG':
     sudo nixos-rebuild switch --flake .#{{profile}}
 
 alias i := install
