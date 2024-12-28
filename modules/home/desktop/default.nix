@@ -5,5 +5,6 @@
     ./gnome
     ./plasma
     ./hyprland
+    ./wallpapers
   ];
 }

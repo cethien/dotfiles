@@ -39,7 +39,6 @@
       catppuccin.enable = true;
       gtk.enable = true;
       qt.enable = true;
-      wallpapers.enable = true;
     };
   };
 }
