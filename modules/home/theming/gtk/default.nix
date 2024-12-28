@@ -1,9 +1,14 @@
 { lib, config, pkgs, ... }:
-
+let
+  inherit (lib) mkIf mkEnableOption;
+  cfg = config.deeznuts.theming.gtk;
+in
 {
-  options.deeznuts.theming.gtk.enable = lib.mkEnableOption "Enable gtk theming";
+  options.deeznuts.theming.gtk = {
+    enable = mkEnableOption "Enable gtk theming";
+  };
 
-  config = lib.mkIf config.deeznuts.theming.gtk.enable {
+  config = mkIf cfg.enable {
     gtk = {
       enable = true;
 

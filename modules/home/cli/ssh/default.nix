@@ -1,9 +1,14 @@
 { lib, config, ... }:
-
+let
+  inherit (lib) mkIf mkEnableOption;
+  cfg = config.deeznuts.cli.ssh;
+in
 {
-  options.deeznuts.cli.ssh.enable = lib.mkEnableOption "Enable ssh";
+  options.deeznuts.cli.ssh = {
+    enable = mkEnableOption "Enable ssh";
+  };
 
-  config = lib.mkIf config.deeznuts.cli.ssh.enable {
+  config = mkIf cfg.enable {
     programs.ssh = {
       enable = true;
 

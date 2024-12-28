@@ -1,11 +1,14 @@
-{ lib, config, pkgs, ... }:
-
+{ lib, config, ... }:
+let
+  inherit (lib) mkIf mkEnableOption;
+  cfg = config.deeznuts.services.podman;
+in
 {
   options.deeznuts.services.podman = {
-    enable = lib.mkEnableOption "Podman";
+    enable = mkEnableOption "Enable podman";
   };
 
-  config = lib.mkIf config.deeznuts.services.podman.enable {
+  config = mkIf cfg.enable {
     services.podman.enable = true;
   };
 }

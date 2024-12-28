@@ -1,5 +1,8 @@
 { lib, config, ... }:
-
+let
+  inherit (lib) mkEnableOption mkIf;
+  cfg = config.deeznuts.cli.networking;
+in
 {
   imports = [
     ./nmap
@@ -7,9 +10,11 @@
     ./netscanner
   ];
 
-  options.deeznuts.cli.networking.enable = lib.mkEnableOption "Enable networking tools";
+  options.deeznuts.cli.networking = {
+    enable = mkEnableOption "Enable networking CLI tools";
+  };
 
-  config = lib.mkIf config.deeznuts.cli.networking.enable {
+  config = mkIf cfg.enable {
     deeznuts.cli.networking = {
       nmap.enable = true;
       termshark.enable = true;

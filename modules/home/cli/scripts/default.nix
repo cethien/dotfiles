@@ -1,9 +1,14 @@
 { lib, config, meta, ... }:
-
+let
+  inherit (lib) mkIf mkEnableOption;
+  cfg = config.deeznuts.cli.scripts;
+in
 {
-  options.deeznuts.cli.scripts.enable = lib.mkEnableOption "Enable scripts";
+  options.deeznuts.cli.scripts = {
+    enable = mkEnableOption "Enable scripts";
+  };
 
-  config = lib.mkIf config.deeznuts.cli.scripts.enable {
+  config = mkIf cfg.enable {
     home.file = {
       "scripts/init.sh".source = ./init.sh;
       "scripts/update.sh".source = ./update.sh;

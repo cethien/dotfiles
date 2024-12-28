@@ -19,3 +19,5 @@ if [[ -n $EXTRA_PACKAGE_MANAGER ]]; then
 else
     echo "nothing to update"
 fi
+
+echo "if you want to update your nix packages, please update the repository flake"

@@ -1,9 +1,14 @@
 { lib, config, pkgs, ... }:
-
+let
+  inherit (lib) mkEnableOption mkIf;
+  cfg = config.deeznuts.cli.networking.netscanner;
+in
 {
-  options.deeznuts.cli.networking.netscanner.enable = lib.mkEnableOption "Enable netscanner";
+  options.deeznuts.cli.networking.netscanner = {
+    enable = mkEnableOption "Enable netscanner";
+  };
 
-  config = lib.mkIf config.deeznuts.cli.networking.netscanner.enable {
+  config = mkIf cfg.enable {
     home.packages = with pkgs; [ netscanner ];
   };
 }

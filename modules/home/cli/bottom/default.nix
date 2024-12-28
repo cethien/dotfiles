@@ -1,9 +1,14 @@
 { lib, config, ... }:
-
+let
+  inherit (lib) mkEnableOption mkIf;
+  cfg = config.deeznuts.cli.bottom;
+in
 {
-  options.deeznuts.cli.bottom.enable = lib.mkEnableOption "Enable bottom";
+  options.deeznuts.cli.bottom = {
+    enable = mkEnableOption "Enable bottom";
+  };
 
-  config = lib.mkIf config.deeznuts.cli.bottom.enable {
+  config = mkIf cfg.enable {
     programs.bottom = {
       enable = true;
 

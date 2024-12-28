@@ -1,9 +1,14 @@
 { lib, config, pkgs, ... }:
-
+let
+  inherit (lib) mkEnableOption mkIf;
+  cfg = config.deeznuts.cli.misc;
+in
 {
-  options.deeznuts.cli.misc.enable = lib.mkEnableOption "Enable misc cli tools";
+  options.deeznuts.cli.misc = {
+    enable = mkEnableOption "Enable misc cli tools";
+  };
 
-  config = lib.mkIf config.deeznuts.cli.misc.enable {
+  config = mkIf cfg.enable {
     home.packages = with pkgs; [
       curl
       wget

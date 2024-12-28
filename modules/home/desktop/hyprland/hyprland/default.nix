@@ -1,11 +1,14 @@
 { config, lib, pkgs, ... }:
-
+let
+  inherit (lib) mkIf;
+  cfg = config.deeznuts.desktop.hyprland;
+in
 {
   imports = [
     ./settings
   ];
 
-  config = lib.mkIf config.deeznuts.desktop.hyprland.enable {
+  config = mkIf cfg.enable {
     wayland.windowManager.hyprland = {
       enable = true;
 

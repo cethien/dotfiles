@@ -1,5 +1,6 @@
-{ lib, config, pkgs, ... }:
+{ lib, config, ... }:
 let
+  inherit (lib) mkIf mkEnableOption;
   cfg = config.deeznuts.cli.shell.bash;
 in
 {
@@ -9,10 +10,10 @@ in
   ];
 
   options.deeznuts.cli.shell.bash = {
-    enable = lib.mkEnableOption "Enable bash";
+    enable = mkEnableOption "Enable bash";
   };
 
-  config = lib.mkIf cfg.enable {
+  config = mkIf cfg.enable {
     programs.bash = {
       enable = true;
       blesh.enable = true;

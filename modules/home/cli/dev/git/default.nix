@@ -1,23 +1,25 @@
 { lib, config, ... }:
 let
+  inherit (lib) mkEnableOption mkOption mkIf;
+  inherit (lib.types) str;
   cfg = config.deeznuts.cli.dev.git;
 in
 {
   options.deeznuts.cli.dev.git = {
-    enable = lib.mkEnableOption "Enable git";
-    userName = lib.mkOption {
-      type = lib.types.str;
+    enable = mkEnableOption "Enable git";
+    userName = mkOption {
+      type = str;
       default = "cethien";
       description = "The user name to use for git commits";
     };
-    userEmail = lib.mkOption {
-      type = lib.types.str;
+    userEmail = mkOption {
+      type = str;
       default = "borislaw.sotnikow@gmx.de";
       description = "The user email to use for git commits";
     };
   };
 
-  config = lib.mkIf cfg.enable {
+  config = mkIf cfg.enable {
     programs.git = {
       enable = true;
       inherit (cfg) userName userEmail;

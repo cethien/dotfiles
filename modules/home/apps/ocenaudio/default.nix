@@ -1,11 +1,14 @@
 { lib, config, pkgs, ... }:
-
+let
+  inherit (lib) mkEnableOption mkIf;
+  cfg = config.deeznuts.apps.ocenaudio;
+in
 {
-  options.deeznuts.apps.ocenaudio.enable = lib.mkEnableOption "Enable ocenaudio";
+  options.deeznuts.apps.ocenaudio = {
+    enable = mkEnableOption "Enable ocenaudio";
+  };
 
-  config = lib.mkIf config.deeznuts.apps.ocenaudio.enable {
-    home.packages = with pkgs; [
-      ocenaudio
-    ];
+  config = mkIf cfg.enable {
+    home.packages = with pkgs; [ ocenaudio ];
   };
 }

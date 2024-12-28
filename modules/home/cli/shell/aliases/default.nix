@@ -1,11 +1,14 @@
 { lib, config, ... }:
-
+let
+  inherit (lib) mkEnableOption mkIf;
+  cfg = config.deeznuts.cli.shell.aliases;
+in
 {
   options.deeznuts.cli.shell.aliases = {
-    enable = lib.mkEnableOption "Enable shell aliases";
+    enable = mkEnableOption "Enable shell aliases";
   };
 
-  config = lib.mkIf config.deeznuts.cli.shell.aliases.enable {
+  config = mkIf cfg.enable {
     home.shellAliases = {
       reload = "source ~/.bashrc && clear";
     };

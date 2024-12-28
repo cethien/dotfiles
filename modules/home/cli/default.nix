@@ -1,5 +1,8 @@
 { lib, config, ... }:
-
+let
+  inherit (lib) mkEnableOption mkIf;
+  cfg = config.deeznuts.cli;
+in
 {
   imports = [
     ./shell
@@ -28,9 +31,11 @@
     ./zoxide
   ];
 
-  options.deeznuts.cli.enable = lib.mkEnableOption "Enable all cli tools";
+  options.deeznuts.cli = {
+    enable = mkEnableOption "Enable all cli tools";
+  };
 
-  config = lib.mkIf config.deeznuts.cli.enable {
+  config = mkIf cfg.enable {
     deeznuts.cli = {
       shell =
         {

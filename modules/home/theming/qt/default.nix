@@ -1,9 +1,14 @@
 { lib, config, ... }:
-
+let
+  inherit (lib) mkIf mkEnableOption;
+  cfg = config.deeznuts.theming.qt;
+in
 {
-  options.deeznuts.theming.qt.enable = lib.mkEnableOption "Enable qt theming";
+  options.deeznuts.theming.qt = {
+    enable = mkEnableOption "Enable qt theming";
+  };
 
-  config = lib.mkIf config.deeznuts.theming.qt.enable {
+  config = mkIf cfg.enable {
     qt = {
       enable = true;
 

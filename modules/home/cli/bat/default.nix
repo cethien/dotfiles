@@ -1,9 +1,14 @@
 { lib, config, ... }:
-
+let
+  inherit (lib) mkEnableOption mkIf;
+  cfg = config.deeznuts.cli.bat;
+in
 {
-  options.deeznuts.cli.bat.enable = lib.mkEnableOption "Enable bat";
+  options.deeznuts.cli.bat = {
+    enable = mkEnableOption "Enable bat";
+  };
 
-  config = lib.mkIf config.deeznuts.cli.bat.enable {
+  config = mkIf cfg.enable {
     programs.bat.enable = true;
     home.shellAliases.cat = "bat -p";
   };

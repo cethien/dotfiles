@@ -1,9 +1,14 @@
 { lib, config, pkgs, ... }:
-
+let
+  inherit (lib) mkIf mkEnableOption;
+  cfg = config.deeznuts.cli.tmux;
+in
 {
-  options.deeznuts.cli.tmux.enable = lib.mkEnableOption "Enable tmux";
+  options.deeznuts.cli.tmux = {
+    enable = mkEnableOption "Enable tmux";
+  };
 
-  config = lib.mkIf config.deeznuts.cli.tmux.enable {
+  config = mkIf cfg.enable {
     programs.tmux = {
       enable = true;
       clock24 = true;

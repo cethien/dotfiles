@@ -1,38 +1,42 @@
 { lib, config, ... }:
-
+let
+  inherit (lib) mkIf mkEnableOption mkOption;
+  inherit (lib.types) bool str;
+  cfg = config.deeznuts.boot.grub;
+in
 {
   options.deeznuts.boot.grub = {
-    enable = lib.mkEnableOption "Enable boot";
+    enable = mkEnableOption "Enable boot";
 
-    efi = lib.mkOption {
-      type = lib.types.bool;
+    efi = mkOption {
+      type = bool;
       default = false;
       description = "Whether to enable EFI support";
     };
 
-    multiBoot = lib.mkOption {
-      type = lib.types.bool;
+    multiBoot = mkOption {
+      type = bool;
       default = false;
       description = "Whether to enable multi-boot";
     };
 
-    device = lib.mkOption {
-      type = lib.types.str;
+    device = mkOption {
+      type = str;
       default = "/dev/sda";
       description = "The device to use for boot";
     };
   };
 
-  config = lib.mkIf config.deeznuts.boot.grub.enable {
+  config = mkIf cfg.enable {
     boot.loader.grub = {
       enable = true;
 
-      efiSupport = config.deeznuts.boot.grub.efi;
-      efiInstallAsRemovable = config.deeznuts.boot.grub.efi;
+      efiSupport = cfg.efi;
+      efiInstallAsRemovable = cfg.efi;
 
-      useOSProber = config.deeznuts.boot.grub.multiBoot;
+      useOSProber = cfg.multiBoot;
 
-      device = config.deeznuts.boot.grub.device;
+      device = cfg.device;
     };
   };
 }

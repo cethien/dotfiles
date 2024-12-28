@@ -1,9 +1,14 @@
 { lib, config, ... }:
-
+let
+  inherit (lib) mkIf mkEnableOption;
+  cfg = config.deeznuts.hardware.nvidia-gpu;
+in
 {
-  options.deeznuts.hardware.nvidia-gpu.enable = lib.mkEnableOption "Enable Nvidia GPU support";
+  options.deeznuts.hardware.nvidia-gpu = {
+    enable = mkEnableOption "Enable nvidia gpu";
+  };
 
-  config = lib.mkIf config.deeznuts.hardware.nvidia-gpu.enable {
+  config = mkIf cfg.enable {
     services.xserver.videoDrivers = [ "nvidia" ];
 
     hardware.graphics.enable = true;

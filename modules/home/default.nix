@@ -1,10 +1,16 @@
 { lib, inputs, config, ... }:
+let
+  inherit (lib) mkOption;
+  inherit (lib.types) str;
+  cfg = config.deeznuts;
+in
 {
   imports = [
     ../shared
-    ./apps
     ./cli
+    ./services
     ./desktop
+    ./apps
     ./theming
 
     inputs.sops-nix.homeManagerModules.sops
@@ -15,8 +21,8 @@
   ];
 
   options.deeznuts = {
-    username = lib.mkOption {
-      type = lib.types.str;
+    username = mkOption {
+      type = str;
       default = "cethien";
       description = "The user name to use for home-manager";
     };
@@ -25,13 +31,12 @@
   config = {
     home.stateVersion = "25.05"; # DO NOT CHANGE IF YOU DON'T KNOW WHAT YOU ARE DOING
 
-    home.username = config.deeznuts.username;
-    home.homeDirectory = "/home/${config.deeznuts.username}";
+    home.username = cfg.username;
+    home.homeDirectory = "/home/${cfg.username}";
 
     nixpkgs.config.allowUnfree = true;
     nixpkgs.config.allowUnfreePredicate = (_: true);
 
     programs.home-manager.enable = true;
-
   };
 }

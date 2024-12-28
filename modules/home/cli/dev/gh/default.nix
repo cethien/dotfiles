@@ -1,9 +1,14 @@
 { lib, config, ... }:
-
+let
+  inherit (lib) mkEnableOption mkIf;
+  cfg = config.deeznuts.cli.dev.gh;
+in
 {
-  options.deeznuts.cli.dev.gh.enable = lib.mkEnableOption "Enable gh";
+  options.deeznuts.cli.dev.gh = {
+    enable = mkEnableOption "Enable gh";
+  };
 
-  config = lib.mkIf config.deeznuts.cli.dev.gh.enable {
+  config = mkIf cfg.enable {
     programs.gh = {
       enable = true;
       settings = {

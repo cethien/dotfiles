@@ -1,9 +1,14 @@
 { lib, config, pkgs, ... }:
-
+let
+  inherit (lib) mkIf mkEnableOption;
+  cfg = config.deeznuts.cli.poppler;
+in
 {
-  options.deeznuts.cli.poppler.enable = lib.mkEnableOption "Enable poppler";
+  options.deeznuts.cli.poppler = {
+    enable = mkEnableOption "Enable poppler CLI tools";
+  };
 
-  config = lib.mkIf config.deeznuts.cli.poppler.enable {
+  config = mkIf cfg.enable {
     home.packages = with pkgs; [ poppler_utils ];
   };
 }

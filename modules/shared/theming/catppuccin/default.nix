@@ -1,9 +1,14 @@
 { lib, config, ... }:
-
+let
+  inherit (lib) mkIf mkEnableOption;
+  cfg = config.deeznuts.theming.catppuccin;
+in
 {
-  options.deeznuts.theming.catppuccin.enable = lib.mkEnableOption "Enable catppuccin module theming";
+  options.deeznuts.theming.catppuccin = {
+    enable = mkEnableOption "Enable catppuccin";
+  };
 
-  config = lib.mkIf config.deeznuts.theming.catppuccin.enable {
+  config = mkIf cfg.enable {
     catppuccin = {
       enable = true;
       flavor = "mocha";

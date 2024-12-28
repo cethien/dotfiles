@@ -1,7 +1,10 @@
 { lib, config, pkgs, ... }:
-
+let
+  inherit (lib) mkIf;
+  cfg = config.deeznuts.desktop.gnome;
+in
 {
-  config = lib.mkIf config.deeznuts.desktop.gnome.enable {
+  config = mkIf cfg.enable {
     programs.gnome-shell.extensions = with pkgs.gnomeExtensions; [
       { package = tweaks-in-system-menu; }
       { package = bluetooth-battery-meter; }

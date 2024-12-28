@@ -1,8 +1,12 @@
 { lib, config, ... }:
-
+let
+  inherit (lib) mkIf;
+  inherit (lib.hm.gvariant) mkUint32;
+  cfg = config.deeznuts.desktop.gnome;
+in
 {
-  config = lib.mkIf config.deeznuts.desktop.gnome.enable {
-    dconf.settings = with lib.hm.gvariant; {
+  config = mkIf cfg.enable {
+    dconf.settings = {
       "org/gnome/desktop/peripherals/mouse" = {
         accel-profile = "flat";
       };
@@ -39,7 +43,7 @@
       "org/gnome/desktop/wm/preferences" = {
         button-layout = ":minimize,maximize,close";
         action-double-click = "toggle-maximized";
-        num-workspaces = 1;
+        num-workspaces = 3;
       };
 
       "org/gnome/shell" = {

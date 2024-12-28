@@ -1,12 +1,16 @@
 { config, lib, ... }:
-
+let
+  inherit (lib) mkIf mkEnableOption;
+  cfg = config.deeznuts.security.sops;
+in
 {
-  options.deeznuts.security.sops.enable = lib.mkEnableOption "Enable sops";
+  options.deeznuts.security.sops = {
+    enable = mkEnableOption "Enable sops";
+  };
 
-  config = lib.mkIf config.deeznuts.security.sops.enable {
+  config = mkIf cfg.enable {
     sops = {
       age.keyFile = "~/.config/sops/age/keys.txt";
-
       defaultSopsFile = "../../secrets/secrets.yaml";
     };
   };

@@ -1,9 +1,14 @@
 { pkgs, lib, config, ... }:
-
+let
+  inherit (lib) mkIf mkEnableOption;
+  cfg = config.deeznuts.hardware.stream-deck;
+in
 {
-  options.deeznuts.hardware.stream-deck.enable = lib.mkEnableOption "Enable Streamdeck peripherals";
+  options.deeznuts.hardware.stream-deck = {
+    enable = mkEnableOption "Enable stream deck";
+  };
 
-  config = lib.mkIf config.deeznuts.hardware.stream-deck.enable {
+  config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [ streamcontroller ];
   };
 }

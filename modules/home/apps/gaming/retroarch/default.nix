@@ -1,9 +1,14 @@
 { lib, config, pkgs, ... }:
-
+let
+  inherit (lib) mkEnableOption mkIf;
+  cfg = config.deeznuts.apps.gaming.retroarch;
+in
 {
-  options.deeznuts.apps.gaming.retroarch.enable = lib.mkEnableOption "Enable retroarch";
+  options.deeznuts.apps.gaming.retroarch = {
+    enable = mkEnableOption "Enable retroarch";
+  };
 
-  config = lib.mkIf config.deeznuts.apps.gaming.retroarch.enable {
+  config = mkIf cfg.enable {
     home.packages =
       let
         retroarchWithCores = (pkgs.retroarch.withCores (cores: with cores; [

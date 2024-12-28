@@ -1,5 +1,8 @@
 { lib, config, ... }:
-
+let
+  inherit (lib) mkEnableOption mkIf;
+  cfg = config.deeznuts.desktop.gnome;
+in
 {
   imports = [
     ./dconf-settings
@@ -7,9 +10,11 @@
     ./keybindings
   ];
 
-  options.deeznuts.desktop.gnome.enable = lib.mkEnableOption "Enable gnome desktop environment customization";
+  options.deeznuts.desktop.gnome = {
+    enable = mkEnableOption "Enable gnome desktop";
+  };
 
-  config = lib.mkIf config.deeznuts.desktop.gnome.enable {
+  config = mkIf cfg.enable {
     programs.gnome-shell.enable = true;
   };
 }

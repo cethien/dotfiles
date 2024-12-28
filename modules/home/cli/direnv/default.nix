@@ -1,9 +1,14 @@
 { config, lib, ... }:
-
+let
+  inherit (lib) mkEnableOption mkIf;
+  cfg = config.deeznuts.cli.direnv;
+in
 {
-  options.deeznuts.cli.direnv.enable = lib.mkEnableOption "Enable direnv";
+  options.deeznuts.cli.direnv = {
+    enable = mkEnableOption "Enable direnv";
+  };
 
-  config = lib.mkIf config.deeznuts.cli.direnv.enable {
+  config = mkIf cfg.enable {
     programs.direnv = {
       enable = true;
       silent = true;

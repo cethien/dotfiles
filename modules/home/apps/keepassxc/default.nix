@@ -1,9 +1,14 @@
 { lib, config, pkgs, ... }:
-
+let
+  inherit (lib) mkEnableOption mkIf;
+  cfg = config.deeznuts.apps.keepassxc;
+in
 {
-  options.deeznuts.apps.keepassxc.enable = lib.mkEnableOption "Enable keepassxc";
+  options.deeznuts.apps.keepassxc = {
+    enable = mkEnableOption "Enable keepassxc";
+  };
 
-  config = lib.mkIf config.deeznuts.apps.keepassxc.enable {
+  config = mkIf cfg.enable {
     home.packages = [ pkgs.keepassxc ];
   };
 }

@@ -1,7 +1,10 @@
 { config, lib, ... }:
-
+let
+  inherit (lib) mkIf;
+  cfg = config.deeznuts.desktop.hyprland;
+in
 {
-  config = lib.mkIf config.deeznuts.desktop.hyprland.enable {
+  config = mkIf cfg.enable {
     programs.waybar.settings.mainBar = {
       layer = "top";
       position = "top";

@@ -1,4 +1,8 @@
 { lib, config, ... }:
+let
+  inherit (lib) mkIf;
+  cfg = config.deeznuts.desktop.hyprland;
+in
 {
   imports = [
     ./autostart.nix
@@ -8,7 +12,7 @@
     ./bindings.nix
   ];
 
-  config = lib.mkIf config.deeznuts.desktop.hyprland.enable {
+  config = mkIf cfg.enable {
     # https://wiki.hyprland.org/Configuring/
     wayland.windowManager.hyprland.settings = {
       # See https://wiki.hyprland.org/Configuring/Monitors/

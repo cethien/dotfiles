@@ -1,9 +1,14 @@
 { lib, config, pkgs, ... }:
-
+let
+  inherit (lib) mkEnableOption mkIf;
+  cfg = config.deeznuts.cli.networking.termshark;
+in
 {
-  options.deeznuts.cli.networking.termshark.enable = lib.mkEnableOption "Enable termshark";
+  options.deeznuts.cli.networking.termshark = {
+    enable = mkEnableOption "Enable termshark";
+  };
 
-  config = lib.mkIf config.deeznuts.cli.networking.termshark.enable {
+  config = mkIf cfg.enable {
     home.packages = with pkgs; [
       tshark
       termshark

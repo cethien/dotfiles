@@ -1,9 +1,14 @@
 { lib, config, pkgs, ... }:
-
+let
+  inherit (lib) mkEnableOption mkIf;
+  cfg = config.deeznuts.cli.networking.nmap;
+in
 {
-  options.deeznuts.cli.networking.nmap.enable = lib.mkEnableOption "Enable nmap";
+  options.deeznuts.cli.networking.nmap = {
+    enable = mkEnableOption "Enable nmap";
+  };
 
-  config = lib.mkIf config.deeznuts.cli.networking.nmap.enable {
+  config = mkIf cfg.enable {
     home.packages = [ pkgs.nmap ];
   };
 }

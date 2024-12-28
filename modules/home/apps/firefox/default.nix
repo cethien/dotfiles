@@ -1,15 +1,22 @@
 { lib, config, pkgs, ... }:
+let
+  inherit (lib) mkEnableOption mkIf;
+  cfg = config.deeznuts.apps.firefox;
+  name = "${config.home.username}";
+in
 
 {
-  options.deeznuts.apps.firefox.enable = lib.mkEnableOption "Enable Firefox";
+  options.deeznuts.apps.firefox = {
+    enable = mkEnableOption "Enable Firefox";
+  };
 
-  config = lib.mkIf config.deeznuts.apps.firefox.enable {
+  config = mkIf cfg.enable {
     programs.firefox = {
       enable = true;
 
-      profiles."${config.home.username}" = {
+      profiles."${name}" = {
         id = 0;
-        name = "${config.home.username}";
+        inherit name;
 
         search.default = "DuckDuckGo";
 

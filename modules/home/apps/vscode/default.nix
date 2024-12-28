@@ -1,9 +1,14 @@
 { lib, config, pkgs, ... }:
-
+let
+  inherit (lib) mkEnableOption mkIf;
+  cfg = config.deeznuts.apps.vscode;
+in
 {
-  options.deeznuts.apps.vscode.enable = lib.mkEnableOption "Enable VSCode";
+  options.deeznuts.apps.vscode = {
+    enable = mkEnableOption "Enable VSCode";
+  };
 
-  config = lib.mkIf config.deeznuts.apps.vscode.enable {
+  config = mkIf cfg.enable {
     programs.vscode = {
       enable = true;
 
@@ -19,7 +24,9 @@
         redhat.vscode-yaml
         redhat.vscode-xml
 
-        jnoortheen.nix-ide
+        jeff-hykin.better-nix-syntax
+        pinage404.nix-extension-pack
+        nefrob.vscode-just-syntax
       ];
     };
   };

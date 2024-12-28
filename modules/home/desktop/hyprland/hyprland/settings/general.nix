@@ -1,7 +1,10 @@
 { lib, config, ... }:
-
+let
+  inherit (lib) mkIf;
+  cfg = config.deeznuts.desktop.hyprland;
+in
 {
-  config = lib.mkIf config.deeznuts.desktop.hyprland.enable {
+  config = mkIf cfg.enable {
     wayland.windowManager.hyprland.settings.general = {
       gaps_in = 5;
       gaps_out = 20;

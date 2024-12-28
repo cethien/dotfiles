@@ -1,9 +1,14 @@
 { lib, config, ... }:
-
+let
+  inherit (lib) mkEnableOption mkIf;
+  cfg = config.deeznuts.apps.easyeffects;
+in
 {
-  options.deeznuts.apps.easyeffects.enable = lib.mkEnableOption "Enable easyeffects";
+  options.deeznuts.apps.easyeffects = {
+    enable = mkEnableOption "Enable easyeffects";
+  };
 
-  config = lib.mkIf config.deeznuts.apps.easyeffects.enable {
+  config = mkIf cfg.enable {
     services.easyeffects.enable = true;
   };
 }

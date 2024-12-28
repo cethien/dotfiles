@@ -1,9 +1,14 @@
 { lib, config, ... }:
-
+let
+  inherit (lib) mkIf mkEnableOption;
+  cfg = config.deeznuts.apps.steam;
+in
 {
-  options.deeznuts.apps.steam.enable = lib.mkEnableOption "Enable Steam";
+  options.deeznuts.apps.steam = {
+    enable = mkEnableOption "Enable steam";
+  };
 
-  config = lib.mkIf config.deeznuts.apps.steam.enable {
+  config = mkIf cfg.enable {
     programs.steam = {
       enable = true;
       protontricks.enable = true;

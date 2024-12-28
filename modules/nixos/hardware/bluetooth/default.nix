@@ -1,8 +1,14 @@
 { lib, config, ... }:
+let
+  inherit (lib) mkIf mkEnableOption;
+  cfg = config.deeznuts.hardware.bluetooth;
+in
 {
-  options.deeznuts.hardware.bluetooth.enable = lib.mkEnableOption "Enable bluetooth hardware";
+  options.deeznuts.hardware.bluetooth = {
+    enable = mkEnableOption "Enable bluetooth";
+  };
 
-  config = lib.mkIf config.deeznuts.hardware.bluetooth.enable {
+  config = mkIf cfg.enable {
     hardware.bluetooth.enable = true;
   };
 }

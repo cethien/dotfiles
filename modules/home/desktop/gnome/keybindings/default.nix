@@ -1,7 +1,10 @@
 { lib, config, ... }:
-
+let
+  inherit (lib) mkIf;
+  cfg = config.deeznuts.desktop.gnome;
+in
 {
-  config = lib.mkIf config.deeznuts.desktop.gnome.enable {
+  config = mkIf cfg.enable {
     dconf.settings = {
       "org/gnome/shell/keybindings" = {
         activate-window-menu = "disabled";

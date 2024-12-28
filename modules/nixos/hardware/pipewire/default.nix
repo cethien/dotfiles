@@ -1,9 +1,14 @@
 { lib, config, pkgs, ... }:
-
+let
+  inherit (lib) mkIf mkEnableOption;
+  cfg = config.deeznuts.hardware.pipewire;
+in
 {
-  options.deeznuts.hardware.pipewire.enable = lib.mkEnableOption "Enable pipewire audio support";
+  options.deeznuts.hardware.pipewire = {
+    enable = mkEnableOption "Enable pipewire";
+  };
 
-  config = lib.mkIf config.deeznuts.hardware.pipewire.enable {
+  config = mkIf cfg.enable {
     hardware.pulseaudio.enable = false;
     security.rtkit.enable = true;
     services.pipewire = {

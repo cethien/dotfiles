@@ -1,5 +1,8 @@
 { lib, ... }:
-
+let
+  inherit (lib) mkEnableOption mkOption;
+  inherit (lib.types) str;
+in
 {
   imports = [
     ./gnome
@@ -8,12 +11,13 @@
   ];
 
   options.deeznuts.desktop = {
-    autoLogin.enable = lib.mkEnableOption "Enable autologin";
-    autoLogin.user = lib.mkOption {
-      type = lib.types.str;
-      default = "";
-      description = "The user to autologin as";
+    autoLogin = {
+      enable = mkEnableOption "Enable autologin";
+      user = mkOption {
+        type = str;
+        default = "";
+        description = "The user to autologin as";
+      };
     };
   };
-
 }

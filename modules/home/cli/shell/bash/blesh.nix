@@ -1,15 +1,17 @@
 { lib, config, pkgs, ... }:
-
 let
+  inherit (lib) mkIf mkEnableOption mkBefore;
   cfg = config.programs.bash.blesh;
 in
 {
   options = {
-    programs.bash.blesh.enable = lib.mkEnableOption "blesh, a full-featured line editor written in pure Bash";
+    programs.bash.blesh = {
+      enable = mkEnableOption "Enable blesh";
+    };
   };
 
-  config = lib.mkIf cfg.enable {
-    programs.bash.initExtra = lib.mkBefore ''
+  config = mkIf cfg.enable {
+    programs.bash.initExtra = mkBefore ''
       source ${pkgs.blesh}/share/blesh/ble.sh
     '';
   };

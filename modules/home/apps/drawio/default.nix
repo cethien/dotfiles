@@ -1,9 +1,14 @@
 { lib, config, pkgs, ... }:
-
+let
+  inherit (lib) mkEnableOption mkIf;
+  cfg = config.deeznuts.apps.drawio;
+in
 {
-  options.deeznuts.apps.drawio.enable = lib.mkEnableOption "Enable Draw.io";
+  options.deeznuts.apps.drawio = {
+    enable = mkEnableOption "Enable Draw.io";
+  };
 
-  config = lib.mkIf config.deeznuts.apps.drawio.enable {
+  config = mkIf cfg.enable {
     home.packages = with pkgs; [
       drawio
     ];

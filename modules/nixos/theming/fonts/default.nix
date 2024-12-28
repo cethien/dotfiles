@@ -1,9 +1,14 @@
 { lib, config, pkgs, ... }:
-
+let
+  inherit (lib) mkIf mkEnableOption;
+  cfg = config.deeznuts.theming.fonts;
+in
 {
-  options.deeznuts.theming.fonts.enable = lib.mkEnableOption "Install fonts";
+  options.deeznuts.theming.fonts = {
+    enable = mkEnableOption "Enable fonts";
+  };
 
-  config = lib.mkIf config.deeznuts.theming.fonts.enable {
+  config = mkIf cfg.enable {
     fonts.packages = with pkgs; [
       roboto
       open-sans

@@ -20,6 +20,11 @@
       inkscape.enable = true;
       obs-studio.enable = true;
 
+      terminals = {
+        kitty.enable = true;
+        wezterm.enable = true;
+      };
+
       gaming = {
         mangohud.enable = true;
         protonge.enable = true;

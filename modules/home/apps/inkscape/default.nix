@@ -1,9 +1,14 @@
 { lib, config, pkgs, ... }:
-
+let
+  inherit (lib) mkEnableOption mkIf;
+  cfg = config.deeznuts.apps.inkscape;
+in
 {
-  options.deeznuts.apps.inkscape.enable = lib.mkEnableOption "Enable inkscape";
+  options.deeznuts.apps.inkscape = {
+    enable = mkEnableOption "Enable inkscape";
+  };
 
-  config = lib.mkIf config.deeznuts.apps.inkscape.enable {
+  config = mkIf cfg.enable {
     home.packages = with pkgs; [ inkscape ];
   };
 }

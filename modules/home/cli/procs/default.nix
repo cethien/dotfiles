@@ -1,9 +1,14 @@
 { lib, config, pkgs, ... }:
-
+let
+  inherit (lib) mkIf mkEnableOption;
+  cfg = config.deeznuts.cli.procs;
+in
 {
-  options.deeznuts.cli.procs.enable = lib.mkEnableOption "Enable procs";
+  options.deeznuts.cli.procs = {
+    enable = mkEnableOption "Enable procs";
+  };
 
-  config = lib.mkIf config.deeznuts.cli.procs.enable {
+  config = mkIf cfg.enable {
     home.packages = with pkgs; [ procs ];
     home.shellAliases.ps = "procs";
   };

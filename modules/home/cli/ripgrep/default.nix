@@ -1,9 +1,14 @@
 { lib, config, ... }:
-
+let
+  inherit (lib) mkIf mkEnableOption;
+  cfg = config.deeznuts.cli.ripgrep;
+in
 {
-  options.deeznuts.cli.ripgrep.enable = lib.mkEnableOption "Enable ripgrep";
+  options.deeznuts.cli.ripgrep = {
+    enable = mkEnableOption "Enable ripgrep";
+  };
 
-  config = lib.mkIf config.deeznuts.cli.ripgrep.enable {
+  config = mkIf cfg.enable {
     programs.ripgrep = {
       enable = true;
       arguments = [

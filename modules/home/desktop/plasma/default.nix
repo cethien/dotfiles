@@ -1,9 +1,14 @@
-{ lib, config, pkgs, ... }:
-
+{ lib, config, ... }:
+let
+  inherit (lib) mkIf mkEnableOption;
+  cfg = config.deeznuts.desktop.plasma6;
+in
 {
-  options.deeznuts.desktop.plasma6.enable = lib.mkEnableOption "Enable Plasma desktop environment";
+  options.deeznuts.desktop.plasma6 = {
+    enable = mkEnableOption "Enable plasma desktop";
+  };
 
-  config = lib.mkIf config.deeznuts.desktop.plasma6.enable {
+  config = mkIf cfg.enable {
     programs.plasma = {
       enable = true;
 

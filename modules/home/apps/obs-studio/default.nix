@@ -1,9 +1,14 @@
 { lib, config, pkgs, ... }:
-
+let
+  inherit (lib) mkEnableOption mkIf;
+  cfg = config.deeznuts.apps.obs-studio;
+in
 {
-  options.deeznuts.apps.obs-studio.enable = lib.mkEnableOption "Enable OBS Studio";
+  options.deeznuts.apps.obs-studio = {
+    enable = mkEnableOption "Enable OBS Studio";
+  };
 
-  config = lib.mkIf config.deeznuts.apps.obs-studio.enable {
+  config = mkIf cfg.enable {
     programs.obs-studio = {
       enable = true;
 

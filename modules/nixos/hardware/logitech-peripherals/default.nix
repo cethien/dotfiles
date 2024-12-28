@@ -1,9 +1,14 @@
 { pkgs, lib, config, ... }:
-
+let
+  inherit (lib) mkIf mkEnableOption;
+  cfg = config.deeznuts.hardware.logitech-peripherals;
+in
 {
-  options.deeznuts.hardware.logitech-peripherals.enable = lib.mkEnableOption "Enable Logitech peripherals support";
+  options.deeznuts.hardware.logitech-peripherals = {
+    enable = mkEnableOption "Enable logitech peripherals";
+  };
 
-  config = lib.mkIf config.deeznuts.hardware.logitech-peripherals.enable {
+  config = mkIf cfg.enable {
     hardware.logitech.wireless.enable = true;
     environment.systemPackages = with pkgs; [ solaar ];
   };

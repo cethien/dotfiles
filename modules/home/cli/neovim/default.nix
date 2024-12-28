@@ -1,9 +1,14 @@
 { lib, config, pkgs, ... }:
-
+let
+  inherit (lib) mkEnableOption mkIf;
+  cfg = config.deeznuts.cli.neovim;
+in
 {
-  options.deeznuts.cli.neovim.enable = lib.mkEnableOption "Enable neovim";
+  options.deeznuts.cli.neovim = {
+    enable = mkEnableOption "Enable neovim";
+  };
 
-  config = lib.mkIf config.deeznuts.cli.neovim.enable {
+  config = mkIf cfg.enable {
     programs.neovim = {
       enable = true;
 
@@ -14,9 +19,8 @@
       vimdiffAlias = true;
 
       plugins = with pkgs.vimPlugins; [
-        comment-nvim
-
         vim-nix
+        comment-nvim
       ];
 
       extraConfig = ''
