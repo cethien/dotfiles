@@ -1,6 +1,7 @@
 {
   imports = [
-    ./catppuccin
+    ./nixpkgs
     ./sops
+    ./catppuccin
   ];
 }

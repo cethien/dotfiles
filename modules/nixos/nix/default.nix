@@ -1,23 +1,15 @@
-{ lib, config, pkgs, ... }:
+{ lib, config, ... }:
 let
-  inherit (lib) mkIf mkEnableOption mkOption;
-  inherit (lib.types) package;
+  inherit (lib) mkIf mkEnableOption;
   cfg = config.deeznuts.nix;
 in
 {
   options.deeznuts.nix = {
     enable = mkEnableOption "Enable nix configuration";
-    package = mkOption {
-      type = package;
-      default = pkgs.nix;
-      description = "The nix package to use";
-    };
   };
 
   config = mkIf cfg.enable {
     nix = {
-      package = cfg.package;
-
       gc = {
         automatic = true;
         dates = "weekly";

@@ -38,6 +38,8 @@
         };
         modules = [
           ./homes/cethien_LPT-SOTNIKOW
+
+          inputs.catppuccin.homeManagerModules.catppuccin
         ];
       };
 
@@ -46,6 +48,14 @@
 
         modules = [
           ./homes/cethien_tower-of-power
+
+
+          inputs.catppuccin.homeManagerModules.catppuccin
+
+          inputs.sops-nix.homeManagerModules.sops
+          inputs.plasma-manager.homeManagerModules.plasma-manager
+          inputs.nur.modules.homeManager.default
+          inputs.spicetify-nix.homeManagerModules.default
         ];
 
         extraSpecialArgs = {
@@ -57,6 +67,9 @@
       nixosConfigurations."tower-of-power" = inputs.nixpkgs.lib.nixosSystem {
         modules = [
           ./systems/tower-of-power
+
+          inputs.sops-nix.nixosModules.sops
+          inputs.catppuccin.nixosModules.catppuccin
         ];
 
         specialArgs = {
