@@ -20,6 +20,7 @@
       easyeffects.enable = true;
 
       firefox.enable = true;
+      zen.enable = true;
       spotify.enable = true;
       vscode.enable = true;
       keepassxc.enable = true;

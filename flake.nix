@@ -33,14 +33,15 @@
     // {
       homeConfigurations."cethien@lpt-sotnikow" = inputs.home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-        extraSpecialArgs = {
-          inherit inputs;
-        };
         modules = [
           ./homes/cethien_LPT-SOTNIKOW
 
           inputs.catppuccin.homeManagerModules.catppuccin
         ];
+
+        extraSpecialArgs = {
+          inherit inputs;
+        };
       };
 
       homeConfigurations."cethien@tower-of-power" = inputs.home-manager.lib.homeManagerConfiguration {
@@ -59,7 +60,7 @@
         ];
 
         extraSpecialArgs = {
-          inherit inputs;
+          inherit inputs system;
         };
       };
     }
@@ -83,31 +84,32 @@
 
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-
-    disko.url = "github:nix-community/disko";
-    disko.inputs.nixpkgs.follows = "nixpkgs";
-
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    zen-browser.url = "github:youwen5/zen-browser-flake";
+    zen-browser.inputs.nixpkgs.follows = "nixpkgs";
 
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
-    plasma-manager = {
-      url = "github:nix-community/plasma-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
-    };
-
-    catppuccin.url = "github:catppuccin/nix";
-
-    nur.url = "github:nix-community/NUR";
-    nur.inputs.nixpkgs.follows = "nixpkgs";
+    plasma-manager.url = "github:nix-community/plasma-manager";
+    plasma-manager.inputs.nixpkgs.follows = "nixpkgs";
+    plasma-manager.inputs.home-manager.follows = "home-manager";
 
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     spicetify-nix.inputs.nixpkgs.follows = "nixpkgs";
 
+    catppuccin.url = "github:catppuccin/nix";
+
     nixos-hardware.url = "github:nixos/nixos-hardware";
+
+    home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    disko.url = "github:nix-community/disko";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
+
+    nur.url = "github:nix-community/NUR";
+    nur.inputs.nixpkgs.follows = "nixpkgs";
+
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
   };
 }

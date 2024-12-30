@@ -1,5 +1,7 @@
 { config, meta, ... }:
-
+let
+  user = "cethien";
+in
 {
   imports = [
     ../../modules/nixos
@@ -67,7 +69,7 @@
     desktop = {
       plasma.enable = true;
       autoLogin.enable = true;
-      autoLogin.user = config.users.users.cethien.name;
+      autoLogin.user = user;
     };
 
     apps = {
@@ -78,10 +80,10 @@
     virtualisation = {
       docker.enable = true;
       docker.liveRestore = true;
-      docker.users = [ config.users.users.cethien.name ];
+      docker.users = [ user ];
 
       kvm.enable = true;
-      kvm.users = [ config.users.users.cethien.name ];
+      kvm.users = [ user ];
     };
   };
 }
