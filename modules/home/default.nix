@@ -1,12 +1,30 @@
+{ lib, config, ... }:
+let
+  inherit (lib) mkOption;
+  inherit (lib.types) str;
+  cfg = config.deeznuts;
+in
 {
   imports = [
     ../shared
-    ./user
     ./cli
     ./services
     ./desktop
     ./apps
   ];
 
-  programs.home-manager.enable = true;
+  options.deeznuts = {
+    username = mkOption {
+      type = str;
+      default = "cethien";
+      description = "The user name to use for home-manager";
+    };
+  };
+
+  config = {
+    programs.home-manager.enable = true;
+
+    home.username = cfg.username;
+    home.homeDirectory = "/home/${cfg.username}";
+  };
 }

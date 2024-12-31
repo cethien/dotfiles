@@ -1,4 +1,4 @@
-{ config, meta, ... }:
+{ meta, ... }:
 let
   user = "cethien";
 in
@@ -20,9 +20,10 @@ in
       device = "/dev/nvme0n1";
     };
 
+    hostname = meta.hostname;
+
     networking = {
       enable = true;
-      hostName = meta.hostname;
       networkManager.enable = true;
     };
 

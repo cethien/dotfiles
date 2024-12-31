@@ -26,6 +26,7 @@
         shellHook = ''
           if [ ! -f .env ]; then
             cp .env.TEMPLATE .env
+            $EDITOR .env
           fi
         '';
       };
@@ -34,8 +35,7 @@
       homeConfigurations."cethien@lpt-sotnikow" = inputs.home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [
-          ./homes/cethien_LPT-SOTNIKOW
-
+          ./homes/cethien_WSL
           inputs.catppuccin.homeManagerModules.catppuccin
         ];
 
@@ -49,10 +49,7 @@
 
         modules = [
           ./homes/cethien_tower-of-power
-
-
           inputs.catppuccin.homeManagerModules.catppuccin
-
           inputs.sops-nix.homeManagerModules.sops
           inputs.plasma-manager.homeManagerModules.plasma-manager
           inputs.nur.modules.homeManager.default
@@ -68,7 +65,6 @@
       nixosConfigurations."tower-of-power" = inputs.nixpkgs.lib.nixosSystem {
         modules = [
           ./systems/tower-of-power
-
           inputs.sops-nix.nixosModules.sops
           inputs.catppuccin.nixosModules.catppuccin
         ];

@@ -6,10 +6,7 @@
   deeznuts = {
     nixpkgs.allowUnfree = true;
 
-    user = {
-      enable = true;
-      name = "cethien";
-    };
+    username = "cethien";
 
     catppuccin.enable = true;
 

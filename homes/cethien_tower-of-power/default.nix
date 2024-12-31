@@ -6,10 +6,7 @@
   deeznuts = {
     nixpkgs.allowUnfree = true;
 
-    user = {
-      enable = true;
-      name = "cethien";
-    };
+    username = "cethien";
 
     catppuccin.enable = true;
     desktop.plasma6.enable = true;
@@ -19,7 +16,6 @@
     apps = {
       easyeffects.enable = true;
 
-      firefox.enable = true;
       zen.enable = true;
       spotify.enable = true;
       vscode.enable = true;
