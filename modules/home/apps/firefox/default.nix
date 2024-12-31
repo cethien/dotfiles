@@ -28,6 +28,7 @@ in
           "browser.warnOnQuitShortcut" = false;
           "browser.tabs.loadBookmarksInTabs" = true;
           "browser.search.openintab" = true;
+          "browser.urlbar.openintab" = true;
           "toolkit.telemetry.reportingpolicy.firstRun" = false;
           "trailhead.firstrun.didSeeAboutWelcome" = true;
           "signon.management.page.breach-alerts.enabled" = false;
