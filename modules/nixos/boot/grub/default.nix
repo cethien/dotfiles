@@ -22,7 +22,7 @@ in
 
     device = mkOption {
       type = str;
-      default = "/dev/sda";
+      default = "";
       description = "The device to use for boot";
     };
   };

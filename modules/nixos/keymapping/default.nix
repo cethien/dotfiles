@@ -11,21 +11,15 @@ in
     xkb = {
       layout = mkOption {
         type = str;
-        default = "de";
+        default = "";
         description = "The keyboard layout to use";
       };
 
       variant = mkOption {
         type = str;
-        default = "nodeadkeys";
+        default = "";
         description = "The keyboard variant to use";
       };
-    };
-
-    keyMap = mkOption {
-      type = str;
-      default = "de-latin1-nodeadkeys";
-      description = "The keymap to use";
     };
   };
 
@@ -34,6 +28,6 @@ in
       inherit layout variant;
     };
 
-    console.keyMap = cfg.keyMap;
+    console.useXkbConfig = true;
   };
 }

@@ -11,6 +11,58 @@
       };
     in
     {
+      homeConfigurations = {
+        "cethien@lpt-sotnikow" = inputs.home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          modules = [
+            ./homes/cethien_WSL
+            ./modules/shared/catppuccin
+            inputs.catppuccin.homeManagerModules.catppuccin
+          ];
+
+          extraSpecialArgs = {
+            inherit inputs;
+          };
+        };
+
+        "cethien@tower-of-power" = inputs.home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          modules = [
+            ./homes/cethien_tower-of-power
+            ./modules/shared/catppuccin
+            inputs.catppuccin.homeManagerModules.catppuccin
+            inputs.sops-nix.homeManagerModules.sops
+            inputs.plasma-manager.homeManagerModules.plasma-manager
+            inputs.nur.modules.homeManager.default
+            inputs.spicetify-nix.homeManagerModules.default
+          ];
+
+          extraSpecialArgs = {
+            inherit inputs system;
+          };
+        };
+      };
+    }
+    // {
+      nixosConfigurations = {
+        "tower-of-power" = inputs.nixpkgs.lib.nixosSystem {
+          modules = [
+            ./systems/tower-of-power
+            ./modules/shared/catppuccin
+            inputs.sops-nix.nixosModules.sops
+            inputs.catppuccin.nixosModules.catppuccin
+          ];
+
+          specialArgs = {
+            inherit inputs;
+            meta = {
+              hostname = "tower-of-power";
+            };
+          };
+        };
+      };
+    }
+    // {
       devShells.x86_64-linux.default = pkgs.mkShell {
         buildInputs = with pkgs; [
           git
@@ -29,52 +81,6 @@
             $EDITOR .env
           fi
         '';
-      };
-    }
-    // {
-      homeConfigurations."cethien@lpt-sotnikow" = inputs.home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        modules = [
-          ./homes/cethien_WSL
-          inputs.catppuccin.homeManagerModules.catppuccin
-        ];
-
-        extraSpecialArgs = {
-          inherit inputs;
-        };
-      };
-
-      homeConfigurations."cethien@tower-of-power" = inputs.home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-
-        modules = [
-          ./homes/cethien_tower-of-power
-          inputs.catppuccin.homeManagerModules.catppuccin
-          inputs.sops-nix.homeManagerModules.sops
-          inputs.plasma-manager.homeManagerModules.plasma-manager
-          inputs.nur.modules.homeManager.default
-          inputs.spicetify-nix.homeManagerModules.default
-        ];
-
-        extraSpecialArgs = {
-          inherit inputs system;
-        };
-      };
-    }
-    // {
-      nixosConfigurations."tower-of-power" = inputs.nixpkgs.lib.nixosSystem {
-        modules = [
-          ./systems/tower-of-power
-          inputs.sops-nix.nixosModules.sops
-          inputs.catppuccin.nixosModules.catppuccin
-        ];
-
-        specialArgs = {
-          inherit inputs;
-          meta = {
-            hostname = "tower-of-power";
-          };
-        };
       };
     };
 
