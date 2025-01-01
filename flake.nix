@@ -9,6 +9,9 @@
         config.allowUnfree = true;
         overlays = [ inputs.nur.overlays.default ];
       };
+
+      stateVersion = "25.05";
+      defaultUser = "cethien";
     in
     {
       homeConfigurations = {
@@ -18,6 +21,12 @@
             ./homes/cethien_WSL
             ./modules/shared/catppuccin
             inputs.catppuccin.homeManagerModules.catppuccin
+
+            {
+              home.stateVersion = stateVersion;
+              home.username = defaultUser;
+              home.homeDirectory = "/home/${defaultUser}";
+            }
           ];
 
           extraSpecialArgs = {
@@ -35,6 +44,12 @@
             inputs.plasma-manager.homeManagerModules.plasma-manager
             inputs.nur.modules.homeManager.default
             inputs.spicetify-nix.homeManagerModules.default
+
+            {
+              home.stateVersion = stateVersion;
+              home.username = defaultUser;
+              home.homeDirectory = "/home/${defaultUser}";
+            }
           ];
 
           extraSpecialArgs = {
@@ -51,13 +66,15 @@
             ./modules/shared/catppuccin
             inputs.sops-nix.nixosModules.sops
             inputs.catppuccin.nixosModules.catppuccin
+
+            {
+              system.stateVersion = stateVersion;
+              networking.hostName = "tower-of-power";
+            }
           ];
 
           specialArgs = {
             inherit inputs;
-            meta = {
-              hostname = "tower-of-power";
-            };
           };
         };
       };

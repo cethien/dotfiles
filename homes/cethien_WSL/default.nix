@@ -1,12 +1,10 @@
 {
-  home.stateVersion = "25.05"; # DO NOT CHANGE IF YOU DON'T KNOW WHAT YOU ARE DOING
-
   imports = [ ../../modules/home ];
+
+  programs.home-manager.enable = true;
 
   deeznuts = {
     nixpkgs.allowUnfree = true;
-
-    username = "cethien";
 
     catppuccin.enable = true;
 

@@ -1,6 +1,6 @@
-{ meta, ... }:
 let
   user = "cethien";
+  formattingLocale = "de_DE.UTF-8";
 in
 {
   imports = [
@@ -11,36 +11,40 @@ in
   # DO NOT CHANGE IF YOU DON'T KNOW WHAT YOU ARE DOING
   system.stateVersion = "25.05";
 
+  boot.loader.grub = {
+    enable = true;
+    device = "/dev/nvme0n1";
+  };
+
+  networking.networkmanager.enable = true;
+
+  time.timeZone = "Europe/Berlin";
+  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = formattingLocale;
+    LC_IDENTIFICATION = formattingLocale;
+    LC_MEASUREMENT = formattingLocale;
+    LC_MONETARY = formattingLocale;
+    LC_NAME = formattingLocale;
+    LC_NUMERIC = formattingLocale;
+    LC_PAPER = formattingLocale;
+    LC_TELEPHONE = formattingLocale;
+    LC_TIME = formattingLocale;
+  };
+
+  services.xserver.xkb = {
+    layout = "de";
+    variant = "nodeadkeys";
+  };
+  console.useXkbConfig = true;
+
+  hardware.bluetooth.enable = true;
+
+  services.printing.enable = true;
+
   deeznuts = {
     nix.enable = true;
     nixpkgs.allowUnfree = true;
-
-    boot.grub = {
-      enable = true;
-      device = "/dev/nvme0n1";
-    };
-
-    hostname = meta.hostname;
-
-    networking = {
-      enable = true;
-      networkManager.enable = true;
-    };
-
-    localization = {
-      enable = true;
-      timeZone = "Europe/Berlin";
-      locale = "en_US.UTF-8";
-      extraLocale = "de_DE.UTF-8";
-    };
-
-    keymapping = {
-      enable = true;
-      xkb = {
-        layout = "de";
-        variant = "nodeadkeys";
-      };
-    };
 
     hardware = {
       nvidia-gpu.enable = true;
@@ -50,13 +54,10 @@ in
       logitech-peripherals.enable = true;
       stream-deck.enable = true;
       xbox-controller.enable = true;
-
-      bluetooth.enable = true;
     };
 
     services = {
       ssh.enable = true;
-      print.enable = true;
     };
 
     users = {
@@ -67,12 +68,12 @@ in
 
     desktop = {
       plasma.enable = true;
+
       autoLogin.enable = true;
       autoLogin.user = user;
     };
 
     apps = {
-      home-manager.enable = true;
       steam.enable = true;
     };
 

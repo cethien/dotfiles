@@ -1,7 +1,5 @@
 {
   imports = [
-    ./bluetooth
-
     ./logitech-peripherals
     ./nvidia-gpu
     ./pipewire
