@@ -27,6 +27,8 @@ in
   };
 
   config = mkIf cfg.enable {
+    time.timeZone = cfg.timeZone;
+
     i18n.defaultLocale = cfg.locale;
 
     i18n.extraLocaleSettings = {
