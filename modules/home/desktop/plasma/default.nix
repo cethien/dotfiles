@@ -17,7 +17,13 @@ in
         lookAndFeel = "Catppuccin-Mocha-Mauve";
         iconTheme = "Tela-dracula-dark";
         cursor.theme = "Nordzy-cursors";
-        wallpaper = "/home/cethien/Pictures/wallpapers/drippy-smiley-cute-5120x2880.jpg";
+        wallpaper = "/home/cethien/Pictures/wallpapers/drippy-smiley.jpg";
+      };
+
+      shortcuts = {
+        "services/org.wezfurlong.wezterm.desktop" = {
+          "_launch" = "Ctrl+Alt+T";
+        };
       };
 
       panels = [
@@ -29,7 +35,6 @@ in
           height = 42;
 
           widgets = [
-            "org.kde.plasma.kickoff"
             "org.kde.plasma.panelspacer"
             {
               plasmusicToolbar = {
@@ -54,14 +59,34 @@ in
             }
             "org.kde.plasma.panelspacer"
             {
+              digitalClock = {
+                time.format = "24h";
+                calendar.firstDayOfWeek = "monday";
+                calendar.showWeekNumbers = true;
+              };
+            }
+          ];
+        }
+        {
+          screen = 0;
+          location = "top";
+          floating = true;
+
+          height = 42;
+
+          widgets = [
+            "org.kde.plasma.kickoff"
+            "org.kde.plasma.pager"
+            "org.kde.plasma.panelspacer"
+            {
               systemTray.items = {
                 shown = [
+                  "org.kde.plasma.volume"
                   "org.kde.plasma.bluetooth"
                 ];
                 hidden = [
                   "org.kde.plasma.battery"
                   "org.kde.plasma.networkmanagement"
-                  "org.kde.plasma.volume"
                 ];
               };
             }
