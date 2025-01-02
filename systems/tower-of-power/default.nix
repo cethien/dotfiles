@@ -8,9 +8,6 @@ in
     ./hardware-configuration.nix
   ];
 
-  # DO NOT CHANGE IF YOU DON'T KNOW WHAT YOU ARE DOING
-  system.stateVersion = "25.05";
-
   boot.loader.grub = {
     enable = true;
     device = "/dev/nvme0n1";
@@ -78,12 +75,16 @@ in
     };
 
     virtualisation = {
-      docker.enable = true;
-      docker.liveRestore = true;
-      docker.users = [ user ];
+      docker = {
+        enable = true;
+        liveRestore = true;
+        users = [ user ];
+      };
 
-      kvm.enable = true;
-      kvm.users = [ user ];
+      kvm = {
+        enable = true;
+        users = [ user ];
+      };
     };
   };
 }
