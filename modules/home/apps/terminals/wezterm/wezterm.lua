@@ -16,7 +16,7 @@ config.default_cursor_style = 'BlinkingBar'
 config.cursor_blink_ease_in = 'Constant'
 config.cursor_blink_ease_out = 'Constant'
 
-config.enable_tab_bar = false
+config.hide_tab_bar_if_only_one_tab = true
 
 config.command_palette_rows = 12
 config.command_palette_font_size = 14
