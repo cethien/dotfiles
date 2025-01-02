@@ -19,8 +19,12 @@
           inherit pkgs;
           modules = [
             ./homes/cethien_WSL
-            ./modules/shared/catppuccin
+
+            inputs.sops-nix.homeManagerModules.sops
+            ./modules/shared/sops
+
             inputs.catppuccin.homeManagerModules.catppuccin
+            ./modules/shared/catppuccin
 
             {
               home.stateVersion = stateVersion;
@@ -38,13 +42,16 @@
           inherit pkgs;
           modules = [
             ./homes/cethien_tower-of-power
-            ./modules/shared/catppuccin
+
             inputs.catppuccin.homeManagerModules.catppuccin
+            ./modules/shared/catppuccin
+
             inputs.sops-nix.homeManagerModules.sops
+            ./modules/shared/sops
+
             inputs.plasma-manager.homeManagerModules.plasma-manager
             inputs.nur.modules.homeManager.default
             inputs.spicetify-nix.homeManagerModules.default
-
             {
               home.stateVersion = stateVersion;
               home.username = defaultUser;
@@ -63,9 +70,12 @@
         "tower-of-power" = inputs.nixpkgs.lib.nixosSystem {
           modules = [
             ./systems/tower-of-power
-            ./modules/shared/catppuccin
+
             inputs.sops-nix.nixosModules.sops
+            ./modules/shared/sops
+
             inputs.catppuccin.nixosModules.catppuccin
+            ./modules/shared/catppuccin
 
             {
               system.stateVersion = stateVersion;
