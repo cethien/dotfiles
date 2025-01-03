@@ -1,3 +1,4 @@
+{ pkgs, ... }:
 let
   user = "cethien";
   formattingLocale = "de_DE.UTF-8";
@@ -8,9 +9,13 @@ in
     ./hardware-configuration.nix
   ];
 
-  boot.loader.grub = {
-    enable = true;
-    device = "/dev/nvme0n1";
+  boot = {
+    kernelPackages = pkgs.linuxPackages_zen;
+
+    loader.grub = {
+      enable = true;
+      device = "/dev/nvme0n1";
+    };
   };
 
   networking.networkmanager.enable = true;
