@@ -57,8 +57,10 @@ in
 
           volume.label = false;
 
-          workspaces.showApplicationIcons = true;
-          workspaces.show_icons = true;
+          workspaces = {
+            showApplicationIcons = true;
+            show_icons = true;
+          };
         };
 
         menus = {
@@ -72,14 +74,16 @@ in
 
           dashboard = {
             directories.enabled = false;
-            stats.enable_gpu = true;
-
             shortcuts.enabled = false;
+            stats.enable_gpu = true;
           };
         };
 
         theme = {
-          bar.transparent = true;
+          bar = {
+            transparent = true;
+            buttons.clock.spacing = "0em";
+          };
 
           font = {
             name = "MesloLGL Nerd Font";
@@ -89,6 +93,7 @@ in
           osd = {
             location = "bottom";
             orientation = "horizontal";
+            margins = "0px 0px 2rem 0px";
           };
         };
       };
