@@ -13,7 +13,6 @@
     ./ocenaudio
     ./rnote
     ./spotify
-    ./terminals
     ./vscode
     ./zen
   ];

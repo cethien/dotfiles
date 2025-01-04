@@ -1,4 +1,4 @@
-{ config, lib, system, inputs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 let
   inherit (lib) mkIf mkEnableOption;
   cfg = config.deeznuts.apps.zen;
@@ -9,6 +9,6 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = [ inputs.zen-browser.packages.${system}.default ];
+    home.packages = [ inputs.zen-browser.packages.${pkgs.system}.default ];
   };
 }

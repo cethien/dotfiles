@@ -8,7 +8,9 @@
 
     catppuccin.enable = true;
 
-    desktop.plasma6.enable = true;
+    desktop.hyprland = {
+      enable = true;
+    };
 
     cli.enable = true;
 
@@ -26,11 +28,6 @@
       inkscape.enable = true;
       obs-studio.enable = true;
 
-      terminals = {
-        kitty.enable = true;
-        wezterm.enable = true;
-      };
-
       gaming = {
         mangohud.enable = true;
         protonge.enable = true;
@@ -39,6 +36,10 @@
         retroarch.enable = true;
         prismlauncher.enable = true;
       };
+    };
+
+    terminals = {
+      kitty.enable = true;
     };
   };
 }

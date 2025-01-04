@@ -9,10 +9,6 @@ in
       enable = true;
 
       settings = {
-        ipc = "on";
-        splash = false;
-        splash_offset = 2.0;
-
         preload = [
           "/home/cethien/Pictures/wallpapers/drippy-smiley.jpg"
           "/home/cethien/Pictures/wallpapers/drippy-smiley-solid-color.jpg"
@@ -20,7 +16,7 @@ in
 
         wallpaper = [
           "DP-1,/home/cethien/Pictures/wallpapers/drippy-smiley.jpg"
-          "DP-2,/home/cethien/Pictures/wallpapers/drippy-smiley-solid-color.jpg"
+          "HDMI-A-1,/home/cethien/Pictures/wallpapers/drippy-smiley-solid-color.jpg"
         ];
       };
     };

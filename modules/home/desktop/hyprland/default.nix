@@ -1,14 +1,13 @@
-{ lib, config, ... }:
+{ lib, config, pkgs, ... }:
 let
   inherit (lib) mkIf mkEnableOption;
   cfg = config.deeznuts.desktop.hyprland;
 in
 {
   imports = [
-    ./hyprland
-    ./hyprpaper
-    ./rofi
-    ./waybar
+    ./settings
+    ./apps
+    ./plugins.nix
   ];
 
   options.deeznuts.desktop.hyprland = {
@@ -16,7 +15,8 @@ in
   };
 
   config = mkIf cfg.enable {
-    services.mako.enable = true;
-    services.playerctld.enable = true;
+    wayland.windowManager.hyprland = {
+      enable = true;
+    };
   };
 }

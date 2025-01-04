@@ -49,9 +49,7 @@
             inputs.sops-nix.homeManagerModules.sops
             ./modules/shared/sops
 
-            inputs.plasma-manager.homeManagerModules.plasma-manager
             inputs.nur.modules.homeManager.default
-            inputs.spicetify-nix.homeManagerModules.default
             {
               home.stateVersion = stateVersion;
               home.username = defaultUser;
@@ -60,7 +58,7 @@
           ];
 
           extraSpecialArgs = {
-            inherit inputs system;
+            inherit inputs;
           };
         };
       };
@@ -113,6 +111,9 @@
 
 
   inputs = {
+    hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
+    hyprpanel.inputs.nixpkgs.follows = "nixpkgs";
+
     zen-browser.url = "github:youwen5/zen-browser-flake";
     zen-browser.inputs.nixpkgs.follows = "nixpkgs";
 

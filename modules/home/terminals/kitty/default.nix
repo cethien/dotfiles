@@ -1,10 +1,10 @@
 { lib, config, ... }:
 let
   inherit (lib) mkEnableOption mkIf;
-  cfg = config.deeznuts.apps.terminals.kitty;
+  cfg = config.deeznuts.terminals.kitty;
 in
 {
-  options.deeznuts.apps.terminals.kitty = {
+  options.deeznuts.terminals.kitty = {
     enable = mkEnableOption "Enable kitty terminal";
   };
 
@@ -12,7 +12,7 @@ in
     programs.kitty = {
       enable = true;
 
-      font.name = "CodeNewRoman Nerd Font Mono";
+      font.name = "MesloLGM Nerd Font Mono";
       font.size = 14;
     };
   };

@@ -4,5 +4,6 @@
     ./cli
     ./desktop
     ./apps
+    ./terminals
   ];
 }

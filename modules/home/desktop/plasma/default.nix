@@ -1,9 +1,13 @@
-{ lib, config, ... }:
+{ lib, config, inputs, ... }:
 let
   inherit (lib) mkIf mkEnableOption;
   cfg = config.deeznuts.desktop.plasma6;
 in
 {
+  imports = [
+    inputs.plasma-manager.homeManagerModules.plasma-manager
+  ];
+
   options.deeznuts.desktop.plasma6 = {
     enable = mkEnableOption "Enable plasma desktop";
   };

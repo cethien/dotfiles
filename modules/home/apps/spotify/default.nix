@@ -4,6 +4,10 @@ let
   cfg = config.deeznuts.apps.spotify;
 in
 {
+  imports = [
+    inputs.spicetify-nix.homeManagerModules.default
+  ];
+
   options.deeznuts.apps.spotify = {
     enable = mkEnableOption "Enable Spotify";
   };

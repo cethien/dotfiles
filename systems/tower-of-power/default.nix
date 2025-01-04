@@ -69,7 +69,7 @@ in
     catppuccin.enable = true;
 
     desktop = {
-      plasma.enable = true;
+      hyprland.enable = true;
 
       autoLogin.enable = true;
       autoLogin.user = user;
