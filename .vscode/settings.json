@@ -13,5 +13,32 @@
     "editor.defaultFormatter": "sumneko.lua"
   },
 
-  "direnv.restart.automatic": true
+  "direnv.restart.automatic": true,
+  "taskExplorer.exclude": [
+    "**/.vscode-test/**",
+    "**/Assets/**",
+    "**/bin/**",
+    "**/build/**",
+    "**/dist/**",
+    "**/doc/**",
+    "**/example/**",
+    "**/examples/**",
+    "**/ext/**",
+    "**/obj/**",
+    "**/out/**",
+    "**/output/**",
+    "**/packages/**",
+    "**/release/**",
+    "**/releases/**",
+    "**/samples/**",
+    "**/sdks/**",
+    "**/static/**",
+    "**/target/**",
+    "**/test/**",
+    "**/third_party/**",
+    "**/vendor/**",
+    "**/work/**",
+    "**/.direnv/**",
+    "modules/**"
+  ]
 }
