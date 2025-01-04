@@ -1,15 +1,10 @@
-{ lib, config, pkgs, ... }:
+{ lib, config, ... }:
 let
   inherit (lib) mkIf;
   cfg = config.deeznuts.desktop.hyprland;
 in
 {
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [
-      brightnessctl
-      playerctl
-    ];
-
     wayland.windowManager.hyprland = {
       settings = {
         # https://wiki.hyprland.org/Configuring/Keywords/
@@ -36,20 +31,6 @@ in
           "$mainMod, mouse:273, resizewindow"
         ];
 
-        "$spotifyctl" = "playerctl --player=spotify";
-
-        bindl = [
-          ", XF86AudioRaiseVolume, exec, $spotifyctl volume 0.05+"
-          ", XF86AudioLowerVolume, exec, $spotifyctl volume 0.05-"
-
-          ", XF86AudioNext, exec, $spotifyctl next"
-          ", XF86AudioPrev, exec, $spotifyctl previous"
-          ", XF86AudioPlay, exec, $spotifyctl play-pause"
-          ", XF86AudioPause, exec, $potifyctl play-pause"
-
-          ", XF86MonBrightnessUp, exec, brightnessctl s 10%+"
-          ", XF86MonBrightnessDown, exec, brightnessctl s 10%-"
-        ];
       };
     };
   };

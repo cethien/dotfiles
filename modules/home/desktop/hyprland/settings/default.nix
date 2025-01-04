@@ -9,7 +9,6 @@ in
     ./decorations.nix
     ./animations.nix
     ./bindings.nix
-    ./workspaces.nix
   ];
 
   config = mkIf cfg.enable {

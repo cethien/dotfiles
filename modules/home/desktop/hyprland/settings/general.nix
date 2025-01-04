@@ -5,18 +5,20 @@ let
 in
 {
   config = mkIf cfg.enable {
-    wayland.windowManager.hyprland.settings.general = {
-      gaps_in = 5;
-      gaps_out = 20;
+    wayland.windowManager.hyprland.settings = {
+      general = {
+        gaps_in = 5;
+        gaps_out = 20;
 
-      border_size = 2;
+        border_size = 2;
 
-      resize_on_border = true;
+        resize_on_border = true;
 
-      # https://wiki.hyprland.org/Configuring/Tearing/
-      allow_tearing = false;
+        # https://wiki.hyprland.org/Configuring/Tearing/
+        allow_tearing = false;
 
-      layout = "dwindle";
+        layout = "dwindle";
+      };
     };
   };
 }
