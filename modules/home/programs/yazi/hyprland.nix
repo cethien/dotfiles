@@ -15,8 +15,8 @@ in
         "float, class:^(yazi)$"
         "center, class:^(yazi)$"
         "size 1640 990, class:^(yazi)$"
+        "stayfocused, class:^(yazi)$"
       ];
-
     };
   };
 }

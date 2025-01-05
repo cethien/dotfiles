@@ -15,6 +15,7 @@ in
         "float, class:^(bottom)$"
         "center, class:^(bottom)$"
         "size 1640 990, class:^(bottom)$"
+        "stayfocused, class:^(bottom)$"
       ];
     };
   };
