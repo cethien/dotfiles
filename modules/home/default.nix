@@ -1,9 +1,7 @@
 {
   imports = [
     ../shared/nixpkgs
-    ./cli
+    ./programs
     ./desktop
-    ./apps
-    ./terminals
   ];
 }

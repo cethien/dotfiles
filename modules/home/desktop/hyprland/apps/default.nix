@@ -5,19 +5,19 @@ let
 in
 {
   imports = [
-    ./hyprpaper.nix
-    ./hyprpanel.nix
-    ./rofi.nix
+    ./hyprpaper
+    ./hyprpanel
+    ./rofi
 
-    ./hyprlock.nix
-    ./hypridle.nix
+    ./hyprlock
+    ./hypridle
   ];
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
       brightnessctl
-      playerctl
 
+      clipse
       hyprpicker
       hyprshot
     ];
@@ -31,67 +31,39 @@ in
 
       # https://wiki.hyprland.org/Configuring/Workspace-Rules/
       workspace = [
-        "1, name:general, monitor:DP-1, persistent:true, default:false"
-        "2, name:gaming, monitor:DP-1, persistent:true, default:false"
+        "1, monitor:DP-1, persistent:true, default:false"
+        "r[2-5], monitor:DP-1, persistent:true, default:true"
 
-        "3, name:browser, monitor:HDMI-A-1, persistent:true, default:false"
-        "4, name:spotify, monitor:HDMI-A-1, persistent:true, default:false"
-        "5, name:discord, monitor:HDMI-A-1, persistent:true, default:false"
+        "10, monitor:HDMI-A-1, persistent:true, default:true"
+        "11, monitor:HDMI-A-1, persistent:true, default:false"
+        "12, monitor:HDMI-A-1, persistent:true, default:false"
       ];
 
       exec-once = [
-        "steam -silent"
+        "clipse -listen"
+
         "solaar -w hide"
-
-        "[workspace 1 silent] code"
-
-        "[workspace 3 silent] zen"
-        "[workspace 4 silent] spotify"
-        "[workspace 5 silent] discordcanary"
+        "streamcontroller"
       ];
-
-      "$terminal" = "kitty";
-      "$fileManager" = "kitty yazi";
-      "$menu" = "rofi -show drun";
 
       bind = [
         # scroll through existing workspaces
-        "$mainMod, mouse_down, workspace, e+1"
-        "$mainMod, mouse_up, workspace, e-1"
-        "$mainMod CTRL, left, workspace, e-1"
-        "$mainMod CTRL, right, workspace, e+1"
+        "SUPER CTRL, right, workspace, e+1"
+        "SUPER CTRL, left, workspace, e-1"
 
-        "$mainMod, R, exec, $menu"
-        "$mainMod, SPACE, exec, $menu"
+        "SUPER, E, exec, $terminal --class yazi yazi"
 
-        "$mainMod, Q, exec, $terminal"
-        "$mainMod, E, exec, $fileManager"
+        "SUPER SHIFT, V, exec, $terminal --class clipse clipse"
 
-        "$mainMod SHIFT, C, exec, hyprpicker -a"
+        "SUPER SHIFT, C, exec, hyprpicker -a"
 
-        "$mainMod SHIFT, S, exec, hyprshot -m region"
+        "SUPER SHIFT, S, exec, hyprshot -m region"
         ", Print, exec, hyprshot -m window"
       ];
 
-      "$spotifyctl" = "playerctl --player=spotify";
-
       bindl = [
-        ", XF86AudioRaiseVolume, exec, $spotifyctl volume 0.05+"
-        ", XF86AudioLowerVolume, exec, $spotifyctl volume 0.05-"
-
-        ", XF86AudioNext, exec, $spotifyctl next"
-        ", XF86AudioPrev, exec, $spotifyctl previous"
-        ", XF86AudioPlay, exec, $spotifyctl play-pause"
-        ", XF86AudioPause, exec, $spotifyctl play-pause"
-
         ", XF86MonBrightnessUp, exec, brightnessctl s 10%+"
         ", XF86MonBrightnessDown, exec, brightnessctl s 10%-"
-      ];
-
-      # https://wiki.hyprland.org/Configuring/Window-Rules/
-      windowrulev2 = [
-        "suppressevent maximize, class:.*" # Ignore maximize requests from apps. You'll probably like this.
-        "nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0" # Fix some dragging issues with XWayland
       ];
     };
   };

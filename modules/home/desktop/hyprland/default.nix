@@ -1,13 +1,12 @@
-{ lib, config, pkgs, ... }:
+{ lib, config, ... }:
 let
   inherit (lib) mkIf mkEnableOption;
   cfg = config.deeznuts.desktop.hyprland;
 in
 {
   imports = [
-    ./settings
     ./apps
-    ./plugins.nix
+    ./plugins
   ];
 
   options.deeznuts.desktop.hyprland = {
@@ -15,8 +14,11 @@ in
   };
 
   config = mkIf cfg.enable {
+    catppuccin.hyprland.enable = true;
     wayland.windowManager.hyprland = {
       enable = true;
+
+      settings = import ./settings.nix;
     };
   };
 }

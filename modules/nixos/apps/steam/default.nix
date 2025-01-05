@@ -1,10 +1,10 @@
 { lib, config, ... }:
 let
   inherit (lib) mkIf mkEnableOption;
-  cfg = config.deeznuts.apps.steam;
+  cfg = config.deeznuts.programs.steam;
 in
 {
-  options.deeznuts.apps.steam = {
+  options.deeznuts.programs.steam = {
     enable = mkEnableOption "Enable steam";
   };
 
