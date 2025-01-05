@@ -14,7 +14,6 @@ in
   };
 
   config = mkIf cfg.enable {
-    catppuccin.hyprland.enable = true;
     wayland.windowManager.hyprland = {
       enable = true;
 
