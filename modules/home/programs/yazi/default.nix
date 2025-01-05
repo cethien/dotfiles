@@ -4,6 +4,10 @@ let
   cfg = config.deeznuts.programs.yazi;
 in
 {
+  imports = [
+    ./hyprland.nix
+  ];
+
   options.deeznuts.programs.yazi = {
     enable = mkEnableOption "Enable yazi";
   };
