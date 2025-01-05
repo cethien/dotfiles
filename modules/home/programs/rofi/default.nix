@@ -10,8 +10,6 @@ in
   };
 
   config = mkIf enable {
-    catppuccin.rofi.enable = false;
-
     programs.rofi = {
       enable = true;
       # package = pkgs.rofi-wayland;
@@ -32,7 +30,6 @@ in
     wayland.windowManager.hyprland.settings = {
       bind = [
         "SUPER, Space, exec, rofi -show drun"
-        "SUPER SHIFT, P, exec, rofi -show top"
       ];
 
       windowrulev2 = [
