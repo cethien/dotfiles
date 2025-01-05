@@ -1,10 +1,10 @@
 { lib, config, ... }:
 let
   inherit (lib) mkIf;
-  cfg = config.deeznuts.desktop.hyprland;
+  enable = config.deeznuts.desktop.hyprland.enable;
 in
 {
-  config = mkIf cfg.enable {
+  config = mkIf enable {
     services.hyprpaper = {
       enable = true;
 

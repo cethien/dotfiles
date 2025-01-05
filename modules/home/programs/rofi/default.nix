@@ -1,10 +1,15 @@
 { lib, config, pkgs, ... }:
 let
-  inherit (lib) mkIf;
-  cfg = config.deeznuts.desktop.hyprland;
+  inherit (lib) mkIf mkEnableOption;
+  cfg = config.deeznuts.programs.rofi;
+  enable = cfg.enable || config.deeznuts.desktop.hyprland.enable;
 in
 {
-  config = mkIf cfg.enable {
+  options.deeznuts.programs.rofi = {
+    enable = mkEnableOption "Enable rofi";
+  };
+
+  config = mkIf enable {
     catppuccin.rofi.enable = false;
 
     programs.rofi = {

@@ -3,6 +3,7 @@ let
   inherit (lib) mkIf mkEnableOption mkOption;
   inherit (lib.types) int;
   cfg = config.deeznuts.desktop.hyprland.idle;
+  enable = cfg.enable || config.deeznuts.desktop.hyprland.enable;
 in
 {
   options.deeznuts.desktop.hyprland.idle = {
@@ -42,7 +43,7 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf enable {
     services.hypridle = {
       enable = true;
 

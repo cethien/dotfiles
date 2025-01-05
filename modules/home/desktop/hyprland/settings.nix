@@ -1,4 +1,20 @@
 {
+  # See https://wiki.hyprland.org/Configuring/Monitors/
+  monitor = [
+    "DP-1, 2560x1440@240, 0x0, 1"
+    "HDMI-A-1, 1920x1080@100, 0x1440, 1"
+  ];
+
+  # https://wiki.hyprland.org/Configuring/Workspace-Rules/
+  workspace = [
+    "1, monitor:DP-1, persistent:true, default:false"
+    "r[2-5], monitor:DP-1, persistent:true, default:true"
+
+    "10, monitor:HDMI-A-1, persistent:true, default:true"
+    "11, monitor:HDMI-A-1, persistent:true, default:false"
+    "12, monitor:HDMI-A-1, persistent:true, default:false"
+  ];
+
   general = {
     gaps_in = 8;
     gaps_out = 12;
@@ -87,6 +103,14 @@
     "SUPER, right, movefocus, r"
     "SUPER, up, movefocus, u"
     "SUPER, down, movefocus, d"
+
+    # scroll through existing workspaces
+    "SUPER CTRL, right, workspace, e+1"
+    "SUPER CTRL, left, workspace, e-1"
+
+    # move to workspace
+    "SUPER CTRL SHIFT, right, movetoworkspace, e+1"
+    "SUPER CTRL SHIFT, left, movetoworkspace, e-1"
   ];
 
   bindm = [

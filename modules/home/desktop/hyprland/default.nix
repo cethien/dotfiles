@@ -5,7 +5,7 @@ let
 in
 {
   imports = [
-    ./apps
+    ./programs
     ./plugins
   ];
 

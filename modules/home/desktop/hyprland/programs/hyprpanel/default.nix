@@ -1,15 +1,14 @@
 { lib, config, inputs, ... }:
-
 let
   inherit (lib) mkIf;
-  cfg = config.deeznuts.desktop.hyprland;
+  enable = config.deeznuts.desktop.hyprland.enable;
 in
 {
   imports = [
     inputs.hyprpanel.homeManagerModules.hyprpanel
   ];
 
-  config = mkIf cfg.enable {
+  config = mkIf enable {
     programs.hyprpanel = {
       enable = true;
       overlay.enable = true;
