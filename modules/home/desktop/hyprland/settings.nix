@@ -87,6 +87,7 @@
   input = {
     kb_layout = "de";
     kb_variant = "nodeadkeys";
+    follow_mouse = -1;
   };
 
   bind = [
