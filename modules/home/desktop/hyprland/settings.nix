@@ -1,18 +1,16 @@
 {
-  # See https://wiki.hyprland.org/Configuring/Monitors/
   monitor = [
     "DP-1, 2560x1440@240, 0x0, 1"
     "HDMI-A-1, 1920x1080@100, 0x1440, 1"
   ];
 
-  # https://wiki.hyprland.org/Configuring/Workspace-Rules/
   workspace = [
     "1, monitor:DP-1, persistent:true, default:false"
-    "r[2-5], monitor:DP-1, persistent:true, default:true"
+    "2, monitor:DP-1, persistent:true, default:true"
+    "r[3-5], monitor:DP-1, persistent:true, default:false"
 
-    "10, monitor:HDMI-A-1, persistent:true, default:true"
-    "11, monitor:HDMI-A-1, persistent:true, default:false"
-    "12, monitor:HDMI-A-1, persistent:true, default:false"
+    "10, monitor:DP-1, persistent:true, default:true"
+    "r[11-15], monitor:HDMI-A-1, persistent:true, default:false"
   ];
 
   general = {
@@ -90,6 +88,8 @@
     follow_mouse = -1;
   };
 
+  "$resizeIncrement" = 25;
+
   bind = [
     "SUPER, M, exit"
 
@@ -100,16 +100,29 @@
     "SUPER, P, pseudo"
     "SUPER, J, togglesplit"
 
+    # move focus
     "SUPER, left, movefocus, l"
     "SUPER, right, movefocus, r"
     "SUPER, up, movefocus, u"
     "SUPER, down, movefocus, d"
 
+    # move windows around inside a workspace
+    "SUPER SHIFT, left, movewindow, l"
+    "SUPER SHIFT, right, movewindow, r"
+    "SUPER SHIFT, up, movewindow, u"
+    "SUPER SHIFT, down, movewindow, d"
+
+    # resize windows
+    "SUPER ALT, right, resizeactive, $resizeIncrement 0"
+    "SUPER ALT, left, resizeactive, -$resizeIncrement 0"
+    "SUPER ALT, up, resizeactive, 0 -$resizeIncrement"
+    "SUPER ALT, down, resizeactive, 0 $resizeIncrement"
+
     # scroll through existing workspaces
     "SUPER CTRL, right, workspace, e+1"
     "SUPER CTRL, left, workspace, e-1"
 
-    # move to workspace
+    # move window to workspace
     "SUPER CTRL SHIFT, right, movetoworkspace, e+1"
     "SUPER CTRL SHIFT, left, movetoworkspace, e-1"
   ];
