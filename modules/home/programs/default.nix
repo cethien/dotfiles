@@ -32,6 +32,7 @@ in
     ./git
     ./hushlogin
     ./inkscape
+    ./imv
     ./jq
     ./keepassxc
     ./kitty
@@ -55,6 +56,7 @@ in
     ./retroarch
     ./ripgrep
     ./rnote
+    ./rofi
     ./scripts
     ./spotify
     ./ssh
