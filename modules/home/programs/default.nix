@@ -39,6 +39,7 @@ in
     ./lazygit
     ./mangohud
     ./misc
+    ./mpv
     ./neovim
     ./netscanner
     ./nmap
