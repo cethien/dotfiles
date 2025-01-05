@@ -1,8 +1,6 @@
 {
   imports = [ ../../modules/home ];
 
-  programs.home-manager.enable = true;
-
   deeznuts = {
     nixpkgs.allowUnfree = true;
 
