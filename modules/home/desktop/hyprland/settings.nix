@@ -7,10 +7,15 @@
   workspace = [
     "1, monitor:DP-1, persistent:true, default:false"
     "2, monitor:DP-1, persistent:true, default:true"
-    "r[3-5], monitor:DP-1, persistent:true, default:false"
+    "3, monitor:DP-1, persistent:true, default:false"
+    "4, monitor:DP-1, persistent:true, default:false"
+    "5, monitor:DP-1, persistent:true, default:false"
 
-    "10, monitor:DP-1, persistent:true, default:true"
-    "r[11-15], monitor:HDMI-A-1, persistent:true, default:false"
+    "6, monitor:HDMI-A-1, persistent:true, default:true"
+    "7, monitor:HDMI-A-1, persistent:true, default:false"
+    "8, monitor:HDMI-A-1, persistent:true, default:false"
+    "9, monitor:HDMI-A-1, persistent:true, default:false"
+    "10, monitor:HDMI-A-1, persistent:true, default:false"
   ];
 
   general = {
@@ -112,12 +117,6 @@
     "SUPER SHIFT, up, movewindow, u"
     "SUPER SHIFT, down, movewindow, d"
 
-    # resize windows
-    "SUPER ALT, right, resizeactive, $resizeIncrement 0"
-    "SUPER ALT, left, resizeactive, -$resizeIncrement 0"
-    "SUPER ALT, up, resizeactive, 0 -$resizeIncrement"
-    "SUPER ALT, down, resizeactive, 0 $resizeIncrement"
-
     # scroll through existing workspaces
     "SUPER CTRL, right, workspace, e+1"
     "SUPER CTRL, left, workspace, e-1"
@@ -125,6 +124,14 @@
     # move window to workspace
     "SUPER CTRL SHIFT, right, movetoworkspace, e+1"
     "SUPER CTRL SHIFT, left, movetoworkspace, e-1"
+  ];
+
+  binde = [
+    # resize windows
+    "SUPER ALT, right, resizeactive, $resizeIncrement 0"
+    "SUPER ALT, left, resizeactive, -$resizeIncrement 0"
+    "SUPER ALT, up, resizeactive, 0 -$resizeIncrement"
+    "SUPER ALT, down, resizeactive, 0 $resizeIncrement"
   ];
 
   bindm = [

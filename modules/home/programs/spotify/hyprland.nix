@@ -12,7 +12,7 @@ in
 
     wayland.windowManager.hyprland.settings = {
       exec-once = [
-        "[workspace 11 silent] spotify"
+        "[workspace 7 silent] spotify"
       ];
 
       "$spotifyctl" = "playerctl --player=spotify";

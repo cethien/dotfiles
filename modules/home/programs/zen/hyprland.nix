@@ -8,7 +8,7 @@ in
   config = mkIf (cfg.enable && isHyprland) {
     wayland.windowManager.hyprland.settings = {
       exec-once = [
-        "[workspace 10 silent] zen"
+        "[workspace 6 silent] zen"
       ];
     };
   };

@@ -24,7 +24,7 @@ in
     wayland.windowManager.hyprland.settings = {
       exec-once = [
         "solaar -w hide"
-        "streamcontroller"
+        "streamcontroller -b"
       ];
 
       bind = [
