@@ -11,6 +11,7 @@ in
     ./hyprpaper
     ./hyprpanel
     ./satty
+    ./nautilus
   ];
 
   config = mkIf cfg.enable {
