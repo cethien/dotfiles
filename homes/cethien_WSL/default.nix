@@ -4,7 +4,9 @@
   deeznuts = {
     nixpkgs.allowUnfree = true;
     catppuccin.enable = true;
-    programs.cli.enable = true;
-    programs.bash.sourceNixProfile = true;
+    programs = {
+      cli.enable = true;
+      bash.sourceNixProfile = true;
+    };
   };
 }
