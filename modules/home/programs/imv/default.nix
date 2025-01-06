@@ -13,13 +13,5 @@ in
     programs.imv = {
       enable = true;
     };
-
-    wayland.windowManager.hyprland.settings = {
-      windowrulev2 = [
-        "float, class:^(imv)$"
-        "center, class:^(imv)$"
-        "size 1640 990, class:^(imv)$"
-      ];
-    };
   };
 }

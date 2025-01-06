@@ -14,12 +14,6 @@ in
       exec-once = [
         "steam -silent"
       ];
-
-      windowrulev2 = [
-        "float, class:(steam)"
-        "center, class:(steam)"
-        "size 1640 990, class:(steam)"
-      ];
     };
   };
 }

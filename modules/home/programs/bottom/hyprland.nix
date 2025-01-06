@@ -10,13 +10,6 @@ in
       bind = [
         "SUPER SHIFT, P, exec, $terminal --class bottom btm"
       ];
-
-      windowrulev2 = [
-        "float, class:^(bottom)$"
-        "center, class:^(bottom)$"
-        "size 1640 990, class:^(bottom)$"
-        "stayfocused, class:^(bottom)$"
-      ];
     };
   };
 }

@@ -15,12 +15,6 @@ in
         "[workspace 11 silent] spotify"
       ];
 
-      windowrulev2 = [
-        "float, class:^(Spotify)$"
-        "center, class:^(Spotify)$"
-        "size 1640 990, class:^(Spotify)$"
-      ];
-
       "$spotifyctl" = "playerctl --player=spotify";
 
       bindl = [

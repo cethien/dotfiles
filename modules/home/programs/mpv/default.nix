@@ -18,13 +18,5 @@ in
         ytdl-format = "bestvideo+bestaudio";
       };
     };
-
-    wayland.windowManager.hyprland.settings = {
-      windowrulev2 = [
-        "float, class:^(mpv)$"
-        "center, class:^(mpv)$"
-        "size 1640 990, class:^(mpv)$"
-      ];
-    };
   };
 }

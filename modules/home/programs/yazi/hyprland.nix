@@ -10,13 +10,6 @@ in
       bind = [
         "SUPER, E, exec, $terminal --class yazi yazi"
       ];
-
-      windowrulev2 = [
-        "float, class:^(yazi)$"
-        "center, class:^(yazi)$"
-        "size 1640 990, class:^(yazi)$"
-        "stayfocused, class:^(yazi)$"
-      ];
     };
   };
 }

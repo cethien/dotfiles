@@ -16,13 +16,6 @@ in
       bind = [
         "SUPER SHIFT, V, exec, $terminal --class clipse clipse"
       ];
-
-      windowrulev2 = [
-        "float, class:^(clipse)$"
-        "center, class:^(clipse)$"
-        "size 1640 990, class:^(clipse)$"
-        "stayfocused, class:^(clipse)$"
-      ];
     };
   };
 }

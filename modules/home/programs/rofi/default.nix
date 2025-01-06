@@ -19,11 +19,10 @@ in
       plugins = with pkgs; [
         rofi-emoji
         rofi-calc
-        rofi-top
       ];
 
       extraConfig = {
-        modi = "drun,ssh,emoji,calc,top";
+        modi = "drun,ssh,emoji,calc";
       };
     };
 
