@@ -10,12 +10,12 @@ in
 
       settings = {
         preload = [
-          "/home/cethien/Pictures/wallpapers/drippy-smiley.jpg"
+          "/home/cethien/Pictures/wallpapers/pixelart-mountains.png"
           "/home/cethien/Pictures/wallpapers/drippy-smiley-solid-color.jpg"
         ];
 
         wallpaper = [
-          "DP-1,/home/cethien/Pictures/wallpapers/drippy-smiley.jpg"
+          "DP-1,/home/cethien/Pictures/wallpapers/pixelart-mountains.png"
           "HDMI-A-1,/home/cethien/Pictures/wallpapers/drippy-smiley-solid-color.jpg"
         ];
       };
