@@ -15,6 +15,10 @@ in
 
       font.name = "MesloLGM Nerd Font Mono";
       font.size = 14;
+
+      settings = {
+        window_padding_width = 6;
+      };
     };
 
     wayland.windowManager.hyprland.settings = {
