@@ -8,7 +8,7 @@ in
   config = mkIf (cfg.enable && isHyprland) {
     wayland.windowManager.hyprland.settings = {
       exec-once = [
-        "[workspace 8 silent] discordcanary --start-minimized"
+        "[workspace 8 silent] vesktop --start-minimized"
       ];
     };
   };
