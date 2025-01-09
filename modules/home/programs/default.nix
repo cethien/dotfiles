@@ -26,6 +26,7 @@ in
     ./fastfetch
     ./fd
     ./ffmpeg
+    ./firefox
     ./fzf
     ./gh
     ./gimp
