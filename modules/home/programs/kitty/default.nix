@@ -27,12 +27,6 @@ in
       bind = [
         "SUPER, Q, exec, $terminal"
       ];
-
-      windowrulev2 = [
-        "float, class:^(kitty)$"
-        "center, class:^(kitty)$"
-        "size 1640 990, class:^(kitty)$"
-      ];
     };
   };
 }
