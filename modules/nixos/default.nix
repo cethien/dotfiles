@@ -5,7 +5,7 @@
 
     ./users
 
-    ./apps
+    ./programs
     ./desktop
     ./hardware
     ./services

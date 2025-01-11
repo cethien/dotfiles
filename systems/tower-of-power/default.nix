@@ -51,8 +51,6 @@ in
     hardware = {
       nvidia-gpu.enable = true;
 
-      pipewire.enable = true;
-
       logitech-peripherals.enable = true;
       stream-deck.enable = true;
       xbox-controller.enable = true;
@@ -60,6 +58,7 @@ in
 
     services = {
       ssh.enable = true;
+      pipewire.enable = true;
     };
 
     users = {
@@ -75,7 +74,7 @@ in
       autoLogin.user = user;
     };
 
-    apps = {
+    programs = {
       steam.enable = true;
     };
 
