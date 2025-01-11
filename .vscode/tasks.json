@@ -2,8 +2,26 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "rebuild",
+      "label": "rebuild: home",
       "command": "just rebuild",
+      "type": "shell",
+      "presentation": {
+        "reveal": "always"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "rebuild: nixos",
+      "command": "just rebuild-nixos",
+      "type": "shell",
+      "presentation": {
+        "reveal": "always"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "check",
+      "command": "just check",
       "type": "shell",
       "presentation": {
         "reveal": "always"
