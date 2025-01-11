@@ -31,9 +31,10 @@ in
     ./gh
     ./gimp
     ./git
+    ./helix
     ./hushlogin
-    ./inkscape
     ./imv
+    ./inkscape
     ./jq
     ./keepassxc
     ./kitty
@@ -66,8 +67,8 @@ in
     ./tmux
     ./vscode
     ./yazi
-    ./zoxide
     ./zen
+    ./zoxide
   ];
 
   config = mkMerge [
@@ -92,7 +93,8 @@ in
         lazydocker.enable = mkDefault true;
         lazygit.enable = mkDefault true;
         misc.enable = mkDefault true;
-        neovim.enable = mkDefault true;
+        neovim.enable = mkDefault false;
+        helix.enable = mkDefault true;
         netscanner.enable = mkDefault true;
         oh-my-posh.enable = mkDefault true;
         nmap.enable = mkDefault true;
