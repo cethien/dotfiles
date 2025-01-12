@@ -15,18 +15,13 @@ in
     wayland.windowManager.hyprland.settings = {
       bind =
         let
+          hyprshot_base_cmd = "hyprshot --freeze --clipboard-only --raw";
           satty_cmd = "satty --filename - --config ${config.home.homeDirectory}/.config/satty/config.toml";
         in
         [
-          "SUPER SHIFT, S, exec, hyprshot -m region --raw | ${satty_cmd}"
-          ", Print, exec, hyprshot -m window --raw | ${satty_cmd}"
+          "SUPER SHIFT, S, exec, ${hyprshot_base_cmd} -m region | ${satty_cmd}"
+          ", Print, exec, ${hyprshot_base_cmd} -m window | ${satty_cmd}"
         ];
-
-      windowrulev2 = [
-        "float, class:^(com.gabm.satty)$"
-        "center, class:^(com.gabm.satty)$"
-        "size 1640 990, class:^(com.gabm.satty)$"
-      ];
     };
   };
 }
