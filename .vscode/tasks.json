@@ -2,6 +2,24 @@
   "version": "2.0.0",
   "tasks": [
     {
+      "label": "format",
+      "command": "just format",
+      "type": "shell",
+      "presentation": {
+        "reveal": "always"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "check",
+      "command": "just check",
+      "type": "shell",
+      "presentation": {
+        "reveal": "always"
+      },
+      "problemMatcher": []
+    },
+    {
       "label": "rebuild: home",
       "command": "just rebuild",
       "type": "shell",
@@ -20,8 +38,8 @@
       "problemMatcher": []
     },
     {
-      "label": "check",
-      "command": "just check",
+      "label": "update",
+      "command": "just update",
       "type": "shell",
       "presentation": {
         "reveal": "always"
