@@ -20,10 +20,15 @@ if [[ ! -d $DIR ]]; then
     exit 1
 fi
 
-cd $DIR && tmux new-session -d -s "$(basename "$DIR")" "bash" \; \
-    split-window -v -p 15 "bash" \; \
-    split-window -h -p 50 "bash" \; \
-    send-keys -t 0 "$EDITOR ." C-m \; \
-    new-window -n "lazygit" "lazygit" \; \
-    select-pane -t 0 \; \
-    attach
+SESSION=$(basename "$DIR")
+if tmux has-session -t "$SESSION" 2>/dev/null; then
+    tmux attach -t "$SESSION"
+else
+    cd $DIR && tmux new-session -d -s "$SESSION" "bash" \; \
+        split-window -v -p 15 "bash" \; \
+        split-window -h -p 50 "bash" \; \
+        send-keys -t 0 "$EDITOR ." C-m \; \
+        new-window -n "lazygit" "lazygit" \; \
+        select-pane -t 0 \; \
+        attach
+fi
