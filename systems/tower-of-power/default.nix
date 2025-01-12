@@ -65,8 +65,6 @@ in
       cethien.enable = true;
     };
 
-    catppuccin.enable = true;
-
     desktop = {
       hyprland.enable = true;
 

@@ -22,8 +22,8 @@
     gaps_in = 8;
     gaps_out = 12;
     border_size = 3;
-    "col.active_border" = "$mauve";
-    "col.inactive_border" = "$surface0";
+    # "col.active_border" = "$mauve";
+    # "col.inactive_border" = "$surface0";
 
     layout = "dwindle";
   };
@@ -44,7 +44,7 @@
       enabled = true;
       range = 12;
       render_power = 3;
-      color = "$crust";
+      # color = "$crust";
     };
 
     blur = {
@@ -77,10 +77,10 @@
     "nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0" # Fix some dragging issues with XWayland
   ];
 
-  env = [
-    "XCURSOR_SIZE,24"
-    "HYPRCURSOR_SIZE,24"
-  ];
+  # env = [
+  #   "XCURSOR_SIZE,24"
+  #   "HYPRCURSOR_SIZE,24"
+  # ];
 
   misc = {
     force_default_wallpaper = 0;

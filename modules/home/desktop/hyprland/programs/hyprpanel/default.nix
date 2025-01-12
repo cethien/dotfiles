@@ -92,8 +92,8 @@ in
           };
 
           font = {
-            name = "MesloLGL Nerd Font";
-            size = "17px";
+            name = "MesloLG Nerd Font";
+            size = "16px";
           };
 
           osd = {

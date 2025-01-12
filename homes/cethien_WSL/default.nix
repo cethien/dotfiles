@@ -3,7 +3,7 @@
 
   deeznuts = {
     nixpkgs.allowUnfree = true;
-    catppuccin.enable = true;
+    stylix.enable = true;
     programs = {
       cli.enable = true;
       bash.sourceNixProfile = true;

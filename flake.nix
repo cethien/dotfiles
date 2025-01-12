@@ -23,8 +23,9 @@
             inputs.sops-nix.homeManagerModules.sops
             ./modules/shared/sops
 
-            inputs.catppuccin.homeManagerModules.catppuccin
-            ./modules/shared/catppuccin
+
+            inputs.stylix.homeManagerModules.stylix
+            ./modules/shared/stylix
 
             {
               home.stateVersion = stateVersion;
@@ -43,8 +44,8 @@
           modules = [
             ./homes/cethien_tower-of-power
 
-            inputs.catppuccin.homeManagerModules.catppuccin
-            ./modules/shared/catppuccin
+            inputs.stylix.homeManagerModules.stylix
+            ./modules/home/stylix
 
             inputs.sops-nix.homeManagerModules.sops
             ./modules/shared/sops
@@ -72,8 +73,8 @@
             inputs.sops-nix.nixosModules.sops
             ./modules/shared/sops
 
-            inputs.catppuccin.nixosModules.catppuccin
-            ./modules/shared/catppuccin
+            # inputs.stylix.nixosModules.stylix            
+            # ./modules/nixos/stylix
 
             {
               system.stateVersion = stateVersion;
@@ -127,12 +128,15 @@
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     spicetify-nix.inputs.nixpkgs.follows = "nixpkgs";
 
-    catppuccin.url = "github:catppuccin/nix";
+    # catppuccin.url = "github:catppuccin/nix";
 
-    nixos-hardware.url = "github:nixos/nixos-hardware";
+    stylix.url = "github:danth/stylix";
+    stylix.inputs.nixpkgs.follows = "nixpkgs";
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    nixos-hardware.url = "github:nixos/nixos-hardware";
 
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";

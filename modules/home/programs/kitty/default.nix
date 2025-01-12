@@ -13,9 +13,6 @@ in
     programs.kitty = {
       enable = true;
 
-      font.name = "MesloLGM Nerd Font Mono";
-      font.size = 14;
-
       settings = {
         window_padding_width = 6;
       };
