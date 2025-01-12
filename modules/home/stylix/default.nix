@@ -45,7 +45,7 @@ in
         emoji = {
           package = pkgs.openmoji-color;
           name = "OpenMoji Color";
-        };        
+        };
 
         sizes = {
           applications = 12;
