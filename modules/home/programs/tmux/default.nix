@@ -30,10 +30,10 @@ in
 
     home.shellAliases = {
       tm = "tmux";
+      tmls = "tmux ls";
       tma = "tmux attach";
       tmas = "tmux attach -t";
-      tml = "tmux ls";
-      tmn = "tmux new";
+      tmk = "tmux kill-session -t";
     };
   };
 }
