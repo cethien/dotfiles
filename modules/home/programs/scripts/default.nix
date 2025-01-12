@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ lib, config, pkgs, ... }:
 let
   inherit (lib) mkIf mkEnableOption;
   cfg = config.deeznuts.programs.scripts;
@@ -9,19 +9,14 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.file = {
-      "scripts/init.sh".source = ./init.sh;
-      "scripts/update.sh".source = ./update.sh;
-      "scripts/cleanup.sh".source = ./cleanup.sh;
-      "scripts/rebuild.sh".source = ./rebuild.sh;
-    };
+    home.packages = with pkgs; [
+      (writeShellScriptBin "update" (builtins.readFile ./update.sh))
+      (writeShellScriptBin "rebuild" (builtins.readFile ./rebuild.sh))
+      (writeShellScriptBin "cleanup" (builtins.readFile ./cleanup.sh))
+      (writeShellScriptBin "init" (builtins.readFile ./init.sh))
+      (writeShellScriptBin "dev" (builtins.readFile ./dev.sh))
+    ];
 
-    home.shellAliases = {
-      rebuild = "~/scripts/rebuild.sh";
-      rebuild-nixos = "~/scripts/rebuild.sh -n";
-      init = "~/scripts/init.sh";
-      update = "~/scripts/update.sh";
-      cleanup = "~/scripts/cleanup.sh";
-    };
+    home.shellAliases.rebuild-nixos = "rebuild -n";
   };
 }
