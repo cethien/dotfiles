@@ -8,11 +8,14 @@ in
 {
   options.deeznuts.programs.firefox = {
     enable = mkEnableOption "Enable Firefox";
+    dev-edition = mkEnableOption "Enable Firefox Dev Edition";
   };
 
   config = mkIf cfg.enable {
     programs.firefox = {
       enable = true;
+
+      package = if cfg.dev-edition then pkgs.firefox-devedition else pkgs.firefox;
 
       profiles."${name}" = {
         id = 0;
@@ -42,12 +45,14 @@ in
           "browser.ssb.enabled" = true;
         };
 
-        extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-          multi-account-containers
-          side-view
-          ublock-origin
-          bitwarden
-        ];
+        extensions =
+          if cfg.dev-edition then [ ]
+          else with pkgs.nur.repos.rycee.firefox-addons; [
+            multi-account-containers
+            side-view
+            ublock-origin
+            bitwarden
+          ];
       };
     };
   };
