@@ -4,10 +4,6 @@ let
   cfg = config.deeznuts.programs.vscode;
 in
 {
-  imports = [
-    ./hyprland.nix
-  ];
-
   options.deeznuts.programs.vscode = {
     enable = mkEnableOption "Enable VSCode";
   };
