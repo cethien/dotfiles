@@ -61,6 +61,11 @@ in
         desktop = 1.0;
         popups = 1.0;
       };
+
+      targets = {
+        vscode.enable = false;
+        mangohud.enable = false;
+      };
     };
   };
 }
