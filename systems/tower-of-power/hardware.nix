@@ -1,0 +1,1 @@
+throw "this file must be genrated by with nixos-generate-config"

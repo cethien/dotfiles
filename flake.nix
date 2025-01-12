@@ -69,6 +69,9 @@
           modules = [
             ./systems/tower-of-power
 
+            inputs.disko.nixosModules.disko
+            ./systems/tower-of-power/disko.nix
+
             inputs.sops-nix.nixosModules.sops
             ./modules/shared/sops
 

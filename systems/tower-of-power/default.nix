@@ -6,16 +6,14 @@ in
 {
   imports = [
     ../../modules/nixos
-    ./hardware-configuration.nix
+    ./hardware.nix
   ];
 
   boot = {
     kernelPackages = pkgs.linuxPackages_zen;
 
-    loader.grub = {
-      enable = true;
-      device = "/dev/nvme0n1";
-    };
+    loader.grub.enable = true;
+    loader.efi.canTouchEfiVariables = true;
   };
 
   networking.networkmanager.enable = true;
@@ -41,7 +39,6 @@ in
   console.useXkbConfig = true;
 
   hardware.bluetooth.enable = true;
-
   services.printing.enable = true;
 
   deeznuts = {

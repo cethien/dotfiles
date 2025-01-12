@@ -25,7 +25,7 @@ set dotenv-load
 @install profile dest:
     nix run github:nix-community/nixos-anywhere -- \
     --flake .#{{profile}} \
-    --generate-hardware-config nixos-generate-config ./systems/{{profile}}/hardware-configuration.nix \
+    --generate-hardware-config nixos-generate-config ./systems/{{profile}}/hardware.nix \
     {{dest}}
 
 @deploy profile dest:
