@@ -23,9 +23,8 @@
             inputs.sops-nix.homeManagerModules.sops
             ./modules/shared/sops
 
-
             inputs.stylix.homeManagerModules.stylix
-            ./modules/shared/stylix
+            ./modules/home/stylix
 
             {
               home.stateVersion = stateVersion;
@@ -72,9 +71,6 @@
 
             inputs.sops-nix.nixosModules.sops
             ./modules/shared/sops
-
-            # inputs.stylix.nixosModules.stylix            
-            # ./modules/nixos/stylix
 
             {
               system.stateVersion = stateVersion;
