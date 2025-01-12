@@ -9,8 +9,8 @@
     }
   },
 
-  "[lua]": {
-    "editor.defaultFormatter": "sumneko.lua"
+  "[shellscript]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
   },
 
   "direnv.restart.automatic": true,
