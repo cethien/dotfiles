@@ -27,6 +27,7 @@ in
     ./fd
     ./ffmpeg
     ./firefox
+    ./firefox-devedition
     ./fzf
     ./gh
     ./gimp
