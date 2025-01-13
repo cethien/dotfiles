@@ -15,7 +15,7 @@
     in
     {
       homeConfigurations = {
-        "cethien@lpt-sotnikow" = inputs.home-manager.lib.homeManagerConfiguration {
+        "cethien@wsl" = inputs.home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           modules = [
             ./homes/cethien_WSL
