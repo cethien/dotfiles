@@ -11,9 +11,9 @@ in
   config = mkIf cfg.enable {
     stylix = {
       enable = true;
-      base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+      base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyo-night-dark.yaml";
 
-      image = ./wallpapers/pixelart-mountains.png;
+      image = ./wallpapers/tokyo-night-city.webp;
 
       cursor = {
         name = "Nordzy-cursors";

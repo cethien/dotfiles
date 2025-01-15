@@ -6,7 +6,7 @@
   config = lib.mkIf config.deeznuts.programs.oh-my-posh.enable {
     programs.oh-my-posh = {
       enable = true;
-      settings = builtins.fromJSON (builtins.unsafeDiscardStringContext (builtins.readFile ./themes/cethien_catppuccin_mocha.omp.json));
+      settings = builtins.fromJSON (builtins.unsafeDiscardStringContext (builtins.readFile ./themes/cethien.omp.json));
     };
   };
 }
