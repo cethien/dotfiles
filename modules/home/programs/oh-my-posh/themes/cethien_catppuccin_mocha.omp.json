@@ -1,14 +1,28 @@
 {
   "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
   "palette": {
-    "os": "#ACB0BE",
-    "closer": "p:os",
-    "pink": "#F5C2E7",
-    "lavender": "#B4BEFE",
-    "blue": "#89B4FA",
-    "green": "#a6e3a1",
+    "flamingo": "#f2cdcd",
+    "pink": "#f5c2e7",
+    "mauve": "#cba6f7",
+    "red": "#f38ba8",
+    "maroon": "#eba0ac",
+    "peach": "#fab387",
     "yellow": "#f9e2af",
-    "red": "#f38ba8"
+    "green": "#a6e3a1",
+    "teal": "#94e2d5",
+    "sky": "#89dceb",
+    "sapphire": "#74c7ec",
+    "blue": "#89B4FA",
+    "lavender": "#B4BEFE",
+    "white": "#cdd6f4",
+
+    "os" : "p:teal",
+    "session" : "p:pink",
+    "path" : "p:blue",
+    "git" : "p:blue",
+    "shell" : "p:peach",
+    "root" : "p:red",
+    "text" : "p:white"
   },
 
   "blocks": [
@@ -16,29 +30,29 @@
       "alignment": "left",
       "segments": [
         {
-          "foreground": "p:blue",
+          "type": "os",
           "style": "plain",
-          "template": "{{ .UserName }} ",
-          "type": "session"
+          "foreground": "p:os",
+          "template": "{{ .Icon }} "
         },
         {
-          "foreground": "p:pink",
+          "type": "session",
+          "style": "plain",
+          "foreground": "p:session",
+          "template": "{{ if .SSHSession }}\ueba9 {{ end }}{{ .UserName }}@{{ .HostName }} "
+        },
+        {
+          "type": "path",
           "properties": {
             "style": "full",
             "home_icon": "~"
           },
           "style": "plain",
-          "template": "{{ .Path }}",
-          "type": "path"
+          "foreground": "p:path",
+          "template": "{{ .Path }}"
         },
         {
-          "foreground": "p:lavender",
-          "foreground_templates": [
-            "{{ if or (.Working.Changed) (.Staging.Changed) }}##f38ba8{{ end }}",
-            "{{ if and (gt .Ahead 0) (gt .Behind 0) }}#ff4500{{ end }}",
-            "{{ if gt .Ahead 0 }}#B388FF{{ end }}",
-            "{{ if gt .Behind 0 }}#B388FF{{ end }}"
-          ],
+          "type": "git",
           "properties": {
             "branch_icon": "\ue725 ",
             "cherry_pick_icon": "\ue29b ",
@@ -54,40 +68,13 @@
           },
           "style": "plain",
           "template": " {{ .HEAD }} ",
-          "type": "git"
-        }
-      ],
-      "type": "prompt"
-    },
-    {
-      "alignment": "right",
-      "segments": [
-        {
-          "type": "status",
-          "style": "plain",
-          "foreground": "p:green",
-          "foreground_templates": ["{{ if gt .Code 0 }}p:red{{ end }}"],
-          "template": " x{{ reason .Code }}"
-        },
-        {
-          "foreground": "p:green",
-          "foreground_templates": ["{{ if gt .Code 0 }}p:red{{ end }}"],
-          "properties": {
-            "style": "roundrock",
-            "always_enabled": true
-          },
-          "style": "diamond",
-          "template": " {{ .FormattedMs }} ",
-          "type": "executiontime"
-        },
-        {
-          "foreground": "p:yellow",
-          "properties": {
-            "time_format": "15:04"
-          },
-          "style": "plain",
-          "template": "{{ .CurrentDate | date .Format }}",
-          "type": "time"
+          "foreground": "p:git",
+          "foreground_templates": [
+            "{{ if or (.Working.Changed) (.Staging.Changed) }}##f38ba8{{ end }}",
+            "{{ if and (gt .Ahead 0) (gt .Behind 0) }}#ff4500{{ end }}",
+            "{{ if gt .Ahead 0 }}#B388FF{{ end }}",
+            "{{ if gt .Behind 0 }}#B388FF{{ end }}"
+          ]
         }
       ],
       "type": "prompt"
@@ -97,16 +84,22 @@
       "newline": true,
       "segments": [
         {
-          "foreground": "p:closer",
+          "type": "shell",
           "style": "plain",
-          "template": "\u0021",
-          "type": "root"
+          "foreground": "p:shell",
+          "template": "{{ .Name }} "
         },
         {
-          "foreground": "p:closer",
+          "type": "root",
           "style": "plain",
-          "template": "\uf105",
-          "type": "text"
+          "foreground": "p:root",
+          "template": "\u0021"
+        },
+        {
+          "type": "text",
+          "style": "plain",
+          "foreground": "p:text",
+          "template": "\uf105"
         }
       ],
       "type": "prompt"
