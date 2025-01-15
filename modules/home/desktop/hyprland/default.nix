@@ -6,7 +6,6 @@ in
 {
   imports = [
     ./programs
-    ./plugins
   ];
 
   options.deeznuts.desktop.hyprland = {
