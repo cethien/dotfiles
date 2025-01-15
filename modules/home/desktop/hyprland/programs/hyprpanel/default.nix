@@ -16,7 +16,7 @@ in
       hyprland.enable = true;
       overwrite.enable = true;
 
-      theme = "catppuccin_mocha";
+      theme = "tokyo_night";
 
       layout = {
         "bar.layouts" = {
