@@ -17,9 +17,9 @@
     "white": "#cdd6f4",
 
     "os" : "p:teal",
-    "session" : "p:pink",
+    "session" : "p:mauve",
     "path" : "p:blue",
-    "git" : "p:blue",
+    "git" : "p:yellow",
     "shell" : "p:peach",
     "root" : "p:red",
     "text" : "p:white"
