@@ -13,7 +13,7 @@ in
       enable = true;
       base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyo-night-dark.yaml";
 
-      image = ./wallpapers/tokyo-night-city.webp;
+      image = ./wallpapers/minimalistic-space.jpg;
 
       cursor = {
         name = "Nordzy-cursors";
