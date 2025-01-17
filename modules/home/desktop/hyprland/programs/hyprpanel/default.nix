@@ -1,8 +1,10 @@
-{ lib, config, inputs, ... }:
+{ lib, config, inputs, pkgs, ... }:
 let
   inherit (lib) mkIf mkOption types;
   cfg = config.deeznuts.desktop.hyprland.hyprpanel;
   enable = config.deeznuts.desktop.hyprland.enable;
+
+  jsonFormat = pkgs.formats.json { };
 in
 {
   imports = [
@@ -10,13 +12,15 @@ in
   ];
 
   options.deeznuts.desktop.hyprland.hyprpanel = {
-    barLayouts = mkOption {
-      type = types.attrsOf (types.listOf types.str);
+    layout = mkOption {
+      type = jsonFormat.type;
       default = {
-        "0" = {
-          left = [ "windowtitle" ];
-          middle = [ "workspaces" ];
-          right = [ "media" "systray" "volume" "bluetooth" "network" "notifications" "dashboard" "clock" ];
+        "bar.layouts" = {
+          "0" = {
+            left = [ "windowtitle" ];
+            middle = [ "workspaces" ];
+            right = [ "media" "systray" "volume" "bluetooth" "network" "notifications" "dashboard" "clock" ];
+          };
         };
       };
     };
@@ -32,9 +36,7 @@ in
 
       theme = "tokyo_night";
 
-      layout = {
-        "bar.layouts" = cfg.barLayouts;
-      };
+      layout = cfg.layout;
 
       settings = {
         bar = {

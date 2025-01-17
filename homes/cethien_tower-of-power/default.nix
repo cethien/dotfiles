@@ -26,16 +26,18 @@
       ];
 
       hyprpanel = {
-        barLayouts = {
-          "0" = {
-            left = [ "windowtitle" ];
-            middle = [ "workspaces" ];
-            right = [ "media" "clock" ];
-          };
-          "1" = {
-            left = [ "windowtitle" ];
-            middle = [ "workspaces" ];
-            right = [ "media" "systray" "volume" "bluetooth" "network" "notifications" "dashboard" "clock" ];
+        layout = {
+          "bar.layouts" = {
+            "0" = {
+              left = [ "windowtitle" ];
+              middle = [ "workspaces" ];
+              right = [ "media" "clock" ];
+            };
+            "1" = {
+              left = [ "windowtitle" ];
+              middle = [ "workspaces" ];
+              right = [ "media" "systray" "volume" "bluetooth" "network" "notifications" "dashboard" "clock" ];
+            };
           };
         };
       };
