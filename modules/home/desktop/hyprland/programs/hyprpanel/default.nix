@@ -1,12 +1,26 @@
 { lib, config, inputs, ... }:
 let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf mkOption types;
+  cfg = config.deeznuts.desktop.hyprland.hyprpanel;
   enable = config.deeznuts.desktop.hyprland.enable;
 in
 {
   imports = [
     inputs.hyprpanel.homeManagerModules.hyprpanel
   ];
+
+  options.deeznuts.desktop.hyprland.hyprpanel = {
+    barLayouts = mkOption {
+      type = types.attrsOf (types.listOf types.str);
+      default = {
+        "0" = {
+          left = [ "windowtitle" ];
+          middle = [ "workspaces" ];
+          right = [ "media" "systray" "volume" "bluetooth" "network" "notifications" "dashboard" "clock" ];
+        };
+      };
+    };
+  };
 
   config = mkIf enable {
     programs.hyprpanel = {
@@ -19,18 +33,7 @@ in
       theme = "tokyo_night";
 
       layout = {
-        "bar.layouts" = {
-          "0" = {
-            left = [ "windowtitle" ];
-            middle = [ "workspaces" ];
-            right = [ "media" "clock" ];
-          };
-          "1" = {
-            left = [ "windowtitle" ];
-            middle = [ "workspaces" ];
-            right = [ "media" "systray" "volume" "bluetooth" "network" "notifications" "dashboard" "clock" ];
-          };
-        };
+        "bar.layouts" = cfg.barLayouts;
       };
 
       settings = {

@@ -11,8 +11,8 @@
       ];
 
       workspaces = [
-        "1, monitor:eDP-1, persistent:true, default:false"
-        "2, monitor:eDP-1, persistent:true, default:true"
+        "1, monitor:eDP-1, persistent:true, default:true"
+        "2, monitor:eDP-1, persistent:true, default:false"
         "3, monitor:eDP-1, persistent:true, default:false"
         "4, monitor:eDP-1, persistent:true, default:false"
         "5, monitor:eDP-1, persistent:true, default:false"

@@ -24,6 +24,21 @@
         "9, monitor:HDMI-A-1, persistent:true, default:false"
         "10, monitor:HDMI-A-1, persistent:true, default:false"
       ];
+
+      hyprpanel = {
+        barLayouts = {
+          "0" = {
+            left = [ "windowtitle" ];
+            middle = [ "workspaces" ];
+            right = [ "media" "clock" ];
+          };
+          "1" = {
+            left = [ "windowtitle" ];
+            middle = [ "workspaces" ];
+            right = [ "media" "systray" "volume" "bluetooth" "network" "notifications" "dashboard" "clock" ];
+          };
+        };
+      };
     };
     programs = {
       cli.enable = true;
