@@ -11,7 +11,6 @@
       gaming.enable = true;
       discord.enable = true;
       obs-studio.enable = true;
-      firefox.enable = true;
       firefox-devedition.enable = true;
     };
   };
