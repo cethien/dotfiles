@@ -6,6 +6,7 @@ in
 {
   imports = [
     ./programs
+    ./settings.nix
   ];
 
   options.deeznuts.desktop.hyprland = {
@@ -15,8 +16,6 @@ in
   config = mkIf cfg.enable {
     wayland.windowManager.hyprland = {
       enable = true;
-
-      settings = import ./settings.nix;
     };
   };
 }
