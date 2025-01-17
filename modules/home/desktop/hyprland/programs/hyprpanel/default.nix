@@ -1,6 +1,6 @@
 { lib, config, inputs, pkgs, ... }:
 let
-  inherit (lib) mkIf mkOption types;
+  inherit (lib) mkIf mkOption;
   cfg = config.deeznuts.desktop.hyprland.hyprpanel;
   enable = config.deeznuts.desktop.hyprland.enable;
 
@@ -17,9 +17,9 @@ in
       default = {
         "bar.layouts" = {
           "0" = {
-            left = [ "windowtitle" ];
-            middle = [ "workspaces" ];
-            right = [ "media" "systray" "volume" "bluetooth" "network" "notifications" "dashboard" "clock" ];
+            left = [ "workspaces" ];
+            middle = [ "media" ];
+            right = [ "systray" "volume" "bluetooth" "network" "notifications" "dashboard" "clock" ];
           };
         };
       };
