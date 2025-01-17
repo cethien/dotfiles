@@ -61,6 +61,31 @@
             inherit inputs;
           };
         };
+
+
+        "cethien@think-machine" = inputs.home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          modules = [
+            ./homes/cethien_think-machine
+
+            inputs.stylix.homeManagerModules.stylix
+            ./modules/home/stylix
+
+            inputs.sops-nix.homeManagerModules.sops
+            ./modules/shared/sops
+
+            inputs.nur.modules.homeManager.default
+            {
+              home.stateVersion = stateVersion;
+              home.username = defaultUser;
+              home.homeDirectory = "/home/${defaultUser}";
+            }
+          ];
+
+          extraSpecialArgs = {
+            inherit inputs;
+          };
+        };
       };
     }
     // {
@@ -78,6 +103,27 @@
             {
               system.stateVersion = stateVersion;
               networking.hostName = "tower-of-power";
+            }
+          ];
+
+          specialArgs = {
+            inherit inputs;
+          };
+        };
+
+        "think-machine" = inputs.nixpkgs.lib.nixosSystem {
+          modules = [
+            ./systems/think-machine
+
+            inputs.disko.nixosModules.disko
+            ./systems/think-machine/disko.nix
+
+            inputs.sops-nix.nixosModules.sops
+            ./modules/shared/sops
+
+            {
+              system.stateVersion = stateVersion;
+              networking.hostName = "think-machine";
             }
           ];
 
