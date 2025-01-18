@@ -1,6 +1,6 @@
 {
   imports = [
-    ../shared/nixpkgs
+    ../../shared/nixpkgs
     ./nix
 
     ./users

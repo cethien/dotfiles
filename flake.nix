@@ -21,7 +21,7 @@
             ./homes/cethien_WSL
 
             inputs.sops-nix.homeManagerModules.sops
-            ./modules/shared/sops
+            ./shared/sops
 
             inputs.stylix.homeManagerModules.stylix
             ./modules/home/stylix
@@ -47,7 +47,7 @@
             ./modules/home/stylix
 
             inputs.sops-nix.homeManagerModules.sops
-            ./modules/shared/sops
+            ./shared/sops
 
             inputs.nur.modules.homeManager.default
             {
@@ -72,7 +72,31 @@
             ./modules/home/stylix
 
             inputs.sops-nix.homeManagerModules.sops
-            ./modules/shared/sops
+            ./shared/sops
+
+            inputs.nur.modules.homeManager.default
+            {
+              home.stateVersion = stateVersion;
+              home.username = defaultUser;
+              home.homeDirectory = "/home/${defaultUser}";
+            }
+          ];
+
+          extraSpecialArgs = {
+            inherit inputs;
+          };
+        };
+
+        "cethien@acer-aspire" = inputs.home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          modules = [
+            ./homes/cethien_acer-aspire
+
+            inputs.stylix.homeManagerModules.stylix
+            ./modules/home/stylix
+
+            inputs.sops-nix.homeManagerModules.sops
+            ./shared/sops
 
             inputs.nur.modules.homeManager.default
             {
@@ -88,21 +112,23 @@
         };
       };
     }
-    // {
+  //
+    {
       nixosConfigurations = {
         "tower-of-power" = inputs.nixpkgs.lib.nixosSystem {
           modules = [
             ./systems/tower-of-power
 
             inputs.disko.nixosModules.disko
-            ./systems/tower-of-power/disko.nix
+            ./shared/disko/simple
 
             inputs.sops-nix.nixosModules.sops
-            ./modules/shared/sops
+            ./shared/sops
 
             {
               system.stateVersion = stateVersion;
               networking.hostName = "tower-of-power";
+              disko.devices.disk.main.device = "/dev/nvme0n1";
             }
           ];
 
@@ -116,14 +142,35 @@
             ./systems/think-machine
 
             inputs.disko.nixosModules.disko
-            ./systems/think-machine/disko.nix
+            ./shared/disko/simple
 
             inputs.sops-nix.nixosModules.sops
-            ./modules/shared/sops
+            ./shared/sops
 
             {
               system.stateVersion = stateVersion;
               networking.hostName = "think-machine";
+            }
+          ];
+
+          specialArgs = {
+            inherit inputs;
+          };
+        };
+
+        "acer-aspire" = inputs.nixpkgs.lib.nixosSystem {
+          modules = [
+            ./systems/acer-aspire
+
+            inputs.disko.nixosModules.disko
+            ./shared/disko/simple
+
+            inputs.sops-nix.nixosModules.sops
+            ./shared/sops
+
+            {
+              system.stateVersion = stateVersion;
+              networking.hostName = "acer-aspire";
             }
           ];
 
@@ -172,8 +219,6 @@
 
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     spicetify-nix.inputs.nixpkgs.follows = "nixpkgs";
-
-    # catppuccin.url = "github:catppuccin/nix";
 
     stylix.url = "github:danth/stylix";
     stylix.inputs.nixpkgs.follows = "nixpkgs";

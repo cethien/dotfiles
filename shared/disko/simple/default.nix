@@ -1,8 +1,12 @@
+{lib, ...}: 
+let
+  inherit (lib) mkDefault;
+in 
 {
   disko.devices = {
     disk = {
       main = {
-        device = "/dev/nvme0n1";
+        device = mkDefault "/dev/sda";
         type = "disk";
         content = {
           type = "gpt";

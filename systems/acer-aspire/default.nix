@@ -10,19 +10,16 @@ in
   ];
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_zen;
+    kernelPackages = pkgs.linuxPackages_latest;
 
-    loader.grub.enable = true;
+    loader.grub = {
+      enable = true;
+      efiSupport = true;
+    };
     loader.efi.canTouchEfiVariables = true;
   };
 
   networking.networkmanager.enable = true;
-
-  networking.extraHosts = ''
-    192.168.0.23 holzrussen.hq
-    192.168.0.23 portainer.holzrussen.hq    
-    192.168.0.23 semaphore.holzrussen.hq    
-  '';
 
   time.timeZone = "Europe/Berlin";
   i18n.defaultLocale = "en_US.UTF-8";
@@ -51,14 +48,6 @@ in
     nix.enable = true;
     nixpkgs.allowUnfree = true;
 
-    hardware = {
-      nvidia-gpu.enable = true;
-
-      logitech-peripherals.enable = true;
-      stream-deck.enable = true;
-      xbox-controller.enable = true;
-    };
-
     services = {
       ssh.enable = true;
       pipewire.enable = true;
@@ -83,11 +72,6 @@ in
       docker = {
         enable = true;
         liveRestore = true;
-        users = [ user ];
-      };
-
-      kvm = {
-        enable = true;
         users = [ user ];
       };
     };
