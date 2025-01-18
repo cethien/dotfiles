@@ -12,6 +12,7 @@ in
     ./hyprpanel
     ./satty
     ./nautilus
+    ./udiskie
   ];
 
   config = mkIf cfg.enable {
