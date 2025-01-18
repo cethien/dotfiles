@@ -5,7 +5,7 @@
     nixpkgs.allowUnfree = true;
 
     stylix.enable = true;
-    
+
     desktop.hyprland = {
       enable = true;
       monitors = [
@@ -44,7 +44,7 @@
         };
       };
     };
-    
+
     programs = {
       cli.enable = true;
       basic.enable = true;

@@ -5,7 +5,7 @@
     nixpkgs.allowUnfree = true;
 
     stylix.enable = true;
-    
+
     desktop.hyprland = {
       enable = true;
       monitors = [
@@ -20,7 +20,7 @@
         "5, monitor:eDP-1, persistent:true, default:false"
       ];
     };
-    
+
     programs = {
       cli.enable = true;
       basic.enable = true;

@@ -8,6 +8,7 @@ in
     home.packages = with pkgs; [
       nautilus
     ];
+    
     wayland.windowManager.hyprland.settings = {
       bind = [
         "SUPER, E, exec, nautilus"

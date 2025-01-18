@@ -1,7 +1,7 @@
-{lib, ...}: 
+{ lib, ... }:
 let
   inherit (lib) mkDefault;
-in 
+in
 {
   disko.devices = {
     disk = {

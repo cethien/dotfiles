@@ -112,7 +112,7 @@
         };
       };
     }
-  //
+    //
     {
       nixosConfigurations = {
         "tower-of-power" = inputs.nixpkgs.lib.nixosSystem {
