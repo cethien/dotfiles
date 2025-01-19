@@ -8,13 +8,21 @@ in
   options.deeznuts.desktop.hyprland = {
     monitors = mkOption {
       type = types.listOf types.str;
-      default = [ ];
+      default = [
+        "eDP-1, 1920x1080@60, 0x0, 1"
+      ];
       description = "Monitors to use";
     };
 
     workspaces = mkOption {
       type = types.listOf types.str;
-      default = [ ];
+      default = [
+        "1, monitor:eDP-1, persistent:true, default:true"
+        "2, monitor:eDP-1, persistent:true, default:false"
+        "3, monitor:eDP-1, persistent:true, default:false"
+        "4, monitor:eDP-1, persistent:true, default:false"
+        "5, monitor:eDP-1, persistent:true, default:false"
+      ];
       description = "Workspaces to use";
     };
   };

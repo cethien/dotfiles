@@ -4,7 +4,16 @@
   deeznuts = {
     nixpkgs.allowUnfree = true;
 
-    stylix.enable = true;
+    stylix = {
+      enable = true;
+      sizes = {
+        cursor = 20;
+        applications = 12;
+        terminal = 14;
+        desktop = 15;
+        popups = 10;
+      };
+    };
 
     desktop.hyprland = {
       enable = true;
@@ -49,7 +58,15 @@
       cli.enable = true;
       basic.enable = true;
       gaming.enable = true;
-      discord.enable = true;
+
+      zen.hyprlandWorkspace = 6;
+      spotify = {
+        hyprlandWorkspace = 7;
+      };
+      discord = {
+        enable = true;
+        hyprlandWorkspace = 8;
+      };
       obs-studio.enable = true;
       firefox-devedition.enable = true;
     };

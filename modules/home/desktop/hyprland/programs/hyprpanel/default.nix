@@ -19,7 +19,7 @@ in
           "0" = {
             left = [ "workspaces" ];
             middle = [ "media" ];
-            right = [ "systray" "volume" "bluetooth" "network" "notifications" "dashboard" "clock" ];
+            right = [ "systray" "volume" "bluetooth" "network" "notifications" "dashboard" "battery" "clock" ];
           };
         };
       };

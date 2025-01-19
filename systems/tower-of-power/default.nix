@@ -19,9 +19,11 @@ in
   networking.networkmanager.enable = true;
 
   networking.extraHosts = ''
-    192.168.0.23 holzrussen.hq
-    192.168.0.23 portainer.holzrussen.hq    
-    192.168.0.23 semaphore.holzrussen.hq    
+    192.168.0.23 cethien.home
+    192.168.0.23 portainer.cethien.home    
+    192.168.0.23 semaphore.cethien.home
+    192.168.0.23 blocky.cethien.home
+    192.168.0.23 beszel.cethien.home
   '';
 
   time.timeZone = "Europe/Berlin";
