@@ -10,13 +10,13 @@ in
   ];
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_zen;
 
+    loader.efi.canTouchEfiVariables = true;
     loader.grub = {
       enable = true;
       efiSupport = true;
     };
-    loader.efi.canTouchEfiVariables = true;
   };
 
   networking.networkmanager.enable = true;
@@ -72,6 +72,11 @@ in
       docker = {
         enable = true;
         liveRestore = true;
+        users = [ user ];
+      };
+
+      kvm = {
+        enable = true;
         users = [ user ];
       };
     };
