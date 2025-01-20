@@ -63,10 +63,10 @@
         };
 
 
-        "cethien@think-machine" = inputs.home-manager.lib.homeManagerConfiguration {
+        "cethien@thinkpad-t540p" = inputs.home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           modules = [
-            ./homes/cethien_think-machine
+            ./homes/cethien_thinkpad-t540p
 
             inputs.stylix.homeManagerModules.stylix
             ./modules/home/stylix
@@ -137,9 +137,9 @@
           };
         };
 
-        "think-machine" = inputs.nixpkgs.lib.nixosSystem {
+        "thinkpad-t540p" = inputs.nixpkgs.lib.nixosSystem {
           modules = [
-            ./systems/think-machine
+            ./systems/thinkpad-t540p
 
             inputs.disko.nixosModules.disko
             ./shared/disko/simple
@@ -149,7 +149,7 @@
 
             {
               system.stateVersion = stateVersion;
-              networking.hostName = "think-machine";
+              networking.hostName = "thinkpad-t540p";
             }
           ];
 
