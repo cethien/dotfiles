@@ -40,14 +40,14 @@
         layout = {
           "bar.layouts" = {
             "0" = {
-              left = [ "windowtitle" ];
-              middle = [ "workspaces" ];
-              right = [ "media" "clock" ];
+              left = [ "workspaces" "windowtitle" ];
+              middle = [ "media" ];
+              right = [ "clock" ];
             };
             "1" = {
-              left = [ "windowtitle" ];
-              middle = [ "workspaces" ];
-              right = [ "media" "systray" "volume" "bluetooth" "network" "notifications" "dashboard" "clock" ];
+              left = [ "workspaces" "systray" "windowtitle" ];
+              middle = [ "media" ];
+              right = [ "volume" "bluetooth" "network" "notifications" "clock" "dashboard" ];
             };
           };
         };

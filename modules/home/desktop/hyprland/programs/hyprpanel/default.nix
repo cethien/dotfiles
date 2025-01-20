@@ -17,9 +17,9 @@ in
       default = {
         "bar.layouts" = {
           "0" = {
-            left = [ "workspaces" ];
+            left = [ "workspaces" "systray" "windowtitle" ];
             middle = [ "media" ];
-            right = [ "systray" "volume" "bluetooth" "network" "notifications" "dashboard" "battery" "clock" ];
+            right = [ "volume" "bluetooth" "network" "battery" "notifications" "clock" "dashboard" ];
           };
         };
       };
