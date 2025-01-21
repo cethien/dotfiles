@@ -1,4 +1,9 @@
-{ lib, config, inputs, pkgs, ... }:
+{ lib
+, config
+, inputs
+, pkgs
+, ...
+}:
 let
   inherit (lib) mkIf mkOption;
   cfg = config.deeznuts.desktop.hyprland.hyprpanel;
@@ -30,7 +35,6 @@ in
     programs.hyprpanel = {
       enable = true;
       overlay.enable = true;
-      systemd.enable = true;
       hyprland.enable = true;
       overwrite.enable = true;
 
@@ -112,5 +116,4 @@ in
 
     home.file.".config/hypr/assets/logo.png".source = ./logo.png;
   };
-
 }

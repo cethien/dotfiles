@@ -14,11 +14,10 @@ in
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
-      # (discord-canary.override {
-      #   withVencord = true;
-      #   withOpenASAR = true;
-      # })
-      vesktop
+      (discord.override {
+        withVencord = true;
+        withOpenASAR = true;
+      })
     ];
   };
 }
