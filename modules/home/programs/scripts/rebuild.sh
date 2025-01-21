@@ -28,5 +28,5 @@ if $NIXOS; then
     fi
     sudo nixos-rebuild switch --flake github:"$REPO"#"$(hostname | tr 'A-Z' 'a-z')"
 else
-    nix run nixpkgs#home-manager -- switch --flake github:"$REPO"#"$(whoami)@$(hostname | tr 'A-Z' 'a-z')" -b bak-hm-"$(date +%Y%m%d_%H%M%S)"
+    nix run nixpkgs#home-manager -- switch --flake github:"$REPO"#"$(whoami)@$(hostname | tr 'A-Z' 'a-z')" -b bak-hm-"$(date +%Y%m%d_%H%M%S) --refresh"
 fi
