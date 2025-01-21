@@ -5,7 +5,7 @@
 , ...
 }:
 let
-  inherit (lib) mkIf mkOption;
+  inherit (lib) mkIf mkOption types;
   cfg = config.deeznuts.desktop.hyprland.hyprpanel;
   enable = config.deeznuts.desktop.hyprland.enable;
 
@@ -29,6 +29,10 @@ in
         };
       };
     };
+    workspacesNum = mkOption {
+      type = types.int;
+      default = 5;
+    };
   };
 
   config = mkIf enable {
@@ -38,12 +42,13 @@ in
       hyprland.enable = true;
       overwrite.enable = true;
 
-      theme = "tokyo_night";
+      theme = "catppuccin_mocha";
 
       layout = cfg.layout;
 
       settings = {
         bar = {
+
           launcher.autoDetectIcon = true;
 
           bluetooth.label = false;
@@ -67,8 +72,8 @@ in
           volume.label = false;
 
           workspaces = {
+            workspaces = cfg.workspacesNum;
             showApplicationIcons = true;
-            show_icons = true;
           };
         };
 
@@ -94,6 +99,7 @@ in
             transparent = true;
             outer_spacing = "0.425em";
             border_radius = "8px";
+            dropdownGap = "3.8rem";
 
             buttons = {
               clock.spacing = "0em";

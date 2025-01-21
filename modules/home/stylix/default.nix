@@ -34,7 +34,7 @@ in
   config = mkIf cfg.enable {
     stylix = {
       enable = true;
-      base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyo-night-dark.yaml";
+      base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
 
       image = ./wallpapers/minimalistic-space.jpg;
 
@@ -79,15 +79,16 @@ in
       };
 
       opacity = {
-        applications = 1.0;
-        terminal = 1.0;
-        desktop = 1.0;
-        popups = 1.0;
+        applications = 1;
+        terminal = 0.75;
+        desktop = 0.75;
+        popups = 0.5;
       };
 
       targets = {
         vscode.enable = false;
         mangohud.enable = false;
+        spicetify.enable = false;
       };
     };
   };
