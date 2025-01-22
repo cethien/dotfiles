@@ -15,6 +15,13 @@ in
 
       settings = {
         window_padding_width = 6;
+        update_check_interval = 0;
+        scrollback_lines = 10000;
+        enable_audio_bell = false;
+      };
+
+      keybindings = {
+        "ctrl+shift+t" = "new_tab_with_cwd";
       };
     };
 
