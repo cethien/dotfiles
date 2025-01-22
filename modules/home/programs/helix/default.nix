@@ -1,10 +1,13 @@
-{ lib, config, pkgs, ... }:
-let
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}: let
   inherit (lib) mkEnableOption mkIf mkDefault;
   cfg = config.deeznuts.programs.helix;
   enabled = cfg.enable;
-in
-{
+in {
   options.deeznuts.programs.helix = {
     enable = mkEnableOption "Helix editor";
   };
@@ -21,19 +24,19 @@ in
           nil.command = "${nil}/bin/nil";
           bash-language-server = {
             command = "${bash-language-server}/bin/bash-language-server";
-            args = [ "start" ];
+            args = ["start"];
           };
           docker-langserver = {
             command = "${dockerfile-language-server-nodejs}/bin/docker-langserver";
-            args = [ "--stdio" ];
+            args = ["--stdio"];
           };
           docker-compose-langserver = {
             command = "${docker-compose-language-service}/bin/docker-compose-langserver";
-            args = [ "--stdio" ];
+            args = ["--stdio"];
           };
           ansible-language-server = {
             command = "${ansible-language-server}/bin/ansible-language-server";
-            args = [ "--stdio" ];
+            args = ["--stdio"];
           };
           gopls = {
             command = "${gopls}/bin/gopls";
@@ -51,7 +54,7 @@ in
           sqls.command = "${sqls}/bin/sqls";
           typescript-language-server = with nodePackages; {
             command = "${typescript-language-server}/bin/typescript-language-server";
-            args = [ "--stdio" ];
+            args = ["--stdio"];
             config = {
               hostInfo = "helix";
               typescript.inlayHints = {
@@ -76,7 +79,7 @@ in
           };
           vscode-css-language-server = with nodePackages; {
             command = "${vscode-langservers-extracted}/bin/vscode-css-language-server";
-            args = [ "--stdio" ];
+            args = ["--stdio"];
             config = {
               provideFormatter = true;
               css = {
@@ -88,14 +91,14 @@ in
           };
           vscode-html-language-server = with nodePackages; {
             command = "${vscode-langservers-extracted}/bin/vscode-html-language-server";
-            args = [ "--stdio" ];
+            args = ["--stdio"];
             config = {
               provideFormatter = true;
             };
           };
           vscode-json-language-server = with nodePackages; {
             command = "${vscode-langservers-extracted}/bin/vscode-json-language-server";
-            args = [ "--stdio" ];
+            args = ["--stdio"];
             config = {
               provideFormatter = true;
               json = {
@@ -107,15 +110,18 @@ in
           };
           yaml-language-server = {
             command = "${yaml-language-server}/bin/yaml-language-server";
-            args = [ "--stdio" ];
+            args = ["--stdio"];
           };
         };
 
         language = [
           {
             name = "nix";
-            language-servers = [ "nil" ];
-            formatter = { command = "${alejandra}/bin/alejandra"; args = [ "--quiet" ]; };
+            language-servers = ["nil"];
+            formatter = {
+              command = "${alejandra}/bin/alejandra";
+              args = ["--quiet"];
+            };
             auto-format = true;
           }
           {
@@ -124,7 +130,7 @@ in
           }
           {
             name = "go";
-            language-servers = [ "gopls" "golangci-lint-lsp" ];
+            language-servers = ["gopls" "golangci-lint-lsp"];
             formatter.command = "go fmt";
             auto-format = true;
           }
@@ -132,12 +138,12 @@ in
             name = "css";
             scope = "source.css";
             injection-regex = "css";
-            file-types = [ "css" "scss" ];
+            file-types = ["css" "scss"];
             block-comment-tokens = {
               start = "/*";
               end = "*/";
             };
-            language-servers = [ "vscode-css-language-server" ];
+            language-servers = ["vscode-css-language-server"];
             auto-format = true;
             indent = {
               tab-width = 2;
@@ -148,27 +154,27 @@ in
             name = "dockerfile";
             scope = "source.dockerfile";
             injection-regex = "docker|dockerfile";
-            roots = [ "Dockerfile" "Containerfile" ];
+            roots = ["Dockerfile" "Containerfile"];
             file-types = [
               "Dockerfile"
-              { glob = "Dockerfile"; }
-              { glob = "Dockerfile.*"; }
+              {glob = "Dockerfile";}
+              {glob = "Dockerfile.*";}
               "dockerfile"
-              { glob = "dockerfile"; }
-              { glob = "dockerfile.*"; }
+              {glob = "dockerfile";}
+              {glob = "dockerfile.*";}
               "Containerfile"
-              { glob = "Containerfile"; }
-              { glob = "Containerfile.*"; }
+              {glob = "Containerfile";}
+              {glob = "Containerfile.*";}
               "containerfile"
-              { glob = "containerfile"; }
-              { glob = "containerfile.*"; }
+              {glob = "containerfile";}
+              {glob = "containerfile.*";}
             ];
             comment-token = "#";
             indent = {
               tab-width = 2;
               unit = "  ";
             };
-            language-servers = [ "docker-langserver" ];
+            language-servers = ["docker-langserver"];
           }
           {
             name = "docker-compose";
@@ -182,8 +188,8 @@ in
               "yaml-language-server"
             ];
             file-types = [
-              { glob = "docker-compose.yaml"; }
-              { glob = "docker-compose.yml"; }
+              {glob = "docker-compose.yaml";}
+              {glob = "docker-compose.yml";}
             ];
             comment-token = "#";
             indent = {
@@ -212,7 +218,7 @@ in
               start = "<!--";
               end = "-->";
             };
-            language-servers = [ "vscode-html-language-server" ];
+            language-servers = ["vscode-html-language-server"];
             auto-format = true;
             indent = {
               tab-width = 2;
@@ -231,16 +237,16 @@ in
               "rules"
               "es6"
               "pac"
-              { glob = ".node_repl_history"; }
-              { glob = "jakefile"; }
+              {glob = ".node_repl_history";}
+              {glob = "jakefile";}
             ];
-            shebangs = [ "node" ];
+            shebangs = ["node"];
             comment-token = "//";
             block-comment-tokens = {
               start = "/*";
               end = "*/";
             };
-            language-servers = [ "typescript-language-server" ];
+            language-servers = ["typescript-language-server"];
             indent = {
               tab-width = 2;
               unit = "  ";
@@ -248,7 +254,7 @@ in
             debugger = {
               name = "node-debug2";
               transport = "stdio";
-              quirks = { absolute-paths = true; };
+              quirks = {absolute-paths = true;};
               templates = [
                 {
                   name = "source";
@@ -260,7 +266,7 @@ in
                       default = "index.js";
                     }
                   ];
-                  args = { program = "{0}"; };
+                  args = {program = "{0}";};
                 }
               ];
             };
@@ -301,12 +307,12 @@ in
 
         keys.normal = {
           space.space = "file_picker";
-          space.w = ":w";
           space.q = ":q";
-          esc = [ "collapse_selection" "keep_primary_selection" ];
+          esc = ["collapse_selection" "keep_primary_selection"];
+          C-s = ":w";
+          C-g = [":new" ":insert-output lazygit" ":buffer-close!" ":redraw"];
         };
       };
-
     };
   };
 }

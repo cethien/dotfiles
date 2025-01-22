@@ -28,7 +28,5 @@ else
         split-window -v -p 15 "bash" \; \
         split-window -h -p 50 "bash" \; \
         send-keys -t 0 "$EDITOR ." C-m \; \
-        new-window -n "lazygit" "lazygit" \; \
-        select-pane -t 0 \; \
         attach
 fi
