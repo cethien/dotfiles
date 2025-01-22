@@ -5,11 +5,11 @@ EXTRA_PACKAGE_MANAGER=""
 # check if apt is installed
 if command -v apt &>/dev/null; then
     EXTRA_PACKAGE_MANAGER="apt"
-fi
 
-# check if nala is installed
-if command -v nala &>/dev/null; then
-    EXTRA_PACKAGE_MANAGER="nala"
+    # check if nala is installed
+    if command -v nala &>/dev/null; then
+        EXTRA_PACKAGE_MANAGER="nala"
+    fi
 fi
 
 if [[ -n $EXTRA_PACKAGE_MANAGER ]]; then
