@@ -135,6 +135,19 @@ in
         "SUPER CTRL, right, workspace, e+1"
         "SUPER CTRL, left, workspace, e-1"
 
+        # navigate workspaces
+        "SUPER, 1, workspace, 1"
+        "SUPER, 2, workspace, 2"
+        "SUPER, 3, workspace, 3"
+        "SUPER, 4, workspace, 4"
+        "SUPER, 5, workspace, 5"
+        "SUPER, 6, workspace, 6"
+        "SUPER, 7, workspace, 7"
+        "SUPER, 8, workspace, 8"
+        "SUPER, 9, workspace, 9"
+        "SUPER, 0, workspace, 10"
+
+
         # move window to workspace
         "SUPER CTRL SHIFT, right, movetoworkspace, e+1"
         "SUPER CTRL SHIFT, left, movetoworkspace, e-1"
