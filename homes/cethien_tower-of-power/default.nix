@@ -23,17 +23,17 @@
       ];
 
       workspaces = [
-        "1, monitor:DP-1, persistent:true, default:false"
-        "2, monitor:DP-1, persistent:true, default:true"
-        "3, monitor:DP-1, persistent:true, default:false"
-        "4, monitor:DP-1, persistent:true, default:false"
-        "5, monitor:DP-1, persistent:true, default:false"
-
-        "6, monitor:HDMI-A-1, persistent:true, default:true"
-        "7, monitor:HDMI-A-1, persistent:true, default:false"
-        "8, monitor:HDMI-A-1, persistent:true, default:false"
-        "9, monitor:HDMI-A-1, persistent:true, default:false"
-        "10, monitor:HDMI-A-1, persistent:true, default:false"
+        "1, monitor:DP-1, persistent:true"
+        "2, monitor:DP-1, persistent:true"
+        "3, monitor:DP-1, persistent:true"
+        "4, monitor:DP-1, persistent:true"
+        "5, monitor:DP-1, persistent:true"
+        
+        "6, monitor:HDMI-A-1, persistent:true"
+        "7, monitor:HDMI-A-1, persistent:true"
+        "8, monitor:HDMI-A-1, persistent:true"
+        "9, monitor:HDMI-A-1, persistent:true"
+        "10, monitor:HDMI-A-1, persistent:true"
       ];
 
       hyprpanel = {
@@ -65,7 +65,6 @@
       };
       discord = {
         enable = true;
-        hyprlandWorkspace = 8;
       };
       obs-studio.enable = true;
       firefox-devedition.enable = true;
