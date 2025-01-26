@@ -18,7 +18,7 @@ in
         obs-vkcapture
         obs-pipewire-audio-capture
 
-        advanced-scene-switcher
+        # advanced-scene-switcher
         obs-vertical-canvas
         obs-source-switcher
         obs-source-record
