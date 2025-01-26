@@ -28,7 +28,7 @@
         "3, monitor:DP-1, persistent:true"
         "4, monitor:DP-1, persistent:true"
         "5, monitor:DP-1, persistent:true"
-        
+
         "6, monitor:HDMI-A-1, persistent:true"
         "7, monitor:HDMI-A-1, persistent:true"
         "8, monitor:HDMI-A-1, persistent:true"
@@ -65,7 +65,9 @@
       };
       discord = {
         enable = true;
+        autostart = true;
       };
+      steam.autostart = true;
       obs-studio.enable = true;
       firefox-devedition.enable = true;
     };
