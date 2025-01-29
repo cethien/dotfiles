@@ -27,7 +27,7 @@ in
         obs-move-transition
         obs-gradient-source
         obs-composite-blur
-        # obs-transition-table
+        obs-transition-table
       ];
     };
   };
