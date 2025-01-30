@@ -150,6 +150,26 @@ in
           ublock-origin
           bitwarden
         ];
+
+        containers = {
+          admin = {
+            id = 2;
+            color = "red";
+            icon = "circle";
+          };
+
+          testing = {
+            id = 1;
+            color = "blue";
+            icon = "circle";
+          };
+
+          "wörk" = {
+            id = 3;
+            color = "orange";
+            icon = "briefcase";
+          };
+        };
       };
     };
   };
