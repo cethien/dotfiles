@@ -52,24 +52,27 @@
           };
         };
       };
+
+      programs = {
+        firefox.autostart = {
+          enable = true;
+          workspace = 6;
+        };
+        spotify.autostart = {
+          enable = true;
+          workspace = 7;
+        };
+        discord.autostart.enable = true;
+        steam.autostart.enable = true;
+      };
     };
 
     programs = {
       cli.enable = true;
       basic.enable = true;
       gaming.enable = true;
-
-      zen.hyprlandWorkspace = 6;
-      spotify = {
-        hyprlandWorkspace = 7;
-      };
-      discord = {
-        enable = true;
-        autostart = true;
-      };
-      steam.autostart = true;
+      discord.enable = true;
       obs-studio.enable = true;
-      firefox-devedition.enable = true;
     };
   };
 }

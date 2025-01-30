@@ -1,26 +1,35 @@
 { lib, config, pkgs, ... }:
 let
   inherit (lib) mkIf mkOption types;
-  cfg = config.deeznuts.programs.spotify;
+  cfgApp = config.deeznuts.programs.spotify;
+  cfg = config.deeznuts.desktop.hyprland.programs.spotify;
   isHyprland = config.deeznuts.desktop.hyprland.enable;
+  enabled = isHyprland && cfgApp.enable != false;
 in
 {
-  options.deeznuts.programs.spotify = {
-    hyprlandWorkspace = mkOption {
-      type = types.int;
-      default = 2;
-      description = "Workspace to use for spotify";
+  options.deeznuts.desktop.hyprland.programs.spotify = {
+    autostart = {
+      enable = mkOption {
+        type = types.bool;
+        default = false;
+        description = "enable autostart";
+      };
+      workspace = mkOption {
+        type = types.int;
+        default = 1;
+        description = "Workspace for autostart";
+      };
     };
   };
 
-  config = mkIf (cfg.enable && isHyprland) {
+  config = mkIf enabled {
     home.packages = with pkgs; [
       playerctl
     ];
 
     wayland.windowManager.hyprland.settings = {
-      exec-once = [
-        "[workspace ${toString cfg.hyprlandWorkspace} silent] spotify"
+      exec-once = mkIf cfg.autostart.enable [
+        "[workspace ${toString cfg.autostart.workspace} silent] spotify"
       ];
 
       "$spotifyctl" = "playerctl --player=spotify";

@@ -6,8 +6,12 @@ let
 in
 
 {
+  imports = [
+    ./hyprland.nix
+  ];
+
   options.deeznuts.programs.firefox = {
-    enable = mkEnableOption "Enable Firefox";
+    enable = mkEnableOption "firefox";
   };
 
   config = mkIf cfg.enable {
@@ -39,6 +43,9 @@ in
           "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
           "browser.aboutConfig.showWarning" = false;
           "browser.ssb.enabled" = true;
+          "browser.ctrlTab.sortByRecentlyUsed" = true;
+          "browser.startup.page" = 3;
+          "browser.shell.checkDefaultBrowser" = false;
 
           "sidebar.revamp" = true;
           "sidebar.verticalTabs" = true;
@@ -81,17 +88,20 @@ in
               "newElementCount": 2
             }
           '';
+
           "browser.uiCustomization.horizontalTabstrip" = ''["firefox-view-button","tabbrowser-tabs","new-tab-button","alltabs-button"]'';
+
           "browser.uiCustomization.state" = ''
             {
               "placements": {
                 "widget-overflow-fixed-list": [],
                 "unified-extensions-area": [
+                  "side-view_mozilla_org-browser-action",
+                  "_testpilot-containers-browser-action",
                   "_7a7a4a92-a2a0-41d1-9fd7-1e92480d612d_-browser-action"
                 ],
                 "nav-bar": [
                   "_aba5dba6-dc7b-458d-8587-d8686f815531_-browser-action",
-                  "sidebar-button",
                   "customizableui-special-spring1",
                   "back-button",
                   "forward-button",
@@ -100,7 +110,9 @@ in
                   "downloads-button",
                   "customizableui-special-spring2",
                   "unified-extensions-button",
-                  "_f8829f14-24b7-4e17-8bde-250217de2d71_-browser-action"
+                  "_f8829f14-24b7-4e17-8bde-250217de2d71_-browser-action",
+                  "ublock0_raymondhill_net-browser-action",
+                  "_446900e4-71c2-419f-a6a7-df9c091e268b_-browser-action"
                 ],
                 "toolbar-menubar": ["menubar-items"],
                 "TabsToolbar": [],
@@ -112,7 +124,11 @@ in
                 "developer-button",
                 "_f8829f14-24b7-4e17-8bde-250217de2d71_-browser-action",
                 "_aba5dba6-dc7b-458d-8587-d8686f815531_-browser-action",
-                "_7a7a4a92-a2a0-41d1-9fd7-1e92480d612d_-browser-action"
+                "_7a7a4a92-a2a0-41d1-9fd7-1e92480d612d_-browser-action",
+                "side-view_mozilla_org-browser-action",
+                "_testpilot-containers-browser-action",
+                "ublock0_raymondhill_net-browser-action",
+                "_446900e4-71c2-419f-a6a7-df9c091e268b_-browser-action"
               ],
               "dirtyAreaCache": [
                 "nav-bar",

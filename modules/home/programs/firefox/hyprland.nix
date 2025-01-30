@@ -1,13 +1,13 @@
 { lib, config, ... }:
 let
   inherit (lib) mkIf mkOption types;
-  cfgApp = config.deeznuts.programs.discord;
-  cfg = config.deeznuts.desktop.hyprland.programs.discord;
+  cfgApp = config.deeznuts.programs.firefox;
+  cfg = config.deeznuts.desktop.hyprland.programs.firefox;
   isHyprland = config.deeznuts.desktop.hyprland.enable;
   enabled = isHyprland && cfgApp.enable != false;
 in
 {
-  options.deeznuts.desktop.hyprland.programs.discord = {
+  options.deeznuts.desktop.hyprland.programs.firefox = {
     autostart = {
       enable = mkOption {
         type = types.bool;
@@ -16,7 +16,7 @@ in
       };
       workspace = mkOption {
         type = types.int;
-        default = 3;
+        default = 1;
         description = "Workspace for autostart";
       };
     };
@@ -25,7 +25,7 @@ in
   config = mkIf enabled {
     wayland.windowManager.hyprland.settings = {
       exec-once = mkIf cfg.autostart.enable [
-        "[workspace ${toString cfg.autostart.workspace} silent] discord --start-minimized"
+        "[workspace ${toString cfg.autostart.workspace} silent] firefox"
       ];
     };
   };

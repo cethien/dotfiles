@@ -27,7 +27,6 @@ in
     ./fd
     ./ffmpeg
     ./firefox
-    ./firefox-devedition
     ./fzf
     ./gh
     ./gimp
@@ -68,7 +67,6 @@ in
     ./tmux
     ./vscode
     ./yazi
-    ./zen
     ./zoxide
   ];
 
@@ -114,7 +112,7 @@ in
       deeznuts.programs = {
         easyeffects.enable = mkDefault true;
 
-        zen.enable = mkDefault true;
+        firefox.enable = mkDefault true;
         spotify.enable = mkDefault true;
         vscode.enable = mkDefault true;
         keepassxc.enable = mkDefault true;
