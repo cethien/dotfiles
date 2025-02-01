@@ -18,7 +18,6 @@
       discord.enable = true;
 
       obs-studio.enable = true;
-      firefox-devedition.enable = true;
     };
   };
 }
