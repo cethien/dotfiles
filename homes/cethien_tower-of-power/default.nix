@@ -40,14 +40,14 @@
         layout = {
           "bar.layouts" = {
             "0" = {
-              left = [ "workspaces" "windowtitle" ];
-              middle = [ "media" ];
-              right = [ "clock" ];
-            };
-            "1" = {
               left = [ "workspaces" "systray" "windowtitle" ];
               middle = [ "media" ];
               right = [ "volume" "bluetooth" "network" "notifications" "clock" "dashboard" ];
+            };
+            "1" = {
+              left = [ "workspaces" "windowtitle" ];
+              middle = [ "" ];
+              right = [ "clock" ];
             };
           };
         };
@@ -62,7 +62,6 @@
           enable = true;
           workspace = 7;
         };
-        discord.autostart.enable = true;
         steam.autostart.enable = true;
       };
     };
