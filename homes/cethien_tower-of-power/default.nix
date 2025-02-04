@@ -70,12 +70,16 @@
       cli.enable = true;
       basic.enable = true;
       gaming.enable = true;
+
       discord.enable = true;
-      obs-studio.enable = true;
+
+      spotify.enable = true;
       vscode = {
         enable = true;
         chromium = true;
       };
+
+      obs-studio.enable = true;
     };
   };
 }

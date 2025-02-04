@@ -113,7 +113,6 @@ in
         easyeffects.enable = mkDefault true;
 
         firefox.enable = mkDefault true;
-        spotify.enable = mkDefault true;
         keepassxc.enable = mkDefault true;
 
         pinta.enable = mkDefault true;
