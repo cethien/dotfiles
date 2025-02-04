@@ -147,10 +147,19 @@ in
         "SUPER, 9, workspace, 9"
         "SUPER, 0, workspace, 10"
 
-
         # move window to workspace
         "SUPER CTRL SHIFT, right, movetoworkspace, e+1"
         "SUPER CTRL SHIFT, left, movetoworkspace, e-1"
+        "SUPER CTRL SHIFT, 1, movetoworkspace, 1"
+        "SUPER CTRL SHIFT, 2, movetoworkspace, 2"
+        "SUPER CTRL SHIFT, 3, movetoworkspace, 3"
+        "SUPER CTRL SHIFT, 4, movetoworkspace, 4"
+        "SUPER CTRL SHIFT, 5, movetoworkspace, 5"
+        "SUPER CTRL SHIFT, 6, movetoworkspace, 6"
+        "SUPER CTRL SHIFT, 7, movetoworkspace, 7"
+        "SUPER CTRL SHIFT, 8, movetoworkspace, 8"
+        "SUPER CTRL SHIFT, 9, movetoworkspace, 9"
+        "SUPER CTRL SHIFT, 0, movetoworkspace, 10"
       ];
 
       binde = [
