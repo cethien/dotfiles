@@ -22,7 +22,10 @@ in
         id = 0;
         inherit name;
 
-        search.default = "DuckDuckGo";
+        search = {
+          default = "DuckDuckGo";
+          order = [ "DuckDuckGo" "Google" ];
+        };
 
         settings = {
           "browser.aboutwelcome.enabled" = false;
@@ -46,6 +49,18 @@ in
           "browser.ctrlTab.sortByRecentlyUsed" = true;
           "browser.startup.page" = 3;
           "browser.shell.checkDefaultBrowser" = false;
+          "extensions.pocket.enabled" = false;
+          "browser.toolbarbuttons.introduced.pocket-button" = false;
+          "browser.toolbars.bookmarks.visibility" = "never";
+
+          "media.videocontrols.picture-in-picture.video-toggle.has-used" = true;
+
+          "widget.disable-workspace-management" = true;
+
+          "signon.rememberSignons" = false;
+          "signon.autofillForms" = false;
+
+          "extensions.autoDisableScopes" = 0;
 
           "sidebar.revamp" = true;
           "sidebar.verticalTabs" = true;
@@ -54,101 +69,34 @@ in
           "browser.toolbarbuttons.introduced.sidebar-button" = true;
           "browser.engagement.sidebar-button.has-used" = true;
 
-          "browser.uiCustomization.horizontalTabsBackup" = ''
-            {
-              "placements": {
-                "widget-overflow-fixed-list": [],
-                "unified-extensions-area": [],
-                "nav-bar": [
-                  "sidebar-button",
-                  "back-button",
-                  "forward-button",
-                  "stop-reload-button",
-                  "customizableui-special-spring1",
-                  "urlbar-container",
-                  "customizableui-special-spring2",
-                  "save-to-pocket-button",
-                  "downloads-button",
-                  "fxa-toolbar-menu-button",
-                  "unified-extensions-button"
-                ],
-                "toolbar-menubar": ["menubar-items"],
-                "TabsToolbar": [
-                  "firefox-view-button",
-                  "tabbrowser-tabs",
-                  "new-tab-button",
-                  "alltabs-button"
-                ],
-                "vertical-tabs": [],
-                "PersonalToolbar": ["import-button", "personal-bookmarks"]
-              },
-              "seen": ["save-to-pocket-button", "developer-button"],
-              "dirtyAreaCache": ["nav-bar", "vertical-tabs", "PersonalToolbar"],
-              "currentVersion": 20,
-              "newElementCount": 2
-            }
-          '';
-
           "browser.uiCustomization.horizontalTabstrip" = ''["firefox-view-button","tabbrowser-tabs","new-tab-button","alltabs-button"]'';
 
-          "browser.uiCustomization.state" = ''
-            {
-              "placements": {
-                "widget-overflow-fixed-list": [],
-                "unified-extensions-area": [
-                  "side-view_mozilla_org-browser-action",
-                  "_testpilot-containers-browser-action",
-                  "_7a7a4a92-a2a0-41d1-9fd7-1e92480d612d_-browser-action"
-                ],
-                "nav-bar": [
-                  "_aba5dba6-dc7b-458d-8587-d8686f815531_-browser-action",
-                  "customizableui-special-spring1",
-                  "back-button",
-                  "forward-button",
-                  "stop-reload-button",
-                  "urlbar-container",
-                  "downloads-button",
-                  "customizableui-special-spring2",
-                  "unified-extensions-button",
-                  "_f8829f14-24b7-4e17-8bde-250217de2d71_-browser-action",
-                  "ublock0_raymondhill_net-browser-action",
-                  "_446900e4-71c2-419f-a6a7-df9c091e268b_-browser-action"
-                ],
-                "toolbar-menubar": ["menubar-items"],
-                "TabsToolbar": [],
-                "vertical-tabs": ["tabbrowser-tabs"],
-                "PersonalToolbar": ["personal-bookmarks"]
-              },
-              "seen": [
-                "save-to-pocket-button",
-                "developer-button",
-                "_f8829f14-24b7-4e17-8bde-250217de2d71_-browser-action",
-                "_aba5dba6-dc7b-458d-8587-d8686f815531_-browser-action",
-                "_7a7a4a92-a2a0-41d1-9fd7-1e92480d612d_-browser-action",
-                "side-view_mozilla_org-browser-action",
-                "_testpilot-containers-browser-action",
-                "ublock0_raymondhill_net-browser-action",
-                "_446900e4-71c2-419f-a6a7-df9c091e268b_-browser-action"
-              ],
-              "dirtyAreaCache": [
-                "nav-bar",
-                "vertical-tabs",
-                "PersonalToolbar",
-                "TabsToolbar",
-                "unified-extensions-area",
-                "toolbar-menubar"
-              ],
-              "currentVersion": 20,
-              "newElementCount": 6
-            }
-          '';
+          "browser.uiCustomization.state" = ''{"placements":{"widget-overflow-fixed-list":[],"unified-extensions-area":["sponsorblocker_ajay_app-browser-action","_testpilot-containers-browser-action","_7a7a4a92-a2a0-41d1-9fd7-1e92480d612d_-browser-action","_762f9885-5a13-4abd-9c77-433dcd38b8fd_-browser-action","side-view_mozilla_org-browser-action"],"nav-bar":["customizableui-special-spring1","back-button","forward-button","stop-reload-button","urlbar-container","downloads-button","customizableui-special-spring2","unified-extensions-button","addon_darkreader_org-browser-action","ublock0_raymondhill_net-browser-action","_446900e4-71c2-419f-a6a7-df9c091e268b_-browser-action","keepassxc-browser_keepassxc_org-browser-action"],"toolbar-menubar":["menubar-items"],"TabsToolbar":[],"vertical-tabs":["tabbrowser-tabs"],"PersonalToolbar":["import-button","personal-bookmarks"]},"seen":["save-to-pocket-button","developer-button","_7a7a4a92-a2a0-41d1-9fd7-1e92480d612d_-browser-action","_446900e4-71c2-419f-a6a7-df9c091e268b_-browser-action","addon_darkreader_org-browser-action","_testpilot-containers-browser-action","keepassxc-browser_keepassxc_org-browser-action","_762f9885-5a13-4abd-9c77-433dcd38b8fd_-browser-action","side-view_mozilla_org-browser-action","sponsorblocker_ajay_app-browser-action","ublock0_raymondhill_net-browser-action"],"dirtyAreaCache":["nav-bar","vertical-tabs","PersonalToolbar","unified-extensions-area","toolbar-menubar","TabsToolbar"],"currentVersion":20,"newElementCount":6}'';
         };
 
         extensions = with pkgs.nur.repos.rycee.firefox-addons; [
           multi-account-containers
           side-view
-          ublock-origin
+
           bitwarden
+          keepassxc-browser
+
+          ublock-origin
+          unpaywall
+          istilldontcareaboutcookies
+          consent-o-matic
+          cookie-autodelete
+          link-cleaner
+
+          stylus
+          darkreader
+
+          sponsorblock
+          return-youtube-dislikes
+
+          twitch-auto-points
+
+          steam-database
         ];
 
         containers = {
