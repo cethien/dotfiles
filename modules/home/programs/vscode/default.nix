@@ -6,30 +6,12 @@ in
 {
   options.deeznuts.programs.vscode = {
     enable = mkEnableOption "Enable VSCode";
+    chromium = mkEnableOption "Chromium for development";
   };
 
   config = mkIf cfg.enable {
-    programs.vscode = {
-      enable = true;
-
-      extensions = with pkgs.vscode-extensions; [
-        vscode-icons-team.vscode-icons
-
-        mads-hartmann.bash-ide-vscode
-        foxundermoon.shell-format
-        timonwong.shellcheck
-        esbenp.prettier-vscode
-        tamasfe.even-better-toml
-        redhat.vscode-yaml
-        redhat.vscode-xml
-
-        arrterian.nix-env-selector
-        jnoortheen.nix-ide
-        mkhl.direnv
-        jeff-hykin.better-nix-syntax
-
-        nefrob.vscode-just-syntax
-      ];
-    };
+    home.packages = [ pkgs.nerd-fonts.meslo-lg ];
+    programs.vscode.enable = true;
+    programs.chromium.enable = cfg.chromium;
   };
 }

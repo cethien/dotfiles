@@ -72,6 +72,10 @@
       gaming.enable = true;
       discord.enable = true;
       obs-studio.enable = true;
+      vscode = {
+        enable = true;
+        chromium = true;
+      };
     };
   };
 }
