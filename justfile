@@ -1,4 +1,7 @@
-set dotenv-load
+hostname := lowercase(shell("hostname"))
+
+nixos := hostname
+home := env("USER") + "@" + hostname
 
 [private]
 @default:
@@ -16,11 +19,11 @@ set dotenv-load
 @update:
     nix flake update
 
-@rebuild profile='$HOMEMANAGER_CONFIG':
-    home-manager switch --flake .#{{profile}} -b bak-hm-$(date +%Y%m%d_%H%M%S)
+rebuild:
+    home-manager switch --flake .#{{home}} -b bak-hm-$(date +%Y%m%d_%H%M%S)
 
-@rebuild-nixos profile='$NIXOS_CONFIG':
-    sudo nixos-rebuild switch --flake .#{{profile}}
+@rebuild-nixos:
+    sudo nixos-rebuild switch --flake .#{{nixos}}
 
 @install profile dest:
     nix run github:nix-community/nixos-anywhere -- \

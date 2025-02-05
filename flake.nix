@@ -149,13 +149,6 @@
 
           just
         ];
-
-        shellHook = ''
-          if [ ! -f .env ]; then
-            cp .env.TEMPLATE .env
-            $EDITOR .env
-          fi
-        '';
       };
     };
 
