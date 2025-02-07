@@ -26,6 +26,8 @@ in
         };
     };
 
+    services.udisks2.enable = true;
+
     programs.hyprland.enable = true;
   };
 }
