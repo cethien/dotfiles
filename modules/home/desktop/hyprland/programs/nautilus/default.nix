@@ -7,6 +7,7 @@ in
   config = mkIf enabled {
     home.packages = with pkgs; [
       nautilus
+      kdePackages.okular
     ];
 
     wayland.windowManager.hyprland.settings = {
