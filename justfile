@@ -19,7 +19,7 @@ home := env("USER") + "@" + hostname
 @update:
     nix flake update
 
-rebuild:
+@rebuild:
     home-manager switch --flake .#{{home}} -b bak-hm-$(date +%Y%m%d_%H%M%S)
 
 @rebuild-nixos:
