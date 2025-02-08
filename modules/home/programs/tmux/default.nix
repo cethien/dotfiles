@@ -17,8 +17,8 @@ in
         yank
         open
         tmux-fzf
-        resurrect
-        continuum
+        # resurrect
+        # continuum
         better-mouse-mode
         prefix-highlight
       ];
