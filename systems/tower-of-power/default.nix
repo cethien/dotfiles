@@ -12,7 +12,7 @@ in
   boot = {
     kernelPackages = pkgs.linuxPackages_zen;
 
-    loader.grub.enable = true;
+    loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
   };
 

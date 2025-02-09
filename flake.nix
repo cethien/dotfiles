@@ -95,8 +95,8 @@
           modules = [
             ./systems/tower-of-power
 
-            inputs.disko.nixosModules.disko
-            ./shared/disko/simple
+            # inputs.disko.nixosModules.disko
+            # ./shared/disko/simple
 
             inputs.sops-nix.nixosModules.sops
             ./shared/sops
@@ -104,7 +104,7 @@
             {
               system.stateVersion = stateVersion;
               networking.hostName = "tower-of-power";
-              disko.devices.disk.main.device = "/dev/nvme0n1";
+              # disko.devices.disk.main.device = "/dev/nvme0n1";
             }
           ];
 
