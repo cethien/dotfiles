@@ -1,6 +1,6 @@
 hostname := lowercase(shell("hostname"))
 
-nixos := hostname
+system := hostname
 home := env("USER") + "@" + hostname
 
 [private]
@@ -20,10 +20,10 @@ home := env("USER") + "@" + hostname
     nix flake update
 
 @rebuild:
-    home-manager switch --flake .#{{home}} -b bak-hm-$(date +%Y%m%d_%H%M%S)
+    nix run nixpkgs#home-manager -- switch --flake .#{{home}} -b bak-hm-$(date +%Y%m%d_%H%M%S)
 
 @rebuild-nixos:
-    sudo nixos-rebuild switch --flake .#{{nixos}}
+    sudo nixos-rebuild switch --flake .#{{system}}
 
 @install profile dest:
     nix run github:nix-community/nixos-anywhere -- \
