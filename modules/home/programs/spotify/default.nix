@@ -9,7 +9,6 @@ in
   imports = [
     inputs.spicetify-nix.homeManagerModules.default
     ./hyprland.nix
-    ./gnome.nix
   ];
 
   options.deeznuts.programs.spotify = {
