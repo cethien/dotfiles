@@ -15,8 +15,6 @@ in
       settings = {
         fps_only = true;
         fps_limit = 240;
-        vsync = 0;
-        glvsync = -1;
       };
     };
   };
