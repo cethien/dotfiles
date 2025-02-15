@@ -15,6 +15,7 @@ in
     ./aliases
     ./bash
     ./bat
+    ./bc
     ./bottom
     ./dblab
     ./direnv
@@ -75,6 +76,7 @@ in
         aliases.enable = mkDefault true;
         bash.enable = mkDefault true;
         bat.enable = mkDefault true;
+        bc.enable = mkDefault true;
         bottom.enable = mkDefault true;
         dblab.enable = mkDefault true;
         direnv.enable = mkDefault true;
