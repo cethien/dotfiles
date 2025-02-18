@@ -27,6 +27,7 @@ in
     };
 
     services.udisks2.enable = true;
+    services.upower.enable = true;
 
     programs.hyprland.enable = true;
   };
