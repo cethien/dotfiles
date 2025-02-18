@@ -8,17 +8,19 @@
 
     desktop.hyprland = {
       enable = true;
+      idle.enable = true;
     };
 
     programs = {
       cli.enable = true;
       basic.enable = true;
-      gaming.enable = true;
 
       spotify.spotify-player.enable = true;
+      vscode = {
+        enable = true;
+        chromium = true;
+      };
       discord.enable = true;
-
-      obs-studio.enable = true;
     };
   };
 }
