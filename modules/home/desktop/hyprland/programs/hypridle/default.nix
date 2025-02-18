@@ -53,7 +53,7 @@ in
         listener = [
           {
             timeout = cfg.dimScreen.timeout;
-            on-timeout = "brightnessctl -s set 10";
+            on-timeout = "brightnessctl -s set 25%";
             on-resume = "brightnessctl -r";
           }
           {
