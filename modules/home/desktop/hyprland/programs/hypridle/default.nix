@@ -10,7 +10,6 @@ in
     enable = mkEnableOption "Enable hypridle";
 
     dimScreen = {
-      enable = mkEnableOption "Dim screen on idle";
       timeout = mkOption {
         type = int;
         default = 150; # 2.5 minutes
@@ -18,7 +17,6 @@ in
       };
     };
     lockScreen = {
-      enable = mkEnableOption "Lock screen on idle";
       timeout = mkOption {
         type = int;
         default = 300; # 5 minutes
@@ -26,7 +24,6 @@ in
       };
     };
     turnOffScreen = {
-      enable = mkEnableOption "Turn off screen on idle";
       timeout = mkOption {
         type = int;
         default = 330; # 5.5 minutes
@@ -34,7 +31,6 @@ in
       };
     };
     suspendComputer = {
-      enable = mkEnableOption "Suspend computer on idle";
       timeout = mkOption {
         type = int;
         default = 900; # 15 minutes
@@ -55,24 +51,24 @@ in
         };
 
         listener = [
-          (mkIf cfg.dimScreen.enable {
+          {
             timeout = cfg.dimScreen.timeout;
             on-timeout = "brightnessctl -s set 10";
             on-resume = "brightnessctl -r";
-          })
-          (mkIf cfg.lockScreen.enable {
+          }
+          {
             timeout = cfg.lockScreen.timeout;
             on-timeout = "loginctl lock-session";
-          })
-          (mkIf cfg.turnOffScreen.enable {
+          }
+          {
             timeout = cfg.turnOffScreen.timeout;
             on-timeout = "hyprctl dispatch dpms off";
             on-resume = "hyprctl dispatch dpms on";
-          })
-          (mkIf cfg.suspendComputer.enable {
+          }
+          {
             timeout = cfg.suspendComputer.timeout;
             on-timeout = "systemctl suspend";
-          })
+          }
         ];
       };
     };
