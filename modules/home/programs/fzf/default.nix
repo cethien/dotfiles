@@ -9,6 +9,11 @@ in
   };
 
   config = mkIf cfg.enable {
-    programs.fzf.enable = true;
+    programs.fzf = {
+      enable = true;
+      defaultCommand = "fd --type f";
+      fileWidgetCommand = "fd --type f";
+      changeDirWidgetCommand = "fd --type d";
+    };
   };
 }
