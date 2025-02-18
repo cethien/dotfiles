@@ -22,9 +22,9 @@ in
       default = {
         "bar.layouts" = {
           "0" = {
-            left = [ "workspaces" "systray" "windowtitle" ];
+            left = [ "dashboard" "workspaces" "systray" "windowtitle" ];
             middle = [ "media" ];
-            right = [ "volume" "bluetooth" "network" "battery" "notifications" "clock" "dashboard" ];
+            right = [ "volume" "bluetooth" "network" "battery" "notifications" "clock" ];
           };
         };
       };
@@ -47,6 +47,7 @@ in
       layout = cfg.layout;
 
       settings = {
+        scalingPriority = "hyprland";
         bar = {
 
           launcher.autoDetectIcon = true;

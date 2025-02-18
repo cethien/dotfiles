@@ -9,7 +9,7 @@ in
     monitors = mkOption {
       type = types.listOf types.str;
       default = [
-        "eDP-1, 1920x1080@60, 0x0, 1"
+        "eDP-1, 1920x1080@60, 0x0, 1.25"
       ];
       description = "Monitors to use";
     };
@@ -31,6 +31,10 @@ in
     wayland.windowManager.hyprland.settings = {
       monitor = cfg.monitors;
       workspace = cfg.workspaces;
+
+      xwayland = {
+        force_zero_scaling = true;
+      };
 
       general = {
         gaps_in = 8;
