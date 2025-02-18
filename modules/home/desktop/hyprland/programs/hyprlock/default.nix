@@ -1,12 +1,19 @@
 { lib, config, ... }:
 let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf mkForce mkOption;
+  cfg = config.deeznuts.desktop.hyprland.hyprlock;
   enable = config.deeznuts.desktop.hyprland.enable;
 in
 {
-  config = mkIf enable {
-    # stylix.hyprlock.enable = false;
+  options.deeznuts.desktop.hyprland.hyprlock = {
+    monitor = mkOption {
+      type = lib.types.str;
+      default = "eDP-1";
+      description = "Monitor to use for the hyprlock background";
+    };
+  };
 
+  config = mkIf enable {
     programs.hyprlock = {
       enable = true;
 
@@ -20,7 +27,7 @@ in
 
         # background = [
         #   {
-        #     monitor = "DP-1";
+        #     monitor = cfg.monitor;
         #     path = "/home/cethien/Pictures/wallpapers/drippy-smiley.jpg";
         #     blur_passes = 2;
         #     blur_size = 4;
@@ -31,22 +38,22 @@ in
         #   }
         # ];
 
-        # input-field = [
-        #   {
-        #     monitor = "DP-1";
-        #     fade_on_empty = false;
-        #     font_family = "MesloLGM Nerd Font";
-        #     font_color = "rgb(205, 214, 244)";
-        #     inner_color = "rgb(24, 24, 37)";
-        #     outer_color = "rgb(17, 17, 27)";
-        #     placeholder_color = "rgb(166, 173, 200)";
-        #     placeholder_text = "Enter Password";
-        #   }
-        # ];
+        input-field = mkForce [
+          {
+            monitor = cfg.monitor;
+            fade_on_empty = false;
+            font_family = "MesloLGM Nerd Font";
+            font_color = "rgb(205, 214, 244)";
+            inner_color = "rgb(24, 24, 37)";
+            outer_color = "rgb(17, 17, 27)";
+            placeholder_color = "rgb(166, 173, 200)";
+            placeholder_text = "Enter Password";
+          }
+        ];
 
         label = [
           {
-            monitor = "DP-1";
+            monitor = cfg.monitor;
             text = "cmd[update:1000] echo \"$TIME\"";
             color = "rgb(205, 214, 244)";
             font_size = 55;
@@ -58,7 +65,7 @@ in
             shadow_size = 10;
           }
           {
-            monitor = "DP-1";
+            monitor = cfg.monitor;
             text = "$USER";
             color = "rgb(205, 214, 244)";
             font_size = 35;

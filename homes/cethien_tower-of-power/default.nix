@@ -53,6 +53,10 @@
         };
       };
 
+      hyprlock = {
+        monitor = "DP-1";
+      };
+
       programs = {
         firefox.autostart = {
           enable = true;
