@@ -7,7 +7,7 @@ in
 {
   options.deeznuts.programs = {
     cli.enable = mkEnableOption "Enable all cli programs";
-    basic.enable = mkEnableOption "Enable basic programs";
+    basic.enable = mkEnableOption "Enable basic desktop programs";
     gaming.enable = mkEnableOption "Enable gaming related programs";
   };
 
@@ -113,6 +113,7 @@ in
         easyeffects.enable = mkDefault true;
 
         firefox.enable = mkDefault true;
+        spotify.enable = mkDefault true;
         keepassxc.enable = mkDefault true;
 
         pinta.enable = mkDefault true;

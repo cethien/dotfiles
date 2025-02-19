@@ -37,20 +37,21 @@
       ];
 
       hyprpanel = {
-        layout = {
-          "bar.layouts" = {
-            "0" = {
-              left = [ "workspaces" "systray" "windowtitle" ];
-              middle = [ "media" ];
-              right = [ "volume" "bluetooth" "network" "notifications" "clock" "dashboard" ];
-            };
-            "1" = {
-              left = [ "workspaces" "windowtitle" ];
-              middle = [ "" ];
-              right = [ "clock" ];
-            };
-          };
-        };
+        layout.battery = false;
+        # layout.layout = {
+        #   "bar.layouts" = {
+        #     "0" = {
+        #       left = [ "dashboard" "systray" "workspaces" "windowtitle" ];
+        #       middle = [ "media" ];
+        #       right = [ "volume" "bluetooth" "network" "notifications" "clock" ];
+        #     };
+        #     "1" = {
+        #       left = [ "dashboard" "systray" "workspaces" "windowtitle" ];
+        #       middle = [ "media" ];
+        #       right = [ "notifications" "clock" ];
+        #     };
+        #   };
+        # };
       };
 
       hyprlock = {
@@ -74,15 +75,8 @@
       cli.enable = true;
       basic.enable = true;
       gaming.enable = true;
-
       discord.enable = true;
-
-      spotify.enable = true;
-      vscode = {
-        enable = true;
-        chromium = true;
-      };
-
+      vscode.enable = true;
       obs-studio.enable = true;
     };
   };

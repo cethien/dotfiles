@@ -5,13 +5,12 @@ let
 in
 {
   options.deeznuts.programs.vscode = {
-    enable = mkEnableOption "Enable VSCode";
-    chromium = mkEnableOption "Chromium for development";
+    enable = mkEnableOption "VSCode and Chromium";
   };
 
   config = mkIf cfg.enable {
     home.packages = [ pkgs.nerd-fonts.meslo-lg ];
     programs.vscode.enable = true;
-    programs.chromium.enable = cfg.chromium;
+    programs.chromium.enable = true;
   };
 }

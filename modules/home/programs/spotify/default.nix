@@ -4,6 +4,8 @@ let
   cfg = config.deeznuts.programs.spotify;
 
   spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.system};
+
+  enabled = cfg.enable;
 in
 {
   imports = [
@@ -13,11 +15,10 @@ in
 
   options.deeznuts.programs.spotify = {
     enable = mkEnableOption "Enable Spotify";
-    spotify-player.enable = mkEnableOption "Enable Spotify Player (tui)";
   };
 
-  config = {
-    programs.spicetify = mkIf cfg.enable {
+  config = mkIf enabled {
+    programs.spicetify = {
       enable = true;
       enabledExtensions = with spicePkgs.extensions; [
         hidePodcasts
@@ -26,8 +27,7 @@ in
       colorScheme = "mocha";
     };
 
-
-    programs.spotify-player = mkIf cfg.spotify-player.enable {
+    programs.spotify-player = {
       enable = true;
       settings = {
         client_id = "9b20bf81c95d4710bee28bff24db41f9";
