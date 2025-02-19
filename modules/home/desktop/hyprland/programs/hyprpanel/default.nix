@@ -17,14 +17,30 @@ in
   ];
 
   options.deeznuts.desktop.hyprland.hyprpanel = {
-    layout = mkOption {
-      type = jsonFormat.type;
-      default = {
-        "bar.layouts" = {
-          "0" = {
-            left = [ "dashboard" "systray" "workspaces" "windowtitle" ];
-            middle = [ "media" ];
-            right = [ "volume" "bluetooth" "network" "notifications" "battery" "clock" ];
+    layout = {
+      battery = mkOption {
+        type = types.bool;
+        default = true;
+        description = "Show battery percentage in the layout";
+      };
+      bluetooth = mkOption {
+        type = types.bool;
+        default = true;
+        description = "Show bluetooth in the layout";
+      };
+      layout = mkOption {
+        type = jsonFormat.type;
+        default = {
+          "bar.layouts" = {
+            "*" = {
+              left = [ "dashboard" "systray" "workspaces" "windowtitle" ];
+              middle = [ "media" ];
+              right = [ "volume" ] ++
+                (if cfg.layout.bluetooth then [ "bluetooth" ] else [ ]) ++
+                [ "network" "notifications" ] ++
+                (if cfg.layout.battery then [ "battery" ] else [ ]) ++
+                [ "clock" ];
+            };
           };
         };
       };
@@ -44,7 +60,7 @@ in
 
       theme = "catppuccin_mocha";
 
-      layout = cfg.layout;
+      layout = cfg.layout.layout;
 
       settings = {
         scalingPriority = "hyprland";
