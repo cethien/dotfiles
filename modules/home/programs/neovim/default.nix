@@ -37,6 +37,10 @@ in
         list = true;
       };
 
+      globals = {
+        mapleader = " ";
+      };
+
       colorschemes.catppuccin.enable = true;
 
       plugins = {
@@ -51,6 +55,9 @@ in
         dap.enable = true;
         cursorline.enable = true;
         telescope.enable = true;
+        # neo-tree.enable = true;
+        oil.enable = true;
+        gx.enable = true;
 
         direnv.enable = true;
         nix.enable = true;
@@ -79,6 +86,7 @@ in
           servers = {
             nil_ls = {
               enable = true;
+
               settings.formatting.command = [
                 "nixpkgs-fmt"
               ];
@@ -110,18 +118,18 @@ in
 
       keymaps = [
         {
-          key = "<C-S-g>";
+          key = "<leader>g";
           action = "<cmd>LazyGit<cr>";
-        }
-        {
-          mode = "n";
-          key = "<C-p>";
-          action = "<cmd>OverseerRun<cr>";
         }
 
         {
           mode = "n";
-          key = "<C-o>";
+          key = "<leader>or";
+          action = "<cmd>OverseerRun<cr>";
+        }
+        {
+          mode = "n";
+          key = "<leader>o";
           action = "<cmd>OverseerToggle<cr>";
         }
 
@@ -133,7 +141,7 @@ in
 
         {
           mode = "n";
-          key = "<C-Space>";
+          key = "<leader><Space>";
           action = "<cmd>Telescope find_files<cr>";
         }
 
@@ -161,7 +169,7 @@ in
         }
         {
           mode = "n";
-          key = "<C-w>";
+          key = "<leader>w";
           action = "<cmd>bdelete<cr>";
           options = {
             desc = "Delete buffer";
@@ -170,7 +178,7 @@ in
 
         {
           mode = "n";
-          key = "<C-S-5>";
+          key = "<leader>t";
           action = "<cmd>terminal<cr>";
           options = {
             desc = "open terminal";
