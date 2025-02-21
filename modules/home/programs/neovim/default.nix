@@ -112,19 +112,25 @@ in
 
             dockerls.enable = true;
 
+            ansiblels.enable = true;
+
             sqls.enable = true;
 
             lua_ls.enable = true;
 
             html.enable = true;
+            cssls.enable = true;
+
             ts_ls.enable = true;
             eslint.enable = true;
-            cssls.enable = true;
+
             htmx.enable = true;
             tailwindcss.enable = true;
+
             svelte.enable = true;
 
             gopls.enable = true;
+            golangci_lint_ls.enable = true;
             templ.enable = true;
           };
         };
@@ -152,6 +158,12 @@ in
           mode = "n";
           key = "<leader>w";
           action = "<cmd>write<CR>";
+        }
+
+        {
+          mode = "n";
+          key = "<leader>e";
+          action = "<cmd>Oil --float<CR>";
         }
 
         {
