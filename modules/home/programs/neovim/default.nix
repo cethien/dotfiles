@@ -41,9 +41,11 @@ in
         mapleader = " ";
       };
 
-      colorschemes.catppuccin.enable = true;
+      # colorschemes.catppuccin.enable = true; # handled by stylix
 
       plugins = {
+        auto-session.enable = true;
+
         web-devicons.enable = true;
         lualine.enable = true;
         bufferline.enable = true;
@@ -55,9 +57,11 @@ in
         dap.enable = true;
         cursorline.enable = true;
         telescope.enable = true;
-        # neo-tree.enable = true;
+        toggleterm.enable = true;
         oil.enable = true;
         gx.enable = true;
+        yanky.enable = true;
+
 
         direnv.enable = true;
         nix.enable = true;
@@ -66,6 +70,7 @@ in
         # hex.enable = true;
 
         lazygit.enable = true;
+        octo.enable = true;
         yazi.enable = true;
 
         vim-css-color.enable = true;
@@ -78,7 +83,10 @@ in
         treesitter.enable = true;
         rest.enable = true;
 
-        persistence.enable = true;
+
+        vim-dadbod.enable = true;
+        vim-dadbod-completion.enable = true;
+        vim-dadbod-ui.enable = true;
 
         lsp-format.enable = true;
         lsp = {
@@ -114,13 +122,56 @@ in
             templ.enable = true;
           };
         };
+
+        presence-nvim.enable = true;
       };
 
       keymaps = [
         {
+          mode = "n";
+          key = "<leader>q";
+          action = "<cmd>quit<CR>";
+        }
+        {
+          mode = "n";
+          key = "<leader>qq";
+          action = "<cmd>quitall<CR>";
+        }
+        {
+          mode = "n";
+          key = "<leader>sv";
+          action = "<cmd>source $MYVIMRC<CR>";
+        }
+        {
+          mode = "n";
+          key = "<leader>w";
+          action = "<cmd>write<CR>";
+        }
+
+        {
+          mode = "n";
           key = "<leader>g";
           action = "<cmd>LazyGit<cr>";
         }
+
+        {
+          mode = "n";
+          key = "<leader>gh";
+          action = "<cmd>Octo actions<CR>";
+        }
+
+        {
+          mode = "n";
+          key = "<leader>t";
+          action = "<cmd>ToggleTerm<CR>";
+        }
+
+        {
+          mode = "n";
+          key = "<leader>db";
+          action = "<cmd>DBUIToggle<CR>";
+        }
+
 
         {
           mode = "n";
@@ -135,19 +186,18 @@ in
 
         {
           mode = "n";
-          key = "<C-s>";
-          action = "<cmd>write<CR>";
-        }
-
-        {
-          mode = "n";
           key = "<leader><Space>";
           action = "<cmd>Telescope find_files<cr>";
         }
+        {
+          mode = "n";
+          key = "<leader>p";
+          action = "<cmd>Telescope commands<CR>";
+        }
 
         {
           mode = "n";
-          key = "<C-c>";
+          key = "<leader>cc";
           action = "<cmd>Commentary<CR>";
         }
 
@@ -169,19 +219,10 @@ in
         }
         {
           mode = "n";
-          key = "<leader>w";
+          key = "<leader>bx";
           action = "<cmd>bdelete<cr>";
           options = {
             desc = "Delete buffer";
-          };
-        }
-
-        {
-          mode = "n";
-          key = "<leader>t";
-          action = "<cmd>terminal<cr>";
-          options = {
-            desc = "open terminal";
           };
         }
       ];
