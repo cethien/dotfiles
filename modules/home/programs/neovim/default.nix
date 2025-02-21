@@ -58,7 +58,12 @@ in
         dap.enable = true;
         cursorline.enable = true;
         telescope.enable = true;
-        toggleterm.enable = true;
+        toggleterm = {
+          enable = true;
+          settings = {
+            direction = "float";
+          };
+        };
         oil.enable = true;
         gx.enable = true;
         yanky.enable = true;
