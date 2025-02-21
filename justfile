@@ -1,4 +1,4 @@
-hostname := lowercase(shell("hostname"))
+hostname := if env("WSL_DISTRO_NAME", "empty") == "empty" { lowercase(shell("hostname")) } else { "wsl" }
 
 system := hostname
 home := env("USER") + "@" + hostname
