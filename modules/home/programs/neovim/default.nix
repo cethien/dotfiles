@@ -46,6 +46,7 @@ in
       plugins = {
         auto-session.enable = true;
 
+        transparent.enable = true;
         web-devicons.enable = true;
         lualine.enable = true;
         bufferline.enable = true;
