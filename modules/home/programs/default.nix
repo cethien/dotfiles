@@ -27,7 +27,7 @@ in
     ./fastfetch
     ./fd
     ./ffmpeg
-    ./firefox
+    ./zen-browser
     ./fzf
     ./gh
     ./gimp
@@ -112,7 +112,7 @@ in
       deeznuts.programs = {
         easyeffects.enable = mkDefault true;
 
-        firefox.enable = mkDefault true;
+        zen-browser.enable = mkDefault true;
         spotify.enable = mkDefault true;
         keepassxc.enable = mkDefault true;
 
