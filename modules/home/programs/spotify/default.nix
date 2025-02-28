@@ -27,6 +27,8 @@ in
       colorScheme = "mocha";
     };
 
+
+    home.shellAliases.spot = "spotify_player";
     programs.spotify-player = {
       enable = true;
       settings = {

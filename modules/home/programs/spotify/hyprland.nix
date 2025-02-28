@@ -11,13 +11,8 @@ in
     autostart = {
       enable = mkOption {
         type = types.bool;
-        default = false;
-        description = "enable autostart";
-      };
-      workspace = mkOption {
-        type = types.int;
-        default = 1;
-        description = "Workspace for autostart";
+        default = true;
+        description = "enable autostart (spotify_player)";
       };
     };
   };
@@ -29,7 +24,7 @@ in
 
     wayland.windowManager.hyprland.settings = {
       exec-once = mkIf cfg.autostart.enable [
-        "[workspace ${toString cfg.autostart.workspace} silent] spotify"
+        "spotify-player -d"
       ];
 
       "$spotifyctl" = "playerctl --player=spotify";
