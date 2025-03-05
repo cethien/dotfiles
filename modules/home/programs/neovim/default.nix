@@ -67,6 +67,7 @@ in
         oil.enable = true;
         gx.enable = true;
         yanky.enable = true;
+        markview.enable = true;
 
 
         direnv.enable = true;
