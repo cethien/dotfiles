@@ -12,6 +12,7 @@ in
     ./hyprpanel
     ./satty
     ./nautilus
+    ./zathura
   ];
 
   config = mkIf cfg.enable {
