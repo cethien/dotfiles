@@ -63,7 +63,7 @@
       {
         mode = "n";
         key = "<leader>e";
-        action = "<cmd>Oil --float<CR>";
+        action = "<cmd>Oil<CR>";
       }
 
       {
