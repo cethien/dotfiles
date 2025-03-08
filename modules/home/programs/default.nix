@@ -12,6 +12,7 @@ in
   };
 
   imports = [
+    ./lynx
     ./aliases
     ./bash
     ./bat
@@ -106,6 +107,7 @@ in
         tmux.enable = mkDefault true;
         yazi.enable = mkDefault true;
         zoxide.enable = mkDefault true;
+        lynx.enable = mkDefault true;
       };
     })
     (mkIf cfg.basic.enable {
