@@ -62,31 +62,6 @@
           };
         };
 
-
-        "cethien@hp-250-g7" = inputs.home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          modules = [
-            ./homes/cethien_hp-250-g7
-
-            inputs.stylix.homeManagerModules.stylix
-            ./modules/home/stylix
-
-            inputs.sops-nix.homeManagerModules.sops
-            ./shared/sops
-
-            inputs.nur.modules.homeManager.default
-            {
-              home.stateVersion = stateVersion;
-              home.username = defaultUser;
-              home.homeDirectory = "/home/${defaultUser}";
-            }
-          ];
-
-          extraSpecialArgs = {
-            inherit inputs;
-          };
-        };
-
         "cethien@hp-430-g7" = inputs.home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           modules = [
@@ -129,28 +104,6 @@
               system.stateVersion = stateVersion;
               networking.hostName = "tower-of-power";
               # disko.devices.disk.main.device = "/dev/nvme0n1";
-            }
-          ];
-
-          specialArgs = {
-            inherit inputs;
-          };
-        };
-
-        "hp-250-g7" = inputs.nixpkgs.lib.nixosSystem {
-          modules = [
-            ./systems/hp-250-g7
-
-            inputs.disko.nixosModules.disko
-            ./shared/disko/simple
-
-            inputs.sops-nix.nixosModules.sops
-            ./shared/sops
-
-            {
-              system.stateVersion = stateVersion;
-              networking.hostName = "hp-250-g7";
-              disko.devices.disk.main.device = "/dev/nvme0n1";
             }
           ];
 
