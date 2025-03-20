@@ -21,7 +21,6 @@ in
       };
 
       keybindings = {
-        "ctrl+shift+t" = "new_tab_with_cwd";
         "ctrl+shift+g" = "no_op";
       };
     };
