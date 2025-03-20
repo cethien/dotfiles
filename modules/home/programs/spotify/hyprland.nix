@@ -15,6 +15,12 @@ in
         description = "enable autostart (spotify_player)";
       };
     };
+
+    remapVolumeControls = mkOption {
+      type = types.bool;
+      default = false;
+      description = "remap volume controls to spotify controls";
+    };
   };
 
   config = mkIf enabled {
@@ -29,7 +35,7 @@ in
 
       "$spotifyctl" = "playerctl --player=spotify";
 
-      bindl = [
+      bindl = mkIf cfg.remapVolumeControls [
         ", XF86AudioRaiseVolume, exec, $spotifyctl volume 0.05+"
         ", XF86AudioLowerVolume, exec, $spotifyctl volume 0.05-"
 
