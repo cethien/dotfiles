@@ -13,7 +13,18 @@
       blink-cmp.enable = true;
       commentary.enable = true;
       cursorline.enable = true;
-      telescope.enable = true;
+      telescope = {
+        enable = true;
+        settings = {
+          defaults = {
+            file_ignore_patterns = [
+              "^.git/"
+              "^node_modules"
+              "^.direnv"
+            ];
+          };
+        };
+      };
       toggleterm = {
         enable = true;
         settings = {
@@ -48,15 +59,12 @@
       treesitter.enable = true;
       rest.enable = true;
 
-
       vim-dadbod.enable = true;
       vim-dadbod-completion.enable = true;
       vim-dadbod-ui.enable = true;
 
       lsp-format.enable = true;
       lsp.enable = true;
-
-      presence-nvim.enable = true;
     };
 
     keymaps = [
@@ -64,6 +72,12 @@
         mode = "n";
         key = "<leader>e";
         action = "<cmd>Oil<CR>";
+      }
+
+      {
+        mode = "n";
+        key = "<leader>yy";
+        action = "<cmd>Yazi<CR>";
       }
 
       {
@@ -90,7 +104,6 @@
         action = "<cmd>DBUIToggle<CR>";
       }
 
-
       {
         mode = "n";
         key = "<leader>or";
@@ -111,6 +124,11 @@
         mode = "n";
         key = "<leader>p";
         action = "<cmd>Telescope commands<CR>";
+      }
+      {
+        mode = "n";
+        key = "<leader>fg";
+        action = "<cmd>Telescope live_grep<CR>";
       }
 
       {
