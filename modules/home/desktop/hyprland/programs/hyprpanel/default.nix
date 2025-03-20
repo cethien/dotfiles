@@ -38,7 +38,7 @@ in
               right = [ "volume" ] ++
                 (if cfg.layout.bluetooth then [ "bluetooth" ] else [ ]) ++
                 [ "network" "notifications" ] ++
-                (if cfg.layout.battery then [ "battery" ] else [ ]) ++
+                (if cfg.layout.battery then [ "battery" "hypridle" ] else [ ]) ++
                 [ "clock" ];
             };
           };
