@@ -1,10 +1,7 @@
-{ lib, config, pkgs, inputs, ... }:
+{ lib, config, inputs, ... }:
 let
   inherit (lib) mkEnableOption mkIf;
   cfg = config.deeznuts.programs.spotify;
-
-  spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.system};
-
   enabled = cfg.enable;
 in
 {
@@ -18,16 +15,6 @@ in
   };
 
   config = mkIf enabled {
-    programs.spicetify = {
-      enable = true;
-      enabledExtensions = with spicePkgs.extensions; [
-        hidePodcasts
-      ];
-      theme = spicePkgs.themes.catppuccin;
-      colorScheme = "mocha";
-    };
-
-
     home.shellAliases.spot = "spotify_player";
     programs.spotify-player = {
       enable = true;
