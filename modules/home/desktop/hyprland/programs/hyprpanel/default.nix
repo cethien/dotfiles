@@ -58,11 +58,9 @@ in
       hyprland.enable = true;
       overwrite.enable = true;
 
-      theme = "tokyo_night";
-
-      layout = cfg.layout.layout;
-
       settings = {
+        theme.name = "tokyo_night";
+        layout = cfg.layout.layout;
         scalingPriority = "hyprland";
         bar = {
 
