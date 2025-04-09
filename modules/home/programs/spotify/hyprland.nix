@@ -12,7 +12,7 @@ in
       enable = mkOption {
         type = types.bool;
         default = true;
-        description = "enable autostart (spotify_player)";
+        description = "autostart spotify_player";
       };
     };
 

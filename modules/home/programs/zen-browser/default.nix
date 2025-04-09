@@ -5,6 +5,10 @@ let
   enabled = cfg.enable;
 in
 {
+  imports = [
+    ./hyprland.nix
+  ];
+
   options.deeznuts.programs.zen-browser = {
     enable = mkEnableOption "zen browser";
   };

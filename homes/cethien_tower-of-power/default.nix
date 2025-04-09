@@ -38,20 +38,6 @@
 
       hyprpanel = {
         layout.battery = false;
-        # layout.layout = {
-        #   "bar.layouts" = {
-        #     "0" = {
-        #       left = [ "dashboard" "systray" "workspaces" "windowtitle" ];
-        #       middle = [ "media" ];
-        #       right = [ "volume" "bluetooth" "network" "notifications" "clock" ];
-        #     };
-        #     "1" = {
-        #       left = [ "dashboard" "systray" "workspaces" "windowtitle" ];
-        #       middle = [ "media" ];
-        #       right = [ "notifications" "clock" ];
-        #     };
-        #   };
-        # };
       };
 
       hyprlock = {
@@ -59,13 +45,12 @@
       };
 
       programs = {
-        firefox.autostart = {
+        zen-browser.autostart = {
           enable = true;
           workspace = 6;
         };
         spotify.autostart = {
           enable = true;
-          workspace = 7;
         };
         steam.autostart.enable = true;
       };
