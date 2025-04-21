@@ -2,7 +2,7 @@
 let
   inherit (lib) mkIf mkEnableOption;
   cfg = config.deeznuts.programs.rofi;
-  enable = cfg.enable || config.deeznuts.desktop.hyprland.enable;
+  enable = cfg.enable || config.deeznuts.programs.hyprland.enable;
 in
 {
   options.deeznuts.programs.rofi = {

@@ -1,10 +1,10 @@
 { config, lib, pkgs, ... }:
 let
   inherit (lib) mkIf;
-  enable = config.deeznuts.desktop.hyprland.enable;
+  enabled = config.deeznuts.programs.hyprland.enable;
 in
 {
-  config = mkIf enable {
+  config = mkIf enabled {
     home.packages = with pkgs; [
       hyprshot
       satty

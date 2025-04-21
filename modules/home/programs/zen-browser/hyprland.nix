@@ -2,12 +2,12 @@
 let
   inherit (lib) mkIf mkOption types;
   cfgApp = config.deeznuts.programs.zen-browser;
-  cfg = config.deeznuts.desktop.hyprland.programs.zen-browser;
-  isHyprland = config.deeznuts.desktop.hyprland.enable;
+  cfg = config.deeznuts.programs.hyprland.programs.zen-browser;
+  isHyprland = config.deeznuts.programs.hyprland.enable;
   enabled = isHyprland && cfgApp.enable != false;
 in
 {
-  options.deeznuts.desktop.hyprland.programs.zen-browser = {
+  options.deeznuts.programs.hyprland.programs.zen-browser = {
     autostart = {
       enable = mkOption {
         type = types.bool;

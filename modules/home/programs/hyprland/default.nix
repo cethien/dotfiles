@@ -1,7 +1,7 @@
 { lib, config, ... }:
 let
   inherit (lib) mkIf mkEnableOption;
-  cfg = config.deeznuts.desktop.hyprland;
+  cfg = config.deeznuts.programs.hyprland;
 in
 {
   imports = [
@@ -9,8 +9,8 @@ in
     ./settings.nix
   ];
 
-  options.deeznuts.desktop.hyprland = {
-    enable = mkEnableOption "Enable hyprland desktop";
+  options.deeznuts.programs.hyprland = {
+    enable = mkEnableOption "hyprland";
   };
 
   config = mkIf cfg.enable {

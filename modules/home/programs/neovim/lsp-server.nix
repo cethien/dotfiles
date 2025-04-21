@@ -37,7 +37,7 @@
         usePlaceholders = true;
       };
     };
-    golangci_lint_ls.enable = true;
+    # golangci_lint_ls.enable = true;
     templ.enable = true;
   };
 }

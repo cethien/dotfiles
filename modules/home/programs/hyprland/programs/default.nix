@@ -1,18 +1,14 @@
 { lib, config, pkgs, ... }:
 let
   inherit (lib) mkIf;
-  cfg = config.deeznuts.desktop.hyprland;
+  cfg = config.deeznuts.programs.hyprland;
 in
 {
   imports = [
-    ./clipse
     ./hypridle
     ./hyprlock
     ./hyprpaper
     ./hyprpanel
-    ./satty
-    ./nautilus
-    ./zathura
   ];
 
   config = mkIf cfg.enable {

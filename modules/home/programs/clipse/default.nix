@@ -1,10 +1,15 @@
 { lib, config, pkgs, ... }:
 let
-  inherit (lib) mkIf;
-  enable = config.deeznuts.desktop.hyprland.enable;
+  inherit (lib) mkIf mkEnableOption;
+  cfg = config.deeznuts.programs.clipse;
+  enabled = cfg.enable || config.deeznuts.programs.hyprland.enable;
 in
 {
-  config = mkIf enable {
+  options.deeznuts.programs.clipse = {
+    enable = mkEnableOption "clipse";
+  };
+
+  config = mkIf enabled {
     home.packages = with pkgs; [
       wl-clipboard
       clipse

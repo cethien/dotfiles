@@ -12,12 +12,12 @@ in
   };
 
   imports = [
-    ./lynx
     ./aliases
     ./bash
     ./bat
     ./bc
     ./bottom
+    ./clipse
     ./dblab
     ./direnv
     ./discord
@@ -28,12 +28,12 @@ in
     ./fastfetch
     ./fd
     ./ffmpeg
-    ./zen-browser
     ./fzf
     ./gh
     ./gimp
     ./git
     ./hushlogin
+    ./hyprland
     ./imv
     ./inkscape
     ./jq
@@ -41,9 +41,11 @@ in
     ./kitty
     ./lazydocker
     ./lazygit
+    ./lynx
     ./mangohud
     ./misc
     ./mpv
+    ./nautilus
     ./neovim
     ./netscanner
     ./nmap
@@ -68,6 +70,8 @@ in
     ./tmux
     ./vscode
     ./yazi
+    ./zathura
+    ./zen-browser
     ./zoxide
   ];
 

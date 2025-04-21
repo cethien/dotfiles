@@ -2,7 +2,7 @@
 let
   inherit (lib) mkEnableOption mkIf;
   cfg = config.deeznuts.programs.kitty;
-  enable = cfg.enable || config.deeznuts.desktop.hyprland.enable;
+  enable = cfg.enable || config.deeznuts.programs.hyprland.enable;
 in
 {
   options.deeznuts.programs.kitty = {

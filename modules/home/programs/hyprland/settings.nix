@@ -1,11 +1,11 @@
 { config, lib, ... }:
 let
   inherit (lib) mkIf mkOption types;
-  cfg = config.deeznuts.desktop.hyprland;
-  enabled = config.deeznuts.desktop.hyprland.enable;
+  cfg = config.deeznuts.programs.hyprland;
+  enabled = config.deeznuts.programs.hyprland.enable;
 in
 {
-  options.deeznuts.desktop.hyprland = {
+  options.deeznuts.programs.hyprland = {
     monitors = mkOption {
       type = types.listOf types.str;
       default = [

@@ -5,8 +5,6 @@ let
 in
 {
   imports = [
-    ./gnome
-    ./plasma
     ./hyprland
   ];
 

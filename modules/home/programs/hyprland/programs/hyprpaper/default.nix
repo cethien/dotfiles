@@ -1,7 +1,7 @@
 { lib, config, ... }:
 let
   inherit (lib) mkIf;
-  enable = config.deeznuts.desktop.hyprland.enable;
+  enable = config.deeznuts.programs.hyprland.enable;
 in
 {
   config = mkIf enable {

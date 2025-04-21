@@ -2,12 +2,12 @@
 let
   inherit (lib) mkIf mkOption types;
   cfgApp = config.deeznuts.programs.spotify;
-  cfg = config.deeznuts.desktop.hyprland.programs.spotify;
-  isHyprland = config.deeznuts.desktop.hyprland.enable;
+  cfg = config.deeznuts.programs.hyprland.programs.spotify;
+  isHyprland = config.deeznuts.programs.hyprland.enable;
   enabled = isHyprland && cfgApp.enable != false;
 in
 {
-  options.deeznuts.desktop.hyprland.programs.spotify = {
+  options.deeznuts.programs.hyprland.programs.spotify = {
     autostart = {
       enable = mkOption {
         type = types.bool;

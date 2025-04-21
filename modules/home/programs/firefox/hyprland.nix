@@ -2,12 +2,12 @@
 let
   inherit (lib) mkIf mkOption types;
   cfgApp = config.deeznuts.programs.firefox;
-  cfg = config.deeznuts.desktop.hyprland.programs.firefox;
-  isHyprland = config.deeznuts.desktop.hyprland.enable;
+  cfg = config.deeznuts.programs.hyprland.programs.firefox;
+  isHyprland = config.deeznuts.programs.hyprland.enable;
   enabled = isHyprland && cfgApp.enable != false;
 in
 {
-  options.deeznuts.desktop.hyprland.programs.firefox = {
+  options.deeznuts.programs.hyprland.programs.firefox = {
     autostart = {
       enable = mkOption {
         type = types.bool;

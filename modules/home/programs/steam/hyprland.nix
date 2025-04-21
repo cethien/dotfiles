@@ -2,12 +2,12 @@
 let
   inherit (lib) mkIf mkOption types;
   cfgApp = config.deeznuts.programs.steam;
-  cfg = config.deeznuts.desktop.hyprland.programs.steam;
-  isHyprland = config.deeznuts.desktop.hyprland.enable;
+  cfg = config.deeznuts.programs.hyprland.programs.steam;
+  isHyprland = config.deeznuts.programs.hyprland.enable;
   enabled = isHyprland && cfgApp.enable != false;
 in
 {
-  options.deeznuts.desktop.hyprland.programs.steam = {
+  options.deeznuts.programs.hyprland.programs.steam = {
     autostart = {
       enable = mkOption {
         type = types.bool;

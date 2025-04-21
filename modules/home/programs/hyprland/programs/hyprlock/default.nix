@@ -1,11 +1,11 @@
 { lib, config, ... }:
 let
   inherit (lib) mkIf mkForce mkOption;
-  cfg = config.deeznuts.desktop.hyprland.hyprlock;
-  enable = config.deeznuts.desktop.hyprland.enable;
+  cfg = config.deeznuts.programs.hyprland.hyprlock;
+  enable = config.deeznuts.programs.hyprland.enable;
 in
 {
-  options.deeznuts.desktop.hyprland.hyprlock = {
+  options.deeznuts.programs.hyprland.hyprlock = {
     monitor = mkOption {
       type = lib.types.str;
       default = "eDP-1";

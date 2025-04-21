@@ -2,11 +2,11 @@
 let
   inherit (lib) mkIf mkEnableOption mkOption;
   inherit (lib.types) int;
-  cfg = config.deeznuts.desktop.hyprland.idle;
+  cfg = config.deeznuts.programs.hyprland.hypridle;
   enabled = cfg.enable;
 in
 {
-  options.deeznuts.desktop.hyprland.idle = {
+  options.deeznuts.programs.hyprland.hypridle = {
     enable = mkEnableOption "Enable hypridle";
 
     dimScreen = {

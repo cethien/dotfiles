@@ -2,7 +2,7 @@
 let
   inherit (lib) mkIf;
   cfd = config.deeznuts.programs.bottom;
-  enable = cfd.enable || config.deeznuts.desktop.hyprland.enable;
+  enable = cfd.enable || config.deeznuts.programs.hyprland.enable;
 in
 {
   config = mkIf enable {

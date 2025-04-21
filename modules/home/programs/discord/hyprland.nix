@@ -2,12 +2,12 @@
 let
   inherit (lib) mkIf mkOption types;
   cfgApp = config.deeznuts.programs.discord;
-  cfg = config.deeznuts.desktop.hyprland.programs.discord;
-  isHyprland = config.deeznuts.desktop.hyprland.enable;
+  cfg = config.deeznuts.programs.hyprland.programs.discord;
+  isHyprland = config.deeznuts.programs.hyprland.enable;
   enabled = isHyprland && cfgApp.enable != false;
 in
 {
-  options.deeznuts.desktop.hyprland.programs.discord = {
+  options.deeznuts.programs.hyprland.programs.discord = {
     autostart = {
       enable = mkOption {
         type = types.bool;

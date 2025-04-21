@@ -6,8 +6,8 @@
 }:
 let
   inherit (lib) mkIf mkOption types;
-  cfg = config.deeznuts.desktop.hyprland.hyprpanel;
-  enable = config.deeznuts.desktop.hyprland.enable;
+  cfg = config.deeznuts.programs.hyprland.hyprpanel;
+  enable = config.deeznuts.programs.hyprland.enable;
 
   jsonFormat = pkgs.formats.json { };
 in
@@ -16,7 +16,7 @@ in
     inputs.hyprpanel.homeManagerModules.hyprpanel
   ];
 
-  options.deeznuts.desktop.hyprland.hyprpanel = {
+  options.deeznuts.programs.hyprland.hyprpanel = {
     layout = {
       battery = mkOption {
         type = types.bool;
