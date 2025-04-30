@@ -122,6 +122,7 @@ in
         "SUPER, V, togglefloating"
         "SUPER, P, pseudo"
         "SUPER, J, togglesplit"
+        "SUPER, F, fullscreen"
 
         # move focus
         "SUPER, left, movefocus, l"
