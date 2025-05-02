@@ -19,6 +19,7 @@ in
     ./bottom
     ./clipse
     ./dblab
+    ./decibels
     ./direnv
     ./discord
     ./drawio
