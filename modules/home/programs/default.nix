@@ -52,6 +52,7 @@ in
     ./obs-studio
     ./ocenaudio
     ./oh-my-posh
+    ./pavucontrol
     ./pinta
     ./poppler
     ./prismlauncher
@@ -116,6 +117,7 @@ in
     })
     (mkIf cfg.basic.enable {
       deeznuts.programs = {
+        pavucontrol.enable = mkDefault true;
         easyeffects.enable = mkDefault true;
 
         zen-browser.enable = mkDefault true;
