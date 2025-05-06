@@ -9,6 +9,7 @@ in
     ./hyprlock
     ./hyprpaper
     ./hyprpanel
+    ./hyprshot
   ];
 
   config = mkIf cfg.enable {
