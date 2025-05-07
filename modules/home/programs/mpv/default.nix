@@ -18,5 +18,14 @@ in
         ytdl-format = "bestvideo+bestaudio";
       };
     };
+
+    xdg.mimeApps.defaultApplications = {
+      # Video files
+      "video/mp4" = [ "umpv.desktop" ];
+      "video/webm" = [ "umpv.desktop" ];
+      "video/x-matroska" = [ "umpv.desktop" ];
+      "video/ogg" = [ "umpv.desktop" ];
+      "video/x-msvideo" = [ "umpv.desktop" ];
+    };
   };
 }

@@ -1,4 +1,4 @@
-{ lib, config, inputs, ... }:
+{ lib, config, inputs, pkgs, ... }:
 let
   inherit (lib) mkEnableOption mkIf;
   cfg = config.deeznuts.programs.spotify;
@@ -16,6 +16,11 @@ in
 
   config = mkIf enabled {
     home.shellAliases.spot = "spotify_player";
+
+    home.packages = with pkgs; [
+      spotify
+    ];
+
     programs.spotify-player = {
       enable = true;
       settings = {

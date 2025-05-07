@@ -13,5 +13,10 @@ in
     programs.zathura = {
       enable = true;
     };
+
+    xdg.mimeApps.defaultApplications = {
+      # PDFs
+      "application/pdf" = [ "org.pwmt.zathura.desktop" ];
+    };
   };
 }
