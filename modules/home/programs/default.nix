@@ -74,6 +74,7 @@ in
     ./yazi
     ./zathura
     ./zen-browser
+    ./zip
     ./zoxide
   ];
 
@@ -114,6 +115,7 @@ in
         yazi.enable = mkDefault true;
         zoxide.enable = mkDefault true;
         lynx.enable = mkDefault true;
+        zip.enable = mkDefault true;
       };
     })
     (mkIf cfg.basic.enable {

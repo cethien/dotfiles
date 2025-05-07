@@ -12,6 +12,7 @@ in
   config = mkIf enabled {
     home.packages = with pkgs; [
       nautilus
+      file-roller
     ];
 
     wayland.windowManager.hyprland.settings = {
