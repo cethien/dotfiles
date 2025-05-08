@@ -9,6 +9,6 @@ in
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [ streamcontroller ];
+    programs.streamcontroller.enable = true;
   };
 }
