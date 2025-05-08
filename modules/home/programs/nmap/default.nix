@@ -5,10 +5,14 @@ let
 in
 {
   options.deeznuts.programs.nmap = {
-    enable = mkEnableOption "Enable nmap";
+    enable = mkEnableOption "nmap";
   };
 
   config = mkIf cfg.enable {
-    home.packages = [ pkgs.nmap ];
+    home.packages = with pkgs; [ 
+      nmap
+      netscanner
+      dig
+    ];
   };
 }
