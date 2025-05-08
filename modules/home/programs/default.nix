@@ -47,7 +47,6 @@ in
     ./mpv
     ./nautilus
     ./neovim
-    ./netscanner
     ./nmap
     ./obs-studio
     ./ocenaudio
@@ -101,7 +100,6 @@ in
         lazygit.enable = mkDefault true;
         misc.enable = mkDefault true;
         neovim.enable = mkDefault true;
-        netscanner.enable = mkDefault true;
         oh-my-posh.enable = mkDefault true;
         nmap.enable = mkDefault true;
         poppler.enable = mkDefault true;
