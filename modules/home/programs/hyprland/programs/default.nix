@@ -15,14 +15,15 @@ in
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
       brightnessctl
-
       hyprpicker
+      udiskie
     ];
 
     wayland.windowManager.hyprland.settings = {
       exec-once = [
         "solaar -w hide"
         "streamcontroller -b"
+        "udiskie"
       ];
 
       bind = [
