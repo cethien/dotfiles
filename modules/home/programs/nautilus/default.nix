@@ -15,6 +15,7 @@ in
       file-roller
       decibels
       gnome-calculator
+      mission-center
     ];
 
     xdg.mimeApps.defaultApplications = {
@@ -43,6 +44,7 @@ in
     wayland.windowManager.hyprland.settings = {
       bind = [
         "SUPER, E, exec, nautilus"
+        "CTRL SHIFT, escape, exec, missioncenter"
       ];
     };
   };

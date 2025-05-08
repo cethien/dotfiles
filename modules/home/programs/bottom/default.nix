@@ -4,10 +4,6 @@ let
   cfg = config.deeznuts.programs.bottom;
 in
 {
-  imports = [
-    ./hyprland.nix
-  ];
-
   options.deeznuts.programs.bottom = {
     enable = mkEnableOption "Enable bottom";
   };
