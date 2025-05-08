@@ -14,6 +14,7 @@ in
       nautilus
       file-roller
       decibels
+      gnome-calculator
     ];
 
     xdg.mimeApps.defaultApplications = {
@@ -37,8 +38,6 @@ in
       "application/x-7z-compressed" = [ "org.gnome.FileRoller.desktop" ];
       "application/x-rar" = [ "org.gnome.FileRoller.desktop" ];
       "application/x-cpio" = [ "org.gnome.FileRoller.desktop" ];
-
-
     };
 
     wayland.windowManager.hyprland.settings = {
