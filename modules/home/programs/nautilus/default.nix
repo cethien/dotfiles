@@ -16,6 +16,7 @@ in
       decibels
       gnome-calculator
       mission-center
+      baobab
     ];
 
     xdg.mimeApps.defaultApplications = {
