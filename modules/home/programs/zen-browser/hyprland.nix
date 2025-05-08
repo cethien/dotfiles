@@ -25,7 +25,7 @@ in
   config = mkIf enabled {
     wayland.windowManager.hyprland.settings = {
       exec-once = mkIf cfg.autostart.enable [
-        "[workspace ${toString cfg.autostart.workspace} silent] zen"
+        "[workspace ${toString cfg.autostart.workspace} silent] zen-beta"
       ];
     };
   };
