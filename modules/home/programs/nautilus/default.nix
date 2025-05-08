@@ -19,6 +19,8 @@ in
     ];
 
     xdg.mimeApps.defaultApplications = {
+      "inode/directory" = [ "org.gnome.Nautilus.desktop" ];
+
       # Audio files
       "audio/mpeg" = [ "org.gnome.Decibels.desktop" ];
       "audio/x-wav" = [ "org.gnome.Decibels.desktop" ];
