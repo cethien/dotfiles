@@ -2,6 +2,7 @@
 let
   inherit (lib) mkIf mkDefault;
   cfg = config.deeznuts.programs.hyprland;
+  enabled = cfg.enable;
 in
 {
   imports = [
@@ -13,9 +14,10 @@ in
     ./hyprpaper
     ./hyprpanel
     ./hyprshot
+    ./wf-recorder
   ];
 
-  config = mkIf cfg.enable {
+  config = mkIf enabled {
     home.packages = with pkgs; [
       brightnessctl
       hyprpicker
@@ -26,6 +28,7 @@ in
       clipse.enable = mkDefault true;
       common-gui.enable = mkDefault true;
       zathura.enable = mkDefault true;
+      wf-recorder.enable = mkDefault true;
     };
 
     wayland.windowManager.hyprland.settings = {
