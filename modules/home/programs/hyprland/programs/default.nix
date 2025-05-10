@@ -1,10 +1,13 @@
 { lib, config, pkgs, ... }:
 let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf mkDefault;
   cfg = config.deeznuts.programs.hyprland;
 in
 {
   imports = [
+    ./clipse
+    ./common-gui
+    ./zathura
     ./hypridle
     ./hyprlock
     ./hyprpaper
@@ -18,6 +21,12 @@ in
       hyprpicker
       udiskie
     ];
+
+    deeznuts.programs = {
+      clipse.enable = mkDefault true;
+      common-gui.enable = mkDefault true;
+      zathura.enable = mkDefault true;
+    };
 
     wayland.windowManager.hyprland.settings = {
       exec-once = [

@@ -2,7 +2,7 @@
 let
   inherit (lib) mkIf mkEnableOption;
   cfg = config.deeznuts.programs.zathura;
-  enabled = cfg.enable || config.deeznuts.programs.hyprland.enable;
+  enabled = cfg.enable;
 in
 {
   options.deeznuts.programs.zathura = {

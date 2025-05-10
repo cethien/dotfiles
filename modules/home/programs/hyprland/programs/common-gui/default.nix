@@ -1,12 +1,12 @@
 { lib, config, pkgs, ... }:
 let
   inherit (lib) mkIf mkEnableOption;
-  cfg = config.deeznuts.programs.nautilus;
-  enabled = cfg.enable || config.deeznuts.programs.hyprland.enable;
+  cfg = config.deeznuts.programs.common-gui;
+  enabled = cfg.enable;
 in
 {
-  options.deeznuts.programs.nautilus = {
-    enable = mkEnableOption "nautilus";
+  options.deeznuts.programs.common-gui = {
+    enable = mkEnableOption "common gui for hyprland";
   };
 
   config = mkIf enabled {

@@ -17,7 +17,6 @@ in
     ./bat
     ./bc
     ./bottom
-    ./clipse
     ./dblab
     ./direnv
     ./discord
@@ -45,7 +44,6 @@ in
     ./mangohud
     ./misc
     ./mpv
-    ./nautilus
     ./neovim
     ./nmap
     ./obs-studio
@@ -70,7 +68,6 @@ in
     ./tmux
     ./vscode
     ./yazi
-    ./zathura
     ./zen-browser
     ./zip
     ./zoxide
