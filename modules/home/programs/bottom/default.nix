@@ -4,8 +4,8 @@ let
   cfg = config.deeznuts.programs.bottom;
 in
 {
-  options.deeznuts.programs.bottom = {
-    enable = mkEnableOption "Enable bottom";
+  options.deeznuts.programs = {
+    bottom.enable = mkEnableOption "bottom (cli monitoring tool)";
   };
 
   config = mkIf cfg.enable {
@@ -26,6 +26,12 @@ in
     home.shellAliases = {
       top = "btm";
       htop = "btm";
+    };
+
+    wayland.windowManager.hyprland.settings = {
+      bind = [
+        "SUPER SHIFT, p, exec, $terminal --class btm btm"
+      ];
     };
   };
 }

@@ -10,5 +10,11 @@ in
 
   config = mkIf cfg.enable {
     programs.yazi.enable = true;
+
+    wayland.windowManager.hyprland.settings = {
+      bind = [
+        "SUPER SHIFT, e, exec, $terminal --class yazi yazi"
+      ];
+    };
   };
 }
