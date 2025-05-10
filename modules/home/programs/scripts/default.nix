@@ -14,7 +14,6 @@ in
       (writeShellScriptBin "rebuild" (builtins.readFile ./rebuild.sh))
       (writeShellScriptBin "cleanup" (builtins.readFile ./cleanup.sh))
       (writeShellScriptBin "init" (builtins.readFile ./init.sh))
-      (writeShellScriptBin "dev" (builtins.readFile ./dev.sh))
     ];
 
     home.shellAliases.rebuild-nixos = "rebuild -n";
