@@ -10,7 +10,7 @@ in
       satty
     ];
 
-    home.file.".config/satty/config.toml".source = ./config.toml;
+    home.file.".config/satty/config.toml".source = ./satty/config.toml;
 
     wayland.windowManager.hyprland.settings = {
       bind =
