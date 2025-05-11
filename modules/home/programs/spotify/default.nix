@@ -16,6 +16,7 @@ in
 
   config = mkIf enabled {
     home.shellAliases.spot = "spotify_player";
+    home.shellAliases.spotd = "spotify_player -d";
 
     home.packages = with pkgs; [
       spotify

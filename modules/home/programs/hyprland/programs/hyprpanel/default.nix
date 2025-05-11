@@ -78,8 +78,8 @@ in
             truncation = true;
             truncation_size = 50;
 
-            scrollUp = "playerctl --player=spotify volume 0.05+";
-            scrollDown = "playerctl --player=spotify volume 0.05-";
+            # scrollUp = "playerctl --player=spotify volume 0.05+";
+            # scrollDown = "playerctl --player=spotify volume 0.05-";
           };
 
           network.label = false;

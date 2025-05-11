@@ -10,6 +10,10 @@
       hyprland = {
         enable = true;
         hypridle.enable = true;
+
+        programs = {
+          spotify.autostart.enable = true;
+        };
       };
 
       cli.enable = true;
