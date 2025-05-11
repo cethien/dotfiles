@@ -10,25 +10,26 @@ in
   };
 
   config = mkIf enable {
+    home.packages = with pkgs; [
+      rofi-power-menu
+    ];
+
     programs.rofi = {
       enable = true;
-      # package = pkgs.rofi-wayland;
-
-      cycle = true;
-
       plugins = with pkgs; [
-        rofi-emoji
         rofi-calc
+        rofi-emoji
       ];
-
-      extraConfig = {
-        modi = "drun,ssh,emoji,calc";
-      };
+      theme = ./theme.rafi;
     };
 
     wayland.windowManager.hyprland.settings = {
       bind = [
         "SUPER, Space, exec, rofi -show drun"
+        "SUPER, PERIOD, exec, rofi -show calc"
+        ''
+          SUPER, escape, exec, rofi -show power-menu -modi "power-menu:rofi-power-menu --choices=shutdown/reboot/suspend"
+        ''
       ];
 
       windowrulev2 = [

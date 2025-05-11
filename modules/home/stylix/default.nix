@@ -89,6 +89,7 @@ in
         vscode.enable = false;
         mangohud.enable = false;
         spicetify.enable = false;
+        rofi.enable = false;
       };
     };
   };
