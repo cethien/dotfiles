@@ -33,7 +33,7 @@ in
         default = {
           "bar.layouts" = {
             "*" = {
-              left = [ "dashboard" "systray" "workspaces" "windowtitle" ];
+              left = [ "systray" "workspaces" "windowtitle" ];
               middle = [ "media" ];
               right = [ "volume" ] ++
                 (if cfg.layout.bluetooth then [ "bluetooth" ] else [ ]) ++

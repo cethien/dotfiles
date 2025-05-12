@@ -2,11 +2,11 @@
 let
   inherit (lib) mkEnableOption mkIf;
   cfg = config.deeznuts.programs.kitty;
-  enable = cfg.enable || config.deeznuts.programs.hyprland.enable;
+  enable = cfg.enable;
 in
 {
   options.deeznuts.programs.kitty = {
-    enable = mkEnableOption "Enable kitty terminal";
+    enable = mkEnableOption "kitty terminal";
   };
 
   config = mkIf enable {

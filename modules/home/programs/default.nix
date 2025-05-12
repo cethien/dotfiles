@@ -37,7 +37,6 @@ in
     ./inkscape
     ./jq
     ./keepassxc
-    ./kitty
     ./lazydocker
     ./lazygit
     ./lynx
@@ -59,7 +58,6 @@ in
     ./retroarch
     ./ripgrep
     ./rnote
-    ./rofi
     ./scripts
     ./spotify
     ./ssh

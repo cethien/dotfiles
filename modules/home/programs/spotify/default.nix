@@ -7,11 +7,11 @@ in
 {
   imports = [
     inputs.spicetify-nix.homeManagerModules.default
-    ./hyprland.nix
   ];
 
-  options.deeznuts.programs.spotify = {
-    enable = mkEnableOption "Enable Spotify";
+  options.deeznuts.programs = {
+    spotify.enable = mkEnableOption "spotify";
+    hyprland.programs.spotify.autostart.enable = mkEnableOption "autostart spotify_player daemon";
   };
 
   config = mkIf enabled {
@@ -34,6 +34,15 @@ in
           normalization = true;
         };
       };
+    };
+
+    wayland.windowManager.hyprland.settings = {
+      exec-once = mkIf config.deeznuts.programs.hyprland.programs.spotify.autostart.enable [
+        "spotify-player -d"
+      ];
+      bind = [
+        "SUPER SHIFT, M, exec, $terminal --class spotify_player -e spotify_player"
+      ];
     };
   };
 }

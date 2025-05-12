@@ -6,6 +6,8 @@ let
 in
 {
   imports = [
+    ./kitty
+    ./rofi
     ./clipse
     ./common-gui
     ./zathura
@@ -25,6 +27,8 @@ in
     ];
 
     deeznuts.programs = {
+      kitty.enable = mkDefault true;
+      rofi.enable = mkDefault true;
       clipse.enable = mkDefault true;
       common-gui.enable = mkDefault true;
       zathura.enable = mkDefault true;
