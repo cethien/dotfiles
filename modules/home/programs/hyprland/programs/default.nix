@@ -7,6 +7,7 @@ in
 {
   imports = [
     ./kitty
+    ./waybar
     ./rofi
     ./clipse
     ./common-gui
@@ -27,6 +28,10 @@ in
     ];
 
     deeznuts.programs = {
+      hyprpaper.enable = mkDefault true;
+      hyprpanel.enable = mkDefault true;
+      # waybar.enable = mkDefault true;
+
       kitty.enable = mkDefault true;
       rofi.enable = mkDefault true;
       clipse.enable = mkDefault true;

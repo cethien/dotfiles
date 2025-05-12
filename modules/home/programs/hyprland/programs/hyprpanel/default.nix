@@ -5,9 +5,9 @@
 , ...
 }:
 let
-  inherit (lib) mkIf mkOption types;
-  cfg = config.deeznuts.programs.hyprland.hyprpanel;
-  enable = config.deeznuts.programs.hyprland.enable;
+  inherit (lib) mkIf mkEnableOption mkOption types;
+  cfg = config.deeznuts.programs.hyprpanel;
+  enabled = cfg.enable;
 
   jsonFormat = pkgs.formats.json { };
 in
@@ -16,7 +16,8 @@ in
     inputs.hyprpanel.homeManagerModules.hyprpanel
   ];
 
-  options.deeznuts.programs.hyprland.hyprpanel = {
+  options.deeznuts.programs.hyprpanel = {
+    enable = mkEnableOption "hyprpanel";
     layout = {
       battery = mkOption {
         type = types.bool;
@@ -51,7 +52,7 @@ in
     };
   };
 
-  config = mkIf enable {
+  config = mkIf enabled {
     programs.hyprpanel = {
       enable = true;
       overlay.enable = true;
