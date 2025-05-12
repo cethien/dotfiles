@@ -19,7 +19,7 @@ in
       exec-once = [ "clipse -listen" ];
 
       bind = [
-        "SUPER SHIFT, V, exec, $terminal --class clipse clipse"
+        "SUPER SHIFT, V, exec, $terminal --class clipse -e clipse"
       ];
     };
   };
