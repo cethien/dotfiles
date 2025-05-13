@@ -69,6 +69,7 @@ in
     ./zen-browser
     ./zip
     ./zoxide
+    ./jetbrains
   ];
 
   config = mkMerge [
