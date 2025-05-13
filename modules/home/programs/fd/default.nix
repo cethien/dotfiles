@@ -5,15 +5,15 @@ let
 in
 {
   options.deeznuts.programs.fd = {
-    enable = mkEnableOption "Enable fd";
+    enable = mkEnableOption "fd - find replacement";
   };
 
   config = mkIf cfg.enable {
     programs.fd.enable = true;
     home.shellAliases = {
       find = "fd";
-      ff = "fd --type f";
-      ffd = "fd --type d";
+      findf = "fd --type f";
+      findd = "fd --type d";
     };
   };
 }
