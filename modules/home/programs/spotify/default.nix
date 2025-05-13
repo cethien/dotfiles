@@ -2,6 +2,7 @@
 let
   inherit (lib) mkEnableOption mkIf;
   cfg = config.deeznuts.programs.spotify;
+  hyprlandCfg = config.deeznuts.programs.hyprland.programs.spotify;
   enabled = cfg.enable;
 in
 {
@@ -37,8 +38,8 @@ in
     };
 
     wayland.windowManager.hyprland.settings = {
-      exec-once = mkIf config.deeznuts.programs.hyprland.programs.spotify.autostart.enable [
-        "spotify-player -d"
+      exec-once = mkIf hyprlandCfg.autostart.enable [
+        "spotify_player -d"
       ];
       bind = [
         "SUPER SHIFT, M, exec, $terminal --class spotify_player -e spotify_player"
