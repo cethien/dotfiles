@@ -19,6 +19,7 @@
       cli.enable = true;
       basic.enable = true;
       vscode.enable = true;
+      obs-studio.enable = true;
     };
   };
 }
