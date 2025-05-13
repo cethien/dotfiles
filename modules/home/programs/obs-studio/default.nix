@@ -19,19 +19,19 @@ in
         obs-pipewire-audio-capture
         obs-vaapi
 
-        advanced-scene-switcher
-        obs-vertical-canvas
+        # advanced-scene-switcher
+        # obs-vertical-canvas
         obs-source-switcher
-        obs-source-record
+        # obs-source-record
         obs-source-clone
         obs-shaderfilter
         obs-move-transition
         obs-gradient-source
-        obs-command-source
+        # obs-command-source
 
-        obs-composite-blur
-        obs-transition-table
-        obs-backgroundremoval
+        # obs-composite-blur
+        # obs-transition-table
+        # obs-backgroundremoval
       ];
     };
   };
