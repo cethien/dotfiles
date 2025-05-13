@@ -17,8 +17,9 @@ in
         obs-webkitgtk
         obs-vkcapture
         obs-pipewire-audio-capture
+        obs-vaapi
 
-        # advanced-scene-switcher
+        advanced-scene-switcher
         obs-vertical-canvas
         obs-source-switcher
         obs-source-record
@@ -26,8 +27,11 @@ in
         obs-shaderfilter
         obs-move-transition
         obs-gradient-source
+        obs-command-source
+
         obs-composite-blur
         obs-transition-table
+        obs-backgroundremoval
       ];
     };
   };
