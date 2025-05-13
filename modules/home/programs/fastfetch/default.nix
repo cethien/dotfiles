@@ -5,9 +5,16 @@ let
 in
 {
   options.deeznuts.programs.fastfetch = {
-    enable = mkEnableOption "Enable fastfetch";
+    enable = mkEnableOption "fastfetch";
   };
   config = mkIf cfg.enable {
-    programs.fastfetch.enable = true;
+    home.file.".local/share/assets/logo.png".source = ./logo.png;
+
+    programs.fastfetch = {
+      enable = true;
+      settings = builtins.fromJSON (builtins.unsafeDiscardStringContext (builtins.readFile ./settings.json));
+    };
+
+    home.shellAliases.ff = "fastfetch";
   };
 }
