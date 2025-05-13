@@ -7,6 +7,7 @@ in
 {
   imports = [
     ./kitty.nix
+    ./wezterm.nix
     ./waybar
     ./rofi
     ./clipse.nix
@@ -34,7 +35,9 @@ in
       # waybar.enable = mkDefault true;
 
       kitty.enable = mkDefault true;
+      # wezterm.enable = mkDefault true;
       rofi.enable = mkDefault true;
+
       clipse.enable = mkDefault true;
       common-gui.enable = mkDefault true;
       zathura.enable = mkDefault true;
