@@ -30,7 +30,7 @@ in
 
     wayland.windowManager.hyprland.settings = {
       bind = [
-        "SUPER SHIFT, p, exec, $terminal --class btm btm"
+        "SUPER SHIFT, p, exec, $terminal --class monitor -e btm"
       ];
     };
   };

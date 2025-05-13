@@ -42,7 +42,7 @@ in
         "spotify_player -d"
       ];
       bind = [
-        "SUPER SHIFT, M, exec, $terminal --class spotify_player -e spotify_player"
+        "SUPER SHIFT, M, exec, $terminal --class spotify -e spotify_player"
       ];
     };
   };

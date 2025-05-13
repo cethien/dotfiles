@@ -15,12 +15,11 @@ in
       file-roller
       decibels
       gnome-calculator
-      mission-center
       baobab
     ];
 
     xdg.mimeApps.defaultApplications = {
-      "inode/directory" = [ "org.gnome.Nautilus.desktop" ];
+      "inode/directory" = [ "yazi.desktop" ];
 
       # Audio files
       "audio/mpeg" = [ "org.gnome.Decibels.desktop" ];
@@ -42,13 +41,6 @@ in
       "application/x-7z-compressed" = [ "org.gnome.FileRoller.desktop" ];
       "application/x-rar" = [ "org.gnome.FileRoller.desktop" ];
       "application/x-cpio" = [ "org.gnome.FileRoller.desktop" ];
-    };
-
-    wayland.windowManager.hyprland.settings = {
-      bind = [
-        "SUPER, E, exec, nautilus"
-        "CTRL SHIFT, escape, exec, missioncenter"
-      ];
     };
   };
 }

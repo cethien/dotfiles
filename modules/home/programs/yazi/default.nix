@@ -5,7 +5,7 @@ let
 in
 {
   options.deeznuts.programs.yazi = {
-    enable = mkEnableOption "Enable yazi";
+    enable = mkEnableOption "yazi";
   };
 
   config = mkIf cfg.enable {
@@ -13,7 +13,7 @@ in
 
     wayland.windowManager.hyprland.settings = {
       bind = [
-        "SUPER SHIFT, e, exec, $terminal --class yazi yazi"
+        "SUPER SHIFT, e, exec, $terminal --class files -e yazi"
       ];
     };
   };
