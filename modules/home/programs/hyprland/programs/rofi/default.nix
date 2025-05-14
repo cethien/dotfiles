@@ -46,10 +46,6 @@ in
         "SUPER, N, exec, rofi-wifi-menu"
         "SUPER, M, exec, rofi-playerctl"
       ];
-
-      windowrulev2 = [
-        "stayfocused, class:^(Rofi)$"
-      ];
     };
   };
 }
