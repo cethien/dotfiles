@@ -36,13 +36,13 @@
       yanky.enable = true;
       markview.enable = true;
 
-
       direnv.enable = true;
       nix.enable = true;
       nix-develop.enable = true;
 
       # hex.enable = true;
 
+      neogit.enable = true;
       lazygit.enable = true;
       octo.enable = true;
       yazi.enable = true;
@@ -82,9 +82,16 @@
 
       {
         mode = "n";
-        key = "<leader>g";
+        key = "<leader>glg";
         action = "<cmd>LazyGit<cr>";
       }
+
+      {
+        mode = "n";
+        key = "<leader>gg";
+        action = "<cmd>Neogit<cr>";
+      }
+
 
       {
         mode = "n";
@@ -132,7 +139,7 @@
       }
 
       {
-        mode = "n";
+        mode = [ "n" "v" ];
         key = "<leader>cc";
         action = "<cmd>Commentary<CR>";
       }

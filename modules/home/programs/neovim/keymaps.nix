@@ -20,7 +20,12 @@
       key = "<leader>w";
       action = "<cmd>write<CR>";
     }
-    
+    {
+      mode = "n";
+      key = "<C-s>";
+      action = "<cmd>write<CR>";
+    }
+
     {
       mode = "n";
       key = "<leader>bd";
@@ -29,5 +34,14 @@
         desc = "Delete buffer";
       };
     }
+    {
+      mode = "n";
+      key = "<C-w>";
+      action = "<cmd>bdelete<cr>";
+      options = {
+        desc = "Delete buffer";
+      };
+    }
+
   ];
 }
