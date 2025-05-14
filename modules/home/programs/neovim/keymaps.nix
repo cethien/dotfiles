@@ -2,19 +2,37 @@
   programs.nixvim.keymaps = [
     {
       mode = "n";
-      key = "<leader>q";
+      key = "<leader>qq";
       action = "<cmd>quit<CR>";
     }
     {
       mode = "n";
-      key = "<leader>qq";
+      key = "<leader>qa";
       action = "<cmd>quitall<CR>";
     }
+
+    {
+      mode = "n";
+      key = "<leader>qa";
+      action = "<cmd>quitall<CR>";
+    }
+
+
+    {
+      mode = "t";
+      key = "<C-n>";
+      action = ''<C-\><C-n>'';
+      options = {
+        noremap = true;
+      };
+    }
+
     {
       mode = "n";
       key = "<leader>sv";
       action = "<cmd>source $MYVIMRC<CR>";
     }
+
     {
       mode = "n";
       key = "<leader>w";

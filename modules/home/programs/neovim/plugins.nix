@@ -9,7 +9,6 @@
       bufferline.enable = true;
       dropbar.enable = true;
       image.enable = true;
-      overseer.enable = true;
       blink-cmp.enable = true;
       commentary.enable = true;
       cursorline.enable = true;
@@ -27,9 +26,6 @@
       };
       toggleterm = {
         enable = true;
-        settings = {
-          direction = "float";
-        };
       };
       oil.enable = true;
       gx.enable = true;
@@ -43,9 +39,8 @@
       # hex.enable = true;
 
       neogit.enable = true;
-      lazygit.enable = true;
+      gitsigns.enable = true;
       octo.enable = true;
-      yazi.enable = true;
 
       dap.enable = true;
 
@@ -76,23 +71,9 @@
 
       {
         mode = "n";
-        key = "<leader>yy";
-        action = "<cmd>Yazi<CR>";
-      }
-
-      {
-        mode = "n";
-        key = "<leader>glg";
-        action = "<cmd>LazyGit<cr>";
-      }
-
-      {
-        mode = "n";
         key = "<leader>gg";
         action = "<cmd>Neogit<cr>";
       }
-
-
       {
         mode = "n";
         key = "<leader>gh";
@@ -101,9 +82,15 @@
 
       {
         mode = "n";
-        key = "<leader>t";
+        key = "<leader>tt";
         action = "<cmd>ToggleTerm<CR>";
       }
+      {
+        mode = "n";
+        key = "<leader>td";
+        action = "<cmd>2ToggleTerm<CR>";
+      }
+
 
       {
         mode = "n";
@@ -113,13 +100,8 @@
 
       {
         mode = "n";
-        key = "<leader>or";
-        action = "<cmd>OverseerRun<cr>";
-      }
-      {
-        mode = "n";
-        key = "<leader>o";
-        action = "<cmd>OverseerToggle<cr>";
+        key = "<leader>sr";
+        action = "<cmd>SessionRestore<CR>";
       }
 
       {
