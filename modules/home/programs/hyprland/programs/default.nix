@@ -8,6 +8,7 @@ in
   imports = [
     ./kitty.nix
     ./wezterm.nix
+    ./ghostty.nix
     ./waybar
     ./rofi
     ./clipse.nix
@@ -32,10 +33,8 @@ in
     deeznuts.programs = {
       hyprpaper.enable = mkDefault true;
       hyprpanel.enable = mkDefault true;
-      # waybar.enable = mkDefault true;
 
       kitty.enable = mkDefault true;
-      # wezterm.enable = mkDefault true;
       rofi.enable = mkDefault true;
 
       clipse.enable = mkDefault true;
