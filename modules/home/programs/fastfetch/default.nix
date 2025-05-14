@@ -9,6 +9,7 @@ in
   };
   config = mkIf cfg.enable {
     home.file.".local/share/assets/logo.png".source = ./logo.png;
+    home.file.".local/share/assets/bernd.png".source = ./bernd.png;
 
     programs.fastfetch = {
       enable = true;
