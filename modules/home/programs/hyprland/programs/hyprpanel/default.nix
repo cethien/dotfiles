@@ -60,7 +60,7 @@ in
       overwrite.enable = true;
 
       settings = {
-        theme.name = "tokyo_night";
+        theme.name = "one_dark";
         layout = cfg.layout.layout;
         scalingPriority = "hyprland";
         bar = {
