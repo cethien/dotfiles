@@ -1,6 +1,8 @@
 {
   programs.nixvim = {
     plugins = {
+      presence-nvim.enable = true;
+
       auto-session.enable = true;
 
       transparent.enable = true;
@@ -12,21 +14,18 @@
       blink-cmp.enable = true;
       commentary.enable = true;
       cursorline.enable = true;
-      telescope = {
-        enable = true;
-        settings = {
-          defaults = {
-            file_ignore_patterns = [
-              "^.git/"
-              "^node_modules"
-              "^.direnv"
-            ];
-          };
+      telescope.enable = true;
+      telescope.settings = {
+        defaults = {
+          file_ignore_patterns = [
+            "^.git/"
+            "^node_modules"
+            "^.direnv"
+          ];
         };
       };
-      toggleterm = {
-        enable = true;
-      };
+
+      toggleterm.enable = true;
       oil.enable = true;
       gx.enable = true;
       yanky.enable = true;
@@ -35,8 +34,6 @@
       direnv.enable = true;
       nix.enable = true;
       nix-develop.enable = true;
-
-      # hex.enable = true;
 
       neogit.enable = true;
       gitsigns.enable = true;
@@ -52,96 +49,15 @@
       autoclose.enable = true;
 
       treesitter.enable = true;
+      treesitter.settings = {
+        highlight.enable = true;
+      };
       rest.enable = true;
+      luasnip.enable = true;
 
       vim-dadbod.enable = true;
       vim-dadbod-completion.enable = true;
       vim-dadbod-ui.enable = true;
-
-      lsp-format.enable = true;
-      lsp.enable = true;
     };
-
-    keymaps = [
-      {
-        mode = "n";
-        key = "<leader>e";
-        action = "<cmd>Oil<CR>";
-      }
-
-      {
-        mode = "n";
-        key = "<leader>gg";
-        action = "<cmd>Neogit<cr>";
-      }
-      {
-        mode = "n";
-        key = "<leader>gh";
-        action = "<cmd>Octo actions<CR>";
-      }
-
-      {
-        mode = "n";
-        key = "<leader>tt";
-        action = "<cmd>ToggleTerm<CR>";
-      }
-      {
-        mode = "n";
-        key = "<leader>td";
-        action = "<cmd>2ToggleTerm<CR>";
-      }
-
-
-      {
-        mode = "n";
-        key = "<leader>db";
-        action = "<cmd>DBUIToggle<CR>";
-      }
-
-      {
-        mode = "n";
-        key = "<leader>sr";
-        action = "<cmd>SessionRestore<CR>";
-      }
-
-      {
-        mode = "n";
-        key = "<leader><Space>";
-        action = "<cmd>Telescope find_files<cr>";
-      }
-      {
-        mode = "n";
-        key = "<leader>p";
-        action = "<cmd>Telescope commands<CR>";
-      }
-      {
-        mode = "n";
-        key = "<leader>fg";
-        action = "<cmd>Telescope live_grep<CR>";
-      }
-
-      {
-        mode = [ "n" "v" ];
-        key = "<leader>cc";
-        action = "<cmd>Commentary<CR>";
-      }
-
-      {
-        mode = "n";
-        key = "<Tab>";
-        action = "<cmd>BufferLineCycleNext<cr>";
-        options = {
-          desc = "Cycle to next buffer";
-        };
-      }
-      {
-        mode = "n";
-        key = "<S-Tab>";
-        action = "<cmd>BufferLineCyclePrev<cr>";
-        options = {
-          desc = "Cycle to previous buffer";
-        };
-      }
-    ];
   };
 }
