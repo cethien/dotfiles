@@ -7,6 +7,21 @@
 
   programs.nixvim.plugins.lsp = {
     servers = {
+      clangd.enable = true;
+      clangd.settings = {
+        cmd = [
+          "clangd"
+          "--background-index"
+        ];
+        filetypes = [
+          "c"
+          "cpp"
+        ];
+        root_markers = [
+          "compile_commands.json"
+          "compile_flags.txt"
+        ];
+      };
 
       phpactor.enable = true;
       phan.enable = true;
