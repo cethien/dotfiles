@@ -14,12 +14,44 @@ in
 
       settings = {
         flags = {
+          # basic = true;
           temperature_type = "c"; # Celsius
-          rate_unit = "b";
           tree = true;
-          process_command = true;
           cpu_as_percentage = true;
+          cpu_left_legend = true;
+          disable_advanced_kill = true;
         };
+
+        row = [
+          # Row 1: Processes and CPU
+          {
+            child = [
+              { type = "proc"; }
+            ];
+          }
+
+          # Row 2: Graphs
+          {
+            child = [
+              { type = "cpu"; }
+              {
+                child = [
+                  { type = "mem"; default_mode = "table"; }
+                  { type = "net"; default_mode = "table"; }
+                ];
+              }
+            ];
+          }
+
+          # Row 3: Disks and Temp
+          {
+            child = [
+              { type = "disk"; }
+              { type = "temperature"; }
+            ];
+          }
+        ];
+
       };
     };
 
