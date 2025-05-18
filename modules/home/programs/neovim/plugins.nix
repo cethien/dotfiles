@@ -35,7 +35,7 @@
       nix.enable = true;
       nix-develop.enable = true;
 
-      neogit.enable = true;
+      lazygit.enable = true;
       gitsigns.enable = true;
       octo.enable = true;
 

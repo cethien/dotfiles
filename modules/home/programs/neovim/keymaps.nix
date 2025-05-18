@@ -50,7 +50,7 @@
     {
       mode = "n";
       key = "<leader>gg";
-      action = "<cmd>Neogit<cr>";
+      action = "<cmd>LazyGit<cr>";
     }
     {
       mode = "n";
