@@ -42,5 +42,11 @@ in
       "application/x-rar" = [ "org.gnome.FileRoller.desktop" ];
       "application/x-cpio" = [ "org.gnome.FileRoller.desktop" ];
     };
+
+    wayland.windowManager.hyprland.settings = {
+      bind = [
+        "SUPER, e, exec, nautilus"
+      ];
+    };
   };
 }
