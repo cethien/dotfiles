@@ -66,7 +66,7 @@ in
     ./tmux
     ./vscode
     ./yazi
-    ./zen-browser
+    ./zen-browser.nix
     ./zoxide
     ./jetbrains
     ./fun.nix
