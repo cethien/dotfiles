@@ -69,11 +69,13 @@ in
     ./zen-browser
     ./zoxide
     ./jetbrains
+    ./fun.nix
   ];
 
   config = mkMerge [
     (mkIf cfg.cli.enable {
       deeznuts.programs = {
+        fun.enable = mkDefault true;
         aliases.enable = mkDefault true;
         bash.enable = mkDefault true;
         bat.enable = mkDefault true;
