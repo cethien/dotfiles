@@ -41,7 +41,7 @@ in
     ./lazygit
     ./lynx
     ./mangohud
-    ./misc
+    ./common-utils.nix
     ./mpv
     ./neovim
     ./nmap
@@ -67,7 +67,6 @@ in
     ./vscode
     ./yazi
     ./zen-browser
-    ./zip
     ./zoxide
     ./jetbrains
   ];
@@ -94,7 +93,7 @@ in
         jq.enable = mkDefault true;
         lazydocker.enable = mkDefault true;
         lazygit.enable = mkDefault true;
-        misc.enable = mkDefault true;
+        common-utils.enable = mkDefault true;
         neovim.enable = mkDefault true;
         oh-my-posh.enable = mkDefault true;
         nmap.enable = mkDefault true;
@@ -108,7 +107,6 @@ in
         yazi.enable = mkDefault true;
         zoxide.enable = mkDefault true;
         lynx.enable = mkDefault true;
-        zip.enable = mkDefault true;
       };
     })
     (mkIf cfg.basic.enable {
