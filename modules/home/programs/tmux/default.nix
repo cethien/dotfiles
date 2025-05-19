@@ -36,6 +36,12 @@ in
         bind -n M-Up select-pane -U
         bind -n M-Down select-pane -D
 
+        # resize pane using Shift-Alt-arrow without prefix
+        bind -n S-M-Left resize-pane -L 10
+        bind -n S-M-Right resize-pane -R 10
+        bind -n S-M-Up resize-pane -U 10
+        bind -n S-M-Down resize-pane -D 10
+
         # switch windows using Ctrl-Alt-arrow without prefix
         bind -n C-M-Left previous-window
         bind -n C-M-Right next-window
