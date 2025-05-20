@@ -4,11 +4,23 @@ let
   cfg = config.deeznuts.programs.tmux;
 in
 {
+
+  imports = [
+    ./keymaps.nix
+  ];
+
   options.deeznuts.programs.tmux = {
     enable = mkEnableOption "tmux";
   };
 
   config = mkIf cfg.enable {
+    home.shellAliases = {
+      tm = "tmux";
+      tmls = "tmux ls";
+      tma = "tmux attach -t";
+      tmk = "tmux kill-session -t";
+    };
+
     programs.tmux.enable = true;
     programs.tmux = {
       clock24 = true;
@@ -29,29 +41,75 @@ in
         # Allow-passthrough for advanced features
         # (wezterm features mainly)
         set-option -g allow-passthrough on
-
-        # switch panes using Alt-arrow without prefix
-        bind -n M-Left select-pane -L
-        bind -n M-Right select-pane -R
-        bind -n M-Up select-pane -U
-        bind -n M-Down select-pane -D
-
-        # resize pane using Shift-Alt-arrow without prefix
-        bind -n S-M-Left resize-pane -L 10
-        bind -n S-M-Right resize-pane -R 10
-        bind -n S-M-Up resize-pane -U 10
-        bind -n S-M-Down resize-pane -D 10
-
-        # switch windows using Ctrl-Alt-arrow without prefix
-        bind -n C-M-Left previous-window
-        bind -n C-M-Right next-window
-
+        
         # don't rename windows automatically
         set-option -g allow-rename off
 
         # reload config file (change file location to your the tmux.conf you want to use)
-        bind r source-file ~/.config/tmux/tmux.conf
+        # bind r source-file ~/.config/tmux/tmux.conf
       '';
+
+      keybindings = [
+        {
+          key = "r";
+          action = "source-file ~/.config/tmux/tmux.conf";
+        }
+
+        # switch panes using Alt-arrow without prefix
+        {
+          noprefix = true;
+          key = "M-Left";
+          action = "select-pane -L";
+        }
+        {
+          noprefix = true;
+          key = "M-Right";
+          action = "select-pane -R";
+        }
+        {
+          noprefix = true;
+          key = "M-Up";
+          action = "select-pane -U";
+        }
+        {
+          noprefix = true;
+          key = "M-Down";
+          action = "select-pane -D";
+        }
+        # resize pane using Shift-Alt-arrow without prefix
+        {
+          noprefix = true;
+          key = "S-M-Left";
+          action = "select-pane -L";
+        }
+        {
+          noprefix = true;
+          key = "S-M-Right";
+          action = "select-pane -R";
+        }
+        {
+          noprefix = true;
+          key = "S-M-Up";
+          action = "select-pane -U";
+        }
+        {
+          noprefix = true;
+          key = "S-M-Down";
+          action = "select-pane -D";
+        }
+
+        # switch windows using Ctrl-Alt-arrow without prefix
+        {
+          noprefix = true;
+          key = "C-M-Right";
+          action = "next-window";
+        }
+        {
+          noprefix = true;
+          key = "C-M-Left";
+          action = "previous-window";
+        }
+      ];
 
       plugins = with pkgs.tmuxPlugins; [
         sensible
@@ -81,14 +139,6 @@ in
           '';
         }
       ];
-    };
-
-    home.shellAliases = {
-      tm = "tmux";
-      tmls = "tmux ls";
-      tma = "tmux attach";
-      tmas = "tmux attach -t";
-      tmk = "tmux kill-session -t";
     };
   };
 }
