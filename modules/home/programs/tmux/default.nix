@@ -14,8 +14,21 @@ in
   };
 
   config = mkIf cfg.enable {
+    programs.bash.initExtra = ''
+      tmux_sesh() {
+        local s
+        if [ -n "$1" ] && [[ "$1" != -* ]]; then
+        	s=$(echo "$1" | tr -c 'a-zA-Z0-9_' '_')
+        	shift
+        else
+        	s=$(basename "$PWD" | tr -c 'a-zA-Z0-9_' '_')
+        fi
+        tmux new-session -A -s "$s" "$@"
+      }
+    '';
+
     home.shellAliases = {
-      tm = "tmux";
+      tm = "tmux_sesh";
       tmls = "tmux ls";
       tma = "tmux attach -t";
       tmk = "tmux kill-session -t";
@@ -108,6 +121,11 @@ in
           noprefix = true;
           key = "C-M-Left";
           action = "previous-window";
+        }
+
+        {
+          key = "m";
+          action = "copy-mode -u";
         }
       ];
 
