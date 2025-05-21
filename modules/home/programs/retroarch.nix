@@ -14,12 +14,13 @@ in
         retroarchWithCores = (pkgs.retroarch.withCores (cores: with cores; [
           mgba #GB / GBC / GBA
           dolphin #GC / Wii
-          desmume #NDS
+          melonds #NDS
           citra #N3DS
         ]));
       in
       [
         retroarchWithCores
+        pkgs.melonDS
       ];
   };
 }
