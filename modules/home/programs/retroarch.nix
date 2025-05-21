@@ -5,7 +5,7 @@ let
 in
 {
   options.deeznuts.programs.retroarch = {
-    enable = mkEnableOption "Enable retroarch";
+    enable = mkEnableOption "retroarch";
   };
 
   config = mkIf cfg.enable {
@@ -20,7 +20,6 @@ in
       in
       [
         retroarchWithCores
-        pkgs.melonDS
       ];
   };
 }

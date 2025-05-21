@@ -55,7 +55,7 @@ in
     ./procs
     ./protonge
     ./r2modman
-    ./retroarch
+    ./retroarch.nix
     ./ripgrep
     ./rnote
     ./scripts
