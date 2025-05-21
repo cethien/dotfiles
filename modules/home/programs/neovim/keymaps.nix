@@ -22,6 +22,34 @@
 
     {
       mode = "n";
+      key = "<leader>vs";
+      action = "<cmd>vs<CR>";
+    }
+    {
+      mode = "n";
+      key = "<leader><Left>";
+      action = "<cmd>wincmd h<CR>";
+    }
+    {
+      mode = "n";
+      key = "<leader><Right>";
+      action = "<cmd>wincmd l<CR>";
+    }
+    {
+      mode = "n";
+      key = "<leader><Up>";
+      action = "<cmd>wincmd k<CR>";
+    }
+    {
+      mode = "n";
+      key = "<leader><Down>";
+      action = "<cmd>wincmd l<CR>";
+    }
+
+
+
+    {
+      mode = "n";
       key = "<leader>sv";
       action = "<cmd>source $MYVIMRC<CR>";
     }
