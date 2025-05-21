@@ -11,7 +11,7 @@ home := env("USER") + "@" + hostname
     nix flake check && nix flake show
 
 @format:
-    nixpkgs-fmt .
+    nixpkgs-fmt . && shfmt -w $(find . -name '*.sh')
 
 @lint:
     nixpkgs-fmt --check .

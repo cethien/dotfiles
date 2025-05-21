@@ -145,6 +145,7 @@
           nixpkgs-fmt
           sops
           lua
+          shfmt
 
           just
         ];
