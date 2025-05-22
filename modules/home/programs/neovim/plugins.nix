@@ -9,7 +9,7 @@
       web-devicons.enable = true;
       lualine.enable = true;
       bufferline.enable = true;
-      dropbar.enable = true;
+      # dropbar.enable = true;
       image.enable = true;
       blink-cmp.enable = true;
       commentary.enable = true;

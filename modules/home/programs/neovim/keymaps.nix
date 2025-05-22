@@ -60,18 +60,10 @@
       action = "<cmd>write<CR>";
     }
 
-    {
-      mode = "n";
-      key = "<leader>bd";
-      action = "<cmd>bdelete<cr>";
-      options = {
-        desc = "Delete buffer";
-      };
-    }
 
     {
       mode = "n";
-      key = "<C-e>";
+      key = "<leader>e";
       action = "<cmd>Oil<CR>";
     }
 
@@ -88,10 +80,9 @@
 
     {
       mode = "n";
-      key = "<C-q>";
+      key = "<leader>t";
       action = "<cmd>ToggleTerm<CR>";
     }
-
 
     {
       mode = "n";
@@ -112,7 +103,12 @@
     }
     {
       mode = "n";
-      key = "<leader>p";
+      key = "<leader>fb";
+      action = "<cmd>Telescope buffers<cr>";
+    }
+    {
+      mode = "n";
+      key = "<leader>fc";
       action = "<cmd>Telescope commands<CR>";
     }
     {
