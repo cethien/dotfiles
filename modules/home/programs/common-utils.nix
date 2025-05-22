@@ -20,6 +20,8 @@ in
       p7zip
 
       parted
+
+      tldr
     ];
   };
 }
