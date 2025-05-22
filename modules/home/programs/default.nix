@@ -54,7 +54,6 @@ in
     ./poppler
     ./prismlauncher
     ./procs
-    ./protonge
     ./r2modman
     ./retroarch.nix
     ./ripgrep
@@ -118,22 +117,22 @@ in
         easyeffects.enable = mkDefault true;
 
         zen-browser.enable = mkDefault true;
+        discord.enable = mkDefault true;
         spotify.enable = mkDefault true;
+
         keepassxc.enable = mkDefault true;
 
         pinta.enable = mkDefault true;
         gimp.enable = mkDefault true;
         inkscape.enable = mkDefault true;
         drawio.enable = mkDefault true;
-
         ocenaudio.enable = mkDefault true;
       };
     })
     (mkIf cfg.gaming.enable {
       deeznuts.programs = {
-        steam.enable = mkDefault true;
         mangohud.enable = mkDefault true;
-        protonge.enable = mkDefault true;
+        steam.enable = mkDefault true;
         r2modman.enable = mkDefault true;
         retroarch.enable = mkDefault true;
         prismlauncher.enable = mkDefault true;
