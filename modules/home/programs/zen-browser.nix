@@ -23,6 +23,9 @@ in
       exec-once = mkIf cfgHyprland.autostart.enable [
         "[workspace ${toString cfgHyprland.autostart.workspace} silent] zen-beta"
       ];
+      windowrulev2 = [
+        "workspace 1, class:^(zen-beta)$"
+      ];
     };
 
     home.packages = [
