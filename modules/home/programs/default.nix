@@ -12,6 +12,7 @@ in
   };
 
   imports = [
+    ./pokemmo.nix
     ./aliases
     ./bash
     ./bat
@@ -136,6 +137,7 @@ in
         r2modman.enable = mkDefault true;
         retroarch.enable = mkDefault true;
         prismlauncher.enable = mkDefault true;
+        pokemmo.enable = mkDefault true;
       };
     })
   ];
