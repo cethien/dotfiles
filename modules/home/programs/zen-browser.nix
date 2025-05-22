@@ -2,29 +2,28 @@
 let
   inherit (lib) mkEnableOption mkOption types mkIf;
   cfg = config.deeznuts.programs.zen-browser;
-  cfgHyprland = config.deeznuts.programs.hyprland.programs.zen-browser;
   enabled = cfg.enable;
 in
 {
-  options.deeznuts.programs = {
-    zen-browser.enable = mkEnableOption "zen browser";
-    hyprland.programs.zen-browser.autostart = {
-      enable = mkEnableOption "autostart";
+  options.deeznuts.programs.zen-browser = {
+    enable = mkEnableOption "zen browser";
+    hyprland = {
       workspace = mkOption {
         type = types.int;
-        default = 1;
-        description = "autostart workspace";
+        default = config.deeznuts.programs.hyprland.defaultWorkspaces.browser;
+        description = "default workspace";
       };
+      autostart.enable = mkEnableOption "autostart";
     };
   };
 
   config = mkIf enabled {
     wayland.windowManager.hyprland.settings = {
-      exec-once = mkIf cfgHyprland.autostart.enable [
-        "[workspace ${toString cfgHyprland.autostart.workspace} silent] zen-beta"
+      exec-once = mkIf cfg.hyprland.autostart.enable [
+        "[silent] zen-beta"
       ];
       windowrulev2 = [
-        "workspace 1, class:^(zen-beta)$"
+        "workspace ${toString cfg.hyprland.workspace}, class:^(zen-beta)$"
       ];
     };
 

@@ -1,14 +1,37 @@
-{ lib, config, ... }:
+{ lib, config, pkgs, ... }:
+let
+  inherit (lib) mkEnableOption mkOption types mkIf;
+  cfg = config.deeznuts.programs.steam;
+in
 {
-  imports = [
-    ./hyprland.nix
-  ];
-
   options.deeznuts.programs.steam = {
-    enable = lib.mkEnableOption "Enable Steam";
+    enable = mkEnableOption "steam additions (steam is managed on OS level)";
+
+    hyprland = {
+      autostart.enable = mkEnableOption "hyprland autostart";
+      workspace = mkOption {
+        type = types.int;
+        default = config.deeznuts.programs.hyprland.defaultWorkspaces.gaming;
+        description = "default workspace";
+      };
+    };
   };
 
-  config = lib.mkIf config.deeznuts.programs.steam.enable {
-    # dummy option, steam must be installed as a nixos option
+  config = mkIf cfg.enable {
+    wayland.windowManager.hyprland.settings = {
+      windowrulev2 = [
+        "workspace ${toString cfg.hyprland.workspace}, class:^(steam)$"
+      ];
+
+      exec-once = mkIf cfg.hyprland.autostart.enable [
+        "[silent] steam -silent"
+      ];
+    };
+
+    home.packages = with pkgs; [ protonup ];
+    home.sessionVariables = {
+      STEAM_EXTRA_COMPAT_TOOLS_PATH =
+        "~/.stream/root/compatibilitytools.d";
+    };
   };
 }

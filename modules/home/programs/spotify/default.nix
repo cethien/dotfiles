@@ -2,7 +2,6 @@
 let
   inherit (lib) mkEnableOption mkIf;
   cfg = config.deeznuts.programs.spotify;
-  hyprlandCfg = config.deeznuts.programs.hyprland.programs.spotify;
   enabled = cfg.enable;
 in
 {
@@ -10,15 +9,23 @@ in
     inputs.spicetify-nix.homeManagerModules.default
   ];
 
-  options.deeznuts.programs = {
-    spotify.enable = mkEnableOption "spotify";
-    hyprland.programs.spotify.autostart.enable = mkEnableOption "autostart spotify_player daemon";
+  options.deeznuts.programs.spotify = {
+    enable = mkEnableOption "spotify";
+    hyprland.autostart.enable = mkEnableOption "autostart spotify_player daemon";
   };
 
   config = mkIf enabled {
+    wayland.windowManager.hyprland.settings = {
+      exec-once = mkIf cfg.hyprland.autostart.enable [
+        "spotify_player -d"
+      ];
+      bind = [
+        "SUPER SHIFT, M, exec, $terminal --class spotify -e spotify_player"
+      ];
+    };
+
     home.shellAliases.spot = "spotify_player";
     home.shellAliases.spotd = "spotify_player -d";
-
     home.packages = with pkgs; [
       spotify
     ];
@@ -35,15 +42,6 @@ in
           normalization = true;
         };
       };
-    };
-
-    wayland.windowManager.hyprland.settings = {
-      exec-once = mkIf hyprlandCfg.autostart.enable [
-        "spotify_player -d"
-      ];
-      bind = [
-        "SUPER SHIFT, M, exec, $terminal --class spotify -e spotify_player"
-      ];
     };
   };
 }

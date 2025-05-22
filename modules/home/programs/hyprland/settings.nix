@@ -22,8 +22,27 @@ in
         "3, monitor:eDP-1, persistent:true, default:false"
         "4, monitor:eDP-1, persistent:true, default:false"
         "5, monitor:eDP-1, persistent:true, default:false"
+        "6, monitor:eDP-1, persistent:true, default:false"
       ];
       description = "Workspaces to use";
+    };
+
+    defaultWorkspaces = {
+      browser = mkOption {
+        type = types.int;
+        default = 1;
+        description = "default browser workspace";
+      };
+      development = mkOption {
+        type = types.int;
+        default = 3;
+        description = "default development workspace";
+      };
+      gaming = mkOption {
+        type = types.int;
+        default = 7;
+        description = "default gaming workspace";
+      };
     };
   };
 

@@ -1,14 +1,35 @@
 { lib, config, ... }:
 let
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib) mkEnableOption mkOption types mkIf;
   cfg = config.deeznuts.programs.bottom;
 in
 {
-  options.deeznuts.programs = {
-    bottom.enable = mkEnableOption "bottom (cli monitoring tool)";
+  options.deeznuts.programs.bottom = {
+    enable = mkEnableOption "bottom (cli monitoring tool)";
+    hyprland.workspace = mkOption {
+      type = types.int;
+      default = 6;
+      description = "default hyprland workspace";
+    };
+
   };
 
   config = mkIf cfg.enable {
+    wayland.windowManager.hyprland.settings = {
+      bind = [
+        "SUPER SHIFT, p, exec, $terminal --class btm -e btm"
+      ];
+
+      windowrulev2 = [
+        "workspace ${toString cfg.hyprland.workspace}, class:btm"
+      ];
+    };
+
+    home.shellAliases = {
+      top = "btm";
+      htop = "btm";
+    };
+
     programs.bottom = {
       enable = true;
 
@@ -55,16 +76,9 @@ in
       };
     };
 
-    home.shellAliases = {
-      top = "btm";
-      htop = "btm";
-    };
 
-    wayland.windowManager.hyprland.settings = {
-      bind = [
-        "SUPER SHIFT, p, exec, $terminal --class monitor -e btm"
-      ];
-    };
+
+
   };
 }
 

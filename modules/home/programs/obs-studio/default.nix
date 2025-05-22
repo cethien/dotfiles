@@ -1,14 +1,25 @@
 { lib, config, pkgs, ... }:
 let
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib) mkEnableOption mkOption types mkIf;
   cfg = config.deeznuts.programs.obs-studio;
 in
 {
   options.deeznuts.programs.obs-studio = {
-    enable = mkEnableOption "Enable OBS Studio";
+    enable = mkEnableOption "OBS Studio";
+    hyprland.workspace = mkOption {
+      type = types.int;
+      default = 8;
+      description = "default hyprland workspace";
+    };
   };
 
   config = mkIf cfg.enable {
+    wayland.windowManager.hyprland.settings = {
+      windowrulev2 = [
+        "workspace ${toString cfg.hyprland.workspace}, class:^(com\.obsproject\.Studio)$"
+      ];
+    };
+
     programs.obs-studio = {
       enable = true;
 

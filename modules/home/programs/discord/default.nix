@@ -2,29 +2,29 @@
 let
   inherit (lib) mkEnableOption mkIf types mkOption;
   cfg = config.deeznuts.programs.discord;
-  cfgHyprland = config.deeznuts.programs.hyprland.programs.discord;
+  enabled = cfg.enable;
 in
 {
-  options.deeznuts.programs = {
-    discord.enable = mkEnableOption "discord";
-
-    hyprland.programs.discord = {
-      autostart = {
-        enable = mkEnableOption "enable autostart";
-        workspace = mkOption {
-          type = types.int;
-          default = 3;
-          description = "Workspace for autostart";
-        };
+  options.deeznuts.programs.discord = {
+    enable = mkEnableOption "discord";
+    hyprland = {
+      autostart.enable = mkEnableOption "enable autostart";
+      workspace = mkOption {
+        type = types.int;
+        default = 5;
+        description = "default workspace";
       };
     };
-
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf enabled {
     wayland.windowManager.hyprland.settings = {
-      exec-once = mkIf cfgHyprland.autostart.enable [
-        "[workspace ${toString cfgHyprland.autostart.workspace} silent] discord --start-minimized"
+      windowrulev2 = [
+        "workspace ${toString cfg.hyprland.workspace}, class:^(discord)$"
+        "workspace ${toString cfg.hyprland.workspace}, class:^(vesktop)$"
+      ];
+      exec-once = mkIf cfg.hyprland.autostart.enable [
+        "[silent] discord --start-minimized"
       ];
     };
 
