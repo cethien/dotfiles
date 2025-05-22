@@ -11,4 +11,6 @@
     ./services
     ./virtualisation
   ];
+
+  programs.command-not-found.enable = true;
 }
