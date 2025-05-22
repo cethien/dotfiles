@@ -22,6 +22,12 @@
 
     {
       mode = "n";
+      key = "<leader>/";
+      action = "<cmd>noh<CR>";
+    }
+
+    {
+      mode = "n";
       key = "<leader>vs";
       action = "<cmd>vs<CR>";
     }
