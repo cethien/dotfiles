@@ -124,12 +124,6 @@
     }
 
     {
-      mode = [ "n" "v" ];
-      key = "<leader>cc";
-      action = "<cmd>Commentary<CR>";
-    }
-
-    {
       mode = "n";
       key = "<Tab>";
       action = "<cmd>BufferLineCycleNext<cr>";
@@ -137,6 +131,7 @@
         desc = "Cycle to next buffer";
       };
     }
+
     {
       mode = "n";
       key = "<S-Tab>";
