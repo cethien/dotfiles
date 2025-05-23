@@ -51,6 +51,7 @@ in
     ./jq
     ./keepassxc
     ./lynx
+    ./markdown.nix
     ./mpv
     ./neovim
     ./nmap
@@ -98,6 +99,7 @@ in
         lazydocker.enable = mkDefault true;
         lazygit.enable = mkDefault true;
         lynx.enable = mkDefault true;
+        md.enable = mkDefault true;
         neovim.enable = mkDefault true;
         nmap.enable = mkDefault true;
         oh-my-posh.enable = mkDefault true;
