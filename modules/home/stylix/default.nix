@@ -32,6 +32,14 @@ in
   };
 
   config = mkIf cfg.enable {
+    stylix.targets = {
+      vscode.enable = false;
+      mangohud.enable = false;
+      spicetify.enable = false;
+      rofi.enable = false;
+      mako.enable = false; # i dont use but fix for https://github.com/nix-community/home-manager/issues/6971
+    };
+
     stylix = {
       enable = true;
       base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyo-night-dark.yaml";
@@ -83,13 +91,6 @@ in
         terminal = 0.75;
         desktop = 0.75;
         popups = 0.5;
-      };
-
-      targets = {
-        vscode.enable = false;
-        mangohud.enable = false;
-        spicetify.enable = false;
-        rofi.enable = false;
       };
     };
   };

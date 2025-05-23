@@ -23,7 +23,7 @@
             inputs.sops-nix.homeManagerModules.sops
             ./shared/sops
 
-            inputs.stylix.homeManagerModules.stylix
+            inputs.stylix.homeModules.stylix
             ./modules/home/stylix
 
             {
@@ -43,7 +43,7 @@
           modules = [
             ./homes/cethien_tower-of-power
 
-            inputs.stylix.homeManagerModules.stylix
+            inputs.stylix.homeModules.stylix
             ./modules/home/stylix
 
             inputs.sops-nix.homeManagerModules.sops
@@ -67,7 +67,7 @@
           modules = [
             ./homes/cethien_hp-430-g7
 
-            inputs.stylix.homeManagerModules.stylix
+            inputs.stylix.homeModules.stylix
             ./modules/home/stylix
 
             inputs.sops-nix.homeManagerModules.sops
