@@ -6,7 +6,7 @@ in
 {
 
   imports = [
-    ./keymaps.nix
+    ./option-keymaps.nix
   ];
 
   options.deeznuts.programs.tmux = {
@@ -41,7 +41,6 @@ in
       terminal = "screen-256color";
 
       keyMode = "vi";
-      mouse = true;
       prefix = "C-a";
       disableConfirmationPrompt = true;
 
@@ -134,7 +133,9 @@ in
         yank
         {
           plugin = resurrect;
-          extraConfig = "set -g @resurrect-strategy-nvim 'session'";
+          extraConfig = ''
+            set -g @resurrect-stategy-nvim 'session'
+          '';
         }
         {
           plugin = continuum;

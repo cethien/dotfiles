@@ -5,9 +5,12 @@ let
 
   formatBind = binding:
     let
+      table = if binding ? table then "-T ${binding.table} " else "";
       prefix = if binding.noprefix or false then "-n " else "";
+      repeatable = if binding.repeat or false then "-r " else "";
+      desc = if binding ? description then "-N \"${binding.description}\" " else "";
     in
-    "bind ${prefix}${binding.key} ${binding.action}";
+    "bind ${table}${repeatable}${prefix}${desc}${binding.key} ${binding.action}";
 
 in
 {
