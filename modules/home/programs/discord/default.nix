@@ -11,7 +11,7 @@ in
       autostart.enable = mkEnableOption "enable autostart";
       workspace = mkOption {
         type = types.int;
-        default = 5;
+        default = 4;
         description = "default workspace";
       };
     };

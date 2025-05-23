@@ -16,23 +16,28 @@
         ];
 
         workspaces = [
-          "1, monitor:eDP-1, persistent:true"
-          "2, monitor:eDP-1, persistent:true"
-          "3, monitor:eDP-1, persistent:true"
-          "4, monitor:eDP-1, persistent:true"
-          "5, monitor:eDP-1, persistent:true"
-          "6, monitor:eDP-1, persistent:true"
+          "1, monitor:eDP-1, persistent:true" # general
+          "2, monitor:eDP-1, persistent:true" # general
+          "3, monitor:eDP-1, persistent:true" # browser
+          "4, monitor:eDP-1, persistent:true" # discord
+          "5, monitor:eDP-1, persistent:true" # spotify
+          "6, monitor:eDP-1, persistent:true" # monitoring
 
-          "7, monitor:DP-1, persistent:true"
-          "8, monitor:DP-1, persistent:true"
+          "7, monitor:DP-1, persistent:true" # gaming
         ];
+
+        defaultWorkspaces = {
+          browser = 3;
+          gaming = 7;
+        };
       };
 
       cli.enable = true;
-
       basic.enable = true;
       zen-browser.hyprland.autostart.enable = true;
       spotify.hyprland.autostart.enable = true;
+
+      chromium.enable = true;
 
       retroarch.enable = true;
       pokemmo.enable = true;

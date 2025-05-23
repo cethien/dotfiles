@@ -33,11 +33,6 @@ in
         default = 1;
         description = "default browser workspace";
       };
-      development = mkOption {
-        type = types.int;
-        default = 3;
-        description = "default development workspace";
-      };
       gaming = mkOption {
         type = types.int;
         default = 7;

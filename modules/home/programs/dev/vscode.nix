@@ -5,12 +5,7 @@ let
 in
 {
   options.deeznuts.programs.vscode = {
-    enable = mkEnableOption "VSCode";
-    hyprland.workspace = mkOption {
-      type = types.int;
-      default = config.deeznuts.programs.hyprland.defaultWorkspaces.development;
-      description = "default hyprland workspace";
-    };
+    enable = mkEnableOption "vscode";
   };
 
   config = mkIf cfg.enable {

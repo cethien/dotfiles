@@ -24,17 +24,15 @@
         ];
 
         workspaces = [
-          "1, monitor:DP-1, persistent:true"
-          "2, monitor:DP-1, persistent:true"
-          "3, monitor:DP-1, persistent:true"
-          "4, monitor:DP-1, persistent:true"
-          "5, monitor:DP-1, persistent:true"
+          "1, monitor:DP-1, persistent:true" # general
+          "2, monitor:DP-1, persistent:true" # general
+          "3, monitor:DP-1, persistent:true" # gaming
 
-          "6, monitor:HDMI-A-1, persistent:true"
-          "7, monitor:HDMI-A-1, persistent:true"
-          "8, monitor:HDMI-A-1, persistent:true"
-          "9, monitor:HDMI-A-1, persistent:true"
-          "10, monitor:HDMI-A-1, persistent:true"
+          "4, monitor:HDMI-A-1, persistent:true" # browser
+          "5, monitor:HDMI-A-1, persistent:true" # obs
+          "6, monitor:HDMI-A-1, persistent:true" # discord
+          "7, monitor:HDMI-A-1, persistent:true" # spotify
+          "8, monitor:HDMI-A-1, persistent:true" # monitoring
         ];
 
         hyprpanel = {
@@ -44,22 +42,28 @@
         hyprlock = {
           monitor = "DP-1";
         };
+      };
 
-        programs = {
-          zen-browser.autostart = {
-            enable = true;
-            workspace = 6;
-          };
-          steam.autostart.enable = true;
-        };
+      hyprland.defaultWorkspaces = {
+        browser = 4;
+        gaming = 3;
       };
 
       cli.enable = true;
+      bottom.hyprland.workspace = 8;
+
       basic.enable = true;
+      zen-browser.hyprland.autostart.enable = true;
+      spotify.hyprland.autostart.enable = true;
+      spotify.hyprland.workspace = 7;
+      discord.hyprland.autostart.enable = true;
+      discord.hyprland.workspace = 6;
+
       gaming.enable = true;
-      discord.enable = true;
-      vscode.enable = true;
+      steam.hyprland.autostart.enable = true;
+
       obs-studio.enable = true;
+      obs-studio.hyprland.workspace = 5;
     };
   };
 }

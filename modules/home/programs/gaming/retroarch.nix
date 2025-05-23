@@ -17,7 +17,6 @@ in
     wayland.windowManager.hyprland.settings = {
       windowrulev2 = [
         "workspace ${toString cfg.hyprland.workspace}, class:^(com\.libretro\.RetroArch)$"
-        "fullscreen, class:^(com\.libretro\.RetroArch)$"
       ];
     };
 

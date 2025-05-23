@@ -1,6 +1,6 @@
 { lib, config, inputs, pkgs, ... }:
 let
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib) mkEnableOption mkOption types mkIf;
   cfg = config.deeznuts.programs.spotify;
   enabled = cfg.enable;
 in
@@ -11,25 +11,31 @@ in
 
   options.deeznuts.programs.spotify = {
     enable = mkEnableOption "spotify";
-    hyprland.autostart.enable = mkEnableOption "autostart spotify_player daemon";
+    hyprland.autostart.enable = mkEnableOption "autostart spotify daemon";
+    hyprland.workspace = mkOption {
+      type = types.int;
+      default = 5;
+      description = "default hyprland workspace";
+    };
   };
 
   config = mkIf enabled {
     wayland.windowManager.hyprland.settings = {
-      exec-once = mkIf cfg.hyprland.autostart.enable [
-        "spotify_player -d"
+      windowrulev2 = [
+        "workspace ${toString cfg.hyprland.workspace}, class:^(Spotify)$"
       ];
+      exec-once = mkIf cfg.hyprland.autostart.enable [ "spotify_player -d" ];
       bind = [
-        "SUPER SHIFT, M, exec, $terminal --class spotify -e spotify_player"
+        "SUPER SHIFT, M, exec, $terminal --class Spotify -e spotify_player"
       ];
     };
 
-    home.shellAliases.spot = "spotify_player";
-    home.shellAliases.spotd = "spotify_player -d";
     home.packages = with pkgs; [
       spotify
     ];
 
+    home.shellAliases.spot = "spotify_player";
+    home.shellAliases.spotd = "spotify_player -d";
     programs.spotify-player = {
       enable = true;
       settings = {
