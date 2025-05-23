@@ -10,18 +10,25 @@ in
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
-      cowsay
-      ponysay
       fortune
-      figlet
-      lolcat
-
-      cmatrix
       asciiquarium-transparent
-      sl
       hackertyper
-      pipes-rs
+
+      cowsay
+      figlet
+      dotacat
     ];
+
+    home.shellAliases = {
+      lolcat = "dotacat";
+      matrix = "${pkgs.cmatrix}/bin/cmatrix";
+      pipes = "${pkgs.pipes-rs}/bin/pipes-rs";
+      sl = "${pkgs.sl}/bin/sl | ${pkgs.lolcat}/bin/lolcat && clear";
+    };
+
+    programs.bash.initExtra = ''
+      fortune | cowthink -C | dotacat
+    '';
 
     programs.cava.enable = true;
     programs.cava.settings = {
