@@ -44,7 +44,7 @@ in
       enable = true;
       base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyo-night-dark.yaml";
 
-      image = ./wallpapers/minimalistic-space.jpg;
+      image = ./wallpapers/a_hand_holding_a_cassette_tape.jpg;
 
       cursor = {
         name = "Nordzy-cursors";
@@ -88,7 +88,7 @@ in
 
       opacity = {
         applications = 1.0;
-        terminal = 0.75;
+        terminal = 0.90;
         desktop = 0.75;
         popups = 0.5;
       };

@@ -19,8 +19,9 @@ in
           satty_cmd = "satty --filename - --config ${config.home.homeDirectory}/.config/satty/config.toml";
         in
         [
+          ", Print, exec, ${hyprshot_base_cmd} -m output | ${satty_cmd}"
+          "ALT, Print, exec, ${hyprshot_base_cmd} -m window | ${satty_cmd}"
           "SUPER SHIFT, S, exec, ${hyprshot_base_cmd} -m region | ${satty_cmd}"
-          ", Print, exec, ${hyprshot_base_cmd} -m window | ${satty_cmd}"
         ];
     };
   };
