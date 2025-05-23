@@ -5,15 +5,10 @@ let
 in
 {
   options.deeznuts.programs.vscode = {
-    enable = mkEnableOption "VSCode and Chromium";
+    enable = mkEnableOption "VSCode";
     hyprland.workspace = mkOption {
       type = types.int;
       default = config.deeznuts.programs.hyprland.defaultWorkspaces.development;
-      description = "default hyprland workspace";
-    };
-    chromium.hyprland.workspace = mkOption {
-      type = types.int;
-      default = 4;
       description = "default hyprland workspace";
     };
   };
@@ -22,12 +17,10 @@ in
     wayland.windowManager.hyprland.settings = {
       windowrulev2 = [
         "workspace ${toString cfg.hyprland.workspace}, class:Code"
-        "workspace ${toString cfg.chromium.hyprland.workspace}, class:Chromium-browser"
       ];
     };
 
     home.packages = [ pkgs.nerd-fonts.meslo-lg ];
     programs.vscode.enable = true;
-    programs.chromium.enable = true;
   };
 }

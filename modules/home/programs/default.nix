@@ -12,14 +12,14 @@ in
   };
 
   imports = [
-    ./pokemmo.nix
+    ./gaming/pokemmo.nix
     ./aliases
     ./bash
     ./bat
     ./bc
     ./bottom
-    ./dblab
-    ./direnv
+    ./dev/dblab.nix
+    ./dev/direnv.nix
     ./discord
     ./drawio
     ./duf
@@ -38,10 +38,11 @@ in
     ./inkscape
     ./jq
     ./keepassxc
-    ./lazydocker
-    ./lazygit
+    ./dev/lazydocker.nix
+    ./dev/lazygit.nix
+    ./dev/chromium.nix
     ./lynx
-    ./mangohud
+    ./gaming/mangohud.nix
     ./common-utils.nix
     ./mpv
     ./neovim
@@ -52,23 +53,23 @@ in
     ./pavucontrol
     ./pinta
     ./poppler
-    ./prismlauncher
+    ./gaming/prismlauncher.nix
     ./procs
-    ./r2modman
-    ./retroarch.nix
+    ./gaming/r2modman.nix
+    ./gaming/retroarch.nix
     ./ripgrep
     ./rnote
     ./scripts
     ./spotify
     ./ssh
-    ./steam
+    ./gaming/steam.nix
     ./termshark
     ./tmux
-    ./vscode
+    ./dev/vscode.nix
     ./yazi
     ./zen-browser.nix
     ./zoxide
-    ./jetbrains
+    ./dev/jetbrains.nix
     ./fun.nix
   ];
 
