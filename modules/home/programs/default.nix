@@ -12,14 +12,19 @@ in
   };
 
   imports = [
-    ./gaming/pokemmo.nix
     ./aliases
     ./bash
     ./bat
     ./bc
     ./bottom
+    ./common-utils.nix
+    ./dev/chromium.nix
     ./dev/dblab.nix
     ./dev/direnv.nix
+    ./dev/jetbrains.nix
+    ./dev/lazydocker.nix
+    ./dev/lazygit.nix
+    ./dev/vscode.nix
     ./discord
     ./drawio
     ./duf
@@ -28,7 +33,14 @@ in
     ./fastfetch
     ./fd
     ./ffmpeg
+    ./fun.nix
     ./fzf
+    ./gaming/mangohud.nix
+    ./gaming/pokemmo.nix
+    ./gaming/prismlauncher.nix
+    ./gaming/r2modman.nix
+    ./gaming/retroarch.nix
+    ./gaming/steam.nix
     ./gh
     ./gimp
     ./git
@@ -38,12 +50,7 @@ in
     ./inkscape
     ./jq
     ./keepassxc
-    ./dev/lazydocker.nix
-    ./dev/lazygit.nix
-    ./dev/chromium.nix
     ./lynx
-    ./gaming/mangohud.nix
-    ./common-utils.nix
     ./mpv
     ./neovim
     ./nmap
@@ -53,35 +60,28 @@ in
     ./pavucontrol
     ./pinta
     ./poppler
-    ./gaming/prismlauncher.nix
     ./procs
-    ./gaming/r2modman.nix
-    ./gaming/retroarch.nix
     ./ripgrep
     ./rnote
     ./scripts
     ./spotify
     ./ssh
-    ./gaming/steam.nix
     ./termshark
     ./tmux
-    ./dev/vscode.nix
     ./yazi
     ./zen-browser.nix
     ./zoxide
-    ./dev/jetbrains.nix
-    ./fun.nix
   ];
 
   config = mkMerge [
     (mkIf cfg.cli.enable {
       deeznuts.programs = {
-        fun.enable = mkDefault true;
         aliases.enable = mkDefault true;
         bash.enable = mkDefault true;
         bat.enable = mkDefault true;
         bc.enable = mkDefault true;
         bottom.enable = mkDefault true;
+        common-utils.enable = mkDefault true;
         dblab.enable = mkDefault true;
         direnv.enable = mkDefault true;
         duf.enable = mkDefault true;
@@ -89,6 +89,7 @@ in
         fastfetch.enable = mkDefault true;
         fd.enable = mkDefault true;
         ffmpeg.enable = mkDefault true;
+        fun.enable = mkDefault true;
         fzf.enable = mkDefault true;
         gh.enable = mkDefault true;
         git.enable = mkDefault true;
@@ -96,10 +97,10 @@ in
         jq.enable = mkDefault true;
         lazydocker.enable = mkDefault true;
         lazygit.enable = mkDefault true;
-        common-utils.enable = mkDefault true;
+        lynx.enable = mkDefault true;
         neovim.enable = mkDefault true;
-        oh-my-posh.enable = mkDefault true;
         nmap.enable = mkDefault true;
+        oh-my-posh.enable = mkDefault true;
         poppler.enable = mkDefault true;
         procs.enable = mkDefault true;
         ripgrep.enable = mkDefault true;
@@ -109,7 +110,6 @@ in
         tmux.enable = mkDefault true;
         yazi.enable = mkDefault true;
         zoxide.enable = mkDefault true;
-        lynx.enable = mkDefault true;
       };
     })
     (mkIf cfg.basic.enable {
