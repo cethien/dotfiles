@@ -2,7 +2,6 @@
   programs.nixvim = {
     plugins = {
       presence-nvim.enable = true;
-
       auto-session.enable = true;
 
       transparent.enable = true;
@@ -11,9 +10,10 @@
       bufferline.enable = true;
       # dropbar.enable = true;
       image.enable = true;
-      blink-cmp.enable = true;
-      commentary.enable = true;
       cursorline.enable = true;
+
+      commentary.enable = true;
+
       telescope.enable = true;
       telescope.settings = {
         defaults = {
@@ -24,6 +24,37 @@
           ];
         };
       };
+
+      blink-cmp.enable = true;
+      blink-cmp.settings.sources.default = [
+        "lsp"
+        "path"
+        "buffer"
+        "emoji"
+        "dictionary"
+      ];
+
+      blink-emoji.enable = true;
+      blink-cmp.settings.sources.providers.emoji = {
+        module = "blink-emoji";
+        name = "Emoji";
+        score_offset = 15;
+        opts = {
+          insert = true;
+        };
+      };
+
+      blink-cmp-dictionary.enable = true;
+      blink-cmp.settings.sources.providers.dictionary = {
+        module = "blink-cmp-dictionary";
+        name = "Dict";
+        score_offset = 100;
+        min_keyword_length = 3;
+      };
+
+      blink-cmp-git.enable = true;
+
+
 
       toggleterm.enable = true;
       oil.enable = true;
