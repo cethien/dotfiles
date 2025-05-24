@@ -1,18 +1,17 @@
 {
   description = "cethien's dotfiles";
 
-  outputs = inputs:
-    let
-      system = "x86_64-linux";
-      pkgs = import inputs.nixpkgs {
-        inherit system;
-        config.allowUnfree = true;
-        overlays = [ inputs.nur.overlays.default ];
-      };
+  outputs = inputs: let
+    system = "x86_64-linux";
+    pkgs = import inputs.nixpkgs {
+      inherit system;
+      config.allowUnfree = true;
+      overlays = [inputs.nur.overlays.default];
+    };
 
-      stateVersion = "25.05";
-      defaultUser = "cethien";
-    in
+    stateVersion = "25.05";
+    defaultUser = "cethien";
+  in
     {
       homeConfigurations = {
         "cethien@wsl" = inputs.home-manager.lib.homeManagerConfiguration {
@@ -87,8 +86,7 @@
         };
       };
     }
-    //
-    {
+    // {
       nixosConfigurations = {
         "tower-of-power" = inputs.nixpkgs.lib.nixosSystem {
           modules = [
@@ -133,30 +131,18 @@
             inherit inputs;
           };
         };
-
       };
     }
     // {
       devShells.x86_64-linux.default = pkgs.mkShell {
         buildInputs = with pkgs; [
           git
-
-          nil
-          nixpkgs-fmt
-          sops
-          lua
-          shfmt
-
           just
         ];
       };
     };
 
-
   inputs = {
-    nixvim.url = "github:nix-community/nixvim";
-    nixvim.inputs.nixpkgs.follows = "nixpkgs";
-
     nvf.url = "github:notashelf/nvf";
     nvf.inputs.nixpkgs.follows = "nixpkgs";
 
