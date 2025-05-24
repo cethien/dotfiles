@@ -1,10 +1,12 @@
-{ lib, config, pkgs, ... }:
-let
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}: let
   inherit (lib) mkIf mkEnableOption;
   cfg = config.deeznuts.programs.tmux;
-in
-{
-
+in {
   imports = [
     ./option-keymaps.nix
   ];
@@ -53,12 +55,9 @@ in
         # Allow-passthrough for advanced features
         # (wezterm features mainly)
         set-option -g allow-passthrough on
-        
+
         # don't rename windows automatically
         set-option -g allow-rename off
-
-        # reload config file (change file location to your the tmux.conf you want to use)
-        # bind r source-file ~/.config/tmux/tmux.conf
       '';
 
       keybindings = [
