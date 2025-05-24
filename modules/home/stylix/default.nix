@@ -1,9 +1,12 @@
-{ lib, config, pkgs, ... }:
-let
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}: let
   inherit (lib) mkIf mkEnableOption mkOption types;
   cfg = config.deeznuts.stylix;
-in
-{
+in {
   options.deeznuts.stylix = {
     enable = mkEnableOption "Enable theming with stylix";
 
@@ -33,6 +36,8 @@ in
 
   config = mkIf cfg.enable {
     stylix.targets = {
+      nvf.enable = false;
+
       vscode.enable = false;
       mangohud.enable = false;
       spicetify.enable = false;
