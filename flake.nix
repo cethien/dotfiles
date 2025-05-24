@@ -157,6 +157,9 @@
     nixvim.url = "github:nix-community/nixvim";
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
 
+    nvf.url = "github:notashelf/nvf";
+    nvf.inputs.nixpkgs.follows = "nixpkgs";
+
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
 
     hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
