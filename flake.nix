@@ -19,9 +19,6 @@
           modules = [
             ./homes/cethien_WSL
 
-            inputs.sops-nix.homeManagerModules.sops
-            ./shared/sops
-
             inputs.stylix.homeModules.stylix
             ./modules/home/stylix
 
@@ -45,9 +42,6 @@
             inputs.stylix.homeModules.stylix
             ./modules/home/stylix
 
-            inputs.sops-nix.homeManagerModules.sops
-            ./shared/sops
-
             inputs.nur.modules.homeManager.default
             {
               home.stateVersion = stateVersion;
@@ -68,9 +62,6 @@
 
             inputs.stylix.homeModules.stylix
             ./modules/home/stylix
-
-            inputs.sops-nix.homeManagerModules.sops
-            ./shared/sops
 
             inputs.nur.modules.homeManager.default
             {
@@ -95,9 +86,6 @@
             # inputs.disko.nixosModules.disko
             # ./shared/disko/simple
 
-            inputs.sops-nix.nixosModules.sops
-            ./shared/sops
-
             {
               system.stateVersion = stateVersion;
               networking.hostName = "tower-of-power";
@@ -116,9 +104,6 @@
 
             inputs.disko.nixosModules.disko
             ./shared/disko/simple
-
-            inputs.sops-nix.nixosModules.sops
-            ./shared/sops
 
             {
               system.stateVersion = stateVersion;
@@ -150,9 +135,6 @@
 
     hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
     hyprpanel.inputs.nixpkgs.follows = "nixpkgs";
-
-    sops-nix.url = "github:Mic92/sops-nix";
-    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     spicetify-nix.inputs.nixpkgs.follows = "nixpkgs";
