@@ -34,7 +34,7 @@ in
         default = {
           "bar.layouts" = {
             "*" = {
-              left = [ "systray" "workspaces" "windowtitle" ];
+              left = [ "workspaces" "systray" ];
               middle = [ "media" ];
               right = [ "volume" ] ++
                 (if cfg.layout.bluetooth then [ "bluetooth" ] else [ ]) ++
@@ -53,6 +53,13 @@ in
   };
 
   config = mkIf enabled {
+    wayland.windowManager.hyprland.settings = {
+      bind = [
+        "SUPER, I, exec, hyprpanel idleInhibit"
+      ];
+    };
+
+
     programs.hyprpanel = {
       enable = true;
       overlay.enable = true;
