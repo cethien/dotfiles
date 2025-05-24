@@ -1,84 +1,116 @@
 {
-  programs.nvf.settings = {
+  programs.nvf.settings.vim = {
+    languages = {
+      clang.enable = true;
+      go.enable = true;
+      csharp.enable = true;
 
-    vim = {
-      telescope.enable = true;
-      telescope.setupOpts.defaults.file_ignore_patterns = [
-        "node_modules"
-        "%.git/"
-        "%.direnv/"
-        "dist/"
-        "build/"
-        "target/"
-        "result/"
-      ];
-      statusline.lualine.enable = true;
-      tabline.nvimBufferline.enable = true;
+      astro.enable = true;
+      svelte.enable = true;
+      tailwind.enable = true;
+      php.enable = true;
+      ts.enable = true;
+      css.enable = true;
+      html.enable = true;
 
-      utility = {
-        oil-nvim.enable = true;
-        yanky-nvim.enable = true;
-      };
+      sql.enable = true;
 
-      terminal.toggleterm = {
-        enable = true;
-        lazygit.enable = true;
-      };
+      nix.enable = true;
+      lua.enable = true;
+      bash.enable = true;
+      yaml.enable = true;
+      markdown.enable = true;
+      markdown.extensions.markview-nvim.enable = true;
 
-      git.enable = true;
+      enableFormat = true;
+      enableTreesitter = true;
+      enableDAP = true;
+    };
 
-      treesitter = {
-        highlight.enable = true;
-        autotagHtml = true;
-        fold = true;
-      };
+    lsp.enable = true;
+    lsp = {
+      trouble.enable = true;
+      otter-nvim.enable = true;
 
-      autocomplete = {
-        enableSharedCmpSources = true;
+      inlayHints.enable = true;
+      formatOnSave = true;
+    };
 
-        blink-cmp.enable = true;
-        blink-cmp.sourcePlugins = {
-          emoji.enable = true;
-          spell.enable = true;
-        };
-      };
+    autocomplete = {
+      enableSharedCmpSources = true;
 
-      lsp.enable = true;
-      lsp = {
-        formatOnSave = true;
-        inlayHints.enable = true;
-
-        otter-nvim.enable = true;
-      };
-
-      languages = {
-        enableFormat = true;
-        enableTreesitter = true;
-        enableDAP = true;
-
-        nix.enable = true;
-        lua.enable = true;
-        bash.enable = true;
-        yaml.enable = true;
-        markdown.enable = true;
-
-        sql.enable = true;
-
-        html.enable = true;
-        css.enable = true;
-        tailwind.enable = true;
-        ts.enable = true;
-        php.enable = true;
-        svelte.enable = true;
-        astro.enable = true;
-
-        csharp.enable = true;
-        go.enable = true;
-        clang.enable = true;
+      blink-cmp.enable = true;
+      blink-cmp.sourcePlugins = {
+        spell.enable = true;
+        emoji.enable = true;
       };
     };
 
-    vim.keymaps = [
+    mini = {
+      comment.enable = true;
+      move.enable = true;
+      operators.enable = true;
+      pairs.enable = true;
+      surround.enable = true;
+      splitjoin.enable = true;
+    };
+
+    treesitter = {
+      highlight.enable = true;
+      autotagHtml = true;
+      fold = true;
+    };
+
+    utility = {
+      oil-nvim.enable = true;
+      yanky-nvim.enable = true;
+    };
+
+    terminal.toggleterm = {
+      enable = true;
+      lazygit.enable = true;
+    };
+
+    telescope.enable = true;
+    telescope.setupOpts.defaults.file_ignore_patterns = [
+      "node_modules"
+      "%.git/"
+      "%.direnv/"
+      "dist/"
+      "build/"
+      "target/"
+      "result/"
+    ];
+
+    git.enable = true;
+
+    session.nvim-session-manager = {
+      enable = true;
+      setupOpts = {
+        autosave_ignore_filetypes = [
+          "gitcommit"
+          "toggleterm"
+        ];
+        autosave_ignore_buftypes = [
+          "terminal"
+        ];
+      };
+    };
+
+    ui = {
+      fastaction.enable = true;
+      colorizer.enable = true;
+      modes-nvim.enable = true;
+      noice.enable = true;
+      smartcolumn.enable = true;
+
+      borders.enable = true;
+    };
+    statusline.lualine.enable = true;
+    tabline.nvimBufferline.enable = true;
+    visuals.nvim-web-devicons.enable = true;
+
+    keymaps = [
       {
         mode = "n";
         key = "<leader>qq";
@@ -186,8 +218,15 @@
       }
     ];
 
-    vim.globals.mapleader = " ";
+    theme = {
+      enable = true;
+      name = "tokyonight";
+      style = "night";
+      transparent = true;
+    };
 
+    globals.mapleader = " ";
+    viAlias = true;
+    vimAlias = true;
   };
 }
-
