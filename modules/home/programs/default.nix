@@ -1,10 +1,11 @@
-{ lib, config, ... }:
-
-let
+{
+  lib,
+  config,
+  ...
+}: let
   inherit (lib) mkIf mkEnableOption mkMerge mkDefault;
   cfg = config.deeznuts.programs;
-in
-{
+in {
   options.deeznuts.programs = {
     cli.enable = mkEnableOption "Enable all cli programs";
     basic.enable = mkEnableOption "Enable basic desktop programs";
@@ -12,10 +13,10 @@ in
   };
 
   imports = [
-    ./aliases
+    ./shellAliases.nix
     ./bash
-    ./bat
-    ./bc
+    ./bat.nix
+    ./bc.nix
     ./bottom
     ./common-utils.nix
     ./dev/chromium.nix
@@ -25,53 +26,54 @@ in
     ./dev/lazydocker.nix
     ./dev/lazygit.nix
     ./dev/vscode.nix
-    ./discord
-    ./drawio
-    ./duf
-    ./easyeffects
-    ./eza
+    ./discord.nix
+    ./drawio.nix
+    ./duf.nix
+    ./easyeffects.nix
+    ./eza.nix
     ./fastfetch
-    ./fd
-    ./ffmpeg
+    ./fd.nix
+    ./ffmpeg.nix
     ./fun.nix
-    ./fzf
+    ./firefox.nix
+    ./fzf.nix
     ./gaming/mangohud.nix
     ./gaming/pokemmo.nix
     ./gaming/prismlauncher.nix
     ./gaming/r2modman.nix
     ./gaming/retroarch.nix
     ./gaming/steam.nix
-    ./gh
-    ./gimp
-    ./git
-    ./hushlogin
+    ./gh.nix
+    ./gimp.nix
+    ./git.nix
+    ./hushlogin.nix
     ./hyprland
-    ./imv
-    ./inkscape
-    ./jq
-    ./keepassxc
-    ./lynx
+    ./imv.nix
+    ./inkscape.nix
+    ./jq.nix
+    ./keepassxc.nix
+    ./lynx.nix
     ./markdown.nix
-    ./mpv
+    ./mpv.nix
     ./neovim
-    ./nmap
-    ./obs-studio
-    ./ocenaudio
+    ./nmap.nix
+    ./obs-studio.nix
+    ./ocenaudio.nix
     ./oh-my-posh
-    ./pavucontrol
-    ./pinta
-    ./poppler
-    ./procs
-    ./ripgrep
-    ./rnote
+    ./pavucontrol.nix
+    ./pinta.nix
+    ./poppler-utils.nix
+    ./procs.nix
+    ./ripgrep.nix
+    ./rnote.nix
     ./scripts
     ./spotify
-    ./ssh
-    ./termshark
+    ./ssh.nix
+    ./termshark.nix
     ./tmux
-    ./yazi
+    ./yazi.nix
     ./zen-browser.nix
-    ./zoxide
+    ./zoxide.nix
   ];
 
   config = mkMerge [

@@ -1,17 +1,23 @@
-{ lib, config, pkgs, ... }:
-let
-  inherit (lib) mkEnableOption mkIf;
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}: let
+  inherit (lib) mkEnableOption mkOption types mkIf;
   cfg = config.deeznuts.programs.firefox;
   name = "${config.home.username}";
-in
-
-{
-  imports = [
-    ./hyprland.nix
-  ];
-
+in {
   options.deeznuts.programs.firefox = {
     enable = mkEnableOption "firefox";
+    hyprland = {
+      workspace = mkOption {
+        type = types.int;
+        default = config.deeznuts.programs.hyprland.defaultWorkspaces.browser;
+        description = "default workspace";
+      };
+      autostart.enable = mkEnableOption "autostart";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -22,11 +28,54 @@ in
         id = 0;
         inherit name;
 
+        containers = {
+          admin = {
+            id = 2;
+            color = "red";
+            icon = "circle";
+          };
+
+          testing = {
+            id = 1;
+            color = "blue";
+            icon = "circle";
+          };
+
+          "wörk" = {
+            id = 3;
+            color = "orange";
+            icon = "briefcase";
+          };
+        };
+
+        extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
+          multi-account-containers
+
+          bitwarden
+          keepassxc-browser
+
+          ublock-origin
+          unpaywall
+          istilldontcareaboutcookies
+          consent-o-matic
+          cookie-autodelete
+          link-cleaner
+
+          stylus
+          darkreader
+
+          sponsorblock
+          return-youtube-dislikes
+
+          twitch-auto-points
+
+          steam-database
+        ];
+
         search = {
           default = "Google";
           privateDefault = "DuckDuckGo";
-
-          order = [ "Google" "DuckDuckGo" ];
+          order = ["Google" "DuckDuckGo"];
         };
 
         settings = {
@@ -64,63 +113,30 @@ in
 
           "extensions.autoDisableScopes" = 0;
 
-          # "sidebar.revamp" = true;
-          # "sidebar.verticalTabs" = true;
-          # "sidebar.main.tools" = "bookmarks,history";
-          # "sidebar.backupState" = ''{"width":"","command":"","expanded":false,"hidden":false}'';
-          # "browser.toolbarbuttons.introduced.sidebar-button" = true;
-          # "browser.engagement.sidebar-button.has-used" = true;
-
           # "browser.uiCustomization.horizontalTabstrip" = ''["firefox-view-button","tabbrowser-tabs","new-tab-button","alltabs-button"]'';
 
           # "browser.uiCustomization.state" = ''{"placements":{"widget-overflow-fixed-list":[],"unified-extensions-area":["sponsorblocker_ajay_app-browser-action","_testpilot-containers-browser-action","_7a7a4a92-a2a0-41d1-9fd7-1e92480d612d_-browser-action","_762f9885-5a13-4abd-9c77-433dcd38b8fd_-browser-action","side-view_mozilla_org-browser-action"],"nav-bar":["customizableui-special-spring1","back-button","forward-button","stop-reload-button","urlbar-container","downloads-button","customizableui-special-spring2","unified-extensions-button","addon_darkreader_org-browser-action","ublock0_raymondhill_net-browser-action","_446900e4-71c2-419f-a6a7-df9c091e268b_-browser-action","keepassxc-browser_keepassxc_org-browser-action"],"toolbar-menubar":["menubar-items"],"TabsToolbar":[],"vertical-tabs":["tabbrowser-tabs"],"PersonalToolbar":["import-button","personal-bookmarks"]},"seen":["save-to-pocket-button","developer-button","_7a7a4a92-a2a0-41d1-9fd7-1e92480d612d_-browser-action","_446900e4-71c2-419f-a6a7-df9c091e268b_-browser-action","addon_darkreader_org-browser-action","_testpilot-containers-browser-action","keepassxc-browser_keepassxc_org-browser-action","_762f9885-5a13-4abd-9c77-433dcd38b8fd_-browser-action","side-view_mozilla_org-browser-action","sponsorblocker_ajay_app-browser-action","ublock0_raymondhill_net-browser-action"],"dirtyAreaCache":["nav-bar","vertical-tabs","PersonalToolbar","unified-extensions-area","toolbar-menubar","TabsToolbar"],"currentVersion":20,"newElementCount":6}'';
         };
-
-        extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
-          multi-account-containers
-          side-view
-
-          bitwarden
-          keepassxc-browser
-
-          ublock-origin
-          unpaywall
-          istilldontcareaboutcookies
-          consent-o-matic
-          cookie-autodelete
-          link-cleaner
-
-          stylus
-          darkreader
-
-          sponsorblock
-          return-youtube-dislikes
-
-          twitch-auto-points
-
-          steam-database
-        ];
-
-        containers = {
-          admin = {
-            id = 2;
-            color = "red";
-            icon = "circle";
-          };
-
-          testing = {
-            id = 1;
-            color = "blue";
-            icon = "circle";
-          };
-
-          "wörk" = {
-            id = 3;
-            color = "orange";
-            icon = "briefcase";
-          };
-        };
       };
+    };
+
+    wayland.windowManager.hyprland.settings = {
+      exec-once = mkIf cfg.hyprland.autostart.enable [
+        "[silent] firefox"
+      ];
+      windowrulev2 = [
+        "workspace ${toString cfg.hyprland.workspace}, class:^(firefox)$"
+      ];
+    };
+
+    xdg.mimeApps.defaultApplications = {
+      # Web / browser-related
+      "x-scheme-handler/http" = ["firefox.desktop"];
+      "x-scheme-handler/https" = ["firefox.desktop"];
+      "x-scheme-handler/about" = ["firefox.desktop"];
+      "x-scheme-handler/unknown" = ["firefox.desktop"];
+      "text/html" = ["firefox.desktop"];
+      "application/xhtml+xml" = ["firefox.desktop"];
     };
   };
 }
