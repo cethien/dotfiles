@@ -59,6 +59,11 @@
       highlight.enable = true;
       autotagHtml = true;
       fold = true;
+      indent.enable = true;
+    };
+
+    notes = {
+      todo-comments.enable = true;
     };
 
     utility = {
@@ -68,21 +73,25 @@
 
     terminal.toggleterm = {
       enable = true;
+      mappings.open = "<C-q>";
       lazygit.enable = true;
     };
 
     telescope.enable = true;
-    telescope.setupOpts.defaults.file_ignore_patterns = [
-      "node_modules"
-      "%.git/"
-      "%.direnv/"
-      "dist/"
-      "build/"
-      "target/"
-      "result/"
-    ];
+    telescope = {
+      mappings.findFiles = "<leader><Space>";
+      setupOpts.defaults.file_ignore_patterns = [
+        "node_modules"
+        "%.git/"
+        "%.direnv/"
+        "dist/"
+        "build/"
+        "target/"
+        "result/"
+      ];
+    };
 
-    git.enable = true;
+    git.gitsigns.enable = true;
 
     session.nvim-session-manager = {
       enable = true;
@@ -106,22 +115,24 @@
 
       borders.enable = true;
     };
+    tabline.nvimBufferline = {
+      enable = true;
+      setupOpts.options = {
+        indicator.style = "none";
+        numbers = "none";
+      };
+      mappings = {
+        closeCurrent = "<leader>bx";
+        cycleNext = "<Tab>";
+        cyclePrevious = "<S-Tab>";
+        moveNext = "<leader><Tab>";
+        movePrevious = "<leader><S-Tab>";
+      };
+    };
     statusline.lualine.enable = true;
-    tabline.nvimBufferline.enable = true;
     visuals.nvim-web-devicons.enable = true;
 
     keymaps = [
-      {
-        mode = "n";
-        key = "<leader>qq";
-        action = "<cmd>quit<CR>";
-      }
-      {
-        mode = "n";
-        key = "<leader>qa";
-        action = "<cmd>quitall<CR>";
-      }
-
       {
         mode = "t";
         key = "<C-n>";
@@ -163,58 +174,8 @@
 
       {
         mode = "n";
-        key = "<leader>sv";
-        action = "<cmd>source $MYVIMRC<CR>";
-      }
-
-      {
-        mode = "n";
-        key = "<leader>w";
-        action = "<cmd>write<CR>";
-      }
-
-      {
-        mode = "n";
         key = "<leader>e";
         action = "<cmd>Oil<CR>";
-      }
-
-      {
-        mode = "n";
-        key = "<leader>t";
-        action = "<cmd>ToggleTerm<CR>";
-      }
-
-      {
-        mode = "n";
-        key = "<leader><Space>";
-        action = "<cmd>Telescope find_files<cr>";
-      }
-      {
-        mode = "n";
-        key = "<leader>fb";
-        action = "<cmd>Telescope buffers<cr>";
-      }
-      {
-        mode = "n";
-        key = "<leader>fc";
-        action = "<cmd>Telescope commands<CR>";
-      }
-      {
-        mode = "n";
-        key = "<leader>fg";
-        action = "<cmd>Telescope live_grep<CR>";
-      }
-
-      {
-        mode = "n";
-        key = "<Tab>";
-        action = "<cmd>BufferLineCycleNext<cr>";
-      }
-      {
-        mode = "n";
-        key = "<S-Tab>";
-        action = "<cmd>BufferLineCyclePrev<cr>";
       }
     ];
 
@@ -223,6 +184,11 @@
       name = "tokyonight";
       style = "night";
       transparent = true;
+    };
+
+    options = {
+      tabstop = 2;
+      shiftwidth = 0;
     };
 
     globals.mapleader = " ";
