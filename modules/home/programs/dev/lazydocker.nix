@@ -1,15 +1,17 @@
-{ lib, config, pkgs, ... }:
-let
+{
+  lib,
+  config,
+  ...
+}: let
   inherit (lib) mkEnableOption mkIf;
   cfg = config.deeznuts.programs.lazydocker;
-in
-{
+in {
   options.deeznuts.programs.lazydocker = {
-    enable = mkEnableOption "Enable lazydocker";
+    enable = mkEnableOption "lazydocker";
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [ lazydocker ];
-    home.shellAliases.ldocker = "lazydocker";
+    programs.lazydocker.enable = true;
+    home.shellAliases.lzd = "lazydocker";
   };
 }
