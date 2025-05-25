@@ -16,28 +16,8 @@ in {
   };
 
   config = mkIf cfg.enable {
-    programs.bash.initExtra = ''
-      tmux_sesh() {
-        local s
-        if [ -n "$1" ] && [[ "$1" != -* ]]; then
-        	s=$(echo "$1" | tr -c 'a-zA-Z0-9_' '_')
-        	shift
-        else
-        	s=$(basename "$PWD" | tr -c 'a-zA-Z0-9_' '_')
-        fi
-        tmux new-session -A -s "$s" "$@"
-      }
-    '';
-
-    home.shellAliases = {
-      tm = "tmux_sesh";
-      tmls = "tmux ls";
-      tma = "tmux attach -t";
-      tmk = "tmux kill-session -t";
-    };
-
-    programs.tmux.enable = true;
     programs.tmux = {
+      enable = true;
       clock24 = true;
       baseIndex = 1;
       terminal = "screen-256color";
@@ -59,6 +39,37 @@ in {
         # don't rename windows automatically
         set-option -g allow-rename off
       '';
+
+      plugins = with pkgs.tmuxPlugins; [
+        sensible
+        yank
+        {
+          plugin = resurrect;
+          extraConfig = ''
+            set -g @resurrect-stategy-nvim 'session'
+          '';
+        }
+        {
+          plugin = continuum;
+          extraConfig = ''
+            set -g @continuum-restore 'on'
+            set -g @continuum-save-interval '10' # minutes
+          '';
+        }
+        prefix-highlight
+        {
+          plugin = dracula;
+          extraConfig = ''
+            set -g @dracula-plugins "ram-usage cpu-usage"
+            set -g @dracula-show-flags true
+            set -g @dracula-show-left-icon "#h"
+            set -g @dracula-show-ssh-only-when-connected true
+            set -g @dracula-show-left-sep ""
+            set -g @dracula-show-right-sep ""
+            set -g @dracula-transparent-powerline-bg true
+          '';
+        }
+      ];
 
       keybindings = [
         {
@@ -126,37 +137,30 @@ in {
           action = "copy-mode -u";
         }
       ];
+    };
 
-      plugins = with pkgs.tmuxPlugins; [
-        sensible
-        yank
-        {
-          plugin = resurrect;
-          extraConfig = ''
-            set -g @resurrect-stategy-nvim 'session'
-          '';
-        }
-        {
-          plugin = continuum;
-          extraConfig = ''
-            set -g @continuum-restore 'on'
-            set -g @continuum-save-interval '60' # minutes
-          '';
-        }
-        prefix-highlight
-        {
-          plugin = dracula;
-          extraConfig = ''
-            set -g @dracula-plugins "ram-usage cpu-usage"
-            set -g @dracula-show-flags true
-            set -g @dracula-show-left-icon "#h"
-            set -g @dracula-show-ssh-only-when-connected true
-            set -g @dracula-show-left-sep ""
-            set -g @dracula-show-right-sep ""
-            set -g @dracula-transparent-powerline-bg true
-          '';
-        }
-      ];
+    programs.bash.initExtra = ''
+      tmux_sesh() {
+        local s
+        if [ -n "$1" ] && [[ "$1" != -* ]]; then
+        	s=$(echo "$1" | tr -c 'a-zA-Z0-9_' '_')
+        	shift
+        else
+        	s=$(basename "$PWD" | tr -c 'a-zA-Z0-9_' '_')
+        fi
+        tmux new-session -A -s "$s" "$@"
+      }
+    '';
+
+    home.shellAliases = {
+      tm = "tmux_sesh";
+      tmls = "tmux ls";
+      tma = "tmux attach -t";
+      tmk = "tmux kill-session -t";
+    };
+
+    wayland.windowManager.hyprland.settings = {
+      exec-once = ["tmux start-server"];
     };
   };
 }
