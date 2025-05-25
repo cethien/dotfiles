@@ -1,10 +1,14 @@
-{ lib, config, inputs, pkgs, ... }:
-let
+{
+  lib,
+  config,
+  inputs,
+  pkgs,
+  ...
+}: let
   inherit (lib) mkEnableOption mkOption types mkIf;
   cfg = config.deeznuts.programs.spotify;
   enabled = cfg.enable;
-in
-{
+in {
   imports = [
     inputs.spicetify-nix.homeManagerModules.default
   ];
@@ -23,15 +27,18 @@ in
     wayland.windowManager.hyprland.settings = {
       windowrulev2 = [
         "workspace ${toString cfg.hyprland.workspace}, class:^(Spotify)$"
+        "workspace ${toString cfg.hyprland.workspace}, class:^(cava)$"
       ];
-      exec-once = mkIf cfg.hyprland.autostart.enable [ "spotify_player -d" ];
+      exec-once = mkIf cfg.hyprland.autostart.enable ["spotify_player -d"];
       bind = [
-        "SUPER SHIFT, M, exec, $terminal --class Spotify -e spotify_player"
+        # "SUPER SHIFT, M, exec, $terminal --class Spotify -e spotify_player"
+        "SUPER SHIFT, M, exec, hypr_spot-cava"
       ];
     };
 
     home.packages = with pkgs; [
       spotify
+      (pkgs.writeShellScriptBin "hypr_spot-cava" (builtins.readFile ./hyprland_spot-cava.sh))
     ];
 
     home.shellAliases.spot = "spotify_player";
@@ -47,6 +54,27 @@ in
           audio_cache = true;
           normalization = true;
         };
+      };
+    };
+
+    programs.cava.enable = true;
+    programs.cava.settings = {
+      general = {
+        framerate = 120;
+        sensitivity = 33;
+      };
+      smoothing = {
+        noise_reduction = 66;
+        monstercat = 1;
+        # waves = 1;
+      };
+      output = {
+        reverse = 1;
+      };
+      color = {
+        # background = "#000000";
+        # foregrund = "#61AFEF";
+        theme = "tricolor";
       };
     };
   };

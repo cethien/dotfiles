@@ -1,9 +1,12 @@
-{ lib, config, ... }:
-let
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}: let
   inherit (lib) mkEnableOption mkOption types mkIf;
   cfg = config.deeznuts.programs.bottom;
-in
-{
+in {
   options.deeznuts.programs.bottom = {
     enable = mkEnableOption "bottom (cli monitoring tool)";
     hyprland.workspace = mkOption {
@@ -11,13 +14,17 @@ in
       default = 6;
       description = "default hyprland workspace";
     };
-
   };
 
   config = mkIf cfg.enable {
+    home.packages = [
+      (pkgs.writeShellScriptBin "hypr_btm" (builtins.readFile ./hyprland_btm.sh))
+    ];
+
     wayland.windowManager.hyprland.settings = {
       bind = [
-        "SUPER SHIFT, p, exec, $terminal --class btm -e btm"
+        # "SUPER SHIFT, p, exec, $terminal --class btm -e btm"
+        "SUPER SHIFT, p, exec, hypr_btm"
       ];
 
       windowrulev2 = [
@@ -47,18 +54,24 @@ in
           # Row 1: Processes and CPU
           {
             child = [
-              { type = "proc"; }
+              {type = "proc";}
             ];
           }
 
           # Row 2: Graphs
           {
             child = [
-              { type = "cpu"; }
+              {type = "cpu";}
               {
                 child = [
-                  { type = "mem"; default_mode = "table"; }
-                  { type = "net"; default_mode = "table"; }
+                  {
+                    type = "mem";
+                    default_mode = "table";
+                  }
+                  {
+                    type = "net";
+                    default_mode = "table";
+                  }
                 ];
               }
             ];
@@ -67,18 +80,12 @@ in
           # Row 3: Disks and Temp
           {
             child = [
-              { type = "disk"; }
-              { type = "temperature"; }
+              {type = "disk";}
+              {type = "temperature";}
             ];
           }
         ];
-
       };
     };
-
-
-
-
   };
 }
-
