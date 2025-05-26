@@ -37,6 +37,7 @@ in {
       extraConfig = {
         show-icons = true;
       };
+      cycle = false;
     };
 
     home.file.".config/rofi/grid.rasi".source = ./grid.rasi;
@@ -44,6 +45,7 @@ in {
     wayland.windowManager.hyprland.settings = {
       bind = [
         "SUPER, Space, exec, rofi -show drun"
+        "SUPER, r, exec, rofi -show run"
         "SUPER, comma, exec, rofi -show calc -modi calc -no-show-match -no-sort -no-bold -no-history"
         ''
           SUPER, PERIOD, exec, rofimoji --hidden-description --selector-args="-theme ~/.config/rofi/grid.rasi -kb-row-left Left -kb-row-right Right -kb-move-char-back Control+b -kb-move-char-forward Control+f"
