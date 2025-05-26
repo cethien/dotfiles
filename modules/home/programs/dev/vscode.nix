@@ -1,10 +1,13 @@
-{ lib, config, pkgs, ... }:
-let
-  inherit (lib) mkEnableOption mkOption types mkIf;
-  cfg = config.deeznuts.programs.vscode;
-in
 {
-  options.deeznuts.programs.vscode = {
+  lib,
+  config,
+  pkgs,
+  ...
+}: let
+  inherit (lib) mkEnableOption mkIf;
+  cfg = config.deeznuts.programs.dev.vscode;
+in {
+  options.deeznuts.programs.dev.vscode = {
     enable = mkEnableOption "vscode";
   };
 
@@ -15,7 +18,7 @@ in
       ];
     };
 
-    home.packages = [ pkgs.nerd-fonts.meslo-lg ];
+    home.packages = [pkgs.nerd-fonts.meslo-lg];
     programs.vscode.enable = true;
   };
 }

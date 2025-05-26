@@ -4,11 +4,10 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkEnableOption mkOption types mkIf;
-  cfg = config.deeznuts.programs.bottom;
+  inherit (lib) mkOption types mkIf;
+  cfg = config.deeznuts.programs.qol.bottom;
 in {
-  options.deeznuts.programs.bottom = {
-    enable = mkEnableOption "bottom (cli monitoring tool)";
+  options.deeznuts.programs.qol.bottom = {
     hyprland.workspace = mkOption {
       type = types.int;
       default = 6;
@@ -16,7 +15,7 @@ in {
     };
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf config.programs.bottom.enable {
     home.packages = [
       (pkgs.writeShellScriptBin "hypr_btm" (builtins.readFile ./hyprland_btm.sh))
     ];
@@ -38,8 +37,6 @@ in {
     };
 
     programs.bottom = {
-      enable = true;
-
       settings = {
         flags = {
           # basic = true;

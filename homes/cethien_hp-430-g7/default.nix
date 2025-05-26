@@ -16,9 +16,9 @@
         ];
 
         workspaces = [
-          "1, monitor:DP-1, persistent:true" # general
+          "1, monitor:DP-1, persistent:true" # browser
           "2, monitor:DP-1, persistent:true" # general
-          "3, monitor:DP-1, persistent:true" # browser
+          "3, monitor:DP-1, persistent:true" # general
 
           "4, monitor:eDP-1, persistent:true" # youtube
           "5, monitor:eDP-1, persistent:true" # spotify
@@ -27,17 +27,16 @@
         ];
 
         defaultWorkspaces = {
-          browser = 3;
-          gaming = 1;
+          browser = 1;
+          gaming = 3;
         };
       };
 
-      cli.enable = true;
-      basic.enable = true;
+      dev.chromium.enable = true;
+
+      desktop.enable = true;
       zen-browser.hyprland.autostart.enable = true;
       spotify.hyprland.autostart.enable = true;
-
-      chromium.enable = true;
 
       retroarch.enable = true;
       pokemmo.enable = true;

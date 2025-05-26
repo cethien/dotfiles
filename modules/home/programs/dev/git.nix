@@ -1,12 +1,13 @@
-{ lib, config, ... }:
-let
-  inherit (lib) mkEnableOption mkOption mkIf;
-  inherit (lib.types) str;
-  cfg = config.deeznuts.programs.git;
-in
 {
-  options.deeznuts.programs.git = {
-    enable = mkEnableOption "Enable git";
+  lib,
+  config,
+  ...
+}: let
+  inherit (lib) mkOption mkIf;
+  inherit (lib.types) str;
+  cfg = config.deeznuts.programs.dev.git;
+in {
+  options.deeznuts.programs.dev.git = {
     userName = mkOption {
       type = str;
       default = "cethien";
@@ -19,14 +20,10 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf config.programs.git.enable {
     programs.git = {
-      enable = true;
       inherit (cfg) userName userEmail;
-
-      aliases = {
-        ignore = "!gi() { curl -fsSL https://www.toptal.com/developers/gitignore/api/$@ ;}; gi";
-      };
+      aliases.ignore = "!gi() { curl -fsSL https://www.toptal.com/developers/gitignore/api/$@ ;}; gi";
 
       extraConfig = {
         core = {

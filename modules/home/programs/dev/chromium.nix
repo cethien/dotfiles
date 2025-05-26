@@ -5,9 +5,9 @@
   ...
 }: let
   inherit (lib) mkEnableOption mkIf;
-  cfg = config.deeznuts.programs.chromium;
+  cfg = config.deeznuts.programs.dev.chromium;
 in {
-  options.deeznuts.programs.chromium = {
+  options.deeznuts.programs.dev.chromium = {
     enable = mkEnableOption "chromium browser (for development)";
   };
 

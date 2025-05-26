@@ -4,20 +4,15 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkIf mkEnableOption;
-  cfg = config.deeznuts.programs.tmux;
+  inherit (lib) mkIf;
+  cfg = config.programs.tmux;
 in {
   imports = [
     ./option-keymaps.nix
   ];
 
-  options.deeznuts.programs.tmux = {
-    enable = mkEnableOption "tmux";
-  };
-
   config = mkIf cfg.enable {
     programs.tmux = {
-      enable = true;
       clock24 = true;
       baseIndex = 1;
       terminal = "screen-256color";

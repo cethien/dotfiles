@@ -37,7 +37,7 @@ in {
       };
       gaming = mkOption {
         type = types.int;
-        default = 7;
+        default = 1;
         description = "default gaming workspace";
       };
     };
