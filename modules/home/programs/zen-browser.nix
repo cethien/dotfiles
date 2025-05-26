@@ -31,6 +31,7 @@ in {
       ];
       windowrulev2 = [
         "workspace ${toString cfg.hyprland.workspace}, class:^(zen-beta)$"
+        "workspace ${toString (cfg.hyprland.workspace + 1)}, title:^(Picture-in-Picture)$"
       ];
     };
 

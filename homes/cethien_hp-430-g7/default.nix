@@ -1,5 +1,5 @@
 {
-  imports = [ ../../modules/home ];
+  imports = [../../modules/home];
 
   deeznuts = {
     nixpkgs.allowUnfree = true;
@@ -16,19 +16,19 @@
         ];
 
         workspaces = [
-          "1, monitor:eDP-1, persistent:true" # general
-          "2, monitor:eDP-1, persistent:true" # general
-          "3, monitor:eDP-1, persistent:true" # browser
-          "4, monitor:eDP-1, persistent:true" # discord
-          "5, monitor:eDP-1, persistent:true" # spotify
-          "6, monitor:eDP-1, persistent:true" # monitoring
+          "1, monitor:DP-1, persistent:true" # general
+          "2, monitor:DP-1, persistent:true" # general
+          "3, monitor:DP-1, persistent:true" # browser
 
-          "7, monitor:DP-1, persistent:true" # gaming
+          "4, monitor:eDP-1, persistent:true" # youtube
+          "5, monitor:eDP-1, persistent:true" # spotify
+          "6, monitor:eDP-1, persistent:true" # btm
+          "7, monitor:eDP-1, persistent:true" # discord
         ];
 
         defaultWorkspaces = {
           browser = 3;
-          gaming = 7;
+          gaming = 1;
         };
       };
 

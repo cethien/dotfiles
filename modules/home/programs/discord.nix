@@ -1,17 +1,20 @@
-{ lib, config, pkgs, ... }:
-let
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}: let
   inherit (lib) mkEnableOption mkIf types mkOption;
   cfg = config.deeznuts.programs.discord;
   enabled = cfg.enable;
-in
-{
+in {
   options.deeznuts.programs.discord = {
     enable = mkEnableOption "discord";
     hyprland = {
       autostart.enable = mkEnableOption "enable autostart";
       workspace = mkOption {
         type = types.int;
-        default = 4;
+        default = 7;
         description = "default workspace";
       };
     };

@@ -1,15 +1,17 @@
-{ config, lib, ... }:
-let
+{
+  config,
+  lib,
+  ...
+}: let
   inherit (lib) mkIf mkOption types;
   cfg = config.deeznuts.programs.hyprland;
   enabled = config.deeznuts.programs.hyprland.enable;
-in
-{
+in {
   options.deeznuts.programs.hyprland = {
     monitors = mkOption {
       type = types.listOf types.str;
       default = [
-        "eDP-1, 1920x1080@60, 0x0, 1.25"
+        "eDP-1, 1920x1080@60, 0x0, 1.1"
       ];
       description = "Monitors to use";
     };
