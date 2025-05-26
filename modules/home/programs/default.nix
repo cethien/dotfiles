@@ -12,8 +12,7 @@ in {
   };
 
   imports = [
-    ./browser/firefox.nix
-    ./browser/zen-browser.nix
+    ./browser
     ./dev
     ./discord.nix
     ./drawio.nix
@@ -59,9 +58,10 @@ in {
     pavucontrol.enable = mkDefault cfg.desktop.enable;
     easyeffects.enable = mkDefault cfg.desktop.enable;
 
-    zen-browser.enable = mkDefault cfg.desktop.enable;
+    browser.zen-browser.enable = mkDefault cfg.desktop.enable;
     discord.enable = mkDefault cfg.desktop.enable;
     spotify.enable = mkDefault cfg.desktop.enable;
+
     keepassxc.enable = mkDefault cfg.desktop.enable;
 
     pinta.enable = mkDefault cfg.desktop.enable;

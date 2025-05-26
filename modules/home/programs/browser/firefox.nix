@@ -5,10 +5,10 @@
   ...
 }: let
   inherit (lib) mkEnableOption mkOption types mkIf;
-  cfg = config.deeznuts.programs.firefox;
+  cfg = config.deeznuts.programs.browser.firefox;
   name = "${config.home.username}";
 in {
-  options.deeznuts.programs.firefox = {
+  options.deeznuts.programs.browser.firefox = {
     enable = mkEnableOption "firefox";
     hyprland = {
       workspace = mkOption {

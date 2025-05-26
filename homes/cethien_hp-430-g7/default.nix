@@ -35,7 +35,10 @@
       dev.chromium.enable = true;
 
       desktop.enable = true;
-      zen-browser.hyprland.autostart.enable = true;
+      browser = {
+        zen-browser.hyprland.autostart.enable = true;
+        picture-in-picture.hyprland.workspace = 4;
+      };
       spotify.hyprland.autostart.enable = true;
 
       retroarch.enable = true;

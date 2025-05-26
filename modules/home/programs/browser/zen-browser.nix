@@ -5,10 +5,10 @@
   ...
 }: let
   inherit (lib) mkEnableOption mkOption types mkIf;
-  cfg = config.deeznuts.programs.zen-browser;
+  cfg = config.deeznuts.programs.browser.zen-browser;
   enabled = cfg.enable;
 in {
-  options.deeznuts.programs.zen-browser = {
+  options.deeznuts.programs.browser.zen-browser = {
     enable = mkEnableOption "zen browser";
     hyprland = {
       workspace = mkOption {
@@ -31,7 +31,6 @@ in {
       ];
       windowrulev2 = [
         "workspace ${toString cfg.hyprland.workspace}, class:^(zen-beta)$"
-        "workspace ${toString (cfg.hyprland.workspace + 1)}, title:^(Picture-in-Picture)$"
       ];
     };
 
