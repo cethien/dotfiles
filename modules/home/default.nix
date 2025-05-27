@@ -2,6 +2,7 @@
   imports = [
     ../../shared/nixpkgs
     ./programs
+    ./assets
   ];
 
   xdg.mimeApps.enable = true;
