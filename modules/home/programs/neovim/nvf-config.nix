@@ -62,10 +62,13 @@
       enableSharedCmpSources = true;
 
       blink-cmp.enable = true;
+      blink-cmp.setupOpts.cmdline.keymap.preset = "default";
       blink-cmp.sourcePlugins = {
         spell.enable = true;
+        ripgrep.enable = true;
         emoji.enable = true;
       };
+      blink-cmp.friendly-snippets.enable = true;
     };
 
     mini = {
@@ -123,7 +126,11 @@
       ];
     };
 
-    git.gitsigns.enable = true;
+    git = {
+      gitsigns.enable = true;
+      gitlinker-nvim.enable = true;
+      gitlinker-nvim.setupOpts.mappings = "<leader>gy";
+    };
 
     session.nvim-session-manager = {
       enable = true;
