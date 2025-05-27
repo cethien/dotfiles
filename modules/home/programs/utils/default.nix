@@ -19,8 +19,10 @@ in {
       # unrar
       p7zip
 
-      poppler_utils
       ffmpeg
+      (writeShellScriptBin "ffmpeg-convert" (builtins.readFile ./ffmpeg-convert.sh))
+
+      poppler_utils
       bc
       lynx
 

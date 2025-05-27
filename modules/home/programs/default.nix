@@ -15,10 +15,10 @@ in {
   imports = [
     ./qol
     ./dev
-    ./fun.nix
+    ./fun
     ./essentials
     ./utils-net.nix
-    ./utils.nix
+    ./utils
     ./neovim
     ./fastfetch
 
