@@ -12,7 +12,19 @@ in {
   };
 
   config = mkIf cfg.enable {
+    wayland.windowManager.hyprland.settings = {
+      windowrulev2 = [
+        "fullscreen, class:^(cmatrix)$"
+      ];
+      bind = [
+        "SUPER SHIFT, Z, exec, hyprland-cmatrix"
+      ];
+    };
+
     home.packages = with pkgs; [
+      cmatrix
+      (writeShellScriptBin "hyprland-cmatrix" (builtins.readFile ./hyprland-cmatrix.sh))
+
       fortune
       asciiquarium-transparent
       hackertyper
@@ -24,7 +36,7 @@ in {
 
     home.shellAliases = {
       lolcat = "dotacat";
-      matrix = "${pkgs.cmatrix}/bin/cmatrix";
+      matrix = "cmatrix";
       pipes = "${pkgs.pipes-rs}/bin/pipes-rs";
       sl = "${pkgs.sl}/bin/sl | ${pkgs.lolcat}/bin/lolcat && clear";
     };
