@@ -21,6 +21,7 @@ in {
     ./utils
     ./neovim
     ./fastfetch
+    ./syncthing.nix
 
     ./hyprland
 
