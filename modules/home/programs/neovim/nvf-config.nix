@@ -1,4 +1,26 @@
-{
+{pkgs, ...}: {
+  programs.nvf.settings.vim.extraPlugins = {
+    octo = {
+      package = pkgs.vimPlugins.octo-nvim;
+      setup = ''
+        require("octo").setup({})
+      '';
+    };
+    codesnap = {
+      package = pkgs.vimPlugins.codesnap-nvim;
+      setup = ''
+        require("codesnap").setup({
+          save_path = "~/Pictures/CodeSnap",
+          has_breadcrumbs = true,
+          show_workspace = true,
+          has_line_number = true,
+          bg_theme = "grape",
+          watermark = "",
+        })
+      '';
+    };
+  };
+
   programs.nvf.settings.vim = {
     languages = {
       clang.enable = true;
@@ -67,8 +89,18 @@
     };
 
     utility = {
-      oil-nvim.enable = true;
       yanky-nvim.enable = true;
+
+      images.image-nvim.enable = true;
+      images.image-nvim.setupOpts.backend = "kitty";
+
+      oil-nvim.enable = true;
+      yazi-nvim.enable = true;
+      yazi-nvim.setupOpts.open_for_directories = true;
+
+      motion = {
+        flash-nvim.enable = true;
+      };
     };
 
     terminal.toggleterm = {
@@ -122,7 +154,7 @@
         numbers = "none";
       };
       mappings = {
-        closeCurrent = "<leader>bx";
+        closeCurrent = "<leader>x";
         cycleNext = "<Tab>";
         cyclePrevious = "<S-Tab>";
         moveNext = "<leader><Tab>";
@@ -133,6 +165,12 @@
     visuals.nvim-web-devicons.enable = true;
 
     keymaps = [
+      {
+        mode = "n";
+        key = "<leader>e";
+        action = "<cmd>Oil<CR>";
+      }
+
       {
         mode = "t";
         key = "<C-n>";
@@ -174,8 +212,8 @@
 
       {
         mode = "n";
-        key = "<leader>e";
-        action = "<cmd>Oil<CR>";
+        key = "<leader>w";
+        action = "<cmd>w<CR>";
       }
     ];
 
