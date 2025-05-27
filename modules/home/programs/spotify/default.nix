@@ -28,6 +28,7 @@ in {
       windowrulev2 = [
         "workspace ${toString cfg.hyprland.workspace}, class:^(Spotify)$"
         "workspace ${toString cfg.hyprland.workspace}, class:^(cava)$"
+        "pseudo, class:^(cava)$"
       ];
       exec-once = mkIf cfg.hyprland.autostart.enable ["spotify_player -d"];
       bind = [
