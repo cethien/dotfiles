@@ -1,16 +1,14 @@
-{ pkgs, ... }:
-let
+{pkgs, ...}: let
   user = "cethien";
   formattingLocale = "de_DE.UTF-8";
-in
-{
+in {
   imports = [
     ../../modules/nixos
     ./hardware.nix
   ];
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_zen;
+    kernelPackages = pkgs.linuxPackages_latest;
 
     loader.efi.canTouchEfiVariables = true;
     loader.grub = {
@@ -68,7 +66,7 @@ in
       docker = {
         enable = true;
         liveRestore = true;
-        users = [ user ];
+        users = [user];
       };
     };
   };
