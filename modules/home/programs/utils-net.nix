@@ -33,5 +33,9 @@ in {
       tshark
       termshark
     ];
+
+    home.shellAliases = {
+      speedtest = "${pkgs.speedtest-go}/bin/speedtest-go";
+    };
   };
 }
