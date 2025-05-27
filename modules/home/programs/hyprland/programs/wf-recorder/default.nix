@@ -1,10 +1,13 @@
-{ lib, config, pkgs, ... }:
-let
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}: let
   inherit (lib) mkIf mkEnableOption;
   cfg = config.deeznuts.programs.wf-recorder;
   enabled = cfg.enable;
-in
-{
+in {
   options.deeznuts.programs.wf-recorder = {
     enable = mkEnableOption "wf-recorder";
   };
@@ -12,14 +15,13 @@ in
   config = mkIf enabled {
     home.packages = with pkgs; [
       wf-recorder
-      (writeShellScriptBin "toggle-screenrecord" (builtins.readFile ./toggle-screenrecord.sh))
+      (writeShellScriptBin "wf-toggle-record" (builtins.readFile ./wf-toggle-record.sh))
     ];
 
     wayland.windowManager.hyprland.settings = {
       bind = [
-        "SUPER SHIFT, R, exec, toggle-screenrecord"
+        "SUPER SHIFT, R, exec, wf-toggle-record"
       ];
     };
-
   };
 }
