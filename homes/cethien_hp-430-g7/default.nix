@@ -18,9 +18,9 @@
         workspaces = [
           "1, monitor:DP-1, persistent:true" # browser
           "2, monitor:DP-1, persistent:true" # general
-          "3, monitor:DP-1" # general
-          "4, monitor:DP-1" # general
-          "5, monitor:DP-1" # general
+          "3, monitor:DP-1, persistent:true" # general
+          "4, monitor:DP-1, persistent:true" # general
+          "5, monitor:DP-1, persistent:true" # general
 
           "6, monitor:eDP-1, persistent:true" # video
           "7, monitor:eDP-1, persistent:true" # spotify
