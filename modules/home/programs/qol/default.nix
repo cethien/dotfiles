@@ -10,6 +10,7 @@ in {
   imports = [
     ./bottom
     ./bash-options.nix
+    ./yazi.nix
   ];
 
   options.deeznuts.programs.qol = {
@@ -84,7 +85,7 @@ in {
 
     wayland.windowManager.hyprland.settings = {
       bind = [
-        "SUPER SHIFT, e, exec, $terminal --class files -e yazi"
+        "SUPER, e, exec, $terminal --class files -e yazi"
       ];
     };
   };
