@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 adjust_windows() {
-  for i in $(seq 1 20); do
+  for ((i = 1; i <= 20; i++)); do
     if hyprctl clients | grep -q 'class:.*Spotify' &&
       hyprctl clients | grep -q 'class:.*cava'; then
 
