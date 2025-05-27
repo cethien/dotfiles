@@ -10,7 +10,7 @@ in {
   options.deeznuts.programs.qol.bottom = {
     hyprland.workspace = mkOption {
       type = types.int;
-      default = 6;
+      default = 8;
       description = "default hyprland workspace";
     };
   };

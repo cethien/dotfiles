@@ -1,14 +1,17 @@
-{ lib, config, pkgs, ... }:
-let
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}: let
   inherit (lib) mkEnableOption mkOption types mkIf;
   cfg = config.deeznuts.programs.obs-studio;
-in
-{
+in {
   options.deeznuts.programs.obs-studio = {
     enable = mkEnableOption "OBS Studio";
     hyprland.workspace = mkOption {
       type = types.int;
-      default = 8;
+      default = 10;
       description = "default hyprland workspace";
     };
   };

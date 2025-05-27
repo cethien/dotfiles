@@ -9,7 +9,7 @@ in {
   options.deeznuts.programs.browser.picture-in-picture = {
     hyprland.workspace = mkOption {
       type = types.int;
-      default = config.deeznuts.programs.hyprland.defaultWorkspaces.browser + 1;
+      default = 6;
       description = "default workspace";
     };
   };

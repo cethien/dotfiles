@@ -15,12 +15,12 @@ in {
 
   options.deeznuts.programs.spotify = {
     enable = mkEnableOption "spotify";
-    hyprland.autostart.enable = mkEnableOption "autostart spotify daemon";
     hyprland.workspace = mkOption {
       type = types.int;
-      default = 5;
+      default = 7;
       description = "default hyprland workspace";
     };
+    hyprland.autostart.enable = mkEnableOption "autostart spotify daemon";
   };
 
   config = mkIf enabled {
