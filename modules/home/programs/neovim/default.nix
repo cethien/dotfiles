@@ -17,6 +17,7 @@ in {
   };
 
   config = mkIf cfg.enable {
+    home.sessionVariables.EDITOR = "nvim";
     home.shellAliases.v = "nvim";
     programs.nvf.enable = true;
   };
