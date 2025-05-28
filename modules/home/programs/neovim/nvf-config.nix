@@ -224,6 +224,8 @@
       }
     ];
 
+    presence.neocord.enable = true;
+
     theme = {
       enable = true;
       name = "tokyonight";
