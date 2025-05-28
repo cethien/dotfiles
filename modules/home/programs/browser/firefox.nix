@@ -73,9 +73,9 @@ in {
         ];
 
         search = {
-          default = "Google";
-          privateDefault = "DuckDuckGo";
-          order = ["Google" "DuckDuckGo"];
+          default = "google";
+          privateDefault = "ddg";
+          order = ["google" "ddg"];
         };
 
         settings = {
@@ -85,6 +85,7 @@ in {
           "browser.laterrun.enabled" = true;
           "browser.warnOnQuitShortcut" = false;
           "browser.tabs.loadBookmarksInTabs" = true;
+          "browser.tabs.warnOnClose" = true;
           "toolkit.telemetry.reportingpolicy.firstRun" = false;
           "trailhead.firstrun.didSeeAboutWelcome" = true;
           "signon.management.page.breach-alerts.enabled" = false;
@@ -98,27 +99,33 @@ in {
           "browser.aboutConfig.showWarning" = false;
           "browser.ssb.enabled" = true;
           "browser.ctrlTab.sortByRecentlyUsed" = true;
+          "extensions.autoDisableScopes" = 0;
+          "media.videocontrols.picture-in-picture.video-toggle.has-used" = true;
+          "signon.rememberSignons" = false;
+          "signon.autofillForms" = false;
+
           "browser.startup.page" = 3;
           "browser.shell.checkDefaultBrowser" = false;
           "extensions.pocket.enabled" = false;
           "browser.toolbarbuttons.introduced.pocket-button" = false;
           "browser.toolbars.bookmarks.visibility" = "never";
-
-          "media.videocontrols.picture-in-picture.video-toggle.has-used" = true;
-
+          "sidebar.mainTools" = "bookmarks,history";
+          "sidebar.new-sidebar.has-used" = true;
+          "sidebar.revamp" = true;
+          "sidebar.verticalTabs" = true;
           "widget.disable-workspace-management" = true;
-
-          "signon.rememberSignons" = false;
-          "signon.autofillForms" = false;
-
-          "extensions.autoDisableScopes" = 0;
-
-          # "browser.uiCustomization.horizontalTabstrip" = ''["firefox-view-button","tabbrowser-tabs","new-tab-button","alltabs-button"]'';
-
-          # "browser.uiCustomization.state" = ''{"placements":{"widget-overflow-fixed-list":[],"unified-extensions-area":["sponsorblocker_ajay_app-browser-action","_testpilot-containers-browser-action","_7a7a4a92-a2a0-41d1-9fd7-1e92480d612d_-browser-action","_762f9885-5a13-4abd-9c77-433dcd38b8fd_-browser-action","side-view_mozilla_org-browser-action"],"nav-bar":["customizableui-special-spring1","back-button","forward-button","stop-reload-button","urlbar-container","downloads-button","customizableui-special-spring2","unified-extensions-button","addon_darkreader_org-browser-action","ublock0_raymondhill_net-browser-action","_446900e4-71c2-419f-a6a7-df9c091e268b_-browser-action","keepassxc-browser_keepassxc_org-browser-action"],"toolbar-menubar":["menubar-items"],"TabsToolbar":[],"vertical-tabs":["tabbrowser-tabs"],"PersonalToolbar":["import-button","personal-bookmarks"]},"seen":["save-to-pocket-button","developer-button","_7a7a4a92-a2a0-41d1-9fd7-1e92480d612d_-browser-action","_446900e4-71c2-419f-a6a7-df9c091e268b_-browser-action","addon_darkreader_org-browser-action","_testpilot-containers-browser-action","keepassxc-browser_keepassxc_org-browser-action","_762f9885-5a13-4abd-9c77-433dcd38b8fd_-browser-action","side-view_mozilla_org-browser-action","sponsorblocker_ajay_app-browser-action","ublock0_raymondhill_net-browser-action"],"dirtyAreaCache":["nav-bar","vertical-tabs","PersonalToolbar","unified-extensions-area","toolbar-menubar","TabsToolbar"],"currentVersion":20,"newElementCount":6}'';
         };
       };
+
+      languagePacks = [
+        "en-US"
+        "en-GB"
+        "de"
+        "ru"
+      ];
     };
+
+    stylix.targets.firefox.profileNames = ["${config.home.username}"];
 
     wayland.windowManager.hyprland.settings = {
       exec-once = mkIf cfg.hyprland.autostart.enable [
@@ -127,16 +134,6 @@ in {
       windowrulev2 = [
         "workspace ${toString cfg.hyprland.workspace}, class:^(firefox)$"
       ];
-    };
-
-    xdg.mimeApps.defaultApplications = {
-      # Web / browser-related
-      "x-scheme-handler/http" = ["firefox.desktop"];
-      "x-scheme-handler/https" = ["firefox.desktop"];
-      "x-scheme-handler/about" = ["firefox.desktop"];
-      "x-scheme-handler/unknown" = ["firefox.desktop"];
-      "text/html" = ["firefox.desktop"];
-      "application/xhtml+xml" = ["firefox.desktop"];
     };
   };
 }
