@@ -13,11 +13,11 @@ in {
     sizes = {
       cursor = mkOption {
         type = types.int;
-        default = 18;
+        default = 24;
       };
       applications = mkOption {
         type = types.int;
-        default = 12;
+        default = 14;
       };
       terminal = mkOption {
         type = types.int;
@@ -29,7 +29,7 @@ in {
       };
       popups = mkOption {
         type = types.int;
-        default = 10;
+        default = 12;
       };
     };
   };

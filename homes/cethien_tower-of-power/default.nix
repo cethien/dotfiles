@@ -1,5 +1,5 @@
 {
-  imports = [ ../../modules/home ];
+  imports = [../../modules/home];
 
   deeznuts = {
     nixpkgs.allowUnfree = true;
@@ -19,7 +19,7 @@
       hyprland = {
         enable = true;
         monitors = [
-          "DP-1, 2560x1440@240, 0x0, 1"
+          "DP-1, 2560x1440@240, 0x0, 1.25"
           "HDMI-A-1, 1920x1080@100, 0x1440, 1"
         ];
 

@@ -1,17 +1,16 @@
-{ lib
-, config
-, inputs
-, pkgs
-, ...
-}:
-let
+{
+  lib,
+  config,
+  inputs,
+  pkgs,
+  ...
+}: let
   inherit (lib) mkIf mkEnableOption mkOption types;
   cfg = config.deeznuts.programs.hyprpanel;
   enabled = cfg.enable;
 
-  jsonFormat = pkgs.formats.json { };
-in
-{
+  jsonFormat = pkgs.formats.json {};
+in {
   imports = [
     inputs.hyprpanel.homeManagerModules.hyprpanel
   ];
@@ -34,13 +33,22 @@ in
         default = {
           "bar.layouts" = {
             "*" = {
-              left = [ "workspaces" "systray" ];
-              middle = [ "media" ];
-              right = [ "volume" ] ++
-                (if cfg.layout.bluetooth then [ "bluetooth" ] else [ ]) ++
-                [ "network" "notifications" ] ++
-                (if cfg.layout.battery then [ "battery" "hypridle" ] else [ ]) ++
-                [ "clock" ];
+              left = ["workspaces" "systray"];
+              middle = ["media"];
+              right =
+                ["volume"]
+                ++ (
+                  if cfg.layout.bluetooth
+                  then ["bluetooth"]
+                  else []
+                )
+                ++ ["network" "notifications"]
+                ++ (
+                  if cfg.layout.battery
+                  then ["battery" "hypridle"]
+                  else []
+                )
+                ++ ["clock"];
             };
           };
         };
@@ -59,7 +67,6 @@ in
       ];
     };
 
-
     programs.hyprpanel = {
       enable = true;
       overlay.enable = true;
@@ -67,11 +74,9 @@ in
       overwrite.enable = true;
 
       settings = {
-        theme.name = "one_dark";
         layout = cfg.layout.layout;
         scalingPriority = "hyprland";
         bar = {
-
           launcher.autoDetectIcon = true;
 
           bluetooth.label = false;
@@ -118,6 +123,8 @@ in
         };
 
         theme = {
+          name = "one_dark";
+
           bar = {
             transparent = true;
             outer_spacing = "0.425em";
@@ -131,7 +138,7 @@ in
 
           font = {
             name = "MesloLG Nerd Font";
-            size = "16px";
+            size = "18px";
           };
 
           osd = {

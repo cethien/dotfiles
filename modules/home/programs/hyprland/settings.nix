@@ -11,7 +11,7 @@ in {
     monitors = mkOption {
       type = types.listOf types.str;
       default = [
-        "eDP-1, 1920x1080@60, 0x0, 1.1"
+        "eDP-1, 1920x1080@60, 0x0, 1"
       ];
       description = "Monitors to use";
     };
@@ -111,10 +111,10 @@ in {
         "nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0" # Fix some dragging issues with XWayland
       ];
 
-      env = [
-        "XCURSOR_SIZE,24"
-        "HYPRCURSOR_SIZE,24"
-      ];
+      # env = [
+      #   "XCURSOR_SIZE,24"
+      #   "HYPRCURSOR_SIZE,24"
+      # ];
 
       misc = {
         force_default_wallpaper = 0;
