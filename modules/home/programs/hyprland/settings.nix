@@ -59,7 +59,11 @@ in {
         # "col.active_border" = "$mauve";
         # "col.inactive_border" = "$surface0";
 
-        layout = "dwindle";
+        layout = "master";
+      };
+
+      master = {
+        mfact = 0.6;
       };
 
       dwindle = {
