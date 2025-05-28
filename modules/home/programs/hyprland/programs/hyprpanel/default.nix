@@ -138,7 +138,7 @@ in {
 
           font = {
             name = "MesloLG Nerd Font";
-            size = "18px";
+            size = "0.9rem";
           };
 
           osd = {
