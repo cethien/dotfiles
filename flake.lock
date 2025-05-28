@@ -661,15 +661,15 @@
         "tinted-zed": "tinted-zed"
       },
       "locked": {
-        "lastModified": 1747952198,
-        "narHash": "sha256-GjxRPffuLQQx1G701fzgom+bKxCEJD9fbq44x4gl/n8=",
-        "owner": "danth",
+        "lastModified": 1748447709,
+        "narHash": "sha256-E6VJbT7bdDKEfmYi2XYh96b3EhDZp5G0aq3W108on50=",
+        "owner": "nix-community",
         "repo": "stylix",
-        "rev": "f99fe598a68831debbf096e289296c7c7178c21f",
+        "rev": "ba217a812810fd788c42d6dc68a0e0e93c6634e2",
         "type": "github"
       },
       "original": {
-        "owner": "danth",
+        "owner": "nix-community",
         "repo": "stylix",
         "type": "github"
       }
