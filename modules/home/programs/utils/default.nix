@@ -25,10 +25,10 @@ in {
       poppler_utils
       bc
       lynx
-
+      aria2
       parted
 
-      tldr
+      tealdeer
     ];
 
     programs.jq.enable = true;
