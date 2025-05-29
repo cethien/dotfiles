@@ -9,7 +9,6 @@ in {
   options.deeznuts.programs = {
     desktop.enable = mkEnableOption "Enable basic desktop programs";
     media-tools.enable = mkEnableOption "Enable programs for media creation";
-    gaming.enable = mkEnableOption "Enable gaming related programs";
   };
 
   imports = [
@@ -27,12 +26,6 @@ in {
 
     ./browser
     ./discord.nix
-    ./gaming/mangohud.nix
-    ./gaming/pokemmo.nix
-    ./gaming/prismlauncher.nix
-    ./gaming/r2modman.nix
-    ./gaming/retroarch.nix
-    ./gaming/steam.nix
     ./imv.nix
     ./spotify
     ./mpv.nix
@@ -48,6 +41,8 @@ in {
     ./obs-studio.nix
     ./pavucontrol.nix
     ./easyeffects.nix
+
+    ./gaming
   ];
 
   config.deeznuts.programs = {
@@ -65,24 +60,20 @@ in {
     browser = {
       firefox.enable = mkDefault cfg.desktop.enable;
       zen-browser.enable = mkDefault cfg.desktop.enable;
+      zen-browser.hyprland.autostart.enable = mkDefault cfg.desktop.enable;
 
       xmimeDefault = "zen-beta.desktop";
     };
     discord.enable = mkDefault cfg.desktop.enable;
     spotify.enable = mkDefault cfg.desktop.enable;
+    spotify.hyprland.autostart.enable = mkDefault cfg.desktop.enable;
     keepassxc.enable = mkDefault cfg.desktop.enable;
+    keepassxc.hyprland.autostart.enable = mkDefault cfg.desktop.enable;
 
     pinta.enable = mkDefault cfg.media-tools.enable;
     gimp.enable = mkDefault cfg.media-tools.enable;
     inkscape.enable = mkDefault cfg.media-tools.enable;
     drawio.enable = mkDefault cfg.media-tools.enable;
     ocenaudio.enable = mkDefault cfg.media-tools.enable;
-
-    mangohud.enable = mkDefault cfg.gaming.enable;
-    steam.enable = mkDefault cfg.gaming.enable;
-    r2modman.enable = mkDefault cfg.gaming.enable;
-    retroarch.enable = mkDefault cfg.gaming.enable;
-    prismlauncher.enable = mkDefault cfg.gaming.enable;
-    pokemmo.enable = mkDefault cfg.gaming.enable;
   };
 }

@@ -1,10 +1,13 @@
-{ lib, config, pkgs, ... }:
-let
-  inherit (lib) mkEnableOption mkOption types mkIf;
-  cfg = config.deeznuts.programs.steam;
-in
 {
-  options.deeznuts.programs.steam = {
+  lib,
+  config,
+  pkgs,
+  ...
+}: let
+  inherit (lib) mkEnableOption mkOption types mkIf;
+  cfg = config.deeznuts.programs.gaming.steam;
+in {
+  options.deeznuts.programs.gaming.steam = {
     enable = mkEnableOption "steam additions (steam is managed on OS level)";
 
     hyprland = {
@@ -28,10 +31,9 @@ in
       ];
     };
 
-    home.packages = with pkgs; [ protonup ];
+    home.packages = with pkgs; [protonup];
     home.sessionVariables = {
-      STEAM_EXTRA_COMPAT_TOOLS_PATH =
-        "~/.stream/root/compatibilitytools.d";
+      STEAM_EXTRA_COMPAT_TOOLS_PATH = "~/.stream/root/compatibilitytools.d";
     };
   };
 }

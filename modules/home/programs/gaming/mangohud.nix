@@ -1,11 +1,12 @@
-{ lib, config, ... }:
-let
-  inherit (lib) mkEnableOption mkIf;
-  cfg = config.deeznuts.programs.mangohud;
-in
-
 {
-  options.deeznuts.programs.mangohud = {
+  lib,
+  config,
+  ...
+}: let
+  inherit (lib) mkEnableOption mkIf;
+  cfg = config.deeznuts.programs.gaming.mangohud;
+in {
+  options.deeznuts.programs.gaming.mangohud = {
     enable = mkEnableOption "Enable mangohud";
   };
 

@@ -1,10 +1,13 @@
-{ lib, config, pkgs, ... }:
-let
-  inherit (lib) mkEnableOption mkOption types mkIf;
-  cfg = config.deeznuts.programs.retroarch;
-in
 {
-  options.deeznuts.programs.retroarch = {
+  lib,
+  config,
+  pkgs,
+  ...
+}: let
+  inherit (lib) mkEnableOption mkOption types mkIf;
+  cfg = config.deeznuts.programs.gaming.retroarch;
+in {
+  options.deeznuts.programs.gaming.retroarch = {
     enable = mkEnableOption "retroarch";
     hyprland.workspace = mkOption {
       type = types.int;
@@ -20,17 +23,16 @@ in
       ];
     };
 
-    home.packages =
-      let
-        retroarchWithCores = (pkgs.retroarch.withCores (cores: with cores; [
+    home.packages = let
+      retroarchWithCores = pkgs.retroarch.withCores (cores:
+        with cores; [
           mgba #GB / GBC / GBA
           dolphin #GC / Wii
           melonds #NDS
           citra #N3DS
-        ]));
-      in
-      [
-        retroarchWithCores
-      ];
+        ]);
+    in [
+      retroarchWithCores
+    ];
   };
 }

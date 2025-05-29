@@ -1,11 +1,13 @@
-{ lib, config, pkgs, ... }:
-let
-  inherit (lib) mkEnableOption mkIf mkOption types;
-  cfg = config.deeznuts.programs.pokemmo;
-  enabled = cfg.enable;
-in
 {
-  options.deeznuts.programs.pokemmo = {
+  lib,
+  config,
+  pkgs,
+  ...
+}: let
+  inherit (lib) mkEnableOption mkIf mkOption types;
+  cfg = config.deeznuts.programs.gaming.pokemmo;
+in {
+  options.deeznuts.programs.gaming.pokemmo = {
     enable = mkEnableOption "pokemmo";
     hyprland.workspace = mkOption {
       type = types.int;
@@ -14,7 +16,7 @@ in
     };
   };
 
-  config = mkIf enabled {
+  config = mkIf cfg.enable {
     home.packages = with pkgs; [
       pokemmo-installer
     ];

@@ -38,15 +38,11 @@
       dev.chromium.enable = true;
 
       desktop.enable = true;
-      browser = {
-        zen-browser.hyprland.autostart.enable = true;
-      };
-      spotify.hyprland.autostart.enable = true;
-
       media-tools.enable = true;
-
-      retroarch.enable = true;
-      pokemmo.enable = true;
+      gaming = {
+        retroarch.enable = true;
+        pokemmo.enable = true;
+      };
     };
   };
 }
