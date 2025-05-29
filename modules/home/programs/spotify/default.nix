@@ -32,14 +32,15 @@ in {
       ];
       exec-once = mkIf cfg.hyprland.autostart.enable ["spotify_player -d"];
       bind = [
-        "SUPER SHIFT, M, exec, $terminal --class Spotify -e spotify_player"
-        # "SUPER SHIFT, M, exec, hypr_spot-cava"
+        "SUPER SHIFT, M, exec, hyprshot-spot"
+        # "SUPER SHIFT, M, exec, hyprshot-spot-cava"
       ];
     };
 
     home.packages = with pkgs; [
       spotify
-      # (pkgs.writeShellScriptBin "hypr_spot-cava" (builtins.readFile ./hyprland_spot-cava.sh))
+      # (pkgs.writeShellScriptBin "hyprland-spot-cava" (builtins.readFile ./hyprland-spot-cava.sh))
+      (pkgs.writeShellScriptBin "hyprland-spot" (builtins.readFile ./hyprland-spot.sh))
     ];
 
     home.shellAliases.spot = "spotify_player";
