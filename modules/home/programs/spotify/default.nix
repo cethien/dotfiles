@@ -32,8 +32,8 @@ in {
       ];
       exec-once = mkIf cfg.hyprland.autostart.enable ["spotify_player -d"];
       bind = [
-        "SUPER SHIFT, M, exec, hyprshot-spot"
-        # "SUPER SHIFT, M, exec, hyprshot-spot-cava"
+        "SUPER SHIFT, M, exec, hyprland-spot"
+        # "SUPER SHIFT, M, exec, hyprland-spot-cava"
       ];
     };
 
