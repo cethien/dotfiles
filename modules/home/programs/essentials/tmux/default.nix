@@ -18,6 +18,7 @@ in {
       terminal = "screen-256color";
 
       keyMode = "vi";
+      mouse = true;
       prefix = "C-a";
       disableConfirmationPrompt = true;
 
