@@ -21,9 +21,8 @@ in {
   };
 
   config = mkIf cfg.enable {
+    programs.firefox.enable = true;
     programs.firefox = {
-      enable = true;
-
       profiles."${name}" = {
         id = 0;
         inherit name;
@@ -51,9 +50,6 @@ in {
         extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
           multi-account-containers
 
-          bitwarden
-          keepassxc-browser
-
           ublock-origin
           unpaywall
           istilldontcareaboutcookies
@@ -66,9 +62,7 @@ in {
 
           sponsorblock
           return-youtube-dislikes
-
           twitch-auto-points
-
           steam-database
         ];
 
@@ -108,12 +102,14 @@ in {
           "browser.shell.checkDefaultBrowser" = false;
           "extensions.pocket.enabled" = false;
           "browser.toolbarbuttons.introduced.pocket-button" = false;
+          "browser.toolbarbuttons.introduced.sidebar-button" = true;
           "browser.toolbars.bookmarks.visibility" = "never";
-          "sidebar.mainTools" = "bookmarks,history";
+          "sidebar.main.tools" = "bookmarks,history";
           "sidebar.new-sidebar.has-used" = true;
           "sidebar.revamp" = true;
           "sidebar.verticalTabs" = true;
           "widget.disable-workspace-management" = true;
+          "browser.uiCustomization.horizontalTabstrip" = ''["tabbrowser-tabs","new-tab-button"]'';
         };
       };
 
@@ -125,7 +121,7 @@ in {
       ];
     };
 
-    stylix.targets.firefox.profileNames = ["${config.home.username}"];
+    stylix.targets.firefox.profileNames = ["${name}"];
 
     wayland.windowManager.hyprland.settings = {
       exec-once = mkIf cfg.hyprland.autostart.enable [

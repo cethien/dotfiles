@@ -15,6 +15,7 @@ in {
   };
 
   config = mkIf cfg.enable {
+    services.ssh-agent.enable = true;
     programs = {
       ssh.enable = true;
       ssh = {

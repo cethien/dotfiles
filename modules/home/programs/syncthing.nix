@@ -1,8 +1,4 @@
-{
-  config,
-  lib,
-  ...
-}: {
+{config, ...}: {
   services.syncthing.enable = true;
   services.syncthing.settings = {
     options = {
@@ -10,8 +6,9 @@
     };
 
     folders = {
-      "${config.home.homeDirectory}/.sync" = {
-        id = "sync-files";
+      passwords = {
+        id = "passwords";
+        path = "${config.home.homeDirectory}/.pass";
         devices = ["cethien.me"];
       };
     };
