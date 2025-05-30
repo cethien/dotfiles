@@ -46,6 +46,14 @@ in {
       Security.IconDownloadFallback = true;
     };
 
+    services.syncthing.settings = mkIf config.services.syncthing.enable {
+      folders.keepass = {
+        id = "keepass";
+        path = "${config.home.homeDirectory}/.keepass";
+        devices = ["cethien.me"];
+      };
+    };
+
     programs.firefox = mkIf config.programs.firefox.enable {
       profiles.${config.home.username}.extensions.packages = [
         pkgs.nur.repos.rycee.firefox-addons.keepassxc-browser
