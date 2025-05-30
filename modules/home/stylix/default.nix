@@ -49,6 +49,7 @@ in {
       base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyo-night-dark.yaml";
 
       image = ./wallpapers/a_hand_holding_a_cassette_tape.jpg;
+      polarity = "dark";
 
       cursor = {
         name = "Nordzy-cursors";
@@ -72,14 +73,11 @@ in {
           package = pkgs.open-sans;
           name = "Open Sans";
         };
-        serif = {
-          package = pkgs.roboto;
-          name = "Roboto Serif";
-        };
+        serif = config.stylix.fonts.sansSerif;
 
         emoji = {
-          package = pkgs.openmoji-color;
-          name = "OpenMoji Color";
+          package = pkgs.noto-fonts-emoji;
+          name = "Noto Color emoji";
         };
 
         sizes = {
