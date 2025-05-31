@@ -37,7 +37,7 @@ in {
         MinimizeAfterUnlock = true;
         MinimizeOnTray = true;
         ShowTrayIcon = true;
-        FontSizeOffset = 1;
+        FontSizeOffset = 2;
 
         ApplicationTheme = "dark";
         HidePasswords = true;
