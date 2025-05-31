@@ -21,6 +21,7 @@ in {
     ./neovim
     ./fastfetch
     ./syncthing.nix
+    ./rclone.nix
 
     ./hyprland
 
@@ -55,6 +56,9 @@ in {
     fun.enable = mkDefault true;
     fastfetch.enable = mkDefault true;
 
+    keepassxc.enable = mkDefault cfg.desktop.enable;
+    keepassxc.hyprland.autostart.enable = mkDefault cfg.desktop.enable;
+
     pavucontrol.enable = mkDefault cfg.desktop.enable;
     easyeffects.enable = mkDefault cfg.desktop.enable;
     browser = {
@@ -67,8 +71,6 @@ in {
     discord.enable = mkDefault cfg.desktop.enable;
     spotify.enable = mkDefault cfg.desktop.enable;
     spotify.hyprland.autostart.enable = mkDefault cfg.desktop.enable;
-    keepassxc.enable = mkDefault cfg.desktop.enable;
-    keepassxc.hyprland.autostart.enable = mkDefault cfg.desktop.enable;
 
     pinta.enable = mkDefault cfg.media-tools.enable;
     gimp.enable = mkDefault cfg.media-tools.enable;

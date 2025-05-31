@@ -1,5 +1,11 @@
 {pkgs, ...}: {
   programs.nvf.settings.vim.extraPlugins = {
+    sops = {
+      package = pkgs.vimPlugins.nvim-sops;
+      setup = ''
+        require("nvim_sops").setup({})
+      '';
+    };
     octo = {
       package = pkgs.vimPlugins.octo-nvim;
       setup = ''
@@ -170,6 +176,9 @@
     };
     statusline.lualine.enable = true;
     visuals.nvim-web-devicons.enable = true;
+
+    clipboard.enable = true;
+    clipboard.providers.wl-copy.enable = true;
 
     keymaps = [
       {

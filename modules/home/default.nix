@@ -4,6 +4,7 @@
     ./programs
     ./assets
     ./stylix
+    ./sops.nix
   ];
 
   xdg.mimeApps.enable = true;

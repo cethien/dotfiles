@@ -44,7 +44,15 @@
     stateVersion = "25.05";
     defaultUser = "cethien";
   in {
-    devShells.${system}.default = import ./shell.nix {inherit pkgs;};
+    devShells.${system}.default = pkgs.mkShell {
+      buildInputs = with pkgs; [
+        git
+        just
+        sops
+      ];
+    };
+
+    packages.${system}.setup-age = import ./scripts/setup-age.nix {inherit pkgs;};
 
     homeConfigurations."cethien@wsl" = inputs.home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
