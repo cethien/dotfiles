@@ -21,6 +21,7 @@ in {
 
     programs = {
       git.enable = true;
+
       direnv.enable = true;
       direnv = {
         silent = true;
@@ -38,7 +39,6 @@ in {
       gh-dash.enable = true;
       gh.settings = {
         git_protocol = "ssh";
-        prompt = "enable";
       };
     };
 

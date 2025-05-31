@@ -8,7 +8,7 @@
         mounts = {
           "" = {
             enable = true;
-            mountPoint = "${config.home.homeDirectory}/.rclone/GDrive";
+            mountPoint = "${config.home.homeDirectory}/mnt/GDrive";
             options = {
               dir-cache-time = "5000h";
               poll-interval = "10s";

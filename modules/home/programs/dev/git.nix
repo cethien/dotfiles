@@ -10,7 +10,7 @@ in {
   options.deeznuts.programs.dev.git = {
     userName = mkOption {
       type = str;
-      default = config.home.username;
+      default = "cethien";
       description = "The user name to use for git commits";
     };
     userEmail = mkOption {

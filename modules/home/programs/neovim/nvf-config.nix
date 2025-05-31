@@ -1,29 +1,51 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
   programs.nvf.settings.vim.extraPlugins = {
     sops = {
       package = pkgs.vimPlugins.nvim-sops;
-      setup = ''
-        require("nvim_sops").setup({})
-      '';
+      setup =
+        #lua
+        ''
+          require("nvim_sops").setup({
+            defaults = {
+              ageKeyFile = '${config.sops.age.keyFile}'
+            }
+          })
+        '';
+    };
+    csv = {
+      package = pkgs.vimPlugins.csvview-nvim;
+      setup =
+        #lua
+        ''
+          require("csvview").setup({})
+        '';
     };
     octo = {
       package = pkgs.vimPlugins.octo-nvim;
-      setup = ''
-        require("octo").setup({})
-      '';
+      setup =
+        #lua
+        ''
+          require("octo").setup({})
+        '';
     };
     codesnap = {
       package = pkgs.vimPlugins.codesnap-nvim;
-      setup = ''
-        require("codesnap").setup({
-          save_path = "~/Pictures/CodeSnap",
-          has_breadcrumbs = true,
-          show_workspace = true,
-          has_line_number = true,
-          bg_theme = "grape",
-          watermark = "",
-        })
-      '';
+      setup =
+        #lua
+        ''
+          require("codesnap").setup({
+            save_path = "~/Pictures/CodeSnap",
+            has_breadcrumbs = true,
+            show_workspace = true,
+            has_line_number = true,
+            bg_theme = "grape",
+            watermark = "",
+          })
+        '';
     };
   };
 
@@ -91,6 +113,7 @@
       autotagHtml = true;
       fold = true;
       indent.enable = true;
+      # context.enable = true;
     };
 
     notes = {
@@ -181,6 +204,17 @@
     clipboard.providers.wl-copy.enable = true;
 
     keymaps = [
+      {
+        mode = "n";
+        key = "<leader>df";
+        action = "<cmd>SopsDecrypt<CR>";
+      }
+      {
+        mode = "n";
+        key = "<leader>ef";
+        action = "<cmd>SopsEncrypt<CR>";
+      }
+
       {
         mode = "n";
         key = "<leader>e";

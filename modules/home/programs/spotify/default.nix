@@ -33,14 +33,18 @@ in {
       exec-once = mkIf cfg.hyprland.autostart.enable ["spotify_player -d"];
       bind = [
         "SUPER SHIFT, M, exec, hyprland-spot"
-        # "SUPER SHIFT, M, exec, hyprland-spot-cava"
       ];
     };
 
     home.packages = with pkgs; [
       spotify
-      # (pkgs.writeShellScriptBin "hyprland-spot-cava" (builtins.readFile ./hyprland-spot-cava.sh))
-      (pkgs.writeShellScriptBin "hyprland-spot" (builtins.readFile ./hyprland-spot.sh))
+
+      (mkIf config.wayland.windowManager.hyprland.enable (
+        writeShellScriptBin "hyprland-spot" (
+          builtins.readFile ./hyprland-spot.sh
+          # builtins.readFile ./hyprland-spot-cava.sh
+        )
+      ))
     ];
 
     home.shellAliases.spot = "spotify_player";

@@ -1,5 +1,5 @@
 {
   imports = [
-    ./cethien
+    ./cethien.nix
   ];
 }
