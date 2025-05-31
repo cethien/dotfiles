@@ -3,6 +3,7 @@
     ../../shared/nixpkgs
     ./programs
     ./assets
+    ./stylix
   ];
 
   xdg.mimeApps.enable = true;

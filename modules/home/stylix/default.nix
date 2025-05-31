@@ -2,11 +2,16 @@
   lib,
   config,
   pkgs,
+  inputs,
   ...
 }: let
   inherit (lib) mkIf mkEnableOption mkOption types;
   cfg = config.deeznuts.stylix;
 in {
+  imports = [
+    inputs.stylix.homeModules.stylix
+  ];
+
   options.deeznuts.stylix = {
     enable = mkEnableOption "Enable theming with stylix";
 
