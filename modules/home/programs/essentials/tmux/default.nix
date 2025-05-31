@@ -12,6 +12,37 @@ in {
   ];
 
   config = mkIf cfg.enable {
+    home.shellAliases = {
+      tm = "tmux_new";
+      tmd = "tmux_newd";
+      tmls = "tmux ls";
+      tmk = "tmux kill-session -t";
+    };
+
+    programs.bash.initExtra =
+      # bash
+      ''
+        _tmux_session() {
+          if [ -n "$1" ] && [[ "$1" != -* ]]; then
+          	echo "$1" | tr -c 'a-zA-Z0-9_' '_'
+          else
+          	basename "$PWD" | tr -c 'a-zA-Z0-9_' '_'
+          fi
+        }
+
+        tmux_new() {
+          local s=$(_tmux_session "$1")
+          if [ -n "$1" ] && [[ "$1" != -* ]]; then shift; fi
+          tmux new-session -A -s "$s" "$@"
+        }
+
+        tmux_newd(){
+          local s=$(_tmux_session "$1")
+          if [ -n "$1" ] && [[ "$1" != -* ]]; then shift; fi
+          tmux new-session -d -s "$s" "$@"
+        }
+      '';
+
     programs.tmux = {
       clock24 = true;
       baseIndex = 1;
@@ -133,26 +164,6 @@ in {
           action = "copy-mode -u";
         }
       ];
-    };
-
-    programs.bash.initExtra = ''
-      tmux_sesh() {
-        local s
-        if [ -n "$1" ] && [[ "$1" != -* ]]; then
-        	s=$(echo "$1" | tr -c 'a-zA-Z0-9_' '_')
-        	shift
-        else
-        	s=$(basename "$PWD" | tr -c 'a-zA-Z0-9_' '_')
-        fi
-        tmux new-session -A -s "$s" "$@"
-      }
-    '';
-
-    home.shellAliases = {
-      tm = "tmux_sesh";
-      tmls = "tmux ls";
-      tma = "tmux attach -t";
-      tmk = "tmux kill-session -t";
     };
 
     wayland.windowManager.hyprland.settings = {
