@@ -63,6 +63,8 @@ in {
     };
 
     home.shellAliases = {
+      cdc = "cd ~/.config";
+
       grep = "rg";
       ps = "procs";
 
