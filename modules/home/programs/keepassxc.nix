@@ -53,6 +53,10 @@ in {
       Security.IconDownloadFallback = true;
     };
 
+    home.packages = with pkgs; [
+      libsecret
+    ];
+
     services.syncthing.settings = mkIf config.services.syncthing.enable {
       folders.keepass = {
         id = "keepass";
