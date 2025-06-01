@@ -22,6 +22,7 @@ in {
     ./fastfetch
     ./syncthing.nix
     ./rclone.nix
+    ./pim.nix
 
     ./hyprland
 
@@ -55,6 +56,7 @@ in {
     neovim.enable = mkDefault true;
     fun.enable = mkDefault true;
     fastfetch.enable = mkDefault true;
+    pim.enable = mkDefault true;
 
     keepassxc.enable = mkDefault cfg.desktop.enable;
     keepassxc.hyprland.autostart.enable = mkDefault cfg.desktop.enable;
