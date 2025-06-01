@@ -53,9 +53,23 @@ in {
       Security.IconDownloadFallback = true;
     };
 
+    services.ssh-agent.enable = true;
     home.packages = with pkgs; [
       libsecret
+
+      (writeShellScriptBin "sudo-askpass" ''
+        #!/usr/bin/env bash
+        secret-tool lookup whoami $(whoami) hostname $(hostname) | head -n1
+      '')
+
+      (writeShellScriptBin "sudo-askpass-wrapper" ''
+        #!/usr/bin/env bash
+        command sudo -A "$@" 2>/dev/null || command sudo "$@"
+      '')
     ];
+
+    home.sessionVariables.SUDO_ASKPASS = "$HOME/.nix-profile/bin/sudo-askpass";
+    home.shellAliases.sudo = "sudo-askpass-wrapper";
 
     services.syncthing.settings = mkIf config.services.syncthing.enable {
       folders.keepass = {
