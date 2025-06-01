@@ -3,22 +3,28 @@
   config,
   ...
 }: let
-  inherit (lib) mkEnableOption mkIf;
-  cfg = config.deeznuts.programs.pim;
+  inherit (lib) mkEnableOption mkOption types mkIf;
+  cfg = config.deeznuts.programs.pim.email;
+  primary = "borislaw.sotnikow@gmx.de";
 in {
-  options.deeznuts.programs.pim = {
-    enable = mkEnableOption "pim";
+  options.deeznuts.programs.pim.email = {
+    enable = mkEnableOption "email";
+    email = {
+      primary = mkOption {
+        type = types.str;
+        default = "${primary}";
+        description = "primary email address. is also the default email address";
+      };
+    };
   };
 
   config = mkIf cfg.enable {
     programs.mbsync.enable = true;
     programs.neomutt.enable = true;
-
     accounts.email = {
       maildirBasePath = ".mail";
-      accounts."borislaw.sotnikow@gmx.de" = {
-        primary = true;
 
+      accounts.${cfg.email.primary} = {
         mbsync.enable = true;
         mbsync = {
           create = "both";
@@ -27,11 +33,9 @@ in {
         };
         neomutt.enable = true;
 
-        address = "borislaw.sotnikow@gmx.de";
+        primary = true;
+        address = "${cfg.email.primary}";
         realName = "Borislaw Sotnikow";
-        userName = "borislaw.sotnikow@gmx.de";
-
-        passwordCommand = "secret-tool lookup Title mail.gmx.net UserName borislaw.sotnikow@gmx.de";
 
         smtp = {
           host = "mail.gmx.net";
@@ -46,6 +50,8 @@ in {
           port = 993;
           tls.enable = true;
         };
+        userName = "${cfg.email.primary}";
+        passwordCommand = "secret-tool lookup Title mail.gmx.net UserName ${cfg.email.primary}";
       };
     };
   };
