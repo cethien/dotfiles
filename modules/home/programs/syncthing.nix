@@ -3,7 +3,7 @@
   services.syncthing.settings = {
     options.urAccepted = -1;
     devices."cethien.me" = {
-      id = "5MYOAXN-SPEANRU-2QS3XBO-2U4LO5P-MBZWFPI-PH42WNP-5MCYGTG-QGJHZAS";
+      id = "IMVEBRU-Q35QFHT-HLCNT7F-XKK7THW-3QJETCU-W2KHNZT-PJFOTDZ-MAZ7HAU";
       addresses = [
         "tcp://sync.cethien.me:22000"
       ];
