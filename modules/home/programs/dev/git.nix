@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }: let
   inherit (lib) mkOption mkIf;
@@ -21,6 +22,10 @@ in {
   };
 
   config = mkIf config.programs.git.enable {
+    home.packages = with pkgs; [
+      scc
+    ];
+
     programs.git = {
       inherit (cfg) userName userEmail;
       aliases.ignore = "!gi() { curl -fsSL https://www.toptal.com/developers/gitignore/api/$@ ;}; gi";
