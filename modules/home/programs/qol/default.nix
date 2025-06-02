@@ -21,6 +21,7 @@ in {
     home.packages = with pkgs; [
       procs
       duf
+      gdu
 
       glow
       mdcat
@@ -81,6 +82,8 @@ in {
       tree = "eza -T --icons";
 
       df = "duf";
+      du = "duf";
+
       cat = "bat -p";
 
       reload = "source ~/.bashrc && clear";

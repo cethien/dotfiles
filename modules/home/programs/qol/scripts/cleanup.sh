@@ -1,22 +1,9 @@
 #!/usr/bin/env bash
-
-EXTRA_PACKAGE_MANAGER=""
-
-# check if apt is installed
-if command -v apt &>/dev/null; then
-    EXTRA_PACKAGE_MANAGER="apt"
-fi
-
-# check if nala is installed
-if command -v nala &>/dev/null; then
-    EXTRA_PACKAGE_MANAGER="nala"
-fi
-
-if [[ -n $EXTRA_PACKAGE_MANAGER ]]; then
-    sudo $EXTRA_PACKAGE_MANAGER autoremove -y
-fi
-
-nix-store --gc
-nix-env --delete-generations 3d
-
+set -u
+CMD=""
+command -v apt &>/dev/null && CMD="apt autoremove -y"
+command -v nala &>/dev/null && CMD="nala autoremove -y"
+command -v pacman &>/dev/null && CMD="pacman -Rns $(pacman -Qdtq)"
+[[ -n $CMD ]] && sudo "$CMD"
+nix-collect-garbage -d
 echo "done cleaning up 🧹"
