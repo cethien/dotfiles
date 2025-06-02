@@ -10,7 +10,7 @@ in {
     enable = mkEnableOption "fastfetch";
   };
   config = mkIf cfg.enable {
-    home.file.".config/fastfetch/bernd.png".source = ./bernd.png;
+    home.file.".config/fastfetch/logo.png".source = ./bernd_pixel.png;
     home.shellAliases.ff = "fastfetch";
 
     programs.fastfetch = {
