@@ -104,7 +104,7 @@ in {
           action = "source-file ~/.config/tmux/tmux.conf";
         }
 
-        # switch panes using Alt-arrow without prefix
+        # switch panes using Ctrl-Alt-arrow without prefix
         {
           noprefix = true;
           key = "M-Left";
@@ -125,29 +125,8 @@ in {
           key = "M-Down";
           action = "select-pane -D";
         }
-        # resize pane using Shift-Alt-arrow without prefix
-        {
-          noprefix = true;
-          key = "S-M-Left";
-          action = "select-pane -L";
-        }
-        {
-          noprefix = true;
-          key = "S-M-Right";
-          action = "select-pane -R";
-        }
-        {
-          noprefix = true;
-          key = "S-M-Up";
-          action = "select-pane -U";
-        }
-        {
-          noprefix = true;
-          key = "S-M-Down";
-          action = "select-pane -D";
-        }
 
-        # switch windows using Ctrl-Alt-arrow without prefix
+        # switch windows using Ctrl-Alt-Tab
         {
           noprefix = true;
           key = "C-M-Right";

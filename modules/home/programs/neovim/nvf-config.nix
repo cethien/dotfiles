@@ -50,6 +50,21 @@
   };
 
   programs.nvf.settings.vim = {
+    autocmds = [
+      {
+        event = ["BufWritePost"];
+        group = "bufcheck";
+        pattern = ["vim.env.MYVIMRC"];
+        command = "silent source %";
+      }
+      {
+        event = ["TextYankPost"];
+        group = "bufcheck";
+        pattern = ["*"];
+        command = "function() vim.highlight.on_yank{timeout=500} end";
+      }
+    ];
+
     languages = {
       clang.enable = true;
       go.enable = true;
@@ -60,6 +75,7 @@
       tailwind.enable = true;
       php.enable = true;
       ts.enable = true;
+      ts.extensions.ts-error-translator.enable = true;
       css.enable = true;
       html.enable = true;
 
@@ -183,7 +199,6 @@
         "vim.diagnostic.severity.WARN" = "󰀪 ";
       };
       virtual_text = true;
-      # virtual_lines = true;
     };
     ui = {
       fastaction.enable = true;
@@ -252,22 +267,22 @@
       }
       {
         mode = "n";
-        key = "<leader><Left>";
+        key = "<C-Left>";
         action = "<cmd>wincmd h<CR>";
       }
       {
         mode = "n";
-        key = "<leader><Right>";
+        key = "<C-Right>";
         action = "<cmd>wincmd l<CR>";
       }
       {
         mode = "n";
-        key = "<leader><Up>";
+        key = "<C-Up>";
         action = "<cmd>wincmd k<CR>";
       }
       {
         mode = "n";
-        key = "<leader><Down>";
+        key = "<C-Down>";
         action = "<cmd>wincmd l<CR>";
       }
 
