@@ -42,7 +42,6 @@ in {
         AdvancedSettings = true;
         MinimizeOnClose = true;
         MinimizeOnStartup = true;
-        MinimizeAfterUnlock = true;
         MinimizeOnTray = true;
         ShowTrayIcon = true;
         FontSizeOffset = 2;
@@ -50,6 +49,8 @@ in {
         ApplicationTheme = "dark";
         HidePasswords = true;
       };
+
+      General.MinimizeAfterUnlock = true;
 
       Security.IconDownloadFallback = true;
     };
