@@ -8,7 +8,7 @@
   cfg = config.deeznuts.programs.qol;
 in {
   imports = [
-    ./bottom
+    ./bottom.nix
     ./bash-options.nix
     ./yazi.nix
   ];
@@ -87,7 +87,7 @@ in {
 
     wayland.windowManager.hyprland.settings = {
       bind = [
-        "SUPER, e, exec, $terminal --class files -e yazi"
+        "SUPER, e, exec, $terminal --class yazi -e yazi"
       ];
     };
   };

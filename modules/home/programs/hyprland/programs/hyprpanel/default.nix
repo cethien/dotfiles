@@ -90,9 +90,6 @@ in {
             show_active_only = true;
             truncation = true;
             truncation_size = 50;
-
-            # scrollUp = "playerctl --player=spotify volume 0.05+";
-            # scrollDown = "playerctl --player=spotify volume 0.05-";
           };
 
           network.label = false;
@@ -149,7 +146,5 @@ in {
         };
       };
     };
-
-    home.file.".config/hypr/assets/logo.png".source = ./logo.png;
   };
 }

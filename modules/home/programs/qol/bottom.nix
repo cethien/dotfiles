@@ -16,13 +16,18 @@ in {
   };
 
   config = mkIf config.programs.bottom.enable {
+    programs.hyprpanel.settings.bar.workspaces.applicationIconMap.btm = "";
     home.packages = [
-      (pkgs.writeShellScriptBin "hypr_btm" (builtins.readFile ./hyprland_btm.sh))
+      (pkgs.writeShellScriptBin "hypr_btm" ''
+        #!/usr/bin/env bash
+        hyprctl clients | grep -q 'class:.*btm' &&
+          hyprctl dispatch focuswindow class:btm ||
+          kitty --class btm -e btm &
+      '')
     ];
 
     wayland.windowManager.hyprland.settings = {
       bind = [
-        # "SUPER SHIFT, p, exec, $terminal --class btm -e btm"
         "SUPER SHIFT, p, exec, hypr_btm"
       ];
 
