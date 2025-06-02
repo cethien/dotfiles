@@ -24,6 +24,7 @@ in {
 
       glow
       mdcat
+      termshot
 
       (writeShellScriptBin "update" (builtins.readFile ./scripts/update.sh))
       (writeShellScriptBin "rebuild" (builtins.readFile ./scripts/rebuild.sh))
