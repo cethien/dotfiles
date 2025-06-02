@@ -89,6 +89,7 @@
     autocomplete = {
       enableSharedCmpSources = true;
 
+      # TODO: path autocomplete does not work. did work in nixvim, and in path is in defaults list
       blink-cmp.enable = true;
       blink-cmp.setupOpts.cmdline.keymap.preset = "default";
       blink-cmp.sourcePlugins = {
