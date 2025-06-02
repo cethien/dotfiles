@@ -53,13 +53,11 @@
     autocmds = [
       {
         event = ["BufWritePost"];
-        group = "bufcheck";
         pattern = ["vim.env.MYVIMRC"];
         command = "silent source %";
       }
       {
         event = ["TextYankPost"];
-        group = "bufcheck";
         pattern = ["*"];
         command = "function() vim.highlight.on_yank{timeout=500} end";
       }
