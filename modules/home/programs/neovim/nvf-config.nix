@@ -174,6 +174,16 @@
       };
     };
 
+    spellcheck.enable = true;
+    diagnostics.enable = true;
+    diagnostics.config = {
+      signs.text = {
+        "vim.diagnostic.severity.ERROR" = "󰅚 ";
+        "vim.diagnostic.severity.WARN" = "󰀪 ";
+      };
+      virtual_text = true;
+      # virtual_lines = true;
+    };
     ui = {
       fastaction.enable = true;
       colorizer.enable = true;
