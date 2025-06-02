@@ -1,10 +1,12 @@
-{ lib, config, ... }:
-let
+{
+  lib,
+  config,
+  ...
+}: let
   inherit (lib) mkIf mkForce mkOption;
   cfg = config.deeznuts.programs.hyprland.hyprlock;
   enable = config.deeznuts.programs.hyprland.enable;
-in
-{
+in {
   options.deeznuts.programs.hyprland.hyprlock = {
     monitor = mkOption {
       type = lib.types.str;
@@ -14,6 +16,7 @@ in
   };
 
   config = mkIf enable {
+    stylix.targets.hyprlock.enable = false;
     programs.hyprlock = {
       enable = true;
 
@@ -25,18 +28,22 @@ in
           no_fade_in = true;
         };
 
-        # background = [
-        #   {
-        #     monitor = cfg.monitor;
-        #     path = "/home/cethien/Pictures/wallpapers/drippy-smiley.jpg";
-        #     blur_passes = 2;
-        #     blur_size = 4;
-        #   }
-        #   {
-        #     monitor = "HDMI-A-1";
-        #     color = "#111322";
-        #   }
-        # ];
+        background = [
+          {
+            path = "screenshot";
+            blur_passes = 3;
+            blur_size = 8;
+          }
+        ];
+
+        image = [
+          {
+            path = "${config.home.homeDirectory}/Pictures/logo.png";
+            halign = "center";
+            valign = "center";
+            position = "0, 50";
+          }
+        ];
 
         input-field = mkForce [
           {
@@ -48,33 +55,34 @@ in
             outer_color = "rgb(17, 17, 27)";
             placeholder_color = "rgb(166, 173, 200)";
             placeholder_text = "Enter Password";
+
+            halign = "center";
+            valign = "center";
+            position = "0, -100";
           }
         ];
 
         label = [
           {
             monitor = cfg.monitor;
-            text = "cmd[update:1000] echo \"$TIME\"";
-            color = "rgb(205, 214, 244)";
-            font_size = 55;
-            font_family = "MesloLGM Nerd Font";
-            position = "-50, 50";
-            halign = "right";
-            valign = "bottom";
-            shadow_passes = 5;
-            shadow_size = 10;
+            color = "rgba(242, 243, 244, 0.75)";
+            font_family = "JetBrains Mono";
+            font_size = "95";
+            halign = "center";
+            position = "0, 200";
+            text = "$TIME";
+            valign = "center";
           }
+
           {
             monitor = cfg.monitor;
-            text = "$USER";
-            color = "rgb(205, 214, 244)";
-            font_size = 35;
-            font_family = "MesloLGM Nerd Font Mono";
-            position = "0, 100";
+            color = "rgba(242, 243, 244, 0.75)";
+            font_family = "JetBrains Mono";
+            font_size = "22";
             halign = "center";
+            position = "0, 300";
+            text = ''cmd[update:1000] echo $(date +"%A, %B %d")'';
             valign = "center";
-            shadow_passes = 5;
-            shadow_size = 10;
           }
         ];
       };
@@ -87,4 +95,3 @@ in
     };
   };
 }
-

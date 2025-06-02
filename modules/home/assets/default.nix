@@ -1,5 +1,5 @@
 {
   home.file = {
-    ".local/share/logo.png".source = ./logo.png;
+    "Pictures/logo.png".source = ./logo.png;
   };
 }
