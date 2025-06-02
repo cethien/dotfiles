@@ -23,7 +23,12 @@ in {
 
     home.packages = with pkgs; [
       cmatrix
-      (writeShellScriptBin "hyprland-cmatrix" (builtins.readFile ./hyprland-cmatrix.sh))
+      (writeShellScriptBin "hyprland-cmatrix" ''
+        #!/usr/bin/env bash
+        hyprctl clients | grep -q 'class:.*cmatrix' &&
+          hyprctl dispatch focuswindow class:cmatrix ||
+          kitty --class cmatrix -e cmatrix &
+      '')
 
       fortune
       asciiquarium-transparent

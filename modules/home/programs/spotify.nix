@@ -38,12 +38,13 @@ in {
 
     home.packages = with pkgs; [
       spotify
-
       (mkIf config.wayland.windowManager.hyprland.enable (
-        writeShellScriptBin "hyprland-spot" (
-          builtins.readFile ./hyprland-spot.sh
-          # builtins.readFile ./hyprland-spot-cava.sh
-        )
+        writeShellScriptBin "hyprland-spot" ''
+          #!/usr/bin/env bash
+          hyprctl clients | grep -q 'class:.*Spotify' &&
+            hyprctl dispatch focuswindow class:Spotify ||
+            kitty --class Spotify -e spotify_player &
+        ''
       ))
     ];
 

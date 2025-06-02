@@ -14,7 +14,7 @@ in {
   imports = [
     ./qol
     ./dev
-    ./fun
+    ./fun.nix
     ./essentials
     ./utils-net.nix
     ./utils
@@ -29,7 +29,7 @@ in {
     ./browser
     ./discord.nix
     ./imv.nix
-    ./spotify
+    ./spotify.nix
     ./mpv.nix
     ./keepassxc.nix
 

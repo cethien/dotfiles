@@ -1,13 +1,26 @@
 #!/usr/bin/env bash
 
-if [ -z "$1" ] || [ -z "$2" ]; then
-  echo "Usage: ffmpeg-convert <file> <target-format>"
+if [ $# -lt 2 ]; then
+  echo "ℹ️ usage: ffmpeg-convert <target-format> <file> [<another-file> ...]"
   return 1
 fi
 
-input="$1"
-ext="$2"
-base="${input%.*}"
-output="${base}.${ext}"
+ext="$1"
+shift
 
-ffmpeg -i "$input" "$output"
+for input in "$@"; do
+  if [ ! -f "$input" ]; then
+    echo "⚠️ file not found: $input"
+    continue
+  fi
+
+  base="${input%.*}"
+  output="${base}.${ext}"
+
+  echo "🎥 converting '$input' → '$output'..."
+  if ffmpeg -i "$input" "$output"; then
+    echo "✅ successfully converted '$input'!"
+  else
+    echo "❌ failed to convert '$input'."
+  fi
+done
