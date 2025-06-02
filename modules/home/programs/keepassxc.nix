@@ -15,6 +15,7 @@ in {
   };
 
   config = mkIf cfg.enable {
+    programs.hyprpanel.settings.bar.workspaces.applicationIconMap."org.keepassxc.KeePassXC" = "";
     programs.keepassxc.enable = true;
     programs.keepassxc.settings = {
       Browser = {
