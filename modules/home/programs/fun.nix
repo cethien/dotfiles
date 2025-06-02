@@ -29,11 +29,11 @@ in {
           hyprctl dispatch focuswindow class:cmatrix ||
           kitty --class cmatrix -e cmatrix &
       '')
-
-      fortune
       asciiquarium-transparent
       hackertyper
+      ttysvr
 
+      fortune
       cowsay
       figlet
       dotacat
