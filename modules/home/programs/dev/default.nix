@@ -32,7 +32,6 @@ in {
         };
       };
 
-      lazygit.enable = true;
       lazydocker.enable = true;
 
       gh.enable = true;
@@ -40,11 +39,6 @@ in {
       gh.settings = {
         git_protocol = "ssh";
       };
-    };
-
-    home.shellAliases = {
-      lzg = "lazygit";
-      lzd = "lazydocker";
     };
   };
 }

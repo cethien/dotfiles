@@ -26,6 +26,8 @@ in {
       scc
     ];
 
+    programs.lazygit.enable = true;
+
     programs.git = {
       inherit (cfg) userName userEmail;
       aliases.ignore = "!gi() { curl -fsSL https://www.toptal.com/developers/gitignore/api/$@ ;}; gi";
@@ -49,6 +51,8 @@ in {
     };
 
     home.shellAliases = {
+      lzg = "lazygit";
+
       gs = "git status";
       gd = "git diff";
       ga = "git add";

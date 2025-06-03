@@ -23,6 +23,7 @@ in {
     ./syncthing.nix
     ./rclone.nix
     ./pim
+    ./docker.nix
 
     ./hyprland
 
@@ -53,6 +54,7 @@ in {
     net.enable = mkDefault true;
     qol.enable = mkDefault true;
     dev.enable = mkDefault true;
+    docker.enable = mkDefault true;
     neovim.enable = mkDefault true;
     fun.enable = mkDefault true;
     fastfetch.enable = mkDefault true;
