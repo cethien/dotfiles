@@ -40,10 +40,7 @@
 
       desktop.enable = true;
       media-tools.enable = true;
-      gaming = {
-        retroarch.enable = true;
-        pokemmo.enable = true;
-      };
+      gaming.enable = true;
     };
   };
 }

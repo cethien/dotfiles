@@ -12,7 +12,12 @@ inputs.nixpkgs.lib.nixosSystem {
       system.stateVersion = stateVersion;
       networking.hostName = "hp-430-g7";
       boot.loader.grub.device = "/dev/nvme0n1";
-      deeznuts.virtualisation.docker.enable = true;
+      deeznuts = {
+        hardware.logitech-peripherals.enable = true;
+        hardware.xbox-controller.enable = true;
+        programs.steam.enable = true;
+        virtualisation.docker.enable = true;
+      };
     }
   ];
 }
