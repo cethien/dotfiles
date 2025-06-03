@@ -18,12 +18,9 @@ in {
       file-roller
       decibels
       gnome-calculator
-      baobab
     ];
 
     xdg.mimeApps.defaultApplications = {
-      "inode/directory" = ["yazi.desktop"];
-
       # Audio files
       "audio/mpeg" = ["org.gnome.Decibels.desktop"];
       "audio/x-wav" = ["org.gnome.Decibels.desktop"];
