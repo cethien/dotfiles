@@ -17,13 +17,13 @@ home := env("USER") + "@" + hostname
     nixpkgs-fmt --check .
 
 @update:
-    nix flake update
+    clear && nix flake update
 
 @rebuild:
-    nix run nixpkgs#home-manager -- switch --flake .#{{home}} -b bak-hm-$(date +%Y%m%d_%H%M%S)
+    clear && nix run nixpkgs#home-manager -- switch --flake .#{{home}} -b bak-hm-$(date +%Y%m%d_%H%M%S)
 
 @rebuild-nixos:
-    sudo nixos-rebuild switch --flake .#{{system}}
+    clear && sudo nixos-rebuild switch --flake .#{{system}}
 
 @install profile dest:
     nix run github:nix-community/nixos-anywhere -- \
