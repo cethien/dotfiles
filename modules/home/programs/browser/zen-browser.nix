@@ -1,7 +1,7 @@
 {
   lib,
   config,
-  inputs,
+  zen-browser,
   ...
 }: let
   inherit (lib) mkEnableOption mkOption types mkIf;
@@ -21,7 +21,7 @@ in {
 
   config = mkIf cfg.enable {
     home.packages = [
-      inputs.zen-browser.packages."x86_64-linux".beta
+      zen-browser.packages."x86_64-linux".beta
     ];
 
     wayland.windowManager.hyprland.settings = {

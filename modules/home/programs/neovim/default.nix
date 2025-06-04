@@ -1,14 +1,14 @@
 {
   lib,
   config,
-  inputs,
+  nvf,
   ...
 }: let
   inherit (lib) mkEnableOption mkIf;
   cfg = config.deeznuts.programs.neovim;
 in {
   imports = [
-    inputs.nvf.homeManagerModules.default
+    nvf.homeManagerModules.default
     ./nvf-config.nix
   ];
 

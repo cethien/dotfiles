@@ -1,10 +1,11 @@
 {
-  inputs,
+  nixpkgs,
+  pkgs,
   stateVersion,
   ...
 }:
-inputs.nixpkgs.lib.nixosSystem {
-  specialArgs = {inherit inputs;};
+nixpkgs.lib.nixosSystem {
+  inherit pkgs;
   modules = [
     ./hardware.nix
     ../../modules/nixos

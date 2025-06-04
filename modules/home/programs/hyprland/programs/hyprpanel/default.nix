@@ -1,18 +1,16 @@
 {
   lib,
   config,
-  inputs,
   pkgs,
+  hyprpanel,
   ...
 }: let
   inherit (lib) mkIf mkEnableOption mkOption types;
   cfg = config.deeznuts.programs.hyprpanel;
-  enabled = cfg.enable;
-
   jsonFormat = pkgs.formats.json {};
 in {
   imports = [
-    inputs.hyprpanel.homeManagerModules.hyprpanel
+    hyprpanel.homeManagerModules.hyprpanel
   ];
 
   options.deeznuts.programs.hyprpanel = {
@@ -60,7 +58,7 @@ in {
     };
   };
 
-  config = mkIf enabled {
+  config = mkIf cfg.enable {
     wayland.windowManager.hyprland.settings = {
       bind = [
         "SUPER, I, exec, hyprpanel idleInhibit"

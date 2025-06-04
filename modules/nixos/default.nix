@@ -6,9 +6,6 @@
   user = "cethien";
 in {
   imports = [
-    ../../shared/nixpkgs
-    ./nix
-
     ./users
 
     ./programs
@@ -28,6 +25,20 @@ in {
     };
   };
 
+  nix = {
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 7d";
+    };
+    settings = {
+      extra-experimental-features = "nix-command flakes";
+      warn-dirty = false;
+      trusted-users = ["@wheel"];
+      allowed-users = ["@wheel"];
+    };
+  };
+
   time.timeZone = "Europe/Berlin";
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.extraLocaleSettings = let
@@ -43,7 +54,6 @@ in {
     LC_TELEPHONE = formattingLocale;
     LC_TIME = formattingLocale;
   };
-
   services.xserver.xkb = {
     layout = "de";
     variant = "nodeadkeys";
@@ -56,9 +66,6 @@ in {
   services.printing.enable = true;
 
   deeznuts = {
-    nix.enable = true;
-    nixpkgs.allowUnfree = true;
-
     services = {
       ssh.enable = true;
       pipewire.enable = true;

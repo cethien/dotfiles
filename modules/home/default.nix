@@ -1,6 +1,5 @@
-{
+{lib, ...}: {
   imports = [
-    ../../shared/nixpkgs
     ./programs
     ./assets
     ./stylix
@@ -14,4 +13,6 @@
     frequency = "weekly";
   };
   news.display = "silent";
+
+  deeznuts.stylix.enable = lib.mkDefault true;
 }

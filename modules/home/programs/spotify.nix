@@ -1,18 +1,12 @@
 {
   lib,
   config,
-  inputs,
   pkgs,
   ...
 }: let
   inherit (lib) mkEnableOption mkOption types mkIf;
   cfg = config.deeznuts.programs.spotify;
-  enabled = cfg.enable;
 in {
-  imports = [
-    inputs.spicetify-nix.homeManagerModules.default
-  ];
-
   options.deeznuts.programs.spotify = {
     enable = mkEnableOption "spotify";
     hyprland.workspace = mkOption {
@@ -23,7 +17,7 @@ in {
     hyprland.autostart.enable = mkEnableOption "autostart spotify daemon";
   };
 
-  config = mkIf enabled {
+  config = mkIf cfg.enable {
     wayland.windowManager.hyprland.settings = {
       windowrulev2 = [
         "workspace ${toString cfg.hyprland.workspace}, class:^(Spotify)$"
