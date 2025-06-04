@@ -49,6 +49,14 @@ in {
       rofi.enable = false;
     };
 
+    # TODO: remove when https://github.com/nix-community/stylix/issues/478 is resolved
+    wayland.windowManager.hyprland.settings = {
+      env = [
+        "HYPRCURSOR_THEME,Nordzy-cursor"
+        "HYPRCURSOR_SIZE,${toString cfg.sizes.cursor}"
+      ];
+    };
+
     stylix = {
       enable = true;
       base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyo-night-dark.yaml";
