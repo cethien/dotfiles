@@ -56,11 +56,6 @@
         pattern = ["vim.env.MYVIMRC"];
         command = "silent source %";
       }
-      {
-        event = ["TextYankPost"];
-        pattern = ["*"];
-        command = "function() vim.highlight.on_yank{timeout=500} end";
-      }
     ];
 
     languages = {
