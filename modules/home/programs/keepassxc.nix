@@ -88,6 +88,13 @@ in {
       nativeMessagingHosts = [pkgs.keepassxc];
     };
 
+    programs.zen-browser = mkIf config.programs.zen-browser.enable {
+      profiles.${config.home.username}.extensions.packages = [
+        pkgs.nur.repos.rycee.firefox-addons.keepassxc-browser
+      ];
+      nativeMessagingHosts = [pkgs.keepassxc];
+    };
+
     wayland.windowManager.hyprland.settings = {
       exec-once = mkIf cfg.hyprland.autostart.enable [
         "keepassxc"

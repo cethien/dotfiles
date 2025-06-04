@@ -1,12 +1,20 @@
 {
   lib,
   config,
+  pkgs,
   zen-browser,
   ...
 }: let
   inherit (lib) mkEnableOption mkOption types mkIf;
   cfg = config.deeznuts.programs.browser.zen-browser;
+
+  name = "${config.home.username}";
+  shared = import ./firefox-profile.nix {inherit pkgs name;};
 in {
+  imports = [
+    zen-browser.homeModules.beta
+  ];
+
   options.deeznuts.programs.browser.zen-browser = {
     enable = mkEnableOption "zen browser";
     hyprland = {
@@ -20,9 +28,11 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home.packages = [
-      zen-browser.packages."x86_64-linux".beta
-    ];
+    programs.zen-browser.enable = true;
+    programs.zen-browser = {
+      inherit (shared) languagePacks;
+      profiles."${name}" = shared.profiles."${name}";
+    };
 
     wayland.windowManager.hyprland.settings = {
       exec-once = mkIf cfg.hyprland.autostart.enable [
