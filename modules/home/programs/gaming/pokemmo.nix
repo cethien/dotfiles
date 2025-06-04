@@ -17,9 +17,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [
-      pokemmo-installer
-    ];
+    home.packages = with pkgs; [pokemmo-installer];
 
     wayland.windowManager.hyprland.settings = {
       windowrulev2 = [

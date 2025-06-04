@@ -9,7 +9,7 @@ in {
   imports = [
     ./mangohud.nix
     ./steam.nix
-    ./prismlauncher.nix
+    ./minecraft.nix
     ./r2modman.nix
     ./retroarch.nix
     ./pokemmo.nix
@@ -22,7 +22,7 @@ in {
   config.deeznuts.programs.gaming = mkIf cfg.enable {
     mangohud.enable = true;
     steam.enable = true;
-    prismlauncher.enable = true;
+    minecraft.enable = true;
     retroarch.enable = true;
     pokemmo.enable = true;
   };
