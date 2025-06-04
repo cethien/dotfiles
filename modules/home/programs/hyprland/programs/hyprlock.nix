@@ -38,6 +38,7 @@ in {
 
         image = [
           {
+            monitor = cfg.monitor;
             path = "${config.home.homeDirectory}/Pictures/logo.png";
             halign = "center";
             valign = "center";
