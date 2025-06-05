@@ -1,11 +1,14 @@
-{ lib, config, pkgs, ... }:
-let
-  inherit (lib) mkIf mkEnableOption;
-  cfg = config.deeznuts.services.pipewire;
-in
 {
-  options.deeznuts.services.pipewire = {
-    enable = mkEnableOption "Enable pipewire";
+  lib,
+  config,
+  pkgs,
+  ...
+}: let
+  inherit (lib) mkIf mkEnableOption;
+  cfg = config.deeznuts.audio;
+in {
+  options.deeznuts.audio = {
+    enable = mkEnableOption "audio via pipewire";
   };
 
   config = mkIf cfg.enable {
@@ -29,6 +32,5 @@ in
         '')
       ];
     };
-
   };
 }

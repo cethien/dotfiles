@@ -1,8 +1,7 @@
 {
   imports = [
-    ./logitech-peripherals
-    ./nvidia-gpu
-    ./stream-deck
-    ./xbox-controller
+    ./logitech-peripherals.nix
+    ./nvidia-gpu.nix
+    ./elgato-stream-deck.nix
   ];
 }

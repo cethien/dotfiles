@@ -1,35 +1,45 @@
 {
+  nixpkgs,
   pkgs,
-  inputs,
   stateVersion,
   ...
-}:
-inputs.nixpkgs.lib.nixosSystem {
-  specialArgs = {inherit inputs;};
-  modules = [
-    ./hardware.nix
-    ../../modules/nixos
-    {
-      system.stateVersion = stateVersion;
-      networking.hostName = "tower-of-power";
-      boot.loader.grub.device = "/dev/nvme0n1";
-      boot.kernelPackages = pkgs.linuxPackages_zen;
+}: let
+  user = "cethien";
+in
+  nixpkgs.lib.nixosSystem {
+    inherit pkgs;
+    modules = [
+      ./hardware.nix
+      ../../modules/nixos
+      {
+        system.stateVersion = stateVersion;
+        networking.hostName = "tower-of-power";
+        boot.loader.grub.device = "/dev/nvme0n1";
+        boot.kernelPackages = pkgs.linuxPackages_zen;
 
-      deeznuts = {
+        services.printing.enable = true;
         hardware = {
-          nvidia-gpu.enable = true;
-          logitech-peripherals.enable = true;
-          stream-deck.enable = true;
-          xbox-controller.enable = true;
+          bluetooth.enable = true;
+          xpadneo.enable = true;
         };
 
-        programs.steam.enable = true;
+        deeznuts = {
+          hardware = {
+            nvidia-gpu.enable = true;
+            logitech-peripherals.enable = true;
+            elgato-stream-deck.enable = true;
+          };
 
-        virtualisation = {
+          hyprland.enable = true;
+          hyprland.autologinUser = user;
+          audio.enable = true;
+          steam.enable = true;
+
           docker.enable = true;
+          docker.users = [user];
           kvm.enable = true;
+          kvm.users = [user];
         };
-      };
-    }
-  ];
-}
+      }
+    ];
+  }

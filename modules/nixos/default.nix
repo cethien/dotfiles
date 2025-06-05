@@ -3,41 +3,38 @@
   lib,
   ...
 }: let
+  inherit (lib) mkDefault;
   user = "cethien";
 in {
   imports = [
     ./users
+    ./ansible.nix
+    ./deployrs.nix
+    ./docker.nix
 
-    ./programs
-    ./desktop
     ./hardware
-    ./services
-    ./virtualisation
+    ./audio.nix
+    ./hyprland.nix
+    ./steam.nix
+    ./kvm.nix
   ];
 
-  boot = {
-    kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
+  deeznuts.users.${user}.enable = true;
 
-    loader.efi.canTouchEfiVariables = true;
-    loader.grub = {
-      enable = true;
-      efiSupport = true;
-    };
-  };
-
-  nix = {
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 7d";
-    };
+  services.openssh = {
+    enable = mkDefault true;
     settings = {
-      extra-experimental-features = "nix-command flakes";
-      warn-dirty = false;
-      trusted-users = ["@wheel"];
-      allowed-users = ["@wheel"];
+      PasswordAuthentication = false;
+      PermitRootLogin = "no";
     };
   };
+
+  environment.systemPackages = with pkgs; [
+    vim
+    tmux
+    htop
+  ];
+  programs.command-not-found.enable = true;
 
   time.timeZone = "Europe/Berlin";
   i18n.defaultLocale = "en_US.UTF-8";
@@ -61,34 +58,27 @@ in {
   console.useXkbConfig = true;
 
   networking.networkmanager.enable = true;
-  programs.command-not-found.enable = true;
-  hardware.bluetooth.enable = true;
-  services.printing.enable = true;
 
-  deeznuts = {
-    services = {
-      ssh.enable = true;
-      pipewire.enable = true;
+  nix = {
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 7d";
     };
-
-    users.${user}.enable = true;
-
-    desktop = {
-      hyprland.enable = true;
-      autoLogin.enable = true;
-      autoLogin.user = user;
+    settings = {
+      extra-experimental-features = "nix-command flakes";
+      warn-dirty = false;
+      trusted-users = ["@wheel"];
+      allowed-users = ["@wheel"];
     };
+  };
 
-    virtualisation = {
-      docker = {
-        enable = lib.mkDefault false;
-        liveRestore = true;
-        users = [user];
-      };
-      kvm = {
-        enable = lib.mkDefault false;
-        users = [user];
-      };
+  boot = {
+    kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
+    loader.efi.canTouchEfiVariables = true;
+    loader.grub = {
+      enable = true;
+      efiSupport = true;
     };
   };
 }

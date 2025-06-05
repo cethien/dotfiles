@@ -1,15 +1,17 @@
-{ lib, config, ... }:
-let
+{
+  lib,
+  config,
+  ...
+}: let
   inherit (lib) mkIf mkEnableOption mkOption;
   inherit (lib.types) str listOf passwdEntry;
-  cfg = config.deeznuts.virtualisation.kvm;
-in
-{
-  options.deeznuts.virtualisation.kvm = {
-    enable = mkEnableOption "Enable VM Virtualization";
+  cfg = config.deeznuts.kvm;
+in {
+  options.deeznuts.kvm = {
+    enable = mkEnableOption "VM Virtualization";
     users = mkOption {
       type = listOf (passwdEntry str);
-      default = [ ];
+      default = [];
       description = "List of users that can work with VMs";
     };
   };
@@ -18,7 +20,6 @@ in
     virtualisation.libvirtd.enable = true;
     users.groups.libvirt.members = cfg.users;
     virtualisation.spiceUSBRedirection.enable = true;
-
     programs.virt-manager.enable = true;
   };
 }

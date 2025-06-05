@@ -1,11 +1,13 @@
-{ lib, config, ... }:
-let
-  inherit (lib) mkIf mkEnableOption;
-  cfg = config.deeznuts.programs.steam;
-in
 {
-  options.deeznuts.programs.steam = {
-    enable = mkEnableOption "Enable steam";
+  lib,
+  config,
+  ...
+}: let
+  inherit (lib) mkIf mkEnableOption;
+  cfg = config.deeznuts.steam;
+in {
+  options.deeznuts.steam = {
+    enable = mkEnableOption "steam";
   };
 
   config = mkIf cfg.enable {
@@ -14,7 +16,6 @@ in
       protontricks.enable = true;
       gamescopeSession.enable = true;
     };
-
     programs.gamemode.enable = true;
   };
 }
