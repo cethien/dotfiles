@@ -1,0 +1,38 @@
+services:
+  blocky:
+    image: ghcr.io/0xerr0r/blocky:latest
+    environment:
+      TZ: Europe/Berlin
+    ports:
+      - 53:53/udp
+    configs:
+      - source: config.yml
+        target: /app/config.yml
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      - caddy    
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+      labels:
+        caddy: blocky.cethien.home
+        caddy.tls: internal
+        caddy.reverse_proxy: "{{upstreams 4000}}"
+
+        homepage.group: Services
+        homepage.name: Blocky
+        homepage.icon: blocky.png
+        homepage.href: https://blocky.cethien.home/
+        homepage.description: Block all the things!
+
+configs:
+  config.yml:
+    file: ./config.yml
+
+networks:
+  caddy:
+    name: caddy_net
+    external: true
