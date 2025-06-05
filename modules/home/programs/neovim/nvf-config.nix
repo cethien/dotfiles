@@ -268,22 +268,22 @@
         }
         {
           mode = "n";
-          key = "<C-Left>";
+          key = "<leader><Left>";
           action = "<cmd>wincmd h<CR>";
         }
         {
           mode = "n";
-          key = "<C-Right>";
+          key = "<leader><Right>";
           action = "<cmd>wincmd l<CR>";
         }
         {
           mode = "n";
-          key = "<C-Up>";
+          key = "<leader><Up>";
           action = "<cmd>wincmd k<CR>";
         }
         {
           mode = "n";
-          key = "<C-Down>";
+          key = "<leader><Down>";
           action = "<cmd>wincmd l<CR>";
         }
 
