@@ -43,7 +43,9 @@ in {
         advice.addIgnoredFile = false;
         url = {
           "ssh://git@github.com".insteadOf = "https://github.com";
+          "git@github.com:".insteadOf = "gh:";
           "ssh://git@gitlab.com".insteadOf = "https://gitlab.com";
+          "git@gitlab.com:".insteadOf = "gl:";
         };
       };
 
