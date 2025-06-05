@@ -227,6 +227,12 @@
       keymaps = [
         {
           mode = "n";
+          key = "<leader>gh";
+          action = "<cmd>Octo actions<CR>";
+        }
+
+        {
+          mode = "n";
           key = "<leader>df";
           action = "<cmd>SopsDecrypt<CR>";
         }
