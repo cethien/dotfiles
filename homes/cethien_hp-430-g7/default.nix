@@ -52,9 +52,6 @@ home-manager.lib.homeManagerConfiguration {
         };
 
         dev.chromium.enable = true;
-
-        desktop.enable = true;
-        media-tools.enable = true;
         gaming.enable = true;
       };
     }

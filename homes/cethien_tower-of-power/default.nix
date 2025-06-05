@@ -69,6 +69,11 @@ home-manager.lib.homeManagerConfiguration {
         gaming.enable = true;
         steam.hyprland.autostart.enable = true;
 
+        logitech-peripherals.enable = true;
+        logitech-peripherals.hyprland.autostart.enable = true;
+        elgato-stream-deck.enable = true;
+        elgato-stream-deck.hyprland.autostart.enable = true;
+
         obs-studio.enable = true;
         obs-studio.hyprland.workspace = 5;
       };

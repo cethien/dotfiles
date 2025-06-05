@@ -1,5 +1,4 @@
 {
-  pkgs,
   lib,
   config,
   ...
@@ -13,6 +12,5 @@ in {
 
   config = mkIf cfg.enable {
     hardware.logitech.wireless.enable = true;
-    environment.systemPackages = with pkgs; [solaar];
   };
 }

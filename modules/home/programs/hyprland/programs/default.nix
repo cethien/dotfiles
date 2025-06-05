@@ -1,10 +1,13 @@
-{ lib, config, pkgs, ... }:
-let
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}: let
   inherit (lib) mkIf mkDefault;
   cfg = config.deeznuts.programs.hyprland;
   enabled = cfg.enable;
-in
-{
+in {
   imports = [
     ./kitty.nix
     ./wezterm.nix
@@ -45,8 +48,6 @@ in
 
     wayland.windowManager.hyprland.settings = {
       exec-once = [
-        "solaar -w hide"
-        "streamcontroller -b"
         "udiskie"
       ];
 

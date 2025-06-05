@@ -3,14 +3,9 @@
   config,
   ...
 }: let
-  inherit (lib) mkEnableOption mkDefault;
-  cfg = config.deeznuts.programs;
+  inherit (lib) mkDefault;
+  desktopEnabled = config.wayland.windowManager.hyprland.enable;
 in {
-  options.deeznuts.programs = {
-    desktop.enable = mkEnableOption "Enable basic desktop programs";
-    media-tools.enable = mkEnableOption "Enable programs for media creation";
-  };
-
   imports = [
     ./qol
     ./dev
@@ -26,6 +21,9 @@ in {
     ./docker.nix
 
     ./hyprland
+
+    ./logitech-peripherals.nix
+    ./elgato-stream-deck.nix
 
     ./browser
     ./discord.nix
@@ -59,26 +57,25 @@ in {
     fun.enable = mkDefault true;
     fastfetch.enable = mkDefault true;
 
-    keepassxc.enable = mkDefault cfg.desktop.enable;
-    keepassxc.hyprland.autostart.enable = mkDefault cfg.desktop.enable;
-
-    pavucontrol.enable = mkDefault cfg.desktop.enable;
-    easyeffects.enable = mkDefault cfg.desktop.enable;
+    keepassxc.enable = mkDefault desktopEnabled;
+    keepassxc.hyprland.autostart.enable = mkDefault desktopEnabled;
+    pavucontrol.enable = mkDefault desktopEnabled;
+    easyeffects.enable = mkDefault desktopEnabled;
     browser = {
-      firefox.enable = mkDefault cfg.desktop.enable;
-      zen-browser.enable = mkDefault cfg.desktop.enable;
-      zen-browser.hyprland.autostart.enable = mkDefault cfg.desktop.enable;
+      firefox.enable = mkDefault desktopEnabled;
+      zen-browser.enable = mkDefault desktopEnabled;
+      zen-browser.hyprland.autostart.enable = mkDefault desktopEnabled;
 
       xmimeDefault = "zen-beta.desktop";
     };
-    discord.enable = mkDefault cfg.desktop.enable;
-    spotify.enable = mkDefault cfg.desktop.enable;
-    spotify.hyprland.autostart.enable = mkDefault cfg.desktop.enable;
+    discord.enable = mkDefault desktopEnabled;
+    spotify.enable = mkDefault desktopEnabled;
+    spotify.hyprland.autostart.enable = mkDefault desktopEnabled;
 
-    pinta.enable = mkDefault cfg.media-tools.enable;
-    gimp.enable = mkDefault cfg.media-tools.enable;
-    inkscape.enable = mkDefault cfg.media-tools.enable;
-    drawio.enable = mkDefault cfg.media-tools.enable;
-    ocenaudio.enable = mkDefault cfg.media-tools.enable;
+    pinta.enable = mkDefault desktopEnabled;
+    gimp.enable = mkDefault desktopEnabled;
+    inkscape.enable = mkDefault desktopEnabled;
+    drawio.enable = mkDefault desktopEnabled;
+    ocenaudio.enable = mkDefault desktopEnabled;
   };
 }

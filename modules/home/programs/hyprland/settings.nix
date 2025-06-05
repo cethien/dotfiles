@@ -5,7 +5,6 @@
 }: let
   inherit (lib) mkIf mkOption types;
   cfg = config.deeznuts.programs.hyprland;
-  enabled = config.deeznuts.programs.hyprland.enable;
 in {
   options.deeznuts.programs.hyprland = {
     monitors = mkOption {
@@ -43,7 +42,7 @@ in {
     };
   };
 
-  config = mkIf enabled {
+  config = mkIf cfg.enable {
     wayland.windowManager.hyprland.settings = {
       monitor = cfg.monitors;
       workspace = cfg.workspaces;

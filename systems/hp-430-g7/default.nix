@@ -24,7 +24,6 @@ in
         };
 
         deeznuts = {
-          hardware.logitech-peripherals.enable = true;
           hyprland.enable = true;
           hyprland.autologinUser = user;
           audio.enable = true;
