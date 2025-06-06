@@ -1,23 +1,25 @@
 services:
-  #   depends_on:
-  #     - mc
-  #   configs:
-  #     - source: bluemap-Caddyfile
-  #       target: /etc/caddy/Caddyfile
-  #   volumes:
-  #     - /opt/minecraft-server/data/bluemap/web:/var/www:ro
-  #   networks:
-  #     - caddy
-  #   deploy:
-  #     restart_policy:
-  #       condition: on-failure
-  #       delay: 5s
-  #       max_attempts: 3
-  #     labels:
-  #       caddy: minecraft.potato-squad.de
-  #       caddy.handle_path: /bluemap/*
-  #       caddy.handle_path.reverse_proxy: "{{ upstreams 80 }}"
-  #
+  bluemap:
+    image: caddy:latest
+    depends_on:
+      - mc
+    configs:
+      - source: bluemap-Caddyfile
+        target: /etc/caddy/Caddyfile
+    volumes:
+      - /opt/minecraft-server/data/bluemap/web:/var/www:ro
+    networks:
+      - caddy
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+      labels:
+        caddy: minecraft.potato-squad.de
+        caddy.handle_path: /bluemap/*
+        caddy.handle_path.reverse_proxy: "{{ upstreams 80 }}"
+
   mc:
     image: itzg/minecraft-server:latest
     ports:

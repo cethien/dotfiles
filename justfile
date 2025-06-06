@@ -37,13 +37,13 @@ nixos-deploy *targets:
 
 docker-deploy dir:
     #!/usr/bin/env bash
-    domain=$(dirname {{dir}})
+    domain=$(basename "$(dirname {{dir}})")
     stack_name=$(basename {{dir}} | sed 's/[^a-z0-9-]/_/g')
     docker --context "$domain" stack deploy -c "{{dir}}/compose.yml" "$stack_name" --detach=false
 
 docker-remove dir:
     #!/usr/bin/env bash
-    domain=$(dirname {{dir}})
+    domain=$(basename "$(dirname {{dir}})")
     stack_name=$(basename {{dir}} | sed 's/[^a-z0-9-]/_/g')
     docker --context "$domain" stack rm "$stack_name" 
 
