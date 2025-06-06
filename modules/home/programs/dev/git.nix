@@ -59,7 +59,6 @@ in {
       gd = "git diff";
       ga = "git add";
       gaa = "git add .";
-      gaf = "git add -f";
 
       gc = "git commit -m";
       gca = "git commit -am";
@@ -76,9 +75,9 @@ in {
 
       gps = "git push";
 
-      glg = "git log --graph --oneline --decorate";
-
+      gw = "git worktree";
       gwa = "git worktree add";
+      gwrm = "git worktree remove";
       gwl = "git worktree list";
       gwt = "git worktree prune";
 
