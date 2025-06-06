@@ -10,13 +10,11 @@ in {
     ./users
     ./ansible.nix
     ./deployrs.nix
-    ./docker.nix
-
     ./hardware
+    ./virtualisation
     ./audio.nix
     ./hyprland.nix
     ./steam.nix
-    ./kvm.nix
   ];
 
   deeznuts.users.${user}.enable = true;

@@ -29,10 +29,12 @@ in
           audio.enable = true;
           steam.enable = true;
 
-          docker.enable = true;
-          docker.users = [user];
-          kvm.enable = true;
-          kvm.users = [user];
+          virtualisation = {
+            docker.enable = true;
+            docker.users = [user];
+            libvirt.enable = true;
+            libvirt.users = [user];
+          };
         };
       }
     ];
