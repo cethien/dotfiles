@@ -1,0 +1,54 @@
+services:
+  agent:
+    image: portainer/agent:lts
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/docker/volumes:/var/lib/docker/volumes
+    networks:
+      - agent_network
+    deploy:
+      mode: global
+      placement:
+        constraints: [node.platform.os == linux]
+
+  portainer:
+    image: portainer/portainer-ce:lts
+    command: -H tcp://tasks.agent:9001 --tlsskipverify
+    volumes:
+      - data:/data
+    networks:
+      - agent_network
+      - caddy
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+      labels:
+        caddy: portainer.cethien.home
+        caddy.tls: internal
+        caddy.reverse_proxy: "{{upstreams 9000}}"
+
+        homepage.group: Administration
+        homepage.name: Portainer
+        homepage.icon: portainer.png
+        homepage.href: https://portainer.cethien.home/
+        homepage.description: Dockerize all the things!
+
+        # homepage.widget.type: portainer
+        # homepage.widget.url: http://tasks.portainer_portainer
+        # homepage.widget.env: 1
+        # homepage.widget.key: ptr_accesskeyaccesskeyaccesskeyaccesskey
+
+networks:
+  agent_network:
+    driver: overlay
+    attachable: true
+
+  caddy:
+    name: caddy_net
+    external: true
+
+volumes:
+  data:
+    name: portainer_data

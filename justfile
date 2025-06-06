@@ -13,9 +13,6 @@ home := env("USER") + "@" + hostname
 @format:
     nixpkgs-fmt . && shfmt -w $(find . -name '*.sh')
 
-@lint:
-    nixpkgs-fmt --check .
-
 @update:
     clear && nix flake update
 
@@ -25,14 +22,38 @@ home := env("USER") + "@" + hostname
 @rebuild-nixos:
     clear && sudo nixos-rebuild switch --flake .#{{system}}
 
-@install profile dest:
+nixos-install profile dest:
     nix run github:nix-community/nixos-anywhere -- \
     --flake .#{{profile}} \
     --generate-hardware-config nixos-generate-config ./systems/{{profile}}/hardware.nix \
     {{dest}}
 
-@deploy profile dest:
-    nixos-rebuild switch \
-    --flake .#{{profile}} \
-    --target-host {{dest}} \
-    --use-remote-sudo
+nixos-deploy *targets:
+    nix run github:serokell/deploy-rs -- {{ if targets == "" { "." } else { "--targets " + targets } }}
+
+@ansible-run playbook +hosts="":
+    ansible-playbook {{ playbook }} \
+    {{ if hosts != "" { "--extra-vars=\"hosts=" + hosts + "\"" } else { "" } }}
+
+docker-deploy dir:
+    #!/usr/bin/env bash
+    domain=$(basename "$(dirname {{dir}})")
+    stack_name=$(basename {{dir}} | sed 's/[^a-z0-9-]/_/g')
+    docker --context "$domain" stack deploy -c "{{dir}}/compose.yml" "$stack_name" --detach=false
+
+docker-remove dir:
+    #!/usr/bin/env bash
+    domain=$(basename "$(dirname {{dir}})")
+    stack_name=$(basename {{dir}} | sed 's/[^a-z0-9-]/_/g')
+    docker --context "$domain" stack rm "$stack_name" 
+
+docker-create-secret secret_name ctx="default":
+    #!/usr/bin/env bash
+    read -s -p "Enter secret value: " secret_value
+    echo -e "\n"
+    echo "$secret_value" | docker --context {{ctx}} secret create {{secret_name}} -
+
+docker-remove-secret secret_name ctx="default":
+    #!/usr/bin/env bash
+    docker --context {{ctx}} secret rm {{secret_name}}
+

@@ -1,0 +1,33 @@
+services:
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    volumes:
+      - config:/app/config
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - homepage
+      - caddy
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        max_attempts: 5
+      placement:
+        constraints: [node.role == manager]
+      labels:
+        caddy: cethien.home
+        caddy.tls: internal
+        caddy.reverse_proxy: "{{upstreams 3000}}"
+
+networks:
+  homepage:
+    name: homepage_net
+    attachable: true
+
+  caddy:
+    name: caddy_net
+    external: true
+
+volumes:
+  config:
+    name: admin_homepage_config

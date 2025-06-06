@@ -1,0 +1,20 @@
+services:
+  site:
+    image: ghcr.io/potato-squad-de/potato-squad.de:latest
+    environment:
+      DISCORD_INVITE_URL: https://discord.gg/pHdZKq6mf9
+    networks:
+      - caddy
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+      labels:
+        caddy: potato-squad.de
+        caddy.reverse_proxy: "{{upstreams 80}}"
+
+networks:
+  caddy:
+    name: caddy_net
+    external: true

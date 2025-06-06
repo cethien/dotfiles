@@ -1,0 +1,33 @@
+services:
+  valheim-server:
+    image: lloesche/valheim-server:latest
+    environment:
+      TZ: Europe/Berlin
+      SERVER_NAME: "cethien_server"
+      WORLD_NAME: Valhalla
+      ADMINLIST_IDS: |
+        76561198152461169
+      PERMITTEDLIST_IDS: |
+        76561198152461169
+      SERVER_PUBLIC: "false"
+      VALHEIM_PLUS: "true"
+      BEPINEXCFG_Logging_DOT_Console_Enabled: "true"
+
+      VPCFG_Server_enabled: "true"
+      VPCFG_Server_maxPlayers: "1"
+      VPCFG_Server_disableServerPassword: "true"
+
+      VPCFG_CraftFromChest_enabled: "true"
+      VPCFG_CraftFromChest_allowCraftingFromCarts: "true"
+      VPCFG_CraftFromChest_allowCraftingFromShips: "true"
+    ports:
+      - 2456:2456/udp
+      - 2457:2457/udp
+    volumes:
+      - /valheim-server/config:/config
+      - /valheim-server/data:/opt/valheim
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3

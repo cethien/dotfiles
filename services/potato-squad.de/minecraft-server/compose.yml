@@ -1,0 +1,110 @@
+services:
+  bluemap:
+    image: caddy:latest
+    depends_on:
+      - mc
+    configs:
+      - source: bluemap-Caddyfile
+        target: /etc/caddy/Caddyfile
+    volumes:
+      - /opt/minecraft-server/data/bluemap/web:/var/www:ro
+    networks:
+      - caddy
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+      labels:
+        caddy: minecraft.potato-squad.de
+        caddy.handle_path: /bluemap/*
+        caddy.handle_path.reverse_proxy: "{{ upstreams 80 }}"
+
+  mc:
+    image: itzg/minecraft-server:latest
+    ports:
+      - "25565:25565"
+    environment:
+      MEMORY: 2G
+      TZ: Europe/Berlin
+      EXEC_DIRECTLY: "true"
+      SNOOPER_ENABLED: "false"
+      STOP_SERVER_ANNOUNCE_DELAY: "30"
+
+      EULA: "true"
+      VERSION: "1.21.1"
+      TYPE: FABRIC
+      DIFFICULTY: hard
+      VIEW_DISTANCE: "8"
+      MOTD: potato-squad.de
+      MAX_PLAYERS: "8"
+      ENABLE_WHITELIST: "true"
+      WHITELIST: |
+        Cethien, Luwuzifer, ly_snupsie, Ferritzzz, TimmehDE
+
+      VANILLATWEAKS_SHARECODE: RsGKlH
+      DATAPACKS_FILE: /datapacks
+
+      MODRINTH_DOWNLOAD_DEPENDENCIES: required
+      MODRINTH_ALLOWED_VERSION_TYPE: alpha
+      MODRINTH_PROJECTS: |
+        yacl:Y8Wa10Re
+
+        mixintrace
+        lithium
+        ferrite-core
+        modernfix
+        debugify
+        badpackets
+        threadtweak
+        krypton:Acz3ttTp
+
+        G9ZpI0bU
+
+        oplock
+
+        fALzjamp
+        chunky-extension:7e8Rxgsk
+
+        no-chat-reports
+
+        16vhQOQN
+
+        better-stats
+        styled-chat
+        styledplayerlist
+        styled-nicknames
+
+        jade
+        appleskin
+        villager-names-serilum
+        shulkerboxtooltip
+        xaeros-world-map
+
+        terralith
+
+        clumps
+        monsters-in-the-closet
+
+        swbUV1cr
+    configs:
+      - source: mc-datapacks
+        target: /datapacks
+    volumes:
+      - /opt/minecraft-server:/data
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+
+configs:
+  bluemap-Caddyfile:
+    file: ./bluemap/Caddyfile
+  mc-datapacks:
+    file: ./datapacks
+
+networks:
+  caddy:
+    name: caddy_net
+    external: true

@@ -1,0 +1,12 @@
+- name: Prune docker hosts
+  hosts: "{{ host | default('docker') }}"
+  tasks:
+    - name: Prune docker hosts
+      community.docker.docker_prune:
+        containers: true
+        images: true
+        images_filters:
+          dangling: false
+        networks: true
+        volumes: true
+        builder_cache: true

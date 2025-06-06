@@ -2,7 +2,9 @@
   description = "cethien's dotfiles";
 
   outputs = {
+    self,
     nixpkgs,
+    deploy-rs,
     sops-nix,
     home-manager,
     nur,
@@ -38,6 +40,8 @@
       inherit pkgs system home-manager stateVersion sops-nix stylix nvf;
     };
 
+    checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
+
     packages.${system}.setup-age = import ./scripts/setup-age.nix {inherit pkgs;};
 
     devShells.${system}.default = pkgs.mkShell {
@@ -45,6 +49,10 @@
         git
         just
         sops
+
+        ansible
+        ansible-lint
+        sshpass
       ];
     };
   };
@@ -72,6 +80,9 @@
 
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
+
+    deploy-rs.url = "github:serokell/deploy-rs";
+    deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
 
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
