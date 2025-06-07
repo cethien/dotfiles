@@ -7,7 +7,7 @@ services:
       - source: bluemap-Caddyfile
         target: /etc/caddy/Caddyfile
     volumes:
-      - /opt/minecraft-server/data/bluemap/web:/var/www:ro
+      - /opt/minecraft-server/bluemap/web:/var/www:ro
     networks:
       - caddy
     deploy:
