@@ -31,29 +31,35 @@ nixos-install profile dest:
 nixos-deploy *targets:
     nix run github:serokell/deploy-rs -- {{ if targets == "" { "." } else { "--targets " + targets } }}
 
-@ansible-run playbook +hosts="":
+@ansible playbook +hosts="":
     ansible-playbook {{ playbook }} \
     {{ if hosts != "" { "--extra-vars=\"hosts=" + hosts + "\"" } else { "" } }}
 
-docker-deploy dir:
+deploy dir:
     #!/usr/bin/env bash
     domain=$(basename "$(dirname {{dir}})")
     stack_name=$(basename {{dir}} | sed 's/[^a-z0-9-]/_/g')
     docker --context "$domain" stack deploy -c "{{dir}}/compose.yml" "$stack_name" --detach=false
 
-docker-remove dir:
+remove dir:
     #!/usr/bin/env bash
     domain=$(basename "$(dirname {{dir}})")
     stack_name=$(basename {{dir}} | sed 's/[^a-z0-9-]/_/g')
     docker --context "$domain" stack rm "$stack_name" 
 
-docker-create-secret secret_name ctx="default":
+create-secret secret_name ctx="default":
     #!/usr/bin/env bash
     read -s -p "Enter secret value: " secret_value
     echo -e "\n"
     echo "$secret_value" | docker --context {{ctx}} secret create {{secret_name}} -
 
-docker-remove-secret secret_name ctx="default":
+remove-secret secret_name ctx="default":
     #!/usr/bin/env bash
     docker --context {{ctx}} secret rm {{secret_name}}
 
+[working-directory: 'services/potato-squad.de/minecraft-server']
+deploy-minecraft-server:
+  #!/usr/bin/env bash
+  ssh potato-squad.de -t 'sudo mkdir -p /opt/minecraft-server/bluemap/web'
+  rsync --rsync-path="sudo rsync" config potato-squad.de:/opt/minecraft-server/config 
+  docker --context "potato-squad.de" stack deploy -c compose.yml minecraft-server --detach=false
