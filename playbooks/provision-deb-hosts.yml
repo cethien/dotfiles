@@ -1,0 +1,79 @@
+- name: Provision Debian hosts
+  hosts: "{{ host | default('all') }}"
+  become: true
+  vars:
+    cethien_pubkey: "{{ lookup('file', 'keys/cethien_ed25519.pub') }}"
+    ansible_pubkey: "{{ lookup('file', 'keys/ansible_hstgr.pub') }}"
+  tasks:
+    - name: Update via apt
+      ansible.builtin.apt:
+        update_cache: true
+        upgrade: true
+
+    - name: Install tmux, vim, htop
+      ansible.builtin.apt:
+        name:
+          - vim
+          - tmux
+          - htop
+        state: present
+
+    - name: cethien user
+      block:
+      - name: create user cethien
+        ansible.builtin.user:
+          name: cethien
+          comment: 'borislaw.sotnikow@gmx.de'
+          groups: 'sudo'
+          password: '$y$j9T$s/2hfsYA.NA.Xr2XJBxrJ0$AHdrr9u7l3Byi2IVjjg5fCr4qdYnf/h5OxbkKJrP6w9'
+    
+      - name: add public ssh key for cethien
+        ansible.posix.authorized_key:
+          user: cethien
+          state: present
+          key: '{{ cethien_pubkey }}'
+   
+    - name: ansible user
+      block:
+      - name: create system user ansbile
+        ansible.builtin.user:
+          name: ansible
+          system: true
+          shell: /bin/bash
+          groups: 'sudo'
+          password: '$y$j9T$SIMkCIvu4mYN4NT5c3iqb/$X9Jzwzgve7I361gUvp.sL9pqUNJ/en/onPuPmAxytE2'
+
+      - name: allow sudo with no password for user ansible
+        community.general.sudoers:
+          name: ansible
+          user: ansible
+          commands: ALL
+
+      - name: add public ssh key for ansible
+        ansible.posix.authorized_key:
+          user: ansible
+          state: present
+          key: '{{ ansible_pubkey }}'
+
+    - name: ssh hardening
+      block:
+      - name: add file to /etc/ssh/sshd_config.d
+        ansible.builtin.copy:
+          src: '{{ playbook_dir }}/files/10-hardening.conf'
+          dest: /etc/ssh/sshd_config.d/10-hardening.conf
+      
+      - name: restart ssh service
+        ansible.builtin.service:
+          name: ssh
+          state: restarted
+ 
+    - name: firewall
+      block:
+      - name: allow OpenSSH in ufw
+        community.general.ufw:
+          rule: allow
+          name: OpenSSH
+
+      - name: enable ufw
+        community.general.ufw:
+          state: enabled
