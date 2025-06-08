@@ -24,7 +24,7 @@
         ansible.builtin.user:
           name: cethien
           comment: 'borislaw.sotnikow@gmx.de'
-          groups: 'sudo'
+          groups: 'sudo, docker'
           password: '$y$j9T$s/2hfsYA.NA.Xr2XJBxrJ0$AHdrr9u7l3Byi2IVjjg5fCr4qdYnf/h5OxbkKJrP6w9'
     
       - name: add public ssh key for cethien
@@ -40,7 +40,7 @@
           name: ansible
           system: true
           shell: /bin/bash
-          groups: 'sudo'
+          groups: 'sudo, docker'
           password: '$y$j9T$SIMkCIvu4mYN4NT5c3iqb/$X9Jzwzgve7I361gUvp.sL9pqUNJ/en/onPuPmAxytE2'
 
       - name: allow sudo with no password for user ansible
