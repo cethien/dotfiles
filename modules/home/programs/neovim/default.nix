@@ -9,7 +9,6 @@
 in {
   imports = [
     nvf.homeManagerModules.default
-    ./nvf-config.nix
   ];
 
   options.deeznuts.programs.neovim = {
@@ -20,5 +19,6 @@ in {
     home.sessionVariables.EDITOR = "nvim";
     home.shellAliases.v = "nvim";
     programs.nvf.enable = true;
+    programs.nvf.settings = import ./nvf-config.nix;
   };
 }

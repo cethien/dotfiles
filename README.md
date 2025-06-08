@@ -11,25 +11,48 @@ infra...
 
 ### setup home
 
-for first time installation. this installs nix, sets some permissions and builds
-home-manager. check [`setup file`](./setup-home.sh) for details.
+for first time installation.
+
+installs nix, sets some permissions and builds home-manager.
+
+check [`setup file`](./setup-home.sh) for details.
 
 ```bash
 sh <(curl -fsSL -H 'Cache-Control: no-cache' "https://raw.githubusercontent.com/cethien/dotfiles/main/setup-home.sh")
 ```
 
-### rebuild home
+### neovim
 
-doesn't need existing home manager instance
+_`i use vim btw`_ 🤓
+
+_`are you really 10x without vim motions?`_ 🤓
+
+build neovim from remote.
+
+not sure about installing, will look into it later (famous last words)
+
+```bash
+nix run github:cethien/dotfiles#nvim
+```
+
+### build home from remote
+
+_doesn't need existing home manager instance_
 
 ```bash
 nix run nixpkgs#home-manager -- switch \
 --flake github:cethien/dotfiles#"$(whoami)@$(hostname | tr 'A-Z' 'a-z')" -b bak-hm-"$(date +%Y%m%d_%H%M%S)"
 ```
 
-### rebuild nixos
+includes also 2 console aliases:
 
-this assumes nixos is already installed
+- `rebuild` to build home from remote
+- `rebuild-os` to build system from remote... speaking of:
+
+### build nixos
+
+well, you should have nixos installed, otherwise... will do nuthin' (well, it
+will error, but thats basically nuthin')
 
 ```bash
 sudo nixos-rebuild switch \

@@ -42,7 +42,22 @@
 
     checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
 
-    packages.${system}.setup-age = import ./scripts/setup-age.nix {inherit pkgs;};
+    packages.${system} = let
+      neovimConf = nvf.lib.neovimConfiguration {
+        inherit pkgs;
+        modules = [
+          {
+            config = import ./modules/home/programs/neovim/nvf-config.nix {
+              inherit pkgs;
+            };
+          }
+        ];
+      };
+    in {
+      setup-age = import ./scripts/setup-age.nix {inherit pkgs;};
+      neovim = neovimConf.neovim;
+      v = neovimConf.neovim;
+    };
 
     devShells.${system}.default = pkgs.mkShell {
       buildInputs = with pkgs; [
