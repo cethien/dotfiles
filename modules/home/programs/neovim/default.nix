@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   nvf,
   ...
 }: let
@@ -19,6 +20,9 @@ in {
     home.sessionVariables.EDITOR = "nvim";
     home.shellAliases.v = "nvim";
     programs.nvf.enable = true;
-    programs.nvf.settings = import ./nvf-config.nix;
+    programs.nvf.settings = import ./nvf-config.nix {
+      inherit pkgs;
+      ageFile = config.sops.age.keyFile;
+    };
   };
 }
