@@ -256,7 +256,12 @@
       {
         mode = "v";
         key = "<leader>y";
-        action = ''"+y"'';
+        action = ''"+y'';
+      }
+      {
+        mode = "v";
+        key = "<leader>p";
+        action = ''"+p'';
       }
       {
         mode = "n";
