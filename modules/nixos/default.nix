@@ -55,7 +55,7 @@ in {
   };
   console.useXkbConfig = true;
 
-  networking.networkmanager.enable = true;
+  networking.networkmanager.enable = mkDefault true;
 
   nix = {
     gc = {
@@ -72,11 +72,11 @@ in {
   };
 
   boot = {
-    kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
-    loader.efi.canTouchEfiVariables = true;
+    kernelPackages = mkDefault pkgs.linuxPackages_latest;
+    loader.efi.canTouchEfiVariables = mkDefault true;
     loader.grub = {
-      enable = true;
-      efiSupport = true;
+      enable = mkDefault true;
+      efiSupport = mkDefault true;
     };
   };
 }

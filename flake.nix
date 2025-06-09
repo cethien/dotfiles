@@ -2,9 +2,9 @@
   description = "cethien's dotfiles";
 
   outputs = {
-    self,
+    # self,
     nixpkgs,
-    deploy-rs,
+    # deploy-rs,
     sops-nix,
     home-manager,
     nur,
@@ -22,16 +22,43 @@
     };
     stateVersion = "25.05";
   in {
-    nixosConfigurations."hp-430-g7" = import ./systems/hp-430-g7 {
-      inherit nixpkgs pkgs stateVersion;
+    nixosConfigurations.liveIso = nixpkgs.lib.nixosSystem {
+      inherit system;
+      modules = [
+        ./systems/liveIso/configuration.nix
+        {
+          system.stateVersion = stateVersion;
+        }
+      ];
     };
+
+    nixosConfigurations."hp-430-g7" = nixpkgs.lib.nixosSystem {
+      inherit pkgs;
+      modules = [
+        ./systems/hp-430-g7/configuration.nix
+        {
+          system.stateVersion = stateVersion;
+        }
+        ./systems/hp-430-g7/hardware.nix
+      ];
+    };
+
     homeConfigurations."cethien@hp-430-g7" = import ./homes/cethien_hp-430-g7 {
       inherit pkgs system home-manager stateVersion sops-nix stylix hyprpanel zen-browser nvf;
     };
 
-    nixosConfigurations."tower-of-power" = import ./systems/tower-of-power {
-      inherit nixpkgs pkgs stateVersion;
+    nixosConfigurations."tower-of-power" = nixpkgs.lib.nixosSystem {
+      inherit pkgs;
+      modules = [
+        ./systems/tower-of-power/configuration.nix
+        {
+          system.stateVersion = stateVersion;
+          boot.kernelPackages = pkgs.linuxPackages_zen;
+        }
+        ./systems/tower-of-power/hardware.nix
+      ];
     };
+
     homeConfigurations."cethien@tower-of-power" = import ./homes/cethien_tower-of-power {
       inherit pkgs system home-manager stateVersion sops-nix stylix hyprpanel zen-browser nvf;
     };
@@ -40,7 +67,7 @@
       inherit pkgs system home-manager stateVersion sops-nix stylix nvf;
     };
 
-    checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
+    # checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
 
     packages.${system} = let
       neovimConf = nvf.lib.neovimConfiguration {
@@ -54,7 +81,6 @@
         ];
       };
     in {
-      setup-age = import ./scripts/setup-age.nix {inherit pkgs;};
       neovim = neovimConf.neovim;
       v = neovimConf.neovim;
     };

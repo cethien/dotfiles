@@ -7,20 +7,28 @@ home := env("USER") + "@" + hostname
 @default:
     just --list
 
-@check:
+[private]
+@clear:
+  clear
+
+@check: clear
     nix flake check && nix flake show
 
 @format:
     nixpkgs-fmt . && shfmt -w $(find . -name '*.sh')
 
-@update:
-    clear && nix flake update
+@update: clear
+    nix flake update
 
-@rebuild:
-    clear && nix run nixpkgs#home-manager -- switch --flake .#{{home}} -b bak-hm-$(date +%Y%m%d_%H%M%S)
+@build-iso iso="liveIso": clear
+  nix build \
+    .#nixosConfigurations.{{iso}}.config.system.build.isoImage
+
+@rebuild: clear
+    nix run nixpkgs#home-manager -- switch --flake .#{{home}} -b bak-hm-$(date +%Y%m%d_%H%M%S)
 
 @rebuild-nixos:
-    clear && sudo nixos-rebuild switch --flake .#{{system}}
+    sudo nixos-rebuild switch --flake .#{{system}}
 
 nixos-install profile dest:
     nix run github:nix-community/nixos-anywhere -- \
