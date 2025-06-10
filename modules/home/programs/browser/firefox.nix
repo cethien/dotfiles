@@ -8,7 +8,7 @@
   cfg = config.deeznuts.programs.browser.firefox;
 
   name = "${config.home.username}";
-  shared = import ./firefox-profile.nix {inherit pkgs name;};
+  shared = import ./firefox-profile.nix {inherit config lib pkgs name;};
   firefoxProfile = lib.recursiveUpdate shared.profiles."${name}" {
     settings = {
       "extensions.pocket.enabled" = false;
@@ -22,6 +22,7 @@
       "widget.disable-workspace-management" = true;
       "browser.uiCustomization.horizontalTabstrip" = ''["tabbrowser-tabs","new-tab-button"]'';
     };
+    extensions.force = true;
   };
 in {
   options.deeznuts.programs.browser.firefox = {
@@ -39,7 +40,7 @@ in {
   config = mkIf cfg.enable {
     programs.firefox.enable = true;
     programs.firefox = {
-      inherit (shared) languagePacks;
+      inherit (shared) languagePacks nativeMessagingHosts;
       profiles."${name}" = firefoxProfile;
     };
 

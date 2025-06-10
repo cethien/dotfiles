@@ -1,8 +1,12 @@
 {
+  config,
+  lib,
   pkgs,
   name,
   ...
-}: {
+}: let
+  inherit (lib) mkIf mkMerge;
+in {
   profiles."${name}" = {
     id = 0;
     inherit name;
@@ -27,25 +31,34 @@
       };
     };
 
-    extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
-      multi-account-containers
+    extensions = {
+      packages = with pkgs.nur.repos.rycee.firefox-addons;
+        mkMerge [
+          [
+            multi-account-containers
 
-      ublock-origin
-      unpaywall
-      istilldontcareaboutcookies
-      consent-o-matic
-      cookie-autodelete
-      link-cleaner
-      yang
+            ublock-origin
+            unpaywall
+            istilldontcareaboutcookies
+            consent-o-matic
+            cookie-autodelete
+            link-cleaner
+            yang
 
-      stylus
-      darkreader
+            stylus
+            darkreader
 
-      sponsorblock
-      return-youtube-dislikes
-      twitch-auto-points
-      steam-database
-    ];
+            sponsorblock
+            return-youtube-dislikes
+            twitch-auto-points
+            steam-database
+          ]
+
+          (mkIf config.programs.keepassxc.enable [
+            keepassxc-browser
+          ])
+        ];
+    };
 
     search = {
       default = "google";
@@ -82,6 +95,10 @@
       "browser.shell.checkDefaultBrowser" = false;
     };
   };
+
+  nativeMessagingHosts = mkMerge [
+    (mkIf config.programs.keepassxc.enable [pkgs.keepassxc])
+  ];
 
   languagePacks = [
     "en-US"

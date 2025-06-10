@@ -9,7 +9,7 @@
   cfg = config.deeznuts.programs.browser.zen-browser;
 
   name = "${config.home.username}";
-  shared = import ./firefox-profile.nix {inherit pkgs name;};
+  shared = import ./firefox-profile.nix {inherit config lib pkgs name;};
 in {
   imports = [
     zen-browser.homeModules.beta
@@ -30,7 +30,7 @@ in {
   config = mkIf cfg.enable {
     programs.zen-browser.enable = true;
     programs.zen-browser = {
-      inherit (shared) languagePacks;
+      inherit (shared) languagePacks nativeMessagingHosts;
       profiles."${name}" = shared.profiles."${name}";
     };
 
