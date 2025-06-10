@@ -27,7 +27,7 @@ in {
     virtualisation = {
       docker = {
         enable = true;
-        liveRestore = cfg.swarm.enable;
+        liveRestore = !cfg.swarm.enable;
       };
     };
     users.extraGroups.docker.members = cfg.users;
