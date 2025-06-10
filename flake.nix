@@ -5,6 +5,7 @@
     # self,
     nixpkgs,
     # deploy-rs,
+    disko,
     sops-nix,
     home-manager,
     nur,
@@ -29,6 +30,19 @@
         {
           system.stateVersion = stateVersion;
         }
+      ];
+    };
+
+    nixosConfigurations."homelab" = nixpkgs.lib.nixosSystem {
+      inherit pkgs;
+      modules = [
+        ./systems/homelab/configuration.nix
+        {
+          system.stateVersion = stateVersion;
+        }
+        disko.nixosModules.disko
+        ./systems/homelab/disko.nix
+        ./systems/homelab/hardware.nix
       ];
     };
 
