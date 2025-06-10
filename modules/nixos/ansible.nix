@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkIf mkEnableOption mkOption types;
+  inherit (lib) mkIf mkEnableOption mkOption types mkMerge;
   cfg = config.deeznuts.ansible;
 in {
   options.deeznuts.ansible = {
@@ -27,11 +27,10 @@ in {
     users.users.ansible = {
       description = "ansible user";
       isNormalUser = true;
-      extraGroups =
+      extraGroups = mkMerge [
         ["wheel"]
-        ++ (mkIf config.virtualisation.docker.enable [
-          "docker"
-        ]);
+        (mkIf config.virtualisation.docker.enable ["docker"])
+      ];
       hashedPassword = cfg.user.passwordHash;
       openssh.authorizedKeys.keys = cfg.user.keys;
     };
