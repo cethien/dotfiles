@@ -15,6 +15,7 @@ in {
     ./audio.nix
     ./hyprland.nix
     ./steam.nix
+    ./ai.nix
   ];
 
   deeznuts.users.${user}.enable = true;
