@@ -2,9 +2,9 @@
   description = "cethien's dotfiles";
 
   outputs = {
-    # self,
+    self,
     nixpkgs,
-    # deploy-rs,
+    deploy-rs,
     disko,
     sops-nix,
     home-manager,
@@ -45,6 +45,18 @@
         ./systems/homelab/hardware.nix
       ];
     };
+
+    deploy.nodes."homelab" = {
+      hostname = "192.168.0.23";
+      profiles.system = {
+        path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.homelab;
+        user = "root";
+        sshUser = "deployrs";
+        sshOpts = ["-i" "~/.ssh/deployrs_cethien.home"];
+      };
+    };
+
+    checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
 
     nixosConfigurations."hp-430-g7" = nixpkgs.lib.nixosSystem {
       inherit pkgs;

@@ -30,13 +30,13 @@ home := env("USER") + "@" + hostname
 @rebuild-nixos:
   sudo nixos-rebuild switch --flake .#{{system}}
 
-install profile dest:
+@install-nixos profile dest:
   nix run github:nix-community/nixos-anywhere -- \
       --flake .#{{profile}} \
       --generate-hardware-config nixos-generate-config ./systems/{{profile}}/hardware.nix \
        {{dest}}
 
-deploy-os *targets:
+@deploy-nixos *targets:
   nix run github:serokell/deploy-rs -- {{ if targets == "" { "." } else { "--targets " + targets } }}
 
 @ansible playbook +hosts="":
