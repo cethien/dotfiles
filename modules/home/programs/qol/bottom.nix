@@ -37,30 +37,22 @@ in {
     };
 
     home.shellAliases = {
-      top = "btm";
-      htop = "btm";
+      top = "btm --basic";
+      htop = "btm --basic";
     };
 
     programs.bottom = {
       settings = {
         flags = {
-          # basic = true;
           temperature_type = "c"; # Celsius
           tree = true;
           cpu_as_percentage = true;
           cpu_left_legend = true;
           disable_advanced_kill = true;
+          default_widget_type = "proc";
         };
 
         row = [
-          # Row 1: Processes and CPU
-          {
-            child = [
-              {type = "proc";}
-            ];
-          }
-
-          # Row 2: Graphs
           {
             child = [
               {type = "cpu";}
@@ -78,8 +70,11 @@ in {
               }
             ];
           }
-
-          # Row 3: Disks and Temp
+          {
+            child = [
+              {type = "proc";}
+            ];
+          }
           {
             child = [
               {type = "disk";}
