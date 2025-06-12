@@ -14,34 +14,12 @@ in {
   config = mkIf cfg.enable {
     home.shellAliases = {
       tm = "tmux_new";
-      tmd = "tmux_newd";
       tmls = "tmux ls";
       tmk = "tmux kill-session -t";
+      tmks = "tmux kill-server";
     };
 
-    programs.bash.initExtra =
-      # bash
-      ''
-        _tmux_session() {
-          if [ -n "$1" ] && [[ "$1" != -* ]]; then
-          	echo "$1" | tr -c 'a-zA-Z0-9_' '_'
-          else
-          	basename "$PWD" | tr -c 'a-zA-Z0-9_' '_'
-          fi
-        }
-
-        tmux_new() {
-          local s=$(_tmux_session "$1")
-          if [ -n "$1" ] && [[ "$1" != -* ]]; then shift; fi
-          tmux new-session -A -s "$s" "$@"
-        }
-
-        tmux_newd(){
-          local s=$(_tmux_session "$1")
-          if [ -n "$1" ] && [[ "$1" != -* ]]; then shift; fi
-          tmux new-session -d -s "$s" "$@"
-        }
-      '';
+    programs.bash.initExtra = builtins.readFile ./tmux.sh;
 
     programs.tmux = {
       clock24 = true;
@@ -73,7 +51,14 @@ in {
         {
           plugin = resurrect;
           extraConfig = ''
+            set -g @resurrect-processes 'nvim'
             set -g @resurrect-stategy-nvim 'session'
+            set -g @resurrect-processes 'ssh'
+            set -g @resurrect-processes '~ssh'
+            set -g @resurrect-processes 'spotify_player'
+            set -g @resurrect-processes 'cava'
+            set -g @resurrect-processes 'yazi'
+            set -g @resurrect-processes 'btm'
           '';
         }
         {
@@ -87,10 +72,17 @@ in {
         {
           plugin = dracula;
           extraConfig = ''
-            set -g @dracula-plugins "ram-usage cpu-usage"
+            set -g @dracula-plugins "cpu-usage ram-usage time"
+            set -g @dracula-show-empty-plugins false
+            set -g @dracula-show-timezone false
+            set -g @dracula-day-month true
+            set -g @dracula-military-time true
+            set -g @dracula-time-format "%F %R"
+
             set -g @dracula-show-flags true
-            set -g @dracula-show-left-icon "#h"
+            set -g @dracula-show-left-icon "#S"
             set -g @dracula-show-ssh-only-when-connected true
+            set -g @dracula-left-icon-padding 1
             set -g @dracula-show-left-sep ""
             set -g @dracula-show-right-sep ""
             set -g @dracula-transparent-powerline-bg true
