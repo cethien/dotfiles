@@ -23,34 +23,42 @@ in {
     };
   };
 
-  config = mkIf cfg.enable {
-    users.users.ansible = {
-      description = "ansible user";
-      isNormalUser = true;
-      extraGroups = mkMerge [
-        ["wheel"]
-        (mkIf config.virtualisation.docker.enable ["docker"])
-      ];
-      hashedPassword = cfg.user.passwordHash;
-      openssh.authorizedKeys.keys = cfg.user.keys;
-    };
-
-    security.sudo.extraRules = [
-      {
-        users = ["ansible"];
-        commands = [
-          {
-            command = "ALL";
-            options = ["NOPASSWD"];
-          }
+  config = let
+    user = "ansible";
+  in
+    mkIf cfg.enable {
+      users.users."${user}" = {
+        isSystemUser = true;
+        group = "${user}";
+        extraGroups = mkMerge [
+          ["wheel"]
+          (mkIf config.virtualisation.docker.enable ["docker"])
         ];
-      }
-    ];
+        createHome = true;
+        home = "/var/lib/${user}";
+        shell = pkgs.bashInteractive;
 
-    environment.systemPackages = with pkgs; [
-      (python3.withPackages (ps: [
-        ps.requests
-      ]))
-    ];
-  };
+        hashedPassword = cfg.user.passwordHash;
+        openssh.authorizedKeys.keys = cfg.user.keys;
+      };
+      users.groups."${user}" = {};
+
+      security.sudo.extraRules = [
+        {
+          users = [user];
+          commands = [
+            {
+              command = "ALL";
+              options = ["NOPASSWD"];
+            }
+          ];
+        }
+      ];
+
+      environment.systemPackages = with pkgs; [
+        (python3.withPackages (ps: [
+          ps.requests
+        ]))
+      ];
+    };
 }
