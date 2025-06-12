@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }: let
   inherit (lib) mkIf mkEnableOption mkOption types;
@@ -23,25 +24,33 @@ in {
     };
   };
 
-  config = mkIf enabled {
-    users.users.deployrs = {
-      description = "deploy-rs user";
-      isNormalUser = true;
-      extraGroups = ["wheel"];
-      hashedPassword = cfg.user.passwordHash;
-      openssh.authorizedKeys.keys = cfg.user.keys;
-    };
+  config = let
+    user = "deployrs";
+  in
+    mkIf enabled {
+      users.users."${user}" = {
+        isSystemUser = true;
+        group = "${user}";
+        extraGroups = ["wheel"];
+        createHome = true;
+        home = "/var/lib/${user}";
+        shell = pkgs.bashInteractive;
 
-    security.sudo.extraRules = [
-      {
-        users = ["deployrs"];
-        commands = [
-          {
-            command = "ALL";
-            options = ["NOPASSWD"];
-          }
-        ];
-      }
-    ];
-  };
+        hashedPassword = cfg.user.passwordHash;
+        openssh.authorizedKeys.keys = cfg.user.keys;
+      };
+      users.groups."${user}" = {};
+
+      security.sudo.extraRules = [
+        {
+          users = [user];
+          commands = [
+            {
+              command = "ALL";
+              options = ["NOPASSWD"];
+            }
+          ];
+        }
+      ];
+    };
 }
