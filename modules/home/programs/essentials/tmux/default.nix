@@ -48,26 +48,7 @@ in {
       plugins = with pkgs.tmuxPlugins; [
         sensible
         yank
-        {
-          plugin = resurrect;
-          extraConfig = ''
-            set -g @resurrect-processes 'nvim'
-            set -g @resurrect-stategy-nvim 'session'
-            set -g @resurrect-processes 'ssh'
-            set -g @resurrect-processes '~ssh'
-            set -g @resurrect-processes 'spotify_player'
-            set -g @resurrect-processes 'cava'
-            set -g @resurrect-processes 'yazi'
-            set -g @resurrect-processes 'btm'
-          '';
-        }
-        {
-          plugin = continuum;
-          extraConfig = ''
-            set -g @continuum-restore 'on'
-            set -g @continuum-save-interval '10' # minutes
-          '';
-        }
+
         prefix-highlight
         {
           plugin = dracula;
@@ -86,6 +67,21 @@ in {
             set -g @dracula-show-left-sep ""
             set -g @dracula-show-right-sep ""
             set -g @dracula-transparent-powerline-bg true
+          '';
+        }
+        {
+          plugin = resurrect;
+          extraConfig = ''
+            set -g @resurrect-capture-panel-contents 'on'
+            set -g @resurrect-processes 'nvim ssh ~ssh spotify_player yazi btm'
+            set -g @resurrect-processes '~ssh'
+          '';
+        }
+        {
+          plugin = continuum;
+          extraConfig = ''
+            set -g @continuum-restore 'on'
+            set -g @continuum-save-interval '10' # minutes
           '';
         }
       ];
