@@ -18,7 +18,7 @@ in {
     sizes = {
       cursor = mkOption {
         type = types.int;
-        default = 24;
+        default = 26;
       };
       applications = mkOption {
         type = types.int;
@@ -52,8 +52,8 @@ in {
     # TODO: remove when https://github.com/nix-community/stylix/issues/478 is resolved
     wayland.windowManager.hyprland.settings = {
       env = [
-        "HYPRCURSOR_THEME,Nordzy-cursor"
-        "HYPRCURSOR_SIZE,${toString cfg.sizes.cursor}"
+        "HYPRCURSOR_THEME,${toString config.stylix.cursor.name}"
+        "HYPRCURSOR_SIZE,${toString config.stylix.cursor.size}"
       ];
     };
 
@@ -65,8 +65,10 @@ in {
       polarity = "dark";
 
       cursor = {
-        name = "Nordzy-cursors";
-        package = pkgs.nordzy-cursor-theme;
+        package = pkgs.graphite-cursors;
+        name = "graphite-light";
+        # package = pkgs.bibata-cursors;
+        # name = "Bibata-Modern-Ice";
         size = cfg.sizes.cursor;
       };
 
@@ -79,8 +81,8 @@ in {
 
       fonts = {
         monospace = {
-          package = pkgs.nerd-fonts.meslo-lg;
-          name = "MesloLG Nerd Font Mono";
+          package = pkgs.nerd-fonts.jetbrains-mono;
+          name = "JetBrainsMono Nerd Font";
         };
         sansSerif = {
           package = pkgs.open-sans;
