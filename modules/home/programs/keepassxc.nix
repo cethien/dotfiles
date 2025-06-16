@@ -77,7 +77,7 @@ in {
       folders.keepass = {
         id = "keepass";
         path = "${config.home.homeDirectory}/.keepass";
-        devices = ["cethien.me"];
+        devices = ["xiaomi-15"];
       };
     };
 

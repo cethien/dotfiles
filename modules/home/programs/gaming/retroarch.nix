@@ -27,7 +27,7 @@ in {
       folders.retroarch = {
         id = "retroach";
         path = "${config.home.homeDirectory}/.config/retroarch";
-        devices = ["cethien.me"];
+        devices = ["xiaomi-15"];
       };
     };
 
