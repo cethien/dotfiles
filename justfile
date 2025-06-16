@@ -5,14 +5,14 @@ home := env("USER") + "@" + hostname
 
 [private]
 @default:
-    just --list
+  just --list
 
 [private]
 @clear:
   clear
 
 @check: clear
-    nix flake check && nix flake show
+  nix flake check && nix flake show
 
 @format:
   nixpkgs-fmt . && shfmt -w $(find . -name '*.sh')
@@ -24,13 +24,14 @@ home := env("USER") + "@" + hostname
   nix build \
     .#nixosConfigurations.{{iso}}.config.system.build.isoImage
 
-@rebuild: clear
-  nix run nixpkgs#home-manager -- switch --flake .#{{home}} -b bak-hm-$(date +%Y%m%d_%H%M%S)
+@switch: clear
+  nix run nixpkgs#home-manager -- \
+    switch --flake .#{{home}} -b bak-hm-$(date +%Y%m%d_%H%M%S)
 
-@rebuild-nixos:
+@switch-nixos: clear
   sudo nixos-rebuild switch --flake .#{{system}}
 
-@install-nixos profile dest:
+@install-nixos profile dest: clear
   nix run github:nix-community/nixos-anywhere -- \
       --flake .#{{profile}} \
       --generate-hardware-config nixos-generate-config ./systems/{{profile}}/hardware.nix \
