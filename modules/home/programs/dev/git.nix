@@ -30,7 +30,10 @@ in {
 
     programs.git = {
       inherit (cfg) userName userEmail;
-      aliases.ignore = "!gi() { curl -fsSL https://www.toptal.com/developers/gitignore/api/$@ ;}; gi";
+      aliases = {
+        ignore = "!gi() { ${pkgs.git-ignore}/bin/git-ignore $@ ;}; gi";
+        license = "!gl() { ${pkgs.license-go}/bin/license $@ ;}; gl";
+      };
 
       extraConfig = {
         core = {

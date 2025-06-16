@@ -59,6 +59,8 @@
     ];
 
     languages = {
+      python.enable = true;
+      rust.enable = true;
       clang.enable = true;
       go.enable = true;
       csharp.enable = true;
@@ -116,6 +118,7 @@
       pairs.enable = true;
       surround.enable = true;
       splitjoin.enable = true;
+      misc.enable = true;
     };
 
     treesitter = {
