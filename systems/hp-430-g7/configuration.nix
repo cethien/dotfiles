@@ -7,6 +7,9 @@ in {
   networking.hostName = "hp-430-g7";
   boot.loader.grub.device = "/dev/nvme0n1";
 
+  networking.networkmanager.wifi.backend = "iwd";
+  hardware.enableRedistributableFirmware = true;
+
   services.openssh.enable = false;
   services.printing.enable = true;
   hardware = {
