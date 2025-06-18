@@ -133,6 +133,13 @@
       todo-comments.enable = true;
     };
 
+    dashboard = {
+      alpha.enable = true;
+      alpha = {
+        theme = "dashboard";
+      };
+    };
+
     utility = {
       yanky-nvim.enable = true;
 
