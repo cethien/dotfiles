@@ -5,6 +5,7 @@
     self,
     nixpkgs,
     deploy-rs,
+    nixos-hardware,
     disko,
     sops-nix,
     home-manager,
@@ -61,6 +62,7 @@
     nixosConfigurations."hp-430-g7" = nixpkgs.lib.nixosSystem {
       inherit pkgs;
       modules = [
+        nixos-hardware.nixosModules.common-pc-laptop
         ./systems/hp-430-g7/configuration.nix
         {
           system.stateVersion = stateVersion;
