@@ -1,0 +1,6 @@
+.direnv/
+*.env
+!*.env.template
+tmp/
+dist/
+data/

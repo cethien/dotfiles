@@ -1,0 +1,41 @@
+set dotenv-load
+
+app_name := "go-project"
+entrypoint := "cmd/" + app_name
+binary := "tmp/" + app_name
+
+[private]
+@default:
+    just --list
+
+@setup: cleanup build
+
+@format:
+	go fmt ./...
+
+@cleanup:
+	rm -rf dist/ tmp/
+	find . -type d -empty -delete
+
+@update:
+	go get -u ./...
+
+@build:
+	go build -tags='dev' -o {{binary}} ./{{entrypoint}}
+
+@run *args:
+	{{binary}} {{args}}
+
+debug:
+	#!/usr/bin/env bash
+	while true; do
+		dlv debug ./{{entrypoint}} \
+		--build-flags="-tags=dev" \
+		--headless --listen :2345 --api-version 2
+	done
+
+@dev *args:
+	wgo -file .go go mod tidy :: just build :: just run {{args}}
+
+@dev-debug:
+	wgo -file .go go mod tidy :: just debug

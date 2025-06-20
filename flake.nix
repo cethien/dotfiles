@@ -182,5 +182,19 @@
           nvf
           ;
       };
+
+      templates = {
+        default = self.templates.empty;
+
+        empty = {
+          path = ./templates/empty-project;
+          description = "A basic project";
+        };
+
+        go = {
+          path = ./templates/go-project;
+          description = "go project";
+        };
+      };
     });
 }
