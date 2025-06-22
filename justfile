@@ -14,6 +14,7 @@ home := env("USER") + "@" + hostname
 @check: clear
   nix flake check && nix flake show
 
+alias fmt := format
 @format:
   nixpkgs-fmt . && shfmt -w $(find . -name '*.sh')
 
