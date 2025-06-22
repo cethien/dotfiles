@@ -17,7 +17,6 @@ in {
     ./fastfetch
     ./syncthing.nix
     ./rclone.nix
-    ./pim
     ./docker.nix
 
     ./hyprland
@@ -31,6 +30,8 @@ in {
     ./spotify.nix
     ./mpv.nix
     ./keepassxc.nix
+    ./pim
+    ./office.nix
 
     ./pinta.nix
     ./ocenaudio.nix
@@ -62,16 +63,17 @@ in {
     pavucontrol.enable = mkDefault desktopEnabled;
     easyeffects.enable = mkDefault desktopEnabled;
     browser = {
-      firefox.enable = mkDefault desktopEnabled;
       zen-browser.enable = mkDefault desktopEnabled;
       zen-browser.hyprland.autostart.enable = mkDefault desktopEnabled;
+      firefox.enable = mkDefault desktopEnabled;
 
-      xmimeDefault = "zen-beta.desktop";
+      defaultBrowser = "zen-browser";
     };
     discord.enable = mkDefault desktopEnabled;
     spotify.enable = mkDefault desktopEnabled;
     spotify.hyprland.autostart.enable = mkDefault desktopEnabled;
 
+    office.enable = mkDefault desktopEnabled;
     pinta.enable = mkDefault desktopEnabled;
     gimp.enable = mkDefault desktopEnabled;
     inkscape.enable = mkDefault desktopEnabled;
