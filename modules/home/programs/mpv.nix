@@ -1,10 +1,12 @@
-{ lib, config, ... }:
-let
+{
+  lib,
+  config,
+  ...
+}: let
   inherit (lib) mkEnableOption mkIf;
   cfg = config.deeznuts.programs.mpv;
   enable = cfg.enable || config.deeznuts.programs.hyprland.enable;
-in
-{
+in {
   options.deeznuts.programs.mpv = {
     enable = mkEnableOption "Enable mpv";
   };
@@ -19,13 +21,19 @@ in
       };
     };
 
-    xdg.mimeApps.defaultApplications = {
-      # Video files
-      "video/mp4" = [ "umpv.desktop" ];
-      "video/webm" = [ "umpv.desktop" ];
-      "video/x-matroska" = [ "umpv.desktop" ];
-      "video/ogg" = [ "umpv.desktop" ];
-      "video/x-msvideo" = [ "umpv.desktop" ];
-    };
+    xdg.mimeApps.defaultApplications = let
+      mimeTypes = [
+        "video/mp4"
+        "video/webm"
+        "video/x-matroska"
+        "video/ogg"
+        "video/x-msvideo"
+      ];
+    in
+      builtins.listToAttrs (map (mimeType: {
+          name = mimeType;
+          value = ["umpv.desktop"];
+        })
+        mimeTypes);
   };
 }

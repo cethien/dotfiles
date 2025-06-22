@@ -3,8 +3,8 @@
   config,
   pkgs,
   ...
-}: let
-  inherit (lib) mkIf mkEnableOption;
+}:
+with lib; let
   cfg = config.deeznuts.programs.common-gui;
   enabled = cfg.enable;
 in {
@@ -20,27 +20,40 @@ in {
       gnome-calculator
     ];
 
-    xdg.mimeApps.defaultApplications = {
-      # Audio files
-      "audio/mpeg" = ["org.gnome.Decibels.desktop"];
-      "audio/x-wav" = ["org.gnome.Decibels.desktop"];
-      "audio/vnd.wave" = ["org.gnome.Decibels.desktop"];
-      "audio/flac" = ["org.gnome.Decibels.desktop"];
-      "audio/x-flac" = ["org.gnome.Decibels.desktop"];
-      "audio/ogg" = ["org.gnome.Decibels.desktop"];
-      "audio/aac" = ["org.gnome.Decibels.desktop"];
-      "audio/webm" = ["org.gnome.Decibels.desktop"];
-      "audio/mp4" = ["org.gnome.Decibels.desktop"];
+    xdg.mimeApps.defaultApplications = let
+      audioMimeTypes = [
+        "audio/mpeg"
+        "audio/x-wav"
+        "audio/vnd.wave"
+        "audio/flac"
+        "audio/x-flac"
+        "audio/ogg"
+        "audio/aac"
+        "audio/webm"
+        "audio/mp4"
+      ];
+      audioMap = builtins.listToAttrs (map (mimeType: {
+          name = mimeType;
+          value = ["org.gnome.Decibels.desktop"];
+        })
+        audioMimeTypes);
 
-      # Archives with File Roller
-      "application/zip" = ["org.gnome.FileRoller.desktop"];
-      "application/x-tar" = ["org.gnome.FileRoller.desktop"];
-      "application/x-compressed-tar" = ["org.gnome.FileRoller.desktop"];
-      "application/x-bzip-compressed-tar" = ["org.gnome.FileRoller.desktop"];
-      "application/x-xz-compressed-tar" = ["org.gnome.FileRoller.desktop"];
-      "application/x-7z-compressed" = ["org.gnome.FileRoller.desktop"];
-      "application/x-rar" = ["org.gnome.FileRoller.desktop"];
-      "application/x-cpio" = ["org.gnome.FileRoller.desktop"];
-    };
+      archiveMimeTypes = [
+        "application/zip"
+        "application/x-tar"
+        "application/x-compressed-tar"
+        "application/x-bzip-compressed-tar"
+        "application/x-xz-compressed-tar"
+        "application/x-7z-compressed"
+        "application/x-rar"
+        "application/x-cpio"
+      ];
+      archiveMap = builtins.listToAttrs (map (mimeType: {
+          name = mimeType;
+          value = ["org.gnome.FileRoller.desktop"];
+        })
+        archiveMimeTypes);
+    in
+      audioMap // archiveMap;
   };
 }

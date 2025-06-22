@@ -2,8 +2,8 @@
   config,
   lib,
   ...
-}: let
-  inherit (lib) mkOption types mkIf;
+}:
+with lib; let
   cfg = config.deeznuts.programs.browser;
 in {
   imports = [
@@ -13,23 +13,30 @@ in {
   ];
 
   options.deeznuts.programs.browser = {
-    xmimeDefault = mkOption {
+    defaultBrowser = mkOption {
       type = types.str;
-      default = null;
-      description = "which desktop file should be used for web related xMime defaults";
-      example = "firefox.desktop";
+      default = "";
+      description = "default browser name. will be converted to <browser-name>.desktop in mime";
     };
   };
 
   config = {
-    xdg.mimeApps.defaultApplications = mkIf (cfg.xmimeDefault
-      != null) {
-      "x-scheme-handler/http" = [cfg.xmimeDefault];
-      "x-scheme-handler/https" = [cfg.xmimeDefault];
-      "x-scheme-handler/about" = [cfg.xmimeDefault];
-      "x-scheme-handler/unknown" = [cfg.xmimeDefault];
-      "text/html" = [cfg.xmimeDefault];
-      "application/xhtml+xml" = [cfg.xmimeDefault];
-    };
+    xdg.mimeApps.defaultApplications = let
+      mimeTypes = [
+        "text/html"
+        "application/xhtml+xml"
+        "x-scheme-handler/http"
+        "x-scheme-handler/https"
+        "x-scheme-handler/mailto"
+        "x-scheme-handler/webcal"
+        "x-scheme-handler/about"
+        "x-scheme-handler/unknown"
+      ];
+    in
+      builtins.listToAttrs (map (mime: {
+          name = mime;
+          value = "${cfg.defaultBrowser}.desktop";
+        })
+        mimeTypes);
   };
 }
