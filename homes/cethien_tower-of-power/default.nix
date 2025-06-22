@@ -15,7 +15,7 @@ home-manager.lib.homeManagerConfiguration {
   extraSpecialArgs = {
     inherit sops-nix stylix nvf hyprpanel zen-browser;
   };
-  module = [
+  modules = [
     ../../modules/home
     {
       home.stateVersion = stateVersion;
