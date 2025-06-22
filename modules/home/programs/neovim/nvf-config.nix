@@ -157,6 +157,7 @@
 
     terminal.toggleterm = {
       enable = true;
+      setupOpts.direction = "float";
       mappings.open = "<C-q>";
       lazygit.enable = true;
     };
