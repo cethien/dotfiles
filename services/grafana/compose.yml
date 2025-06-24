@@ -1,0 +1,70 @@
+services:
+  grafana:
+    image: grafana/grafana-oss:latest
+    environment:
+      GF_SERVER_ROOT_URL: https://grafana.cethien.home/
+      GF_PANELS_DISABLE_SANITIZE_HTML: "true"      
+      GF_INSTALL_PLUGINS: grafana-piechart-panel
+    volumes:
+      - grafana:/var/lib/grafana
+    networks:
+      - default
+      - grafana
+      - caddy
+    deploy:
+      mode: replicated
+      replicas: 1
+      labels:
+        caddy: grafana.cethien.home
+        caddy.tls: internal
+        caddy.reverse_proxy: "{{upstreams 3000}}"
+
+        homepage.group: monitoring
+        homepage.name: grafana
+        homepage.icon: grafana.png
+        homepage.href: https://grafana.cethien.home/
+        homepage.description: MONITOR ALL YOUR STUFF!
+
+  prometheus:
+    image: prom/prometheus:latest
+    configs:
+      - target: /etc/prometheus/prometheus.yml
+        source: prometheus.yml3
+    volumes:
+      - prometheus:/prometheus
+    networks:
+      - default
+      - caddy
+    deploy:
+      mode: replicated
+      replicas: 1
+      labels:
+        caddy: prometheus.cethien.home
+        caddy.tls: internal
+        caddy.reverse_proxy: "{{upstreams 9090}}"
+
+        homepage.group: monitoring
+        homepage.name: prometheus
+        homepage.icon: prometheus.png
+        homepage.href: https://prometheus.cethien.home/
+        homepage.description: MONITOR ALL YOUR STUFF! TO PUT IT INTO GRAFANA!
+
+configs:
+  prometheus.yml3:
+    file: ./prometheus.yml
+
+networks:
+  grafana:
+    name: grafana_net
+    driver: overlay
+    attachable: true
+
+  caddy:
+    name: caddy_net
+    external: true
+
+volumes:
+  prometheus:
+    name: prometheus_data
+  grafana:
+    name: grafana_data

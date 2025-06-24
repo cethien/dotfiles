@@ -16,7 +16,7 @@ in {
     ./hyprland.nix
     ./steam.nix
     ./ai.nix
-    ./homelab.nix
+    ./monitoring.nix
   ];
 
   deeznuts.users.${user}.enable = true;

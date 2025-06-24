@@ -1,0 +1,38 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: 'blocky'
+    static_configs:
+      - targets: ['blocky:4000']
+  
+  - job_name: 'dnssec'
+    static_configs:
+      - targets: ['dnssec_exporter:9221']
+
+  - job_name: 'domains'
+    static_configs:
+      - targets: ['domains_exporter:9222']
+
+  - job_name: 'docker'
+    static_configs:
+      - targets: ['srv-home-01:8080']
+  
+  - job_name: 'wireguard'
+    static_configs:
+      - targets: ['srv-home-01:9586']
+
+  - job_name: 'systemd'
+    static_configs:
+      - targets: ['srv-home-01:9558']
+
+  - job_name: 'hosts'
+    static_configs:
+      - targets: ['srv-home-01:9100']
+
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+

@@ -1,0 +1,8 @@
+---
+- devices:
+  - vodafone station:
+      href: http://192.168.0.1
+      icon: vodafone.png
+  - mi router:
+      href: http://mi-router.cethien.home
+      icon: xiaomi.png

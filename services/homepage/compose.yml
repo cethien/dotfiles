@@ -1,0 +1,53 @@
+services:   
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    environment:
+      HOMEPAGE_ALLOWED_HOSTS: cethien.home
+    configs:
+      - source: settings.yaml
+        target: /app/config/settings.yaml
+      - source: docker.yaml
+        target: /app/config/docker.yaml
+      - source: services.yaml
+        target: /app/config/services.yaml
+      - source: widgets.yaml
+        target: /app/config/widgets.yaml
+      - source: bookmarks.yaml
+        target: /app/config/bookmarks.yaml
+    volumes:
+      - config:/app/config
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - caddy
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        max_attempts: 5
+      placement:
+        constraints: [node.role == manager]
+      labels:
+        caddy: cethien.home
+        caddy.tls: internal
+        caddy.reverse_proxy: "{{upstreams 3000}}"
+
+configs:
+  widgets.yaml:
+    file: ./config/widgets.yaml
+  services.yaml:
+    file: ./config/services.yaml
+  settings.yaml:
+    file: ./config/settings.yaml
+  docker.yaml:
+    file: ./config/docker.yaml
+  bookmarks.yaml:
+    file: ./config/bookmarks.yaml
+
+networks:
+  caddy:
+    name: caddy_net
+    external: true
+
+volumes:
+  config:
+    name: admin_homepage_config
