@@ -1,5 +1,5 @@
 - name: Prune docker hosts
-  hosts: "{{ host | default('docker') }}"
+  hosts: "{{ host | default('docker_hosts') }}"
   tasks:
     - name: Prune docker hosts
       community.docker.docker_prune:

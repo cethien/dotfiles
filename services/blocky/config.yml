@@ -1,0 +1,45 @@
+upstreams:
+  groups:
+    default:
+      - 46.182.19.48
+      - 80.241.218.68
+      - tcp-tls:fdns1.dismail.de:853
+      - https://dns.digitale-gesellschaft.ch/dns-query
+
+blocking:
+  blockType: zeroIp
+  denylists:
+    ads:
+      - https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
+      - https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt
+      - https://mirror1.malwaredomains.com/files/justdomains
+      - http://sysctl.org/cameleon/hosts
+      - https://zeustracker.abuse.ch/blocklist.php?download=domainblocklist
+      - https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt
+  clientGroupsBlock:
+    default:
+      - ads
+
+customDNS:
+  customTTL: 1h
+  rewrite:
+    cethien.home: lan
+  mapping:
+    vodafone-router.lan: 192.168.0.1
+    mi-router.lan: 192.168.1.1
+
+    cethien.home: 192.168.1.50
+    grafana.lan: 192.168.1.50
+    prometheus.lan: 192.168.1.50
+    loki.lan: 192.168.1.50
+    semaphore.lan: 192.168.1.50
+
+clientLookup:
+  upstream: 192.168.1.1
+
+prometheus:
+  enable: true
+
+ports:
+  dns: 53
+  http: 4000

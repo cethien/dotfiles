@@ -98,24 +98,24 @@
         ];
       };
 
-      nixosConfigurations."homelab" = nixpkgs.lib.nixosSystem {
+      nixosConfigurations."cethien.home" = nixpkgs.lib.nixosSystem {
         inherit pkgs;
         modules = [
           disko.nixosModules.disko
-          ./systems/homelab/disko.nix
-          ./systems/homelab/hardware.nix
-          ./systems/homelab/configuration.nix
+          ./shared/disko/simple
+          ./systems/cethien.home/hardware.nix
+          ./systems/cethien.home/configuration.nix
           {system.stateVersion = stateVersion;}
         ];
       };
 
-      deploy.nodes."homelab" = {
-        hostname = "192.168.0.23";
+      deploy.nodes."cethien.home" = {
+        hostname = "192.168.1.50";
         profiles.system = {
-          path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.homelab;
+          path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations."cethien.home";
           user = "root";
           sshUser = "deployrs";
-          sshOpts = ["-i" "~/.ssh/deployrs_cethien.home"];
+          sshOpts = ["-i" "~/.ssh/id_deployrs_cethien.home"];
         };
       };
 
@@ -129,6 +129,7 @@
           ./systems/hp-430-g7/configuration.nix
           {system.stateVersion = stateVersion;}
         ];
+        specialArgs = {inherit sops-nix;};
       };
 
       homeConfigurations."cethien@hp-430-g7" = import ./homes/cethien_hp-430-g7 {
@@ -155,6 +156,7 @@
             boot.kernelPackages = pkgs.linuxPackages_zen;
           }
         ];
+        specialArgs = {inherit sops-nix;};
       };
 
       homeConfigurations."cethien@tower-of-power" = import ./homes/cethien_tower-of-power {

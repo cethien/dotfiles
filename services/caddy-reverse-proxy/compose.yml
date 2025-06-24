@@ -1,0 +1,29 @@
+services:
+  caddy-docker-proxy:
+    image: lucaslorentz/caddy-docker-proxy:ci-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      CADDY_INGRESS_NETWORKS: caddy_net
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - data:/data
+    networks:
+      - caddy
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+      
+networks:
+  caddy:
+    name: caddy_net
+    attachable: true
+
+volumes:
+  data:
+    name: caddy_data

@@ -38,38 +38,40 @@ alias fmt := format
       --generate-hardware-config nixos-generate-config ./systems/{{profile}}/hardware.nix \
        {{dest}}
 
-@deploy-nixos *targets:
-  nix run github:serokell/deploy-rs -- {{ if targets == "" { "." } else { "--targets " + targets } }}
+@deploy-nixos *targets: clear
+  nix run github:serokell/deploy-rs -- \
+      {{ if targets == "" { "." } else { "--targets " + targets } }}
 
-@ansible playbook +hosts="":
-  ansible-playbook {{ playbook }} \
-    {{ if hosts != "" { "--extra-vars=\"hosts=" + hosts + "\"" } else { "" } }}
+@get_host_ip host:
+  ansible-inventory --host {{host}} | grep -v '^Using ' | jq -r '.ansible_host // empty'  
 
-deploy dir:
+deploy dir target="home": clear
   #!/usr/bin/env bash
-  domain=$(basename "$(dirname {{dir}})")
+  dir="{{dir}}"
+  host=$(just get_host_ip {{target}})
+  stack_name=$(basename "$dir" | sed 's/[^a-z0-9-]/_/g')
+  
+  echo "🚀 deploying $stack_name to $host"
+  DOCKER_HOST=ssh://"$host" docker stack deploy -c "$dir/compose.yml" "$stack_name" --detach=false
+
+remove dir target="home": clear
+  #!/usr/bin/env bash
+  host=$(just get_host_ip {{target}})
   stack_name=$(basename {{dir}} | sed 's/[^a-z0-9-]/_/g')
-  docker --context "$domain" stack deploy -c "{{dir}}/compose.yml" "$stack_name" --detach=false
+  
+  echo "❌ removing $stack_name from $host"
+  DOCKER_HOST=ssh://"$host" docker stack rm "$stack_name" 
 
-remove dir:
+create-secret secret_name target="home": clear
   #!/usr/bin/env bash
-  domain=$(basename "$(dirname {{dir}})")
-  stack_name=$(basename {{dir}} | sed 's/[^a-z0-9-]/_/g')
-  docker --context "$domain" stack rm "$stack_name" 
-
-create-secret secret_name ctx="default":
-  #!/usr/bin/env bash
-  read -s -p "Enter secret value: " secret_value
+  read -s -p "🔐 Enter secret value: " secret_value
   echo -e "\n"
-  echo "$secret_value" | docker --context {{ctx}} secret create {{secret_name}} -
+  
+  host=$(just get_host_ip {{target}})
+  echo "$secret_value" | DOCKER_HOST=ssh://"$host" docker secret create {{secret_name}} -
 
-remove-secret secret_name ctx="default":
-  #!/usr/bin/env bash
-  docker --context {{ctx}} secret rm {{secret_name}}
+@remove-secret secret_name target="home": clear
+  host=$(just get_host_ip {{target}})
+  echo "❌ deleting secret {{secret_name}} from $host"
+  DOCKER_HOST=ssh://"$host" docker secret rm {{secret_name}}
 
-[working-directory: 'services/potato-squad.de/minecraft-server']
-deploy-minecraft-server:
-  #!/usr/bin/env bash
-  ssh potato-squad.de -t 'sudo mkdir -p /opt/minecraft-server/bluemap/web'
-  rsync --rsync-path="sudo rsync" config potato-squad.de:/opt/minecraft-server/config 
-  docker --context "potato-squad.de" stack deploy -c compose.yml minecraft-server --detach=false
