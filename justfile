@@ -25,11 +25,11 @@ alias fmt := format
   nix build \
     .#nixosConfigurations.{{iso}}.config.system.build.isoImage
 
-@switch: clear
+@switch-home: clear
   nix run nixpkgs#home-manager -- \
     switch --flake .#{{home}} -b bak-hm-$(date +%Y%m%d_%H%M%S)
 
-@switch-nixos: clear
+@switch: clear
   sudo nixos-rebuild switch --flake .#{{system}}
 
 @install-nixos profile dest: clear

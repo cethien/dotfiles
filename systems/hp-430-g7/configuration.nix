@@ -1,4 +1,4 @@
-let
+{pkgs, ...}: let
   user = "cethien";
 in {
   imports = [
@@ -16,6 +16,18 @@ in {
     bluetooth.enable = true;
     xpadneo.enable = true;
   };
+
+  security.sudo.extraRules = [
+    {
+      users = [user];
+      commands = [
+        {
+          command = "${pkgs.nixos-rebuild}/bin/nixos-rebuild";
+          options = ["NOPASSWD"];
+        }
+      ];
+    }
+  ];
 
   deeznuts = {
     hyprland.enable = true;

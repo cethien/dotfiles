@@ -123,31 +123,47 @@
 
       nixosConfigurations."hp-430-g7" = nixpkgs.lib.nixosSystem {
         inherit pkgs;
+        specialArgs = {inherit sops-nix;};
+
         modules = [
           nixos-hardware.nixosModules.common-pc-laptop
           ./systems/hp-430-g7/hardware.nix
           ./systems/hp-430-g7/configuration.nix
-          {system.stateVersion = stateVersion;}
-        ];
-        specialArgs = {inherit sops-nix;};
-      };
+          {
+            system.stateVersion = stateVersion;
+          }
 
-      homeConfigurations."cethien@hp-430-g7" = import ./homes/cethien_hp-430-g7 {
-        inherit
-          pkgs
-          system
-          home-manager
-          stateVersion
-          sops-nix
-          stylix
-          hyprpanel
-          zen-browser
-          nvf
-          ;
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              backupFileExtension = "bak-hm-$(date +%Y%m%d_%H%M%S)";
+
+              users.cethien = ./systems/hp-430-g7/homes/cethien.nix;
+
+              extraSpecialArgs = {
+                inherit
+                  pkgs
+                  system
+                  home-manager
+                  stateVersion
+                  sops-nix
+                  stylix
+                  hyprpanel
+                  zen-browser
+                  nvf
+                  ;
+              };
+            };
+          }
+        ];
       };
 
       nixosConfigurations."tower-of-power" = nixpkgs.lib.nixosSystem {
         inherit pkgs;
+        specialArgs = {inherit sops-nix;};
+
         modules = [
           ./systems/tower-of-power/hardware.nix
           ./systems/tower-of-power/configuration.nix
@@ -155,22 +171,32 @@
             system.stateVersion = stateVersion;
             boot.kernelPackages = pkgs.linuxPackages_zen;
           }
-        ];
-        specialArgs = {inherit sops-nix;};
-      };
 
-      homeConfigurations."cethien@tower-of-power" = import ./homes/cethien_tower-of-power {
-        inherit
-          pkgs
-          system
-          home-manager
-          stateVersion
-          sops-nix
-          stylix
-          hyprpanel
-          zen-browser
-          nvf
-          ;
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              backupFileExtension = "bak-hm-$(date +%Y%m%d_%H%M%S)";
+
+              users.cethien = ./systems/tower-of-power/homes/cethien.nix;
+
+              extraSpecialArgs = {
+                inherit
+                  pkgs
+                  system
+                  home-manager
+                  stateVersion
+                  sops-nix
+                  stylix
+                  hyprpanel
+                  zen-browser
+                  nvf
+                  ;
+              };
+            };
+          }
+        ];
       };
 
       homeConfigurations."cethien@wsl" = import ./homes/cethien_wsl {
