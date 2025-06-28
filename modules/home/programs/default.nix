@@ -67,7 +67,7 @@ in {
       zen-browser.hyprland.autostart.enable = mkDefault desktopEnabled;
       firefox.enable = mkDefault desktopEnabled;
 
-      defaultBrowser = "zen-browser";
+      defaultBrowser = "zen-beta";
     };
     discord.enable = mkDefault desktopEnabled;
     spotify.enable = mkDefault desktopEnabled;
