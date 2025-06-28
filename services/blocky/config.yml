@@ -5,6 +5,7 @@ upstreams:
       - 80.241.218.68
       - tcp-tls:fdns1.dismail.de:853
       - https://dns.digitale-gesellschaft.ch/dns-query
+      - https://dns10.quad9.net/dns-query
 
 blocking:
   blockType: zeroIp
@@ -22,17 +23,20 @@ blocking:
 
 customDNS:
   customTTL: 1h
-  rewrite:
-    cethien.home: lan
   mapping:
-    vodafone-router.lan: 192.168.0.1
-    mi-router.lan: 192.168.1.1
+    # devices
+    vodafone-router.cethien.home: 192.168.0.1
+    mi-router.cethien.home: 192.168.1.1
 
+    # DNS
+    doh.cethien.home: 192.168.1.50
+    
+    # services
     cethien.home: 192.168.1.50
-    grafana.lan: 192.168.1.50
-    prometheus.lan: 192.168.1.50
-    loki.lan: 192.168.1.50
-    semaphore.lan: 192.168.1.50
+    grafana.cethien.home: 192.168.1.50
+    prometheus.cethien.home: 192.168.1.50
+    loki.cethien.home: 192.168.1.50
+    semaphore.cethien.home: 192.168.1.50
 
 clientLookup:
   upstream: 192.168.1.1
@@ -43,3 +47,4 @@ prometheus:
 ports:
   dns: 53
   http: 4000
+  https: 8443

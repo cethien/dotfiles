@@ -34,6 +34,7 @@ services:
       - prometheus:/prometheus
     networks:
       - default
+      - prometheus
       - caddy
     deploy:
       mode: replicated
@@ -54,6 +55,11 @@ configs:
     file: ./prometheus.yml
 
 networks:
+  prometheus:
+    name: prometheus_net
+    driver: overlay
+    attachable: true
+
   grafana:
     name: grafana_net
     driver: overlay

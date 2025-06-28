@@ -4,6 +4,7 @@ services:
     environment:
       TZ: Europe/Berlin
     ports:
+      - 53:53/tcp
       - 53:53/udp
     configs:
       - source: config.yml
@@ -11,7 +12,8 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
     networks:
-      - caddy    
+      - caddy
+      - prometheus
     deploy:
       mode: replicated
       replicas: 1
@@ -23,13 +25,17 @@ services:
         homepage.icon: blocky.png
         homepage.description: FILTER ALL THE CRAP!
 
+        caddy: doh.cethien.home
+        caddy.reverse_proxy: /dns-query https://{{.Service.Name}}:8443
+        caddy.reverse_proxy.transport.http.tls_insecure_skip_verify: "true"
+
 configs:
   config.yml:
     file: ./config.yml
 
 networks:
-  grafana:
-    name: grafana_net
+  prometheus:
+    name: prometheus_net
     external: true
 
   caddy:
