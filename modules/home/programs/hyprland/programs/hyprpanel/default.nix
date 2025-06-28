@@ -118,7 +118,7 @@ in {
         };
 
         theme = {
-          name = "one_dark";
+          name = "cyberpunk";
 
           bar = {
             transparent = true;
@@ -132,8 +132,8 @@ in {
           };
 
           font = {
-            name = "MesloLG Nerd Font";
-            size = "0.9rem";
+            name = config.stylix.fonts.sansSerif.name;
+            size = "1rem";
           };
 
           osd = {

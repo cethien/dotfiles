@@ -54,7 +54,7 @@ in {
       general = {
         gaps_in = 8;
         gaps_out = 12;
-        border_size = 3;
+        border_size = 2;
         # "col.active_border" = "$mauve";
         # "col.inactive_border" = "$surface0";
 
@@ -71,10 +71,10 @@ in {
       };
 
       decoration = {
-        rounding = 8;
+        rounding = 6;
 
         active_opacity = 1.0;
-        inactive_opacity = 1.0;
+        inactive_opacity = 0.5;
         fullscreen_opacity = 1.0;
 
         shadow = {

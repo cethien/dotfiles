@@ -22,7 +22,7 @@ in {
       };
       applications = mkOption {
         type = types.int;
-        default = 14;
+        default = 13;
       };
       terminal = mkOption {
         type = types.int;
@@ -59,17 +59,15 @@ in {
 
     stylix = {
       enable = true;
+
+      image = ./wallpapers/cyberpunk.jpg;
+      polarity = "dark";
       base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyo-night-dark.yaml";
 
-      image = ./wallpapers/a_hand_holding_a_cassette_tape.jpg;
-      polarity = "dark";
-
       cursor = {
-        package = pkgs.graphite-cursors;
-        name = "graphite-light";
-        # package = pkgs.bibata-cursors;
-        # name = "Bibata-Modern-Ice";
         size = cfg.sizes.cursor;
+        package = pkgs.simp1e-cursors;
+        name = "Simp1e-Tokyo-Night";
       };
 
       iconTheme = {
@@ -82,11 +80,11 @@ in {
       fonts = {
         monospace = {
           package = pkgs.nerd-fonts.jetbrains-mono;
-          name = "JetBrainsMono Nerd Font";
+          name = "NotoSansM Nerd Font";
         };
         sansSerif = {
-          package = pkgs.open-sans;
-          name = "Open Sans";
+          package = pkgs.nerd-fonts.hack;
+          name = "Hack Nerd Font";
         };
         serif = config.stylix.fonts.sansSerif;
 
