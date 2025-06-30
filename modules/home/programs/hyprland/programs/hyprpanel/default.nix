@@ -118,7 +118,7 @@ in {
         };
 
         theme = {
-          name = "cyberpunk";
+          name = "one_dark";
 
           bar = {
             transparent = true;

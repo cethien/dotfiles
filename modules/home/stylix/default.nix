@@ -60,9 +60,9 @@ in {
     stylix = {
       enable = true;
 
-      image = ./wallpapers/cyberpunk.jpg;
+      image = ./wallpapers/a_hand_holding_a_cassette_tape.jpg;
       polarity = "dark";
-      base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyo-night-dark.yaml";
+      base16Scheme = "${pkgs.base16-schemes}/share/themes/rose-pine.yaml";
 
       cursor = {
         size = cfg.sizes.cursor;
@@ -78,15 +78,19 @@ in {
       };
 
       fonts = {
+        sansSerif = {
+          package = pkgs.nerd-fonts.noto;
+          name = "NotoSans Nerd Font";
+        };
+        serif = {
+          package = pkgs.nerd-fonts.noto;
+          name = "NotoSerif Nerd Font";
+        };
+
         monospace = {
           package = pkgs.nerd-fonts.jetbrains-mono;
-          name = "NotoSansM Nerd Font";
+          name = "JetbrainsMono Nerd Font";
         };
-        sansSerif = {
-          package = pkgs.nerd-fonts.hack;
-          name = "Hack Nerd Font";
-        };
-        serif = config.stylix.fonts.sansSerif;
 
         emoji = {
           package = pkgs.noto-fonts-emoji;

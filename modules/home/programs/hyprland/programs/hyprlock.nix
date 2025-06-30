@@ -1,17 +1,23 @@
 {
   lib,
   config,
+  pkgs,
   ...
-}: let
-  inherit (lib) mkIf mkForce mkOption;
+}:
+with lib; let
   cfg = config.deeznuts.programs.hyprland.hyprlock;
   enable = config.deeznuts.programs.hyprland.enable;
 in {
   options.deeznuts.programs.hyprland.hyprlock = {
     monitor = mkOption {
-      type = lib.types.str;
+      type = types.str;
       default = "eDP-1";
       description = "Monitor to use for the hyprlock background";
+    };
+    showBattery = mkOption {
+      type = types.bool;
+      default = true;
+      description = "show battery label";
     };
   };
 
@@ -39,10 +45,13 @@ in {
         image = [
           {
             monitor = cfg.monitor;
-            path = "${config.home.homeDirectory}/Pictures/logo.png";
+            path = "${config.home.homeDirectory}/Pictures/smiley.png";
             halign = "center";
             valign = "center";
-            position = "0, 50";
+            position = "0, 100";
+            size = 200;
+            rounding = 0;
+            border_size = 0;
           }
         ];
 
@@ -50,12 +59,27 @@ in {
           {
             monitor = cfg.monitor;
             fade_on_empty = false;
-            font_family = "MesloLGM Nerd Font";
-            font_color = "rgb(205, 214, 244)";
-            inner_color = "rgb(24, 24, 37)";
-            outer_color = "rgb(17, 17, 27)";
-            placeholder_color = "rgb(166, 173, 200)";
-            placeholder_text = "Enter Password";
+            font_family = config.stylix.fonts.monospace.name;
+
+            # The main color of the "Enter Password" text when nothing is typed
+            placeholder_color = "rgba(110, 106, 134, 1.0)"; # base04 - Muted Grey, soft hint
+
+            # Color of the text you type (Inner Font)
+            bar_text_color = "rgba(224, 222, 244, 1.0)"; # base05 - Pale Lavender White, clear and readable
+
+            # Color of the background of the input bar
+            bar_color = "rgba(31, 29, 46, 0.6)"; # base01 - Darker Plum/Gray, subtle transparency
+
+            # Ring colors (Outer Ring)
+            fail_color = "rgba(231, 130, 132, 1.0)"; # base0E - Red Accent for errors
+            ring_color = "rgba(38, 35, 53, 1.0)"; # base02 - Mid-Dark Plum/Gray, default ring (subtle)
+            ring_color_error = "rgba(231, 130, 132, 1.0)"; # base0E - Red for error ring
+            ring_color_clear = "rgba(49, 116, 143, 1.0)"; # base0B - Iris/Teal, calming clear input
+            ring_color_caps = "rgba(246, 193, 119, 1.0)"; # base09 - Gold/Orange for Caps Lock (warning)
+            ring_color_vkey = "rgba(196, 167, 231, 1.0)"; # base0D - Lilac/Lavender for virtual keyboard
+            ring_color_verify = "rgba(49, 116, 143, 1.0)"; # base0B - Iris/Teal, calming verify
+
+            placeholder_text = "enter password";
 
             halign = "center";
             valign = "center";
@@ -63,31 +87,49 @@ in {
           }
         ];
 
-        label = [
-          {
-            monitor = cfg.monitor;
-            color = "rgba(242, 243, 244, 0.75)";
-            font_family = "JetBrains Mono";
-            font_size = "95";
-            halign = "center";
-            position = "0, 200";
-            text = "$TIME";
-            valign = "center";
-          }
+        label = mkMerge [
+          [
+            {
+              monitor = cfg.monitor;
+              color = "rgba(224, 222, 244, 1.0)"; # base05 - Pale Lavender White, main text color
+              font_family = config.stylix.fonts.sansSerif.name;
+              font_size = "95";
+              halign = "center";
+              valign = "top";
+              position = "0, -75";
+              text = "$TIME";
+            }
 
-          {
-            monitor = cfg.monitor;
-            color = "rgba(242, 243, 244, 0.75)";
-            font_family = "JetBrains Mono";
-            font_size = "22";
-            halign = "center";
-            position = "0, 300";
-            text = ''cmd[update:1000] echo $(date +"%A, %B %d")'';
-            valign = "center";
-          }
+            {
+              monitor = cfg.monitor;
+              color = "rgba(224, 222, 244, 1.0)"; # base05 - Pale Lavender White, main text color
+              font_family = config.stylix.fonts.sansSerif.name;
+              font_size = "22";
+              halign = "center";
+              valign = "top";
+              position = "0, -35";
+              text = ''cmd[update:1000] echo $(date +"%A, %B %d")'';
+            }
+          ]
+          (mkIf cfg.showBattery [
+            {
+              monitor = cfg.monitor;
+              color = "rgba(235, 111, 146, 1.0)"; # base08 - Rosewater/Pink Accent for a cozy pop!
+              font_family = config.stylix.fonts.sansSerif.name;
+              font_size = "24";
+              halign = "center";
+              valign = "bottom";
+              position = "0, 60";
+              text = ''cmd[update:1000] hyprlock-batterystatus'';
+            }
+          ])
         ];
       };
     };
+
+    home.packages = [
+      (pkgs.writeShellScriptBin "hyprlock-batterystatus" (builtins.readFile ./hyprlock-batterystatus.sh))
+    ];
 
     wayland.windowManager.hyprland.settings = {
       bind = [
