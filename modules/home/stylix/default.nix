@@ -62,7 +62,7 @@ in {
 
       image = ./wallpapers/a_hand_holding_a_cassette_tape.jpg;
       polarity = "dark";
-      base16Scheme = "${pkgs.base16-schemes}/share/themes/rose-pine.yaml";
+      base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyo-night-dark.yaml";
 
       cursor = {
         size = cfg.sizes.cursor;
