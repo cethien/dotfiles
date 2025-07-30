@@ -34,6 +34,8 @@ in {
       profiles."${name}" = shared.profiles."${name}";
     };
 
+    stylix.targets.zen-browser.profileNames = ["${name}"];
+
     wayland.windowManager.hyprland.settings = {
       exec-once = mkIf cfg.hyprland.autostart.enable [
         "[silent] zen-beta"
