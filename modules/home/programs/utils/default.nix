@@ -31,6 +31,11 @@ in {
       tealdeer
     ];
 
-    programs.jq.enable = true;
+    programs = {
+      nix-index.enable = true;
+      pay-respects.enable = true;
+
+      jq.enable = true;
+    };
   };
 }
