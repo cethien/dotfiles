@@ -25,9 +25,6 @@
     nur.url = "github:nix-community/NUR";
     nur.inputs.nixpkgs.follows = "nixpkgs";
 
-    hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
-    hyprpanel.inputs.nixpkgs.follows = "nixpkgs";
-
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
 
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
@@ -49,7 +46,6 @@
     nur,
     stylix,
     nvf,
-    hyprpanel,
     zen-browser,
     ...
   }: let
@@ -136,11 +132,12 @@
           home-manager.nixosModules.home-manager
           {
             home-manager = {
-              useGlobalPkgs = true;
+              # useGlobalPkgs = true;
               useUserPackages = true;
               backupFileExtension = "bak-hm-$(date +%Y%m%d_%H%M%S)";
 
-              users.cethien = ./systems/hp-430-g7/homes/cethien.nix;
+              users.cethien =
+                ./systems/hp-430-g7/homes/cethien.nix;
 
               extraSpecialArgs = {
                 inherit
@@ -150,7 +147,6 @@
                   stateVersion
                   sops-nix
                   stylix
-                  hyprpanel
                   zen-browser
                   nvf
                   ;
@@ -175,7 +171,6 @@
           home-manager.nixosModules.home-manager
           {
             home-manager = {
-              useGlobalPkgs = true;
               useUserPackages = true;
               backupFileExtension = "bak-hm-$(date +%Y%m%d_%H%M%S)";
 
@@ -189,7 +184,6 @@
                   stateVersion
                   sops-nix
                   stylix
-                  hyprpanel
                   zen-browser
                   nvf
                   ;

@@ -2,17 +2,12 @@
   lib,
   config,
   pkgs,
-  hyprpanel,
   ...
 }: let
   inherit (lib) mkIf mkEnableOption mkOption types;
   cfg = config.deeznuts.programs.hyprpanel;
   jsonFormat = pkgs.formats.json {};
 in {
-  imports = [
-    hyprpanel.homeManagerModules.hyprpanel
-  ];
-
   options.deeznuts.programs.hyprpanel = {
     enable = mkEnableOption "hyprpanel";
     layout = {
@@ -29,25 +24,23 @@ in {
       layout = mkOption {
         type = jsonFormat.type;
         default = {
-          "bar.layouts" = {
-            "*" = {
-              left = ["workspaces" "systray"];
-              middle = ["media"];
-              right =
-                ["volume"]
-                ++ (
-                  if cfg.layout.bluetooth
-                  then ["bluetooth"]
-                  else []
-                )
-                ++ ["network" "notifications"]
-                ++ (
-                  if cfg.layout.battery
-                  then ["battery" "hypridle"]
-                  else []
-                )
-                ++ ["clock"];
-            };
+          "*" = {
+            left = ["workspaces" "systray"];
+            middle = ["media"];
+            right =
+              ["volume"]
+              ++ (
+                if cfg.layout.bluetooth
+                then ["bluetooth"]
+                else []
+              )
+              ++ ["network" "notifications"]
+              ++ (
+                if cfg.layout.battery
+                then ["battery" "hypridle"]
+                else []
+              )
+              ++ ["clock"];
           };
         };
       };
@@ -67,12 +60,8 @@ in {
 
     programs.hyprpanel = {
       enable = true;
-      overlay.enable = true;
-      hyprland.enable = true;
-      overwrite.enable = true;
-
       settings = {
-        layout = cfg.layout.layout;
+        bar.layouts = cfg.layout.layout;
         scalingPriority = "hyprland";
         bar = {
           launcher.autoDetectIcon = true;
