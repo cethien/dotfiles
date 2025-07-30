@@ -33,6 +33,21 @@
             require("octo").setup({})
           '';
       };
+      biscuits = {
+        package = pkgs.vimPlugins.nvim-biscuits;
+        setup =
+          #lua
+          ''
+            require("nvim-biscuits").setup({
+              cursor_line_only = true,
+              language_config = {
+                markdown = {
+                  disabled = true,
+                }
+              }
+            })
+          '';
+      };
       codesnap = {
         package = pkgs.vimPlugins.codesnap-nvim;
         setup =
@@ -101,14 +116,16 @@
       enableSharedCmpSources = true;
 
       # TODO: path autocomplete does not work. did work in nixvim, and in path is in defaults list
-      blink-cmp.enable = true;
-      blink-cmp.setupOpts.cmdline.keymap.preset = "default";
-      blink-cmp.sourcePlugins = {
-        spell.enable = true;
-        ripgrep.enable = true;
-        emoji.enable = true;
+      blink-cmp = {
+        enable = true;
+        setupOpts.cmdline.keymap.preset = "default";
+        sourcePlugins = {
+          spell.enable = true;
+          ripgrep.enable = true;
+          emoji.enable = true;
+        };
+        friendly-snippets.enable = true;
       };
-      blink-cmp.friendly-snippets.enable = true;
     };
 
     mini = {
@@ -141,7 +158,7 @@
     };
 
     utility = {
-      yanky-nvim.enable = true;
+      # yanky-nvim.enable = true;
 
       images.image-nvim.enable = true;
       images.image-nvim.setupOpts.backend = "kitty";
@@ -213,6 +230,7 @@
       smartcolumn.enable = true;
 
       borders.enable = true;
+      breadcrumbs.navbuddy.enable = true;
     };
     tabline.nvimBufferline = {
       enable = true;
@@ -229,7 +247,10 @@
       };
     };
     statusline.lualine.enable = true;
-    visuals.nvim-web-devicons.enable = true;
+    visuals = {
+      nvim-web-devicons.enable = true;
+      nvim-scrollbar.enable = true;
+    };
 
     clipboard.enable = true;
     clipboard.providers.wl-copy.enable = true;
