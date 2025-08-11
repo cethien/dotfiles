@@ -8,10 +8,10 @@
   cfg = config.deeznuts.programs.ocenaudio;
 in {
   options.deeznuts.programs.ocenaudio = {
-    enable = mkEnableOption "audacity";
+    enable = mkEnableOption "ocenaudio";
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [audacity];
+    home.packages = with pkgs; [ocenaudio];
   };
 }

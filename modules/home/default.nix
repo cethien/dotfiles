@@ -41,6 +41,7 @@ in {
     ./programs/inkscape.nix
     ./programs/gimp.nix
     ./programs/drawio.nix
+    ./programs/mixxx.nix
 
     ./programs/rnote.nix
     ./programs/obs-studio.nix
@@ -92,6 +93,7 @@ in {
       inkscape.enable = mkDefault desktopEnabled;
       drawio.enable = mkDefault desktopEnabled;
       ocenaudio.enable = mkDefault desktopEnabled;
+      mixxx.enable = mkDefault desktopEnabled;
     };
   };
 }
