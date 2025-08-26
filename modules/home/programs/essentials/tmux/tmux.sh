@@ -6,7 +6,7 @@ _tmux_session() {
     name=$(basename "$PWD")
   fi
   local session=$(echo "$name" | tr -c 'a-zA-Z0-9_' '_' | sed 's/_$//')
-  [ "$session" = "$USER" ] && echo "deez-nuts" || echo "$session"
+  [ "$session" = "$USER" ] && echo "deez_nuts" || echo "$session"
 }
 
 tmux_new() {
