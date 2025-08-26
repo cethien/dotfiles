@@ -86,13 +86,13 @@
       pkgs = pkgsFor system;
       stateVersion = "25.05";
     in {
-      nixosConfigurations.liveIso = nixpkgs.lib.nixosSystem {
-        inherit system;
-        modules = [
-          ./systems/liveIso/configuration.nix
-          {system.stateVersion = stateVersion;}
-        ];
-      };
+      # nixosConfigurations.liveIso = nixpkgs.lib.nixosSystem {
+      #   inherit system;
+      #   modules = [
+      #     ./systems/liveIso/configuration.nix
+      #     {system.stateVersion = stateVersion;}
+      #   ];
+      # };
 
       nixosConfigurations."cethien.home" = nixpkgs.lib.nixosSystem {
         inherit pkgs;
@@ -114,8 +114,6 @@
           sshOpts = ["-i" "~/.ssh/id_deployrs_cethien.home"];
         };
       };
-
-      checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
 
       nixosConfigurations."hp-430-g7" = nixpkgs.lib.nixosSystem {
         inherit pkgs;
@@ -156,54 +154,56 @@
         ];
       };
 
-      nixosConfigurations."tower-of-power" = nixpkgs.lib.nixosSystem {
-        inherit pkgs;
-        specialArgs = {inherit sops-nix;};
+      # nixosConfigurations."tower-of-power" = nixpkgs.lib.nixosSystem {
+      #   inherit pkgs;
+      #   specialArgs = {inherit sops-nix;};
+      #
+      #   modules = [
+      #     ./systems/tower-of-power/hardware.nix
+      #     ./systems/tower-of-power/configuration.nix
+      #     {
+      #       system.stateVersion = stateVersion;
+      #       boot.kernelPackages = pkgs.linuxPackages_zen;
+      #     }
+      #
+      #     home-manager.nixosModules.home-manager
+      #     {
+      #       home-manager = {
+      #         useUserPackages = true;
+      #         backupFileExtension = "bak-hm-$(date +%Y%m%d_%H%M%S)";
+      #
+      #         users.cethien = ./systems/tower-of-power/homes/cethien.nix;
+      #
+      #         extraSpecialArgs = {
+      #           inherit
+      #             pkgs
+      #             system
+      #             home-manager
+      #             stateVersion
+      #             sops-nix
+      #             stylix
+      #             zen-browser
+      #             nvf
+      #             ;
+      #         };
+      #       };
+      #     }
+      #   ];
+      # };
+      #
+      # homeConfigurations."cethien@wsl" = import ./homes/cethien_wsl {
+      #   inherit
+      #     pkgs
+      #     system
+      #     home-manager
+      #     stateVersion
+      #     sops-nix
+      #     stylix
+      #     nvf
+      #     ;
+      # };
 
-        modules = [
-          ./systems/tower-of-power/hardware.nix
-          ./systems/tower-of-power/configuration.nix
-          {
-            system.stateVersion = stateVersion;
-            boot.kernelPackages = pkgs.linuxPackages_zen;
-          }
-
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              useUserPackages = true;
-              backupFileExtension = "bak-hm-$(date +%Y%m%d_%H%M%S)";
-
-              users.cethien = ./systems/tower-of-power/homes/cethien.nix;
-
-              extraSpecialArgs = {
-                inherit
-                  pkgs
-                  system
-                  home-manager
-                  stateVersion
-                  sops-nix
-                  stylix
-                  zen-browser
-                  nvf
-                  ;
-              };
-            };
-          }
-        ];
-      };
-
-      homeConfigurations."cethien@wsl" = import ./homes/cethien_wsl {
-        inherit
-          pkgs
-          system
-          home-manager
-          stateVersion
-          sops-nix
-          stylix
-          nvf
-          ;
-      };
+      checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
 
       templates = {
         default = self.templates.empty;
