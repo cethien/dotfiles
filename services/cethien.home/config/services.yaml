@@ -4,5 +4,5 @@
       href: http://192.168.0.1
       icon: vodafone.png
   - mi router:
-      href: http://mi-router.cethien.home
+      href: http://192.168.1.1
       icon: xiaomi.png

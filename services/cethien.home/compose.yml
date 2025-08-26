@@ -32,6 +32,8 @@ services:
         caddy.reverse_proxy: "{{upstreams 3000}}"
 
 configs:
+  bookmarks.yaml:
+    file: ./config/bookmarks.yaml
   widgets.yaml:
     file: ./config/widgets.yaml
   services.yaml:
@@ -40,8 +42,7 @@ configs:
     file: ./config/settings.yaml
   docker.yaml:
     file: ./config/docker.yaml
-  bookmarks.yaml:
-    file: ./config/bookmarks.yaml
+  
 
 networks:
   caddy:
