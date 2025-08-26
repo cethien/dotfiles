@@ -1,14 +1,20 @@
-{ lib, config, ... }:
-let
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}: let
   inherit (lib) mkEnableOption mkIf;
   cfg = config.deeznuts.programs.easyeffects;
-in
-{
+in {
   options.deeznuts.programs.easyeffects = {
     enable = mkEnableOption "Enable easyeffects";
   };
 
   config = mkIf cfg.enable {
     services.easyeffects.enable = true;
+    home.packages = with pkgs; [
+      qpwgraph
+    ];
   };
 }
