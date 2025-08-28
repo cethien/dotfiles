@@ -1,10 +1,12 @@
-{ lib, config, ... }:
-let
+{
+  lib,
+  config,
+  ...
+}: let
   inherit (lib) mkEnableOption mkIf;
   cfg = config.deeznuts.programs.kitty;
   enable = cfg.enable;
-in
-{
+in {
   options.deeznuts.programs.kitty = {
     enable = mkEnableOption "kitty terminal";
   };
@@ -14,7 +16,7 @@ in
       enable = true;
 
       settings = {
-        window_padding_width = 6;
+        window_padding_width = 2;
         update_check_interval = 0;
         scrollback_lines = 10000;
         enable_audio_bell = false;
