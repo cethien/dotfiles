@@ -35,6 +35,8 @@ in {
     ./programs/keepassxc.nix
     ./programs/pim
     ./programs/office.nix
+    ./programs/taskwarrior.nix
+    ./programs/slides.nix
 
     ./programs/pinta.nix
     ./programs/ocenaudio.nix
@@ -71,6 +73,8 @@ in {
       neovim.enable = mkDefault true;
       fun.enable = mkDefault true;
       fastfetch.enable = mkDefault true;
+      taskwarrior.enable = mkDefault true;
+      slides.enable = mkDefault true;
 
       keepassxc.enable = mkDefault desktopEnabled;
       keepassxc.hyprland.autostart.enable = mkDefault desktopEnabled;
