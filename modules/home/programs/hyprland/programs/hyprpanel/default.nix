@@ -28,16 +28,16 @@ in {
             left = ["workspaces" "systray"];
             middle = ["media"];
             right =
-              ["volume"]
+              ["ram" "cpu"]
               ++ (
                 if cfg.layout.bluetooth
                 then ["bluetooth"]
                 else []
               )
-              ++ ["network" "notifications"]
+              ++ ["network" "volume" "notifications"]
               ++ (
                 if cfg.layout.battery
-                then ["battery" "hypridle"]
+                then ["hypridle" "battery"]
                 else []
               )
               ++ ["clock"];
