@@ -19,8 +19,22 @@ in {
       decibels
       gnome-calculator
     ];
+    wayland.windowManager.hyprland.settings = {
+      bind = [
+        "SUPER, e, exec, nautilus"
+      ];
+    };
 
     xdg.mimeApps.defaultApplications = let
+      filesMimeTypes = [
+        "inode/directory"
+      ];
+      filesMap = builtins.listToAttrs (map (mimeType: {
+          name = mimeType;
+          value = ["org.gnome.Nautilus.desktop"];
+        })
+        filesMimeTypes);
+
       audioMimeTypes = [
         "audio/mpeg"
         "audio/x-wav"
@@ -54,6 +68,6 @@ in {
         })
         archiveMimeTypes);
     in
-      audioMap // archiveMap;
+      filesMap // audioMap // archiveMap;
   };
 }

@@ -3,8 +3,8 @@
   config,
   pkgs,
   ...
-}: let
-  inherit (lib) mkEnableOption mkIf;
+}:
+with lib; let
   cfg = config.deeznuts.programs.qol;
 in {
   imports = [
@@ -92,10 +92,12 @@ in {
 
     home.file."${config.home.homeDirectory}/.hushlogin".text = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
 
-    wayland.windowManager.hyprland.settings = {
-      bind = [
-        "SUPER, e, exec, $terminal --class yazi -e yazi"
-      ];
-    };
+    programs.hyprpanel.settings.bar.workspaces.applicationIconMap.yazi = "󰝰";
+    # xdg.mimeApps.defaultApplications."inode/directory" = ["yazi.desktop"];
+    # wayland.windowManager.hyprland.settings = {
+    #   bind = [
+    #     "SUPER, e, exec, $terminal --class yazi -e yazi"
+    #   ];
+    # };
   };
 }

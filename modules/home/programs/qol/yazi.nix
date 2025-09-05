@@ -7,8 +7,6 @@
   inherit (lib) mkIf;
 in {
   config = mkIf config.programs.yazi.enable {
-    programs.hyprpanel.settings.bar.workspaces.applicationIconMap.yazi = "󰝰";
-    xdg.mimeApps.defaultApplications."inode/directory" = ["yazi.desktop"];
     programs.yazi = {
       plugins = {
         inherit
