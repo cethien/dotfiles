@@ -3,10 +3,10 @@
   ageFile ? "$HOME/.config/sops/age/keys.txt",
   ...
 }: {
-  vim = {
+  vim = with pkgs.vimPlugins; {
     extraPlugins = {
       sops = {
-        package = pkgs.vimPlugins.nvim-sops;
+        package = nvim-sops;
         setup =
           #lua
           ''
@@ -18,7 +18,7 @@
           '';
       };
       csv = {
-        package = pkgs.vimPlugins.csvview-nvim;
+        package = csvview-nvim;
         setup =
           #lua
           ''
@@ -26,7 +26,7 @@
           '';
       };
       octo = {
-        package = pkgs.vimPlugins.octo-nvim;
+        package = octo-nvim;
         setup =
           #lua
           ''
@@ -34,7 +34,7 @@
           '';
       };
       biscuits = {
-        package = pkgs.vimPlugins.nvim-biscuits;
+        package = nvim-biscuits;
         setup =
           #lua
           ''
@@ -49,7 +49,7 @@
           '';
       };
       codesnap = {
-        package = pkgs.vimPlugins.codesnap-nvim;
+        package = codesnap-nvim;
         setup =
           #lua
           ''
@@ -182,15 +182,31 @@
     telescope.enable = true;
     telescope = {
       mappings.findFiles = "<leader><Space>";
-      setupOpts.defaults.file_ignore_patterns = [
-        "node_modules"
-        "%.git/"
-        "%.direnv/"
-        "dist/"
-        "build/"
-        "target/"
-        "result/"
+      extensions = [
+        {
+          name = "fzf";
+          packages = [pkgs.vimPlugins.telescope-fzf-native-nvim];
+          setup = {fzf = {fuzzy = true;};};
+        }
       ];
+      setupOpts.defaults = {
+        layouts_stategy = "horizontal";
+        layout_config = {
+          height = 0.8;
+          width = 0.95;
+          horizontal.prompt_position = "top";
+          preview_cutoff = 1;
+        };
+        file_ignore_patterns = [
+          "node_modules"
+          "%.git/"
+          "%.direnv/"
+          "dist/"
+          "build/"
+          "target/"
+          "result/"
+        ];
+      };
     };
 
     git = {
@@ -254,6 +270,13 @@
 
     clipboard.enable = true;
     clipboard.providers.wl-copy.enable = true;
+
+    notes.obsidian = {
+      # enable = true;
+      setupOpts = {
+        dir = "./";
+      };
+    };
 
     keymaps = [
       {
