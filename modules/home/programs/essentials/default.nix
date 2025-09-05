@@ -15,14 +15,17 @@ in {
   };
 
   config = mkIf cfg.enable {
-    programs = {
-      ssh.enable = true;
-      ssh = {
+    programs.tmux.enable = true;
+
+    programs.ssh = {
+      enable = true;
+      enableDefaultConfig = false;
+
+      matchBlocks."*" = {
         compression = true;
         forwardAgent = true;
         hashKnownHosts = true;
       };
-      tmux.enable = true;
     };
   };
 }
