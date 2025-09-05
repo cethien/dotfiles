@@ -16,7 +16,7 @@ tmux_new() {
   if [ -n "$arg_f" ] && [[ "$arg_f" != -* ]]; then tmux_args=("${@:2}"); fi
   if [ -n "$TMUX" ]; then
     tmux new-session -d -s "$s" "${tmux_args[@]}"
-    echo "Created detached tmux session: '$s'"
+    echo "👻 created detached tmux session: '$s'"
   else
     tmux new-session -A -s "$s" "${tmux_args[@]}"
   fi

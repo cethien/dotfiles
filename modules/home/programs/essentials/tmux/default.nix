@@ -3,15 +3,24 @@
   config,
   pkgs,
   ...
-}: let
-  inherit (lib) mkIf;
-  cfg = config.programs.tmux;
+}:
+with lib; let
+  cfg = config.deeznuts.programs.essentials.tmux;
 in {
   imports = [
     ./option-keymaps.nix
   ];
 
-  config = mkIf cfg.enable {
+  options.deeznuts.programs.essentials.tmux = {
+    hyprland.workspace = mkOption {
+      type = types.int;
+      default = 2;
+      description = "default hyprland workspace";
+    };
+    hyprland.autostart.enable = mkEnableOption "autostart terminal with tmux";
+  };
+
+  config = mkIf config.programs.tmux.enable {
     home.shellAliases = {
       tm = "tmux_new";
       tmls = "tmux ls";
@@ -55,7 +64,7 @@ in {
           plugin = continuum;
           extraConfig = ''
             set -g @continuum-restore 'on'
-            set -g @continuum-save-interval '10' # minutes
+            set -g @continuum-save-interval '5' # minutes
           '';
         }
 
@@ -119,7 +128,13 @@ in {
     };
 
     wayland.windowManager.hyprland.settings = {
-      exec-once = ["tmux start-server"];
+      exec-once = mkMerge [
+        ["tmux start-server"]
+        (mkIf cfg.hyprland.autostart.enable [''[silent] $terminal --class tmux -e bash -i -c "tmux_new"''])
+      ];
+      windowrulev2 = [
+        "workspace ${toString cfg.hyprland.workspace}, class:^(tmux)$"
+      ];
     };
   };
 }
