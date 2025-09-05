@@ -23,11 +23,11 @@
         "4, monitor:HDMI-A-1, persistent:true" # general
         "5, monitor:HDMI-A-1, persistent:true" # general
 
-        "6, monitor:HDMI-A-1, persistent:true" # video
+        "6, monitor:eDP-1, persistent:true" # general
         "7, monitor:eDP-1, persistent:true" # spotify
-        "8, monitor:DP-1" # btm
-        "9, monitor:DP-1" # discord
-        "10, monitor:DP-1" # obs
+        "8, monitor:eDP-1" # btm
+        "9, monitor:eDP-1" # discord
+        "10, monitor:eDP-1" # obs
       ];
 
       defaultWorkspaces = {
