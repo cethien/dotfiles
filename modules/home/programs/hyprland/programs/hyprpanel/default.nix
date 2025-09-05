@@ -107,7 +107,7 @@ in {
         };
 
         theme = {
-          name = "one_dark";
+          # name = "one_dark";
 
           bar = {
             transparent = true;

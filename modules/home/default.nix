@@ -65,12 +65,13 @@ in {
     stylix.enable = mkDefault true;
     programs = {
       essentials.enable = mkDefault true;
+      essentials.tmux.hyprland.autostart.enable = mkDefault desktopEnabled;
+      neovim.enable = mkDefault true;
       utils.enable = mkDefault true;
       net.enable = mkDefault true;
       qol.enable = mkDefault true;
       dev.enable = mkDefault true;
       docker.enable = mkDefault true;
-      neovim.enable = mkDefault true;
       fun.enable = mkDefault true;
       fastfetch.enable = mkDefault true;
       taskwarrior.enable = mkDefault true;

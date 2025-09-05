@@ -3,8 +3,8 @@
   config,
   pkgs,
   ...
-}: let
-  inherit (lib) mkIf mkEnableOption mkOption types mkMerge;
+}:
+with lib; let
   cfg = config.deeznuts.ansible;
 in {
   options.deeznuts.ansible = {
