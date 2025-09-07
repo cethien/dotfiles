@@ -7,10 +7,11 @@
   home.homeDirectory = "/home/cethien";
   home.stateVersion = stateVersion;
 
-  deeznuts.programs = {
-    hyprland = {
+  deeznuts = {
+    storage.enable = true;
+
+    desktop.hyprland = {
       enable = true;
-      hypridle.enable = true;
       monitors = [
         "HDMI-A-1, 2560x1440@60, 0x0, 1"
         "eDP-1, 1920x1080@60, 320x1440, 1"
@@ -36,38 +37,38 @@
       };
     };
 
-    essentials.tmux.hyprland.autostart.enable = true;
-    syncthing.enable = true;
-    docker.enable = true;
-    dev = {
-      vscode.enable = true;
-      chromium.enable = true;
+    terminal.kitty.enable = true;
+
+    programs = {
+      essentials.tmux.hyprland.autostart.enable = true;
+      docker.enable = true;
+      dev = {
+        vscode.enable = true;
+        chromium.enable = true;
+      };
+
+      gaming.enable = true;
+
+      keepassxc.enable = true;
+      keepassxc.hyprland.autostart.enable = true;
+      pavucontrol.enable = true;
+      easyeffects.enable = true;
+      browser = {
+        zen-browser.enable = true;
+        zen-browser.hyprland.autostart.enable = true;
+        firefox.enable = true;
+
+        defaultBrowser = "zen-beta";
+      };
+
+      discord.enable = true;
+      spotify.enable = true;
+      spotify.hyprland.autostart.enable = true;
     };
 
-    gaming.enable = true;
-
-    keepassxc.enable = true;
-    keepassxc.hyprland.autostart.enable = true;
-    pavucontrol.enable = true;
-    easyeffects.enable = true;
-    browser = {
-      zen-browser.enable = true;
-      zen-browser.hyprland.autostart.enable = true;
-      firefox.enable = true;
-
-      defaultBrowser = "zen-beta";
+    creative = {
+      enable = true;
+      mixxx.enable = true;
     };
-
-    discord.enable = true;
-    spotify.enable = true;
-    spotify.hyprland.autostart.enable = true;
-
-    office.enable = true;
-    pinta.enable = true;
-    gimp.enable = true;
-    inkscape.enable = true;
-    drawio.enable = true;
-    ocenaudio.enable = true;
-    mixxx.enable = true;
   };
 }

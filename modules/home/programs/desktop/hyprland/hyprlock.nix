@@ -5,8 +5,8 @@
   ...
 }:
 with lib; let
-  cfg = config.deeznuts.programs.hyprland.hyprlock;
-  enable = config.deeznuts.programs.hyprland.enable;
+  enabled = config.deeznuts.desktop.hyprland.enable;
+  cfg = config.deeznuts.desktop.hyprland.hyprlock;
 
   colors = {
     base01 = "rgba(31, 29, 46, 0.6)"; # base01 - Darker Plum/Gray, subtle transparency
@@ -20,7 +20,7 @@ with lib; let
     base0E = "rgba(231, 130, 132, 1.0)"; # base0E - Red Accent for errors
   };
 in {
-  options.deeznuts.programs.hyprland.hyprlock = {
+  options.deeznuts.desktop.hyprland.hyprlock = {
     monitor = mkOption {
       type = types.str;
       default = "eDP-1";
@@ -33,7 +33,7 @@ in {
     };
   };
 
-  config = mkIf enable {
+  config = mkIf enabled {
     stylix.targets.hyprlock.enable = false;
     programs.hyprlock = {
       enable = true;

@@ -3,9 +3,9 @@
   lib,
   pkgs,
   ...
-}: let
-  inherit (lib) mkIf;
-  enabled = config.deeznuts.programs.hyprland.enable;
+}:
+with lib; let
+  enabled = config.deeznuts.desktop.hyprland.enable;
 in {
   config = mkIf enabled {
     home.file.".config/satty/config.toml".source = ./satty/config.toml;

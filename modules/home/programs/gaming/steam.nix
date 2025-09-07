@@ -14,7 +14,7 @@ in {
       autostart.enable = mkEnableOption "hyprland autostart";
       workspace = mkOption {
         type = types.int;
-        default = config.deeznuts.programs.hyprland.defaultWorkspaces.gaming;
+        default = config.deeznuts.desktop.hyprland.defaultWorkspaces.gaming;
         description = "default workspace";
       };
     };

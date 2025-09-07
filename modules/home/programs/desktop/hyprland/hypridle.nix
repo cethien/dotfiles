@@ -1,45 +1,42 @@
-{ lib, config, ... }:
-let
-  inherit (lib) mkIf mkEnableOption mkOption;
-  inherit (lib.types) int;
-  cfg = config.deeznuts.programs.hyprland.hypridle;
-  enabled = cfg.enable;
-in
 {
-  options.deeznuts.programs.hyprland.hypridle = {
-    enable = mkEnableOption "Enable hypridle";
+  lib,
+  config,
+  ...
+}:
+with lib; let
+  enabled = config.deeznuts.desktop.hyprland.enable;
+  cfg = config.deeznuts.desktop.hyprland.hypridle;
+in {
+  options.deeznuts.desktop.hyprland.hypridle = {
+    enable = mkOption {
+      type = types.bool;
+      default = enabled;
+      description = "hypridle";
+    };
 
-    dimScreen = {
-      timeout = mkOption {
-        type = int;
-        default = 150; # 2.5 minutes
-        description = "Timeout in seconds before dimming the screen";
-      };
+    dimScreen.timeout = mkOption {
+      type = types.int;
+      default = 150; # 2.5 minutes
+      description = "Timeout in seconds before dimming the screen";
     };
-    lockScreen = {
-      timeout = mkOption {
-        type = int;
-        default = 300; # 5 minutes
-        description = "Timeout in seconds before locking the screen";
-      };
+    lockScreen.timeout = mkOption {
+      type = types.int;
+      default = 300; # 5 minutes
+      description = "Timeout in seconds before locking the screen";
     };
-    turnOffScreen = {
-      timeout = mkOption {
-        type = int;
-        default = 330; # 5.5 minutes
-        description = "Timeout in seconds before turning off the screen";
-      };
+    turnOffScreen.timeout = mkOption {
+      type = types.int;
+      default = 330; # 5.5 minutes
+      description = "Timeout in seconds before turning off the screen";
     };
-    suspendComputer = {
-      timeout = mkOption {
-        type = int;
-        default = 900; # 15 minutes
-        description = "Timeout in seconds before suspending the computer";
-      };
+    suspendComputer.timeout = mkOption {
+      type = types.int;
+      default = 900; # 15 minutes
+      description = "Timeout in seconds before suspending the computer";
     };
   };
 
-  config = mkIf enabled {
+  config = mkIf cfg.enable {
     services.hypridle = {
       enable = true;
 

@@ -30,7 +30,7 @@ in {
     hyprland = {
       workspace = mkOption {
         type = types.int;
-        default = config.deeznuts.programs.hyprland.defaultWorkspaces.browser;
+        default = config.deeznuts.desktop.hyprland.defaultWorkspaces.browser;
         description = "default workspace";
       };
       autostart.enable = mkEnableOption "autostart";

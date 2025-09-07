@@ -3,13 +3,13 @@
   config,
   pkgs,
   ...
-}: let
-  inherit (lib) mkIf mkEnableOption mkOption types;
-  cfg = config.deeznuts.programs.hyprpanel;
+}:
+with lib; let
+  enabled = config.deeznuts.desktop.hyprland.enable;
+  cfg = config.deeznuts.desktop.hyprland.hyprpanel;
   jsonFormat = pkgs.formats.json {};
 in {
-  options.deeznuts.programs.hyprpanel = {
-    enable = mkEnableOption "hyprpanel";
+  options.deeznuts.desktop.hyprland.hyprpanel = {
     layout = {
       battery = mkOption {
         type = types.bool;
@@ -51,7 +51,7 @@ in {
     };
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf enabled {
     wayland.windowManager.hyprland.settings = {
       bind = [
         "SUPER, I, exec, hyprpanel idleInhibit"

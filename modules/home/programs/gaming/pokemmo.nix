@@ -11,7 +11,7 @@ in {
     enable = mkEnableOption "pokemmo";
     hyprland.workspace = mkOption {
       type = types.int;
-      default = config.deeznuts.programs.hyprland.defaultWorkspaces.gaming;
+      default = config.deeznuts.desktop.hyprland.defaultWorkspaces.gaming;
       description = "default hyprland workspace";
     };
   };
