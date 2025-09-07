@@ -63,16 +63,10 @@ in {
 
       iconTheme = {
         enable = true;
-        package = pkgs.papirus-icon-theme;
-        dark = "Papirus-Dark";
-        light = "Papirus-Light";
+        package = pkgs.tela-icon-theme;
+        dark = "Tela-dracula-dark";
+        light = "Tela-dracula";
       };
-      # iconTheme = {
-      #   enable = true;
-      #   package = pkgs.tela-icon-theme;
-      #   dark = "Tela-dracula-dark";
-      #   light = "Tela-dracula";
-      # };
 
       fonts = {
         sansSerif = {
