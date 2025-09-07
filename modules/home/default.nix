@@ -1,6 +1,5 @@
 {lib, ...}:
-with lib; let
-in {
+with lib; {
   imports = [
     ./assets
     ./stylix

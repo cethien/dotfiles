@@ -37,6 +37,7 @@
     };
 
     essentials.tmux.hyprland.autostart.enable = true;
+    syncthing.enable = true;
     docker.enable = true;
     dev = {
       vscode.enable = true;

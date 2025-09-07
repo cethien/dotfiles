@@ -6,6 +6,8 @@
 with lib; let
   cfg = config.deeznuts.programs.syncthing;
 in {
+  options.deeznuts.programs.syncthing.enable = mkEnableOption "syncthing";
+
   config = mkIf cfg.enable {
     services.syncthing = {
       enable = true;

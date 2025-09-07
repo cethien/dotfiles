@@ -10,6 +10,7 @@
   deeznuts.programs = {
     # gnome.enable = true;
 
+    syncthing.enable = true;
     keepassxc.enable = true;
     pavucontrol.enable = true;
     easyeffects.enable = true;
