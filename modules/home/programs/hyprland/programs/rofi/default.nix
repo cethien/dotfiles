@@ -26,6 +26,7 @@ in {
       (writeShellScriptBin "rofi-playerctl" (builtins.readFile ./rofi-playerctl.sh))
     ];
 
+    stylix.targets.rofi.enable = false;
     programs.rofi = {
       enable = true;
       package = pkgs.rofi-wayland;

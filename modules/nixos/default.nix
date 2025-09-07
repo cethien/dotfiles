@@ -2,8 +2,8 @@
   pkgs,
   lib,
   ...
-}: let
-  inherit (lib) mkDefault;
+}:
+with lib; let
   user = "cethien";
 in {
   imports = [
@@ -13,7 +13,7 @@ in {
     ./hardware
     ./virtualisation
     ./audio.nix
-    ./hyprland.nix
+    ./desktop
     ./steam.nix
     ./ai.nix
     ./monitoring.nix
@@ -74,7 +74,7 @@ in {
   };
 
   boot = {
-    kernelPackages = mkDefault pkgs.linuxPackages_latest;
+    # kernelPackages = mkDefault pkgs.linuxPackages_latest;
 
     kernelParams = mkDefault [
       "quiet"

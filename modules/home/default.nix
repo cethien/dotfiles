@@ -1,10 +1,5 @@
-{
-  lib,
-  config,
-  ...
-}: let
-  inherit (lib) mkDefault;
-  desktopEnabled = config.wayland.windowManager.hyprland.enable;
+{lib, ...}:
+with lib; let
 in {
   imports = [
     ./assets
@@ -12,6 +7,7 @@ in {
     ./sops.nix
 
     ./programs/hyprland
+
     ./programs/qol
     ./programs/dev
     ./programs/fun.nix
@@ -45,11 +41,11 @@ in {
     ./programs/drawio.nix
     ./programs/mixxx.nix
 
-    ./programs/rnote.nix
     ./programs/obs-studio.nix
     ./programs/pavucontrol.nix
     ./programs/easyeffects.nix
 
+    ./programs/rnote.nix
     ./programs/gaming
   ];
 
@@ -65,40 +61,15 @@ in {
     stylix.enable = mkDefault true;
     programs = {
       essentials.enable = mkDefault true;
-      essentials.tmux.hyprland.autostart.enable = mkDefault desktopEnabled;
       neovim.enable = mkDefault true;
+      taskwarrior.enable = true;
+      slides.enable = true;
       utils.enable = mkDefault true;
       net.enable = mkDefault true;
       qol.enable = mkDefault true;
       dev.enable = mkDefault true;
-      docker.enable = mkDefault true;
       fun.enable = mkDefault true;
       fastfetch.enable = mkDefault true;
-      taskwarrior.enable = mkDefault true;
-      slides.enable = mkDefault true;
-
-      keepassxc.enable = mkDefault desktopEnabled;
-      keepassxc.hyprland.autostart.enable = mkDefault desktopEnabled;
-      pavucontrol.enable = mkDefault desktopEnabled;
-      easyeffects.enable = mkDefault desktopEnabled;
-      browser = {
-        zen-browser.enable = mkDefault desktopEnabled;
-        zen-browser.hyprland.autostart.enable = mkDefault desktopEnabled;
-        firefox.enable = mkDefault desktopEnabled;
-
-        defaultBrowser = "zen-beta";
-      };
-      discord.enable = mkDefault desktopEnabled;
-      spotify.enable = mkDefault desktopEnabled;
-      spotify.hyprland.autostart.enable = mkDefault desktopEnabled;
-
-      office.enable = mkDefault desktopEnabled;
-      pinta.enable = mkDefault desktopEnabled;
-      gimp.enable = mkDefault desktopEnabled;
-      inkscape.enable = mkDefault desktopEnabled;
-      drawio.enable = mkDefault desktopEnabled;
-      ocenaudio.enable = mkDefault desktopEnabled;
-      mixxx.enable = mkDefault desktopEnabled;
     };
   };
 }

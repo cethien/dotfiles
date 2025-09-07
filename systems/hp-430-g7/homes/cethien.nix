@@ -36,7 +36,37 @@
       };
     };
 
-    dev.chromium.enable = true;
+    essentials.tmux.hyprland.autostart.enable = true;
+    docker.enable = true;
+    dev = {
+      vscode.enable = true;
+      chromium.enable = true;
+    };
+
     gaming.enable = true;
+
+    keepassxc.enable = true;
+    keepassxc.hyprland.autostart.enable = true;
+    pavucontrol.enable = true;
+    easyeffects.enable = true;
+    browser = {
+      zen-browser.enable = true;
+      zen-browser.hyprland.autostart.enable = true;
+      firefox.enable = true;
+
+      defaultBrowser = "zen-beta";
+    };
+
+    discord.enable = true;
+    spotify.enable = true;
+    spotify.hyprland.autostart.enable = true;
+
+    office.enable = true;
+    pinta.enable = true;
+    gimp.enable = true;
+    inkscape.enable = true;
+    drawio.enable = true;
+    ocenaudio.enable = true;
+    mixxx.enable = true;
   };
 }

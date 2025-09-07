@@ -30,6 +30,7 @@ in {
       ];
     };
 
+    stylix.targets.spicetify.enable = false;
     home.packages = with pkgs; [
       spotify
       (mkIf config.wayland.windowManager.hyprland.enable (

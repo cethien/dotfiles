@@ -19,11 +19,13 @@ in {
   config = mkIf cfg.enable {
     home.sessionVariables.EDITOR = "nvim";
     home.shellAliases.v = "nvim";
+
     programs.nvf.enable = true;
     programs.nvf.settings = import ./nvf-config.nix {
       inherit pkgs;
       ageFile = config.sops.age.keyFile;
     };
+    stylix.targets.nvf.enable = false;
 
     xdg.mimeApps.defaultApplications = let
       mimeTypes = [

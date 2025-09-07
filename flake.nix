@@ -154,6 +154,47 @@
         ];
       };
 
+      nixosConfigurations."surface-7-pro" = nixpkgs.lib.nixosSystem {
+        inherit pkgs;
+        specialArgs = {inherit sops-nix;};
+
+        modules = [
+          # disko.nixosModules.disko
+          # ./shared/disko/simple
+          nixos-hardware.nixosModules.microsoft-surface-pro-intel
+          ./systems/surface-7-pro/hardware.nix
+          ./systems/surface-7-pro/configuration.nix
+          {
+            system.stateVersion = stateVersion;
+          }
+
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              # useGlobalPkgs = true;
+              useUserPackages = true;
+              backupFileExtension = "bak-hm-$(date +%Y%m%d_%H%M%S)";
+
+              users.cethien =
+                ./systems/surface-7-pro/homes/cethien.nix;
+
+              extraSpecialArgs = {
+                inherit
+                  pkgs
+                  system
+                  home-manager
+                  stateVersion
+                  sops-nix
+                  stylix
+                  zen-browser
+                  nvf
+                  ;
+              };
+            };
+          }
+        ];
+      };
+
       # nixosConfigurations."tower-of-power" = nixpkgs.lib.nixosSystem {
       #   inherit pkgs;
       #   specialArgs = {inherit sops-nix;};

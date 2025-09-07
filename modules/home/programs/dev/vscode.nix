@@ -3,8 +3,8 @@
   config,
   pkgs,
   ...
-}: let
-  inherit (lib) mkEnableOption mkIf;
+}:
+with lib; let
   cfg = config.deeznuts.programs.dev.vscode;
 in {
   options.deeznuts.programs.dev.vscode = {
@@ -12,13 +12,8 @@ in {
   };
 
   config = mkIf cfg.enable {
-    wayland.windowManager.hyprland.settings = {
-      windowrulev2 = [
-        "workspace ${toString cfg.hyprland.workspace}, class:Code"
-      ];
-    };
-
     home.packages = [pkgs.nerd-fonts.meslo-lg];
     programs.vscode.enable = true;
+    stylix.targets.vscode.enable = false;
   };
 }

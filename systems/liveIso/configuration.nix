@@ -14,8 +14,6 @@ in {
   networking.networkmanager.enable = false;
   services.printing.enable = true;
   deeznuts = {
-    hyprland.enable = true;
-    hyprland.autologinUser = user;
     audio.enable = true;
   };
 }

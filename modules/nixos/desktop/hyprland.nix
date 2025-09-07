@@ -3,20 +3,15 @@
   config,
   pkgs,
   ...
-}: let
-  inherit (lib) mkIf mkEnableOption mkOption types;
-  cfg = config.deeznuts.hyprland;
+}:
+with lib; let
+  cfg = config.deeznuts.desktop;
 in {
-  options.deeznuts.hyprland = {
+  options.deeznuts.desktop.hyprland = {
     enable = mkEnableOption "hyprland desktop";
-    autologinUser = mkOption {
-      type = types.passwdEntry types.str;
-      default = null;
-      description = "autologin user";
-    };
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf cfg.hyprland.enable {
     # TODO: replace with simpler autologin without sddm.
     # so far greetd could autostart, getty could login, but could not use both
     services.displayManager = {
@@ -31,6 +26,7 @@ in {
         user = cfg.autologinUser;
       };
     };
+
     programs.hyprland.enable = true;
     services.udisks2.enable = true;
     services.upower.enable = true;

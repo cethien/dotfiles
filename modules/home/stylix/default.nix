@@ -40,15 +40,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-    stylix.targets = {
-      nvf.enable = false;
-
-      vscode.enable = false;
-      mangohud.enable = false;
-      spicetify.enable = false;
-      rofi.enable = false;
-    };
-
     # TODO: remove when https://github.com/nix-community/stylix/issues/478 is resolved
     wayland.windowManager.hyprland.settings = {
       env = [
