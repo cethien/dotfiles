@@ -4,8 +4,8 @@
   pkgs,
   stylix,
   ...
-}: let
-  inherit (lib) mkIf mkEnableOption mkOption types;
+}:
+with lib; let
   cfg = config.deeznuts.stylix;
 in {
   imports = [
@@ -51,7 +51,7 @@ in {
     stylix = {
       enable = true;
 
-      image = ./wallpapers/a_hand_holding_a_cassette_tape.jpg;
+      image = mkDefault ./wallpapers/a_hand_holding_a_cassette_tape.jpg;
       polarity = "dark";
       base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyo-night-dark.yaml";
 
