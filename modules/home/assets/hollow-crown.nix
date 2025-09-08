@@ -1,7 +1,7 @@
 {config, ...}: {
-  services.syncthing.folders.hollow-crown = {
+  services.syncthing.settings.folders.hollow-crown = {
     id = "hollow-crown";
     path = "${config.home.homeDirectory}/hollow-crown";
-    devices = ["hp-430-g7" "xiaomi-15"];
+    devices = ["hp-430-g7" "xiaomi-15" "surface-7-pro"];
   };
 }
