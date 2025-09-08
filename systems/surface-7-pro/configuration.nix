@@ -1,11 +1,10 @@
-{pkgs, ...}: let
-  user = "cethien";
-in {
+{
   imports = [
     ../../modules/nixos
   ];
   networking.hostName = "surface-7-pro";
   boot.loader.grub.device = "/dev/nvme0n1";
+  boot.plymouth.theme = "bgrt";
   # boot.kernelPackages = pkgs.linuxPackages_latest;
   # hardware.microsoft-surface.kernelVersion = "stable";
 

@@ -102,7 +102,7 @@ in {
         plymouth-blahaj-theme
         adi1090x-plymouth-themes
       ]);
-      theme = "polaroid";
+      theme = mkDefault "polaroid";
     };
   };
 }
