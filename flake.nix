@@ -161,8 +161,8 @@
         modules = [
           # disko.nixosModules.disko
           # ./shared/disko/simple
-          nixos-hardware.nixosModules.microsoft-surface-pro-intel
-          ./systems/surface-7-pro/hardware.nix
+          # nixos-hardware.nixosModules.microsoft-surface-pro-intel
+          ./systems/surface-7-pro/hardware-configuration.nix
           ./systems/surface-7-pro/configuration.nix
           {
             system.stateVersion = stateVersion;

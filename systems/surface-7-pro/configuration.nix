@@ -7,7 +7,7 @@ in {
   networking.hostName = "surface-7-pro";
   boot.loader.grub.device = "/dev/nvme0n1";
   # boot.kernelPackages = pkgs.linuxPackages_latest;
-  hardware.microsoft-surface.kernelVersion = "stable";
+  # hardware.microsoft-surface.kernelVersion = "stable";
 
   networking.networkmanager.wifi.backend = "iwd";
   hardware.enableRedistributableFirmware = true;
@@ -20,7 +20,6 @@ in {
 
   deeznuts = {
     desktop = {
-      autologinUser = user;
       gnome.enable = true;
     };
     audio.enable = true;
