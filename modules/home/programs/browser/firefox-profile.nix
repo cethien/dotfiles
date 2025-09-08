@@ -4,30 +4,37 @@
   pkgs,
   name,
   ...
-}: let
-  inherit (lib) mkIf mkMerge;
+}:
+with lib; let
+  cfg = config.deeznuts.browser;
 in {
   profiles."${name}" = {
     id = 0;
     inherit name;
 
     containers = {
+      "alt acc" = {
+        id = 1;
+        color = "turquoise";
+        icon = "circle";
+      };
+
       admin = {
         id = 2;
         color = "red";
         icon = "circle";
       };
 
-      testing = {
-        id = 1;
-        color = "blue";
-        icon = "circle";
-      };
-
-      "wörk" = {
+      "potato-squad.de" = mkIf cfg.firefox-profile.containers."potato-squad.de".enable {
         id = 3;
         color = "orange";
-        icon = "briefcase";
+        icon = "fruit";
+      };
+
+      "creative-europe.net" = mkIf cfg.firefox-profile.containers."creative-europe.net".enable {
+        id = 4;
+        color = "yellow";
+        icon = "vacation";
       };
     };
 

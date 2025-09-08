@@ -5,7 +5,7 @@
   ...
 }: let
   inherit (lib) mkEnableOption mkOption types mkIf;
-  cfg = config.deeznuts.programs.browser.firefox;
+  cfg = config.deeznuts.browser.firefox;
 
   name = "${config.home.username}";
   shared = import ./firefox-profile.nix {inherit config lib pkgs name;};
@@ -25,7 +25,7 @@
     extensions.force = true;
   };
 in {
-  options.deeznuts.programs.browser.firefox = {
+  options.deeznuts.browser.firefox = {
     enable = mkEnableOption "firefox";
     hyprland = {
       workspace = mkOption {

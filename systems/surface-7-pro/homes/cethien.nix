@@ -8,25 +8,24 @@
   home.stateVersion = stateVersion;
 
   deeznuts = {
-
     storage.enable = true;
     # desktop.gnome.enable = true;
-   
+
+    browser = {
+      firefox.enable = true;
+      zen-browser.enable = true;
+      defaultBrowser = "zen-beta";
+    };
+
     programs = {
       rnote.enable = true;
       keepassxc.enable = true;
       pavucontrol.enable = true;
       easyeffects.enable = true;
-      browser = {
-        zen-browser.enable = true;
-        firefox.enable = true;
-
-        defaultBrowser = "zen-beta";
-      };
 
       spotify.enable = true;
     };
-    
+
     terminal.kitty.enable = true;
   };
 }

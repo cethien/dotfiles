@@ -39,6 +39,19 @@
 
     terminal.kitty.enable = true;
 
+    browser = {
+      firefox-profile.containers = {
+        "potato-squad.de".enable = true;
+        "creative-europe.net".enable = true;
+      };
+
+      firefox.enable = true;
+      zen-browser.enable = true;
+      zen-browser.hyprland.autostart.enable = true;
+
+      defaultBrowser = "zen-beta";
+    };
+
     programs = {
       essentials.tmux.hyprland.autostart.enable = true;
       docker.enable = true;
@@ -53,13 +66,6 @@
       keepassxc.hyprland.autostart.enable = true;
       pavucontrol.enable = true;
       easyeffects.enable = true;
-      browser = {
-        zen-browser.enable = true;
-        zen-browser.hyprland.autostart.enable = true;
-        firefox.enable = true;
-
-        defaultBrowser = "zen-beta";
-      };
 
       discord.enable = true;
       spotify.enable = true;

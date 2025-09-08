@@ -4,7 +4,7 @@
   ...
 }:
 with lib; let
-  cfg = config.deeznuts.programs.browser;
+  cfg = config.deeznuts.browser;
 in {
   imports = [
     ./firefox.nix
@@ -12,11 +12,27 @@ in {
     ./picture-in-picture.nix
   ];
 
-  options.deeznuts.programs.browser = {
+  options.deeznuts.browser = {
     defaultBrowser = mkOption {
       type = types.str;
       default = "";
       description = "default browser name. will be converted to <browser-name>.desktop in mime";
+    };
+
+    firefox-profile = {
+      containers = {
+        "potato-squad.de".enable = mkOption {
+          type = types.bool;
+          default = false;
+          description = "enable container for potato-squad.de";
+        };
+
+        "creative-europe.net".enable = mkOption {
+          type = types.bool;
+          default = false;
+          description = "enable container for creative-europe.net";
+        };
+      };
     };
   };
 

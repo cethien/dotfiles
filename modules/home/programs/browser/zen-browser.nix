@@ -6,7 +6,7 @@
   ...
 }: let
   inherit (lib) mkEnableOption mkOption types mkIf;
-  cfg = config.deeznuts.programs.browser.zen-browser;
+  cfg = config.deeznuts.browser.zen-browser;
 
   name = "${config.home.username}";
   shared = import ./firefox-profile.nix {inherit config lib pkgs name;};
@@ -15,7 +15,7 @@ in {
     zen-browser.homeModules.beta
   ];
 
-  options.deeznuts.programs.browser.zen-browser = {
+  options.deeznuts.browser.zen-browser = {
     enable = mkEnableOption "zen browser";
     hyprland = {
       workspace = mkOption {
