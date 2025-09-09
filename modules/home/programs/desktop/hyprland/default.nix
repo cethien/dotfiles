@@ -125,15 +125,14 @@ in {
           enabled = true;
 
           bezier = [
-            "myBezier, 0.10, 0.9, 0.1, 1.05"
+            "deez, 0.10, 0.9, 0.1, 1.05"
           ];
 
           animation = [
-            "windows, 1, 5, myBezier, popin"
-            "windowsOut, 1, 5, myBezier, popin"
-            "border, 1, 10, default"
-            "fade, 1, 7, default"
-            "workspaces, 1, 6, default"
+            "windows, 1, 5, deez, popin"
+            "border, 1, 3, deez"
+            "fade, 1, 3, deez"
+            "workspaces, 1, 3, deez"
           ];
         };
 
