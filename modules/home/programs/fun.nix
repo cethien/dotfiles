@@ -33,7 +33,6 @@ in {
       hackertyper
       ttysvr
 
-      fortune
       cowsay
       figlet
       dotacat
@@ -44,12 +43,9 @@ in {
       matrix = "cmatrix";
       pipes = "${pkgs.pipes-rs}/bin/pipes-rs";
       sl = "${pkgs.sl}/bin/sl | ${pkgs.lolcat}/bin/lolcat && clear";
-    };
-
-    programs.bash.initExtra =
-      # bash
-      ''
-        fortune cookie | cowthink -e "$(printf "oo\n**\n__\n^^\n$$\n@@\n==\nxx\n..\n" | shuf | head -n 1)" -C | dotacat
+      fortune = ''
+        ${pkgs.fortune}/bin/fortune cookie | cowthink -e "$(printf "oo\n**\n__\n^^\n$$\n@@\n==\nxx\n..\n" | shuf | head -n 1)" -C | dotacat
       '';
+    };
   };
 }
