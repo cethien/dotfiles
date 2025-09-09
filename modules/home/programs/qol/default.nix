@@ -25,6 +25,10 @@ in {
 
       glow
       mdcat
+
+      epr
+      bk
+
       termshot
 
       (writeShellScriptBin "update" (builtins.readFile ./scripts/update.sh))

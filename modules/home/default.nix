@@ -8,6 +8,7 @@ with lib; {
     ./programs/storage.nix
 
     ./programs/desktop/hyprland
+    ./programs/desktop/gnome.nix
     ./programs/terminals.nix
 
     ./programs/qol

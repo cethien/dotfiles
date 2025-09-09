@@ -9,7 +9,8 @@
 
   deeznuts = {
     storage.enable = true;
-    # desktop.gnome.enable = true;
+
+    desktop.gnome.enable = true;
 
     browser = {
       firefox.enable = true;
