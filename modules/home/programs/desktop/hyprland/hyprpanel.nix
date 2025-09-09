@@ -110,9 +110,9 @@ in {
           # name = "one_dark";
 
           bar = {
-            transparent = true;
-            outer_spacing = "0.425em";
-            border_radius = "8px";
+            transparent = false; #true;
+            outer_spacing = "0em"; #"0.425em";
+            border_radius = "0"; #"8px";
             dropdownGap = "3.8rem";
 
             buttons = {

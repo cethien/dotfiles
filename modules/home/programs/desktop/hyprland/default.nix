@@ -80,9 +80,9 @@ in {
         };
 
         general = {
-          gaps_in = 8;
-          gaps_out = 12;
-          border_size = 2;
+          gaps_in = 0; #8;
+          gaps_out = 0; #12;
+          border_size = 0; #2;
           # "col.active_border" = "$mauve";
           # "col.inactive_border" = "$surface0";
 
@@ -99,14 +99,14 @@ in {
         };
 
         decoration = {
-          rounding = 6;
+          # rounding = 6;
 
           active_opacity = 1.0;
           inactive_opacity = 0.9;
           fullscreen_opacity = 1.0;
 
           shadow = {
-            enabled = true;
+            enabled = false;
             range = 12;
             render_power = 3;
             # color = "$crust";
@@ -129,7 +129,7 @@ in {
           ];
 
           animation = [
-            "windows, 1, 5, deez, popin"
+            "windows, 1, 5, deez, slide"
             "border, 1, 3, deez"
             "fade, 1, 3, deez"
             "workspaces, 1, 3, deez"

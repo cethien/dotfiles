@@ -19,7 +19,7 @@ in {
     programs.kitty = {
       enable = cfg.kitty.enable;
       settings = {
-        window_padding_width = 2;
+        window_padding_width = 0; #2;
         update_check_interval = 0;
         scrollback_lines = 10000;
         enable_audio_bell = false;
