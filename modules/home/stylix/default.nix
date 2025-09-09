@@ -51,7 +51,7 @@ in {
     stylix = {
       enable = true;
 
-      image = mkDefault ./wallpapers/a_hand_holding_a_cassette_tape.jpg;
+      image = mkDefault ./wallpapers/boy_and_cat_sitting_on_stairs.jpeg;
       polarity = "dark";
       base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyo-night-dark.yaml";
 

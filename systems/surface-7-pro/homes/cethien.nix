@@ -7,7 +7,6 @@
   home.homeDirectory = "/home/cethien";
   home.stateVersion = stateVersion;
 
-  stylix.image = ./boy_and_cat_sitting_on_stairs.jpeg;
   deeznuts = {
     storage.enable = true;
     # desktop.gnome.enable = true;
