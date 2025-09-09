@@ -20,7 +20,7 @@ services:
       placement:
         constraints: [node.role == manager]
       labels:
-        homepage.group: services
+        homepage.group: home - services
         homepage.name: blocky
         homepage.icon: blocky.png
         homepage.description: FILTER ALL THE CRAP!

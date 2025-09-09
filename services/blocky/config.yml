@@ -24,10 +24,6 @@ blocking:
 customDNS:
   customTTL: 1h
   mapping:
-    # devices
-    vodafone-router.cethien.home: 192.168.0.1
-    mi-router.cethien.home: 192.168.1.1
-
     # DNS
     doh.cethien.home: 192.168.1.50
     

@@ -1,8 +1,5 @@
 ---
 - devices:
-  - vodafone station:
-      href: http://192.168.0.1
-      icon: vodafone.png
-  - mi router:
-      href: http://192.168.1.1
-      icon: xiaomi.png
+    - mi router:
+        href: http://192.168.1.1
+        icon: xiaomi.png
