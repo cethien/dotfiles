@@ -15,6 +15,11 @@
       firefox.enable = true;
       zen-browser.enable = true;
       defaultBrowser = "zen-beta";
+
+      firefox-profile.containers = {
+        "potato-squad.de".enable = true;
+        "creative-europe.net".enable = true;
+      };
     };
 
     programs = {
