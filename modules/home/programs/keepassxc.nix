@@ -9,6 +9,8 @@
 in {
   options.deeznuts.programs.keepassxc = {
     enable = mkEnableOption "keepassxc";
+    compactMode = mkEnableOption "compact mode";
+
     hyprland = {
       autostart.enable = mkEnableOption "autostart";
     };
@@ -46,11 +48,13 @@ in {
         ShowTrayIcon = true;
         FontSizeOffset = 2;
 
+        CompactMode = cfg.compactMode;
+
         ApplicationTheme = "dark";
         HidePasswords = true;
       };
 
-      General.MinimizeAfterUnlock = true;
+      General.MinimizeAfterUnlock = false;
 
       Security.IconDownloadFallback = true;
     };
