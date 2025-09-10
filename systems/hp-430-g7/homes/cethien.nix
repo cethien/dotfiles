@@ -7,6 +7,8 @@
   home.homeDirectory = "/home/cethien";
   home.stateVersion = stateVersion;
 
+  stylix.image = ../../../wallpapers/a_hand_holding_a_cassette_tape.jpg;
+
   deeznuts = {
     storage.enable = true;
 
@@ -38,7 +40,7 @@
     };
 
     terminal.kitty.enable = true;
-
+    audio.enable = true;
     browser = {
       firefox-profile.containers = {
         "potato-squad.de".enable = true;
@@ -64,8 +66,6 @@
 
       keepassxc.enable = true;
       keepassxc.hyprland.autostart.enable = true;
-      pavucontrol.enable = true;
-      easyeffects.enable = true;
 
       discord.enable = true;
       spotify.enable = true;

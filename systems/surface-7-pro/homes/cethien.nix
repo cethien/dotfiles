@@ -7,11 +7,12 @@
   home.homeDirectory = "/home/cethien";
   home.stateVersion = stateVersion;
 
+  stylix.image = ../../../wallpapers/boy_and_cat_sitting_on_stairs.jpeg;
+
   deeznuts = {
     storage.enable = true;
-
     desktop.gnome.enable = true;
-
+    audio.enable = true;
     browser = {
       firefox.enable = true;
       zen-browser.enable = true;
@@ -24,12 +25,12 @@
     };
 
     programs = {
-      rnote.enable = true;
-      keepassxc.enable = true;
-      pavucontrol.enable = true;
-      easyeffects.enable = true;
-
+      keepassxc = {
+        enable = true;
+        compactMode = true;
+      };
       spotify.enable = true;
+      rnote.enable = true;
     };
 
     terminal.kitty.enable = true;
