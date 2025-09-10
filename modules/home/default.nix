@@ -33,8 +33,7 @@ with lib; {
     ./programs/spotify.nix
     ./programs/discord.nix
     ./programs/creative.nix
-    ./programs/pavucontrol.nix
-    ./programs/easyeffects.nix
+    ./programs/audio.nix
 
     ./programs/rnote.nix
     ./programs/gaming
