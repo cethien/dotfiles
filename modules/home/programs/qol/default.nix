@@ -74,6 +74,8 @@ in {
       cdc = "cd ~/.config";
       cdd = "cd ~/Downloads";
 
+      mkdir = "mkdir -p";
+
       grep = "rg";
       ps = "procs";
 
