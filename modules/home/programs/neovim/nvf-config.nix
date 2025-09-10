@@ -272,9 +272,14 @@
     clipboard.providers.wl-copy.enable = true;
 
     notes.obsidian = {
-      # enable = true;
+      enable = true;
       setupOpts = {
-        dir = "./";
+        workspaces = [
+          {
+            name = "notes";
+            path = "~/notes";
+          }
+        ];
       };
     };
 
@@ -370,6 +375,7 @@
     options = {
       tabstop = 2;
       shiftwidth = 0;
+      conceallevel = 2;
     };
 
     globals.mapleader = " ";
