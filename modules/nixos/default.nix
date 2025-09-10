@@ -99,10 +99,11 @@ in {
       enable = mkDefault true;
       themePackages = mkDefault (with pkgs; [
         nixos-bgrt-plymouth
-        plymouth-blahaj-theme
         adi1090x-plymouth-themes
+        catppuccin-plymouth
+        plymouth-blahaj-theme
       ]);
-      theme = mkDefault "polaroid";
+      theme = mkDefault "bgrt";
     };
   };
 }

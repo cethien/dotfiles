@@ -4,7 +4,7 @@
   ];
   networking.hostName = "surface-7-pro";
   boot.loader.grub.device = "/dev/nvme0n1";
-  boot.plymouth.theme = "bgrt";
+  boot.plymouth.theme = "catpuccin-mocha";
   # boot.kernelPackages = pkgs.linuxPackages_latest;
   # hardware.microsoft-surface.kernelVersion = "stable";
 

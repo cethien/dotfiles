@@ -7,6 +7,7 @@ in {
   networking.hostName = "hp-430-g7";
   boot.loader.grub.device = "/dev/nvme0n1";
   boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.plymouth.theme = "polaroid";
 
   networking.networkmanager.wifi.backend = "iwd";
   hardware.enableRedistributableFirmware = true;
