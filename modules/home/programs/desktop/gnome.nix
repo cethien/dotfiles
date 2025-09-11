@@ -17,6 +17,9 @@ in {
         {package = touchup;}
         {package = forge;}
         {package = blur-my-shell;}
+        # {package = quick-settings-tweaker;}
+        {package = quick-settings-audio-panel;}
+        {package = system-monitor;}
       ];
     };
   };
