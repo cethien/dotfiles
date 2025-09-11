@@ -100,8 +100,6 @@ in {
       themePackages = mkDefault (with pkgs; [
         nixos-bgrt-plymouth
         adi1090x-plymouth-themes
-        catppuccin-plymouth
-        plymouth-blahaj-theme
       ]);
       theme = mkDefault "bgrt";
     };
