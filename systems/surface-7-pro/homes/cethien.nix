@@ -13,6 +13,8 @@
     storage.enable = true;
     desktop.gnome.enable = true;
     audio.enable = true;
+
+    terminal.kitty.enable = true;
     browser = {
       firefox.enable = true;
       zen-browser.enable = true;
@@ -23,7 +25,6 @@
         "creative-europe.net".enable = true;
       };
     };
-
     programs = {
       keepassxc = {
         enable = true;
@@ -32,7 +33,5 @@
       spotify.enable = true;
       rnote.enable = true;
     };
-
-    terminal.kitty.enable = true;
   };
 }
