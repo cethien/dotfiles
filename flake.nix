@@ -161,7 +161,10 @@
         modules = [
           # disko.nixosModules.disko
           # ./shared/disko/simple
-          # nixos-hardware.nixosModules.microsoft-surface-pro-intel
+          nixos-hardware.nixosModules.microsoft-surface-pro-intel
+          {
+            hardware.microsoft-surface.kernelVersion = "stable";
+          }
           ./systems/surface-7-pro/hardware-configuration.nix
           ./systems/surface-7-pro/configuration.nix
           {
