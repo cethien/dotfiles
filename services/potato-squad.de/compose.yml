@@ -14,6 +14,12 @@ services:
         caddy: potato-squad.de
         caddy.reverse_proxy: "{{upstreams 80}}"
 
+        homepage.group: sites
+        homepage.name: potato
+        homepage.icon: potato.png
+        homepage.description: OUT DOMAIN! LENA STINKT!
+        homepage.href: https://potato-squad.de
+
 networks:
   caddy:
     name: caddy_net

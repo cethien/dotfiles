@@ -1,4 +1,4 @@
-services:   
+services:
   homepage:
     image: ghcr.io/gethomepage/homepage:latest
     environment:
@@ -31,24 +31,23 @@ services:
         caddy.tls: internal
         caddy.reverse_proxy: "{{upstreams 3000}}"
 
+volumes:
+  config:
+    name: admin_homepage_config
+
 configs:
   bookmarks.yaml:
-    file: ./config/bookmarks.yaml
+    file: ./bookmarks.yaml
   widgets.yaml:
-    file: ./config/widgets.yaml
+    file: ./widgets.yaml
   services.yaml:
-    file: ./config/services.yaml
+    file: ./services.yaml
   settings.yaml:
-    file: ./config/settings.yaml
+    file: ./settings.yaml
   docker.yaml:
-    file: ./config/docker.yaml
-  
+    file: ./docker.yaml
 
 networks:
   caddy:
     name: caddy_net
     external: true
-
-volumes:
-  config:
-    name: admin_homepage_config

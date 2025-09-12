@@ -3,7 +3,7 @@ services:
     image: grafana/grafana-oss:latest
     environment:
       GF_SERVER_ROOT_URL: https://grafana.cethien.home/
-      GF_PANELS_DISABLE_SANITIZE_HTML: "true"      
+      GF_PANELS_DISABLE_SANITIZE_HTML: "true"
       GF_INSTALL_PLUGINS: grafana-piechart-panel
     volumes:
       - grafana:/var/lib/grafana
@@ -25,11 +25,35 @@ services:
         homepage.href: https://grafana.cethien.home/
         homepage.description: MONITOR ALL YOUR STUFF!
 
+  loki:
+    image: grafana/loki:latest
+    configs:
+      - target: /etc/loki/config.yaml
+        source: loki.yaml
+    volumes:
+      - loki:/loki
+    networks:
+      - default
+      - loki
+      - caddy
+    deploy:
+      mode: replicated
+      replicas: 1
+      labels:
+        caddy: loki.cethien.home
+        caddy.tls: internal
+        caddy.reverse_proxy: "{{upstreams 3100}}"
+
+        homepage.group: monitoring
+        homepage.name: loki
+        homepage.icon: loki.png
+        homepage.description: MONITOR ALL YOUR LOGS! TO PUT IT INTO GRAFANA!
+
   prometheus:
     image: prom/prometheus:latest
     configs:
-      - target: /etc/prometheus/prometheus.yml
-        source: prometheus.yml3
+      - source: prometheus.yml
+        target: /etc/prometheus/prometheus.yml
     volumes:
       - prometheus:/prometheus
     networks:
@@ -51,10 +75,17 @@ services:
         homepage.description: MONITOR ALL YOUR STUFF! TO PUT IT INTO GRAFANA!
 
 configs:
-  prometheus.yml3:
+  loki.yaml:
+    file: ./loki.yaml
+  prometheus.yml:
     file: ./prometheus.yml
 
 networks:
+  loki:
+    name: loki_net
+    driver: overlay
+    attachable: true
+
   prometheus:
     name: prometheus_net
     driver: overlay
@@ -70,6 +101,8 @@ networks:
     external: true
 
 volumes:
+  loki:
+    name: loki_data
   prometheus:
     name: prometheus_data
   grafana:

@@ -1,0 +1,43 @@
+services:
+  openproject:
+    image: openproject/openproject:16
+    environment:
+      OPENPROJECT_SECRET_KEY_BASE: "RjmYJ9pA3n6rxyNjo9ki4lrKFiwBC03y"
+      OPENPROJECT_HOST__NAME: openproject.cethien.home
+      OPENPROJECT_HTTPS: "false"
+      OPENPROJECT_DEFAULT__LANGUAGE: en
+    volumes:
+      - assets:/var/openproject/assets
+      - db:/var/openproject/pgdata
+    networks:
+      - openproject
+      - caddy
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+      # placement:
+      #   constraints: [node.role == worker]
+      labels:
+        caddy: openproject.cethien.home
+        caddy.tls: internal
+        caddy.reverse_proxy: "{{ upstreams 80 }}"
+
+        homepage.group: apps
+        homepage.name: openproject
+        homepage.icon: openproject.png
+        homepage.href: https://openproject.cethien.home
+        homepage.description: manage all your projects!
+
+volumes:
+  assets:
+    name: openproject_assets
+  db:
+    name: openproject_db
+
+networks:
+  openproject:
+  caddy:
+    name: caddy_net
+    external: true

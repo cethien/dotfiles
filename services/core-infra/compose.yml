@@ -1,0 +1,102 @@
+services:
+  coredns:
+    image: coredns/coredns:1.12.4
+    ports:
+      - 53:53/tcp
+      - 53:53/udp
+    networks:
+      - dns
+      - prometheus
+    configs:
+      - source: coredns-Corefile
+        target: /Corefile
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+      labels:
+        homepage.group: infra
+        homepage.name: coreDNS
+        homepage.icon: coredns.png
+        homepage.description: RESOLVE ALL THE STUFF!
+
+  blocky:
+    image: ghcr.io/0xerr0r/blocky:latest
+    environment:
+      TZ: Europe/Berlin
+    configs:
+      - source: blocky-config.yml
+        target: /app/config.yml
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      dns:
+        ipv4_address: 10.10.0.10
+      caddy:
+      prometheus:
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+      labels:
+        homepage.group: infra
+        homepage.name: blocky
+        homepage.icon: blocky.png
+        homepage.description: FILTER ALL THE CRAP!
+
+        caddy: doh.cethien.home
+        caddy.reverse_proxy: /dns-query https://{{.Service.Name}}:8443
+        caddy.reverse_proxy.transport.http.tls_insecure_skip_verify: "true"
+
+  caddy-docker-proxy:
+    image: lucaslorentz/caddy-docker-proxy:ci-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      CADDY_INGRESS_NETWORKS: caddy_net
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - caddy-data:/data
+    networks:
+      - caddy
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+      labels:
+        homepage.group: infra
+        homepage.name: caddy
+        homepage.icon: caddy.png
+        homepage.description: proxy all the services!
+
+volumes:
+  caddy-data:
+    name: caddy_data
+  homepage-config:
+    name: admin_homepage_config
+
+configs:
+  coredns-Corefile:
+    file: ./coredns/Corefile
+
+  blocky-config.yml:
+    file: ./blocky/config.yml
+
+networks:
+  dns:
+    name: dns_net
+
+  caddy:
+    name: caddy_net
+    driver: overlay
+    attachable: true
+
+  prometheus:
+    name: prometheus_net
+    external: true

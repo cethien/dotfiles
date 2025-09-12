@@ -2,8 +2,7 @@
   imports = [
     ../../modules/nixos
 
-    ../../services/blocky
-    ../../services/caddy-reverse-proxy
+    ../../services/core-infra
   ];
 
   networking.hostName = "srv-home-01";

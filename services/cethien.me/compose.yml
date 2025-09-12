@@ -13,6 +13,12 @@ services:
         caddy: cethien.me
         caddy.redir: https://github.com/cethien
 
+        homepage.group: sites
+        homepage.name: cethien
+        homepage.icon: cethien.png
+        homepage.description: MY DOMAIN!
+        homepage.href: https://cethien.me
+
 networks:
   web:
     name: caddy_net

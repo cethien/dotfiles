@@ -37,7 +37,7 @@ services:
         caddy.tls: internal
         caddy.reverse_proxy: "{{ upstreams 3000 }}"
 
-        homepage.group: admin
+        homepage.group: ci/cd
         homepage.name: semaphore
         homepage.icon: semaphore.png
         homepage.href: https://semaphore.cethien.home

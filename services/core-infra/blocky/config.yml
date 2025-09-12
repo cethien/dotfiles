@@ -1,11 +1,5 @@
-upstreams:
-  groups:
-    default:
-      - 46.182.19.48
-      - 80.241.218.68
-      - tcp-tls:fdns1.dismail.de:853
-      - https://dns.digitale-gesellschaft.ch/dns-query
-      - https://dns10.quad9.net/dns-query
+clientLookup:
+  upstream: 192.168.1.1
 
 blocking:
   blockType: zeroIp
@@ -21,21 +15,14 @@ blocking:
     default:
       - ads
 
-customDNS:
-  customTTL: 1h
-  mapping:
-    # DNS
-    doh.cethien.home: 192.168.1.50
-    
-    # services
-    cethien.home: 192.168.1.50
-    grafana.cethien.home: 192.168.1.50
-    prometheus.cethien.home: 192.168.1.50
-    loki.cethien.home: 192.168.1.50
-    semaphore.cethien.home: 192.168.1.50
-
-clientLookup:
-  upstream: 192.168.1.1
+upstreams:
+  groups:
+    default:
+      - 46.182.19.48
+      - 80.241.218.68
+      - tcp-tls:fdns1.dismail.de:853
+      - https://dns.digitale-gesellschaft.ch/dns-query
+      - https://dns10.quad9.net/dns-query
 
 prometheus:
   enable: true
