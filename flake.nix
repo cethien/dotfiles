@@ -71,6 +71,7 @@
           ansible
           ansible-lint
           sshpass
+          openssl
         ];
       };
 
