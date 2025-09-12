@@ -91,6 +91,7 @@ in {
 
         master = {
           mfact = 0.6;
+          orientation = "right";
         };
 
         dwindle = {
