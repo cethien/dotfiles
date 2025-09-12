@@ -2,7 +2,6 @@ services:
   openproject:
     image: openproject/openproject:16
     environment:
-      OPENPROJECT_SECRET_KEY_BASE: "RjmYJ9pA3n6rxyNjo9ki4lrKFiwBC03y"
       OPENPROJECT_HOST__NAME: openproject.cethien.home
       OPENPROJECT_HTTPS: "false"
       OPENPROJECT_DEFAULT__LANGUAGE: en
