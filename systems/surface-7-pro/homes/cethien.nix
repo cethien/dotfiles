@@ -28,7 +28,6 @@
     programs = {
       keepassxc = {
         enable = true;
-        compactMode = true;
       };
       spotify.enable = true;
       rnote.enable = true;

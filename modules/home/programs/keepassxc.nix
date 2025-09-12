@@ -9,7 +9,6 @@
 in {
   options.deeznuts.programs.keepassxc = {
     enable = mkEnableOption "keepassxc";
-    compactMode = mkEnableOption "compact mode";
 
     hyprland = {
       autostart.enable = mkEnableOption "autostart";
@@ -46,9 +45,7 @@ in {
         MinimizeOnStartup = true;
         MinimizeOnTray = true;
         ShowTrayIcon = true;
-        FontSizeOffset = 2;
-
-        CompactMode = cfg.compactMode;
+        # FontSizeOffset = 1;
 
         ApplicationTheme = "dark";
         HidePasswords = true;
@@ -72,6 +69,13 @@ in {
         #!/usr/bin/env bash
         command sudo -A "$@" 2>/dev/null || command sudo "$@"
       '')
+
+      (writeShellScriptBin "hypr_keepassxc" ''
+        #!/usr/bin/env bash
+        hyprctl clients | grep -q 'class:.*KeePassXC' &&
+          hyprctl dispatch focuswindow class:org.keepassxc.KeePassXC ||
+          keepassxc &
+      '')
     ];
 
     home.sessionVariables.SUDO_ASKPASS = "$HOME/.nix-profile/bin/sudo-askpass";
@@ -86,6 +90,10 @@ in {
     };
 
     wayland.windowManager.hyprland.settings = {
+      bind = [
+        "SUPER SHIFT, K, exec, hypr_keepassxc"
+      ];
+
       exec-once = mkIf cfg.hyprland.autostart.enable [
         "keepassxc"
       ];
