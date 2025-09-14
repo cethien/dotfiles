@@ -2,8 +2,8 @@
   lib,
   config,
   ...
-}: let
-  inherit (lib) mkIf mkEnableOption;
+}:
+with lib; let
   cfg = config.deeznuts.virtualisation.waydroid;
 in {
   options.deeznuts.virtualisation.waydroid = {

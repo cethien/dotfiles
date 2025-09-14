@@ -3,9 +3,7 @@
   lib,
   ...
 }:
-with lib; let
-  user = "cethien";
-in {
+with lib; {
   imports = [
     ./users
     ./ansible.nix
@@ -18,8 +16,6 @@ in {
     ./ai.nix
     ./monitoring.nix
   ];
-
-  deeznuts.users.${user}.enable = true;
 
   services.openssh = {
     enable = mkDefault true;

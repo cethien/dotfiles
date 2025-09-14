@@ -2,8 +2,8 @@
   lib,
   config,
   ...
-}: let
-  inherit (lib) mkIf mkEnableOption mkOption types;
+}:
+with lib; let
   cfg = config.deeznuts.virtualisation.libvirt;
 in {
   options.deeznuts.virtualisation.libvirt = {

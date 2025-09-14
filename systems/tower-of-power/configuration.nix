@@ -1,6 +1,4 @@
-let
-  user = "cethien";
-in {
+{
   imports = [
     ../../modules/nixos
   ];
@@ -14,23 +12,24 @@ in {
     xpadneo.enable = true;
   };
 
-  deeznuts = {
-    hardware = {
-      nvidia-gpu.enable = true;
-      logitech-peripherals.enable = true;
-      elgato-stream-deck.enable = true;
-    };
+  deeznuts = let
+    user = "cethien";
+  in {
+    hardware = ["nvidia-gpu" "logitech" "elgato-stream-deck"];
 
-    hyprland.enable = true;
-    hyprland.autologinUser = user;
-    audio.enable = true;
-    steam.enable = true;
-
+    users = [user];
     virtualisation = {
       docker.enable = true;
       docker.users = [user];
       libvirt.enable = true;
       libvirt.users = [user];
     };
+
+    desktop = {
+      autologinUser = user;
+      hyprland.enable = true;
+    };
+    audio.enable = true;
+    steam.enable = true;
   };
 }

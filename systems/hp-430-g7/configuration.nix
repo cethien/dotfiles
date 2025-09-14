@@ -1,6 +1,4 @@
-{pkgs, ...}: let
-  user = "cethien";
-in {
+{pkgs, ...}: {
   imports = [
     ../../modules/nixos
   ];
@@ -19,7 +17,10 @@ in {
     xpadneo.enable = true;
   };
 
-  deeznuts = {
+  deeznuts = let
+    user = "cethien";
+  in {
+    users = [user];
     desktop = {
       autologinUser = user;
       hyprland.enable = true;

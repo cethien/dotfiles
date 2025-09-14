@@ -2,15 +2,9 @@
   lib,
   config,
   ...
-}: let
-  inherit (lib) mkIf mkEnableOption;
-  cfg = config.deeznuts.hardware.logitech-peripherals;
-in {
-  options.deeznuts.hardware.logitech-peripherals = {
-    enable = mkEnableOption "logitech peripherals";
-  };
-
-  config = mkIf cfg.enable {
+}:
+with lib; {
+  config = mkIf (elem "logitech" config.deeznuts.hardware) {
     hardware.logitech.wireless.enable = true;
   };
 }

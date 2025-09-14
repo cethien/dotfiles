@@ -2,22 +2,21 @@
   lib,
   config,
   ...
-}: let
-  inherit (lib) mkIf mkEnableOption mkOption;
-  inherit (lib.types) bool str listOf passwdEntry;
+}:
+with lib; let
   cfg = config.deeznuts.virtualisation.docker;
 in {
   options.deeznuts.virtualisation.docker = {
     enable = mkEnableOption "docker";
     users = mkOption {
-      type = listOf (passwdEntry str);
+      type = types.listOf (types.passwdEntry types.str);
       default = [];
       description = "List of users that can use docker";
     };
 
     swarm.enable = mkEnableOption "swarm mode";
     swarm.firewall.enable = mkOption {
-      type = bool;
+      type = types.bool;
       default = cfg.swarm.enable;
       description = "enables firewall ports that are needed so swarm nodes can talk to each other";
     };
