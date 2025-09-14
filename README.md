@@ -35,12 +35,6 @@ not sure about installing, will look into it later (famous last words)
 nix run github:cethien/dotfiles#neovim
 ```
 
-or use `v` alias cuz... why not
-
-```bash
-nix run github:cethien/dotfiles#v
-```
-
 ### build home from remote
 
 _doesn't need existing home manager instance_

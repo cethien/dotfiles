@@ -5,8 +5,6 @@
   networking.hostName = "surface-7-pro";
   boot.loader.grub.device = "/dev/nvme0n1";
   boot.plymouth.theme = "sphere";
-  # boot.kernelPackages = pkgs.linuxPackages_latest;
-  # hardware.microsoft-surface.kernelVersion = "stable";
 
   networking.networkmanager.wifi.backend = "iwd";
   hardware.enableRedistributableFirmware = true;

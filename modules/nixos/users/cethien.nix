@@ -13,7 +13,7 @@ in {
   config = mkIf cfg.enable {
     users.users.cethien = {
       isNormalUser = true;
-      description = "Boris";
+      description = "boris";
       extraGroups = ["networkmanager" "wheel"];
 
       hashedPassword = "$y$j9T$OqozgiTqzcpfQ9zbKkhvr0$i4lBjUVMF1xpGCOm57m/jXVWt0KVDh/evHHFq9mF7Z4";
