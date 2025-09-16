@@ -14,29 +14,6 @@ in {
 
   options.deeznuts.stylix = {
     enable = mkEnableOption "Enable theming with stylix";
-
-    sizes = {
-      cursor = mkOption {
-        type = types.int;
-        default = 26;
-      };
-      applications = mkOption {
-        type = types.int;
-        default = 13;
-      };
-      terminal = mkOption {
-        type = types.int;
-        default = 14;
-      };
-      desktop = mkOption {
-        type = types.int;
-        default = 16;
-      };
-      popups = mkOption {
-        type = types.int;
-        default = 12;
-      };
-    };
   };
 
   config = mkIf cfg.enable {
@@ -53,10 +30,10 @@ in {
 
       image = mkDefault ../../../wallpapers/blueish_river_landscape.jpg;
       polarity = "dark";
-      base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyo-night-dark.yaml";
+      base16Scheme = mkDefault "${pkgs.base16-schemes}/share/themes/tokyo-night-dark.yaml";
 
       cursor = {
-        size = cfg.sizes.cursor;
+        size = mkDefault 26;
         package = pkgs.simp1e-cursors;
         name = "Simp1e-Tokyo-Night";
       };
@@ -89,18 +66,18 @@ in {
         };
 
         sizes = {
-          applications = cfg.sizes.applications;
-          terminal = cfg.sizes.terminal;
-          desktop = cfg.sizes.desktop;
-          popups = cfg.sizes.popups;
+          applications = mkDefault 13;
+          terminal = mkDefault 14;
+          desktop = mkDefault 16;
+          popups = mkDefault 12;
         };
       };
 
       opacity = {
-        applications = 1.0;
-        terminal = 0.90;
-        desktop = 0.75;
-        popups = 0.5;
+        applications = mkDefault 1.0;
+        terminal = mkDefault 0.90;
+        desktop = mkDefault 0.75;
+        popups = mkDefault 0.5;
       };
     };
   };
