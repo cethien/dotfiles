@@ -12,7 +12,7 @@ in {
     enable = mkEnableOption "wf-recorder";
   };
 
-  config = mkIf enabled {
+  config = mkIf config.wayland.windowManager.hyprland.enable {
     home.packages = with pkgs; [
       wf-recorder
       (writeShellScriptBin "wf-toggle-record" (builtins.readFile ./wf-toggle-record.sh))

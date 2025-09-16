@@ -8,18 +8,15 @@
   home.stateVersion = stateVersion;
 
   stylix.image = ../../../wallpapers/a_hand_holding_a_cassette_tape.jpg;
-
-  deeznuts = {
-    storage.enable = true;
-
-    desktop.hyprland = {
-      enable = true;
-      monitors = [
+  wayland.windowManager.hyprland = {
+    enable = true;
+    settings = {
+      monitor = [
         "HDMI-A-1, 2560x1440@60, 0x0, 1"
         "eDP-1, 1920x1080@60, 320x1440, 1"
       ];
 
-      workspaces = [
+      workspace = [
         "1, monitor:HDMI-A-1, persistent:true" # browser
         "2, monitor:HDMI-A-1, persistent:true" # general
         "3, monitor:HDMI-A-1, persistent:true" # general
@@ -32,7 +29,12 @@
         "9, monitor:eDP-1" # discord
         "10, monitor:eDP-1" # obs
       ];
+    };
+  };
+  deeznuts = {
+    storage.enable = true;
 
+    desktop.hyprland = {
       defaultWorkspaces = {
         browser = 1;
         gaming = 4;

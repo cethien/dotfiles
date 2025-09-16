@@ -4,10 +4,8 @@
   config,
   ...
 }:
-with lib; let
-  enabled = config.deeznuts.desktop.hyprland.enable;
-in {
-  config = mkIf enabled {
+with lib; {
+  config = mkIf config.wayland.windowManager.hyprland.enable {
     home.packages = with pkgs; [
       rofimoji
 
@@ -21,12 +19,10 @@ in {
       (writeShellScriptBin "rofi-playerctl" (builtins.readFile ./rofi-playerctl.sh))
     ];
 
-    stylix.targets.rofi.enable = false;
     programs.rofi = {
       enable = true;
       package = pkgs.rofi-wayland;
-      terminal = "${pkgs.kitty}/bin/kitty";
-      theme = ./theme.rafi;
+      terminal = "\${pkgs.kitty}/bin/kitty";
       plugins = with pkgs; [
         rofi-calc
       ];
@@ -42,16 +38,12 @@ in {
       bind = [
         "SUPER, Space, exec, rofi -show drun"
         "SUPER, r, exec, rofi -show run"
-        "SUPER, comma, exec, rofi -show calc -modi calc -no-show-match -no-sort -no-bold -no-history"
-        ''
-          SUPER, PERIOD, exec, rofimoji --hidden-description --selector-args="-theme ~/.config/rofi/grid.rasi -kb-row-left Left -kb-row-right Right -kb-move-char-back Control+b -kb-move-char-forward Control+f"
-        ''
-        ''
-          SUPER, escape, exec, rofi -show power-menu -modi "power-menu:rofi-power-menu --choices=shutdown/reboot/suspend"
-        ''
-        "SUPER, B, exec, rofi-bluetooth"
+        ''SUPER, escape, exec, rofi -show power-menu -modi "power-menu:rofi-power-menu"''
         "SUPER, N, exec, rofi-wifi-menu"
+        "SUPER, B, exec, rofi-bluetooth"
         "SUPER, M, exec, rofi-playerctl"
+        "SUPER, comma, exec, rofi -show calc -modi calc -no-show-match -no-sort -no-bold -no-history"
+        ''SUPER, PERIOD, exec, rofimoji --hidden-description --selector-args="-theme ~/.config/rofi/grid.rasi"''
       ];
     };
   };

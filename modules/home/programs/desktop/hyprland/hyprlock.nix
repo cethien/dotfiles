@@ -33,7 +33,7 @@ in {
     };
   };
 
-  config = mkIf enabled {
+  config = mkIf config.wayland.windowManager.hyprland.enable {
     stylix.targets.hyprlock.enable = false;
     programs.hyprlock = {
       enable = true;

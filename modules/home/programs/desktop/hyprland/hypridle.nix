@@ -36,7 +36,7 @@ in {
     };
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf config.wayland.windowManager.hyprland.enable {
     services.hypridle = {
       enable = true;
 

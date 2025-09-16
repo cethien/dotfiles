@@ -5,7 +5,6 @@
   ...
 }:
 with lib; let
-  enabled = config.deeznuts.desktop.hyprland.enable;
   cfg = config.deeznuts.desktop.hyprland.hyprpanel;
   jsonFormat = pkgs.formats.json {};
 in {
@@ -51,7 +50,7 @@ in {
     };
   };
 
-  config = mkIf enabled {
+  config = mkIf config.wayland.windowManager.hyprland.enable {
     wayland.windowManager.hyprland.settings = {
       bind = [
         "SUPER, I, exec, hyprpanel idleInhibit"

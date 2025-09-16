@@ -7,7 +7,7 @@
 with lib; let
   enabled = config.deeznuts.desktop.hyprland.enable;
 in {
-  config = mkIf enabled {
+  config = mkIf config.wayland.windowManager.hyprland.enable {
     home.file.".config/satty/config.toml".source = ./satty/config.toml;
 
     wayland.windowManager.hyprland.settings = {

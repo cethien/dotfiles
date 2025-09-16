@@ -3,18 +3,8 @@
   config,
   pkgs,
   ...
-}: let
-  inherit (lib) mkOption types mkIf;
-  cfg = config.deeznuts.programs.qol.bottom;
-in {
-  options.deeznuts.programs.qol.bottom = {
-    hyprland.workspace = mkOption {
-      type = types.int;
-      default = 8;
-      description = "default hyprland workspace";
-    };
-  };
-
+}:
+with lib; {
   config = mkIf config.programs.bottom.enable {
     programs.hyprpanel.settings.bar.workspaces.applicationIconMap.btm = "";
     home.packages = [
@@ -22,17 +12,13 @@ in {
         #!/usr/bin/env bash
         hyprctl clients | grep -q 'class:.*btm' &&
           hyprctl dispatch focuswindow class:btm ||
-          kitty --class btm -e btm &
+          kitty --class btm -e btm --basic &
       '')
     ];
 
     wayland.windowManager.hyprland.settings = {
       bind = [
         "SUPER SHIFT, p, exec, hypr_btm"
-      ];
-
-      windowrulev2 = [
-        "workspace ${toString cfg.hyprland.workspace}, class:btm"
       ];
     };
 
@@ -55,28 +41,18 @@ in {
         row = [
           {
             child = [
-              {type = "cpu";}
-              {
-                child = [
-                  {
-                    type = "mem";
-                    default_mode = "table";
-                  }
-                  {
-                    type = "net";
-                    default_mode = "table";
-                  }
-                ];
-              }
-            ];
-          }
-          {
-            child = [
               {type = "proc";}
             ];
           }
           {
             child = [
+              {type = "cpu";}
+              {type = "mem";}
+            ];
+          }
+          {
+            child = [
+              {type = "net";}
               {type = "disk";}
               {type = "temperature";}
             ];
