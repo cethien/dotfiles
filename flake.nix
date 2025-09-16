@@ -47,6 +47,7 @@
     stylix,
     nvf,
     zen-browser,
+    spicetify-nix,
     ...
   }: let
     eachSys = flake-utils.lib.eachDefaultSystem;
@@ -147,6 +148,7 @@
                   sops-nix
                   stylix
                   zen-browser
+                  spicetify-nix
                   nvf
                   ;
               };
@@ -191,6 +193,7 @@
                   sops-nix
                   stylix
                   zen-browser
+                  spicetify-nix
                   nvf
                   ;
               };
@@ -228,6 +231,7 @@
       #             sops-nix
       #             stylix
       #             zen-browser
+      #             spicetify-nix
       #             nvf
       #             ;
       #         };

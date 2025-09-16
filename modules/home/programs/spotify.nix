@@ -2,11 +2,16 @@
   lib,
   config,
   pkgs,
+  spicetify-nix,
   ...
 }: let
   inherit (lib) mkEnableOption mkOption types mkIf;
   cfg = config.deeznuts.programs.spotify;
 in {
+  imports = [
+    spicetify-nix.homeManagerModules.default
+  ];
+
   options.deeznuts.programs.spotify = {
     enable = mkEnableOption "spotify";
     hyprland.workspace = mkOption {
@@ -19,11 +24,6 @@ in {
 
   config = mkIf cfg.enable {
     wayland.windowManager.hyprland.settings = {
-      windowrulev2 = [
-        "workspace ${toString cfg.hyprland.workspace}, class:^(Spotify)$"
-        "workspace ${toString cfg.hyprland.workspace}, class:^(cava)$"
-        "pseudo, class:^(cava)$"
-      ];
       exec-once = mkIf cfg.hyprland.autostart.enable ["spotify_player -d"];
       bind = [
         "SUPER SHIFT, M, exec, hyprland-spot"
@@ -32,7 +32,7 @@ in {
 
     stylix.targets.spicetify.enable = false;
     home.packages = with pkgs; [
-      spotify
+      # spotify
       (mkIf config.wayland.windowManager.hyprland.enable (
         writeShellScriptBin "hyprland-spot" ''
           #!/usr/bin/env bash
@@ -57,6 +57,28 @@ in {
           normalization = true;
         };
       };
+    };
+
+    programs.spicetify = let
+      spicePkgs = spicetify-nix.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+    in {
+      enable = true;
+
+      enabledExtensions = with spicePkgs.extensions; [
+        adblock
+        hidePodcasts
+        shuffle # shuffle+ (special characters are sanitized out of extension names)
+      ];
+      enabledCustomApps = with spicePkgs.apps; [
+        newReleases
+        ncsVisualizer
+      ];
+      enabledSnippets = with spicePkgs.snippets; [
+        rotatingCoverart
+        pointer
+      ];
+
+      theme = spicePkgs.themes.nightlight;
     };
 
     programs.cava.enable = true;
