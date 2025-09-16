@@ -3,7 +3,7 @@
   config,
   ...
 }: let
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib) mkEnableOption mkIf mkDefault;
   cfg = config.deeznuts.programs.essentials;
 in {
   imports = [
@@ -15,16 +15,18 @@ in {
   };
 
   config = mkIf cfg.enable {
-    programs.tmux.enable = true;
-
-    programs.ssh = {
-      enable = true;
-      enableDefaultConfig = false;
-
-      matchBlocks."*" = {
-        compression = true;
-        forwardAgent = true;
-        hashKnownHosts = true;
+    programs = {
+      tmux.enable = true;
+      ssh = {
+        enable = true;
+        enableDefaultConfig = false;
+        matchBlocks = {
+          "*" = mkDefault {
+            compression = true;
+            forwardAgent = true;
+            hashKnownHosts = true;
+          };
+        };
       };
     };
   };

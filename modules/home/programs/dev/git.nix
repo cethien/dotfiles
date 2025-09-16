@@ -4,32 +4,12 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkOption mkIf;
-  inherit (lib.types) str;
-  cfg = config.deeznuts.programs.dev.git;
+  inherit (lib) mkIf mkDefault;
 in {
-  options.deeznuts.programs.dev.git = {
-    userName = mkOption {
-      type = str;
-      default = "cethien";
-      description = "The user name to use for git commits";
-    };
-    userEmail = mkOption {
-      type = str;
-      default = "borislaw.sotnikow@gmx.de";
-      description = "The user email to use for git commits";
-    };
-  };
-
   config = mkIf config.programs.git.enable {
-    home.packages = with pkgs; [
-      scc
-    ];
-
-    programs.lazygit.enable = true;
-
     programs.git = {
-      inherit (cfg) userName userEmail;
+      userName = mkDefault "cethien";
+      userEmail = mkDefault "borislaw.sotnikow@gmx.de";
       aliases = {
         ignore = "!gi() { ${pkgs.git-ignore}/bin/git-ignore $@ ;}; gi";
         license = "!gl() { ${pkgs.license-go}/bin/license $@ ;}; gl";
@@ -54,7 +34,10 @@ in {
 
       diff-so-fancy.enable = true;
     };
-
+    programs.lazygit.enable = true;
+    home.packages = with pkgs; [
+      scc
+    ];
     home.shellAliases = {
       lzg = "lazygit";
 

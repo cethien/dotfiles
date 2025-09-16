@@ -31,6 +31,9 @@
       ];
     };
   };
+
+  programs.distrobox.enable = true;
+
   deeznuts = {
     storage.enable = true;
 
@@ -58,10 +61,9 @@
 
     programs = {
       essentials.tmux.hyprland.autostart.enable = true;
-      docker.enable = true;
       dev = {
-        vscode.enable = true;
         chromium.enable = true;
+        containers.enable = true;
       };
 
       gaming.enable = true;

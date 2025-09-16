@@ -4,24 +4,39 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib) mkEnableOption mkIf mkMerge;
   cfg = config.deeznuts.programs.dev;
 in {
   imports = [
     ./git.nix
-    ./vscode.nix
+    ./containers.nix
     ./chromium.nix
-    ./jetbrains.nix
   ];
 
-  options.deeznuts.programs.dev.enable = mkEnableOption "dev tools";
+  options.deeznuts.programs.dev = {
+    enable = mkEnableOption "dev tools";
+    ide = {
+      vscode.enable = mkEnableOption "vscode";
+      jetbrains = {
+        idea.enable = mkEnableOption "Jetbrains IntelliJ Community IDE";
+        rider.enable = mkEnableOption "Jetbrains Rider IDE";
+      };
+    };
+    chromium.enable = mkEnableOption "chromium browser";
+    containers.enable = mkEnableOption "enable containers";
+  };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [dblab];
+    home.packages = mkMerge [
+      (mkIf cfg.ide.jetbrains.idea.enable [pkgs.jetbrains.idea-community])
+      (mkIf cfg.ide.jetbrains.rider.enable [pkgs.jetbrains.rider])
+      [pkgs.dblab]
+    ];
 
+    stylix.targets.vscode.enable = false;
     programs = {
-      git.enable = true;
-
+      chromium.enable = cfg.chromium.enable;
+      vscode.enable = cfg.ide.vscode.enable;
       direnv.enable = true;
       direnv = {
         silent = true;
@@ -31,14 +46,12 @@ in {
           warn_timeout = 0;
         };
       };
-
-      lazydocker.enable = true;
-
       gh.enable = true;
       gh-dash.enable = true;
       gh.settings = {
         git_protocol = "ssh";
       };
+      git.enable = true;
     };
   };
 }

@@ -2,8 +2,8 @@
   lib,
   config,
   ...
-}:
-with lib; let
+}: let
+  inherit (lib) mkIf mkEnableOption mkOption types;
   cfg = config.deeznuts.virtualisation.libvirt;
 in {
   options.deeznuts.virtualisation.libvirt = {
@@ -12,11 +12,6 @@ in {
       type = types.listOf (types.passwdEntry types.str);
       default = [];
       description = "List of users that can work with VMs";
-    };
-    virt-manager.enable = mkOption {
-      type = types.bool;
-      default = true;
-      description = "virt-manager";
     };
   };
 
@@ -27,6 +22,6 @@ in {
       multipass.enable = true;
     };
     users.groups.libvirt.members = cfg.users;
-    programs.virt-manager.enable = cfg.virt-manager.enable;
+    programs.virt-manager.enable = config.deeznuts.desktop.isEnabled;
   };
 }

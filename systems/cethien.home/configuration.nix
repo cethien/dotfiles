@@ -1,13 +1,16 @@
-{
+let
+  users = ["cethien"];
+in {
   imports = [
     ../../modules/nixos
-
     ../../services/core-infra
   ];
 
   networking.hostName = "srv-home-01";
 
   deeznuts = {
+    users = users;
+
     monitoring.enable = true;
     ansible = {
       enable = true;
@@ -27,10 +30,13 @@
         ];
       };
     };
-    virtualisation.docker = {
-      enable = true;
-      swarm.enable = true;
-      users = ["cethien"];
+
+    virtualisation = {
+      docker = {
+        enable = true;
+        users = users;
+        swarm.enable = true;
+      };
     };
   };
 }

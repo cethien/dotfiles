@@ -32,8 +32,6 @@
     virtualisation = {
       docker.enable = true;
       docker.users = [user];
-      libvirt.enable = true;
-      libvirt.users = [user];
     };
   };
 }

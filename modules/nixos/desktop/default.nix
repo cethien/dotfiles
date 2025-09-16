@@ -2,8 +2,8 @@
   lib,
   config,
   ...
-}:
-with lib; let
+}: let
+  inherit (lib) mkOption types;
   cfg = config.deeznuts.desktop;
 in {
   imports = [
@@ -12,12 +12,14 @@ in {
   ];
 
   options.deeznuts.desktop = {
+    isEnabled = mkOption {
+      type = types.bool;
+      default = cfg.gnome.enable || cfg.hyprland.enable;
+    };
     autologinUser = mkOption {
       type = types.passwdEntry types.str;
       default = null;
       description = "autologin user";
     };
   };
-
-  config = {};
 }

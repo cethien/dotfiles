@@ -19,7 +19,6 @@ with lib; {
     ./programs/utils
     ./programs/neovim
     ./programs/fastfetch
-    ./programs/docker.nix
 
     ./programs/logitech-peripherals.nix
     ./programs/elgato-stream-deck.nix
