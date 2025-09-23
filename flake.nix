@@ -88,13 +88,50 @@
       pkgs = pkgsFor system;
       stateVersion = "25.05";
     in {
-      # nixosConfigurations.liveIso = nixpkgs.lib.nixosSystem {
-      #   inherit system;
-      #   modules = [
-      #     ./systems/liveIso/configuration.nix
-      #     {system.stateVersion = stateVersion;}
-      #   ];
-      # };
+      nixosConfigurations."surface-7-pro" = nixpkgs.lib.nixosSystem {
+        inherit pkgs;
+        specialArgs = {inherit sops-nix;};
+
+        modules = [
+          # disko.nixosModules.disko
+          # ./shared/disko/simple
+          nixos-hardware.nixosModules.microsoft-surface-pro-intel
+          {
+            hardware.microsoft-surface.kernelVersion = "stable";
+          }
+          ./systems/surface-7-pro/hardware-configuration.nix
+          ./systems/surface-7-pro/configuration.nix
+          {
+            system.stateVersion = stateVersion;
+          }
+
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              # useGlobalPkgs = true;
+              useUserPackages = true;
+              backupFileExtension = "bak-hm-$(date +%Y%m%d_%H%M%S)";
+
+              users.cethien =
+                ./systems/surface-7-pro/homes/cethien.nix;
+
+              extraSpecialArgs = {
+                inherit
+                  pkgs
+                  system
+                  home-manager
+                  stateVersion
+                  sops-nix
+                  stylix
+                  zen-browser
+                  spicetify-nix
+                  nvf
+                  ;
+              };
+            };
+          }
+        ];
+      };
 
       nixosConfigurations."cethien.home" = nixpkgs.lib.nixosSystem {
         inherit pkgs;
@@ -157,51 +194,6 @@
         ];
       };
 
-      nixosConfigurations."surface-7-pro" = nixpkgs.lib.nixosSystem {
-        inherit pkgs;
-        specialArgs = {inherit sops-nix;};
-
-        modules = [
-          # disko.nixosModules.disko
-          # ./shared/disko/simple
-          nixos-hardware.nixosModules.microsoft-surface-pro-intel
-          {
-            hardware.microsoft-surface.kernelVersion = "stable";
-          }
-          ./systems/surface-7-pro/hardware-configuration.nix
-          ./systems/surface-7-pro/configuration.nix
-          {
-            system.stateVersion = stateVersion;
-          }
-
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              # useGlobalPkgs = true;
-              useUserPackages = true;
-              backupFileExtension = "bak-hm-$(date +%Y%m%d_%H%M%S)";
-
-              users.cethien =
-                ./systems/surface-7-pro/homes/cethien.nix;
-
-              extraSpecialArgs = {
-                inherit
-                  pkgs
-                  system
-                  home-manager
-                  stateVersion
-                  sops-nix
-                  stylix
-                  zen-browser
-                  spicetify-nix
-                  nvf
-                  ;
-              };
-            };
-          }
-        ];
-      };
-
       # nixosConfigurations."tower-of-power" = nixpkgs.lib.nixosSystem {
       #   inherit pkgs;
       #   specialArgs = {inherit sops-nix;};
@@ -240,17 +232,31 @@
       #   ];
       # };
       #
-      # homeConfigurations."cethien@wsl" = import ./homes/cethien_wsl {
-      #   inherit
-      #     pkgs
-      #     system
-      #     home-manager
-      #     stateVersion
-      #     sops-nix
-      #     stylix
-      #     nvf
-      #     ;
-      # };
+      # homeConfigurations."cethien@wsl" =
+      #   home-manager.lib.homeManagerConfiguration {
+      #     inherit pkgs;
+      #     modules = [
+      #       ./systems/wsl/homes/cethien.nix
+      #       {
+      #         home.stateVersion = stateVersion;
+      #       }
+      #     ];
+      #     extraSpecialArgs = {
+      #       inherit sops-nix stylix nvf;
+      #     };
+      #   }
+      #   import
+      #   ./systems/cethien_wsl/homes/cethien.nix {
+      #     inherit
+      #       pkgs
+      #       system
+      #       home-manager
+      #       stateVersion
+      #       sops-nix
+      #       stylix
+      #       nvf
+      #       ;
+      #   };
 
       checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
 

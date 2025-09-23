@@ -1,8 +1,0 @@
-- name: Update Debian hosts
-  hosts: "{{ host | default('deb') }}"
-  become: true
-  tasks:
-    - name: Update via apt
-      ansible.builtin.apt:
-        update_cache: true
-        upgrade: true
