@@ -19,6 +19,5 @@
     users = ["cethien"];
     desktop.gnome.enable = true;
     audio.enable = true;
-    virtualisation.waydroid.enable = true;
   };
 }
