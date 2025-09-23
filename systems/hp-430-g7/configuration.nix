@@ -10,6 +10,17 @@
   networking.networkmanager.wifi.backend = "iwd";
   hardware.enableRedistributableFirmware = true;
 
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [
+      intel-media-driver
+    ];
+  };
+
+  environment.sessionVariables = {
+    LIBVA_DRIVER_NAME = "iHD";
+  };
+
   services.openssh.enable = false;
   services.printing.enable = true;
   hardware = {
@@ -25,9 +36,7 @@
       autologinUser = user;
       hyprland.enable = true;
     };
-
     audio.enable = true;
-    steam.enable = true;
 
     virtualisation = {
       docker.enable = true;
