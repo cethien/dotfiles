@@ -18,6 +18,27 @@ in {
     services.gnome.core-apps.enable = true;
     services.gnome.core-developer-tools.enable = false;
     services.gnome.games.enable = false;
-    environment.gnome.excludePackages = with pkgs; [gnome-tour gnome-user-docs];
+    environment.gnome.excludePackages = with pkgs; [
+      gnome-tour
+      gnome-user-docs
+      epiphany
+      gnome-text-editor
+      yelp
+      totem
+      geary
+      gnome-maps
+      gnome-music
+      gnome-calendar
+      gnome-calculator
+      gnome-characters
+      gnome-logs
+      gnome-clocks
+      gnome-console
+      gnome-contacts
+      gnome-font-viewer
+      gnome-weather
+      gnome-connections
+      simple-scan
+    ];
   };
 }
