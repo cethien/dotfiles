@@ -86,24 +86,23 @@ networks:
     driver: overlay
     attachable: true
 
-  prometheus:
-    name: prometheus_net
-    driver: overlay
-    attachable: true
-
   grafana:
     name: grafana_net
     driver: overlay
     attachable: true
+
+  prometheus:
+    name: prometheus_net
+    external: true
 
   caddy:
     name: caddy_net
     external: true
 
 volumes:
-  loki:
-    name: loki_data
   prometheus:
     name: prometheus_data
+  loki:
+    name: loki_data
   grafana:
     name: grafana_data

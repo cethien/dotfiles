@@ -99,4 +99,5 @@ networks:
 
   prometheus:
     name: prometheus_net
-    external: true
+    driver: overlay
+    attachable: true
