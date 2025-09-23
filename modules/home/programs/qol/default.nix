@@ -76,12 +76,10 @@ in {
 
       mkdir = "mkdir -p";
 
-      grep = "rg";
       ps = "procs";
 
-      find = "fd";
-      findf = "fd --type f";
-      findd = "fd --type d";
+      fdf = "fd --type f";
+      fdd = "fd --type d";
 
       ll = "eza -la --icons --group-directories-first --git";
       ls = "eza -1a --icons --group-directories-first --git";
