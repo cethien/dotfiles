@@ -4,20 +4,11 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkEnableOption mkIf;
-  cfg = config.deeznuts.programs.keepassxc;
+  inherit (lib) mkIf elem;
+  hypr = elem "keepassxc" config.wayland.windowManager.hyprland.autostart;
 in {
-  options.deeznuts.programs.keepassxc = {
-    enable = mkEnableOption "keepassxc";
-
-    hyprland = {
-      autostart.enable = mkEnableOption "autostart";
-    };
-  };
-
-  config = mkIf cfg.enable {
+  config = mkIf config.programs.keepassxc.enable {
     programs.hyprpanel.settings.bar.workspaces.applicationIconMap."org.keepassxc.KeePassXC" = "";
-    programs.keepassxc.enable = true;
     programs.keepassxc.settings = {
       Browser = {
         Enabled = true;
@@ -94,7 +85,7 @@ in {
         "SUPER SHIFT, K, exec, hypr_keepassxc"
       ];
 
-      exec-once = mkIf cfg.hyprland.autostart.enable [
+      exec-once = mkIf hypr [
         "keepassxc"
       ];
     };

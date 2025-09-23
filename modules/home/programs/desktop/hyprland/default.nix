@@ -3,8 +3,9 @@
   config,
   pkgs,
   ...
-}:
-with lib; {
+}: let
+  inherit (lib) mkIf mkDefault mkOption types;
+in {
   imports = [
     ./rofi
     ./common-gui.nix
@@ -12,10 +13,13 @@ with lib; {
     ./hyprlock.nix
     ./hyprpanel.nix
     ./hyprshot
-    ./wf-recorder
   ];
 
-  options.deeznuts.desktop.hyprland = {
+  options.wayland.windowManager.hyprland = {
+    autostart = mkOption {
+      type = types.listOf types.str;
+      default = [];
+    };
     defaultWorkspaces = {
       browser = mkOption {
         type = types.int;
@@ -24,7 +28,7 @@ with lib; {
       };
       gaming = mkOption {
         type = types.int;
-        default = 1;
+        default = 3;
         description = "default gaming workspace";
       };
     };
@@ -40,8 +44,8 @@ with lib; {
     ];
     services.clipse.enable = true;
     services.hyprpaper.enable = true;
+    programs.rofi.enable = true;
     programs.eww.enable = true;
-    deeznuts.programs.wf-recorder.enable = true;
 
     wayland.windowManager.hyprland.settings = {
       monitor = mkDefault [
@@ -141,6 +145,10 @@ with lib; {
       "$resizeIncrement" = 25;
 
       bind = [
+        "SUPER SHIFT, R, exec, wf-toggle-record"
+        "SUPER SHIFT, C, exec, hyprpicker -a"
+
+        "SUPER SHIFT, V, exec, $terminal --class clipse -e clipse"
         # "SUPER, M, exit"
 
         "ALT, F4, killactive"
@@ -192,9 +200,6 @@ with lib; {
         "SUPER CTRL SHIFT, 8, movetoworkspace, 8"
         "SUPER CTRL SHIFT, 9, movetoworkspace, 9"
         "SUPER CTRL SHIFT, 0, movetoworkspace, 10"
-
-        "SUPER SHIFT, C, exec, hyprpicker -a"
-        "SUPER SHIFT, V, exec, $terminal --class clipse -e clipse"
       ];
 
       binde = [

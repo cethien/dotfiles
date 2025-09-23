@@ -1,42 +1,31 @@
 {
   lib,
   config,
-  pkgs,
   ...
 }: let
-  inherit (lib) mkEnableOption mkIf types mkOption;
-  cfg = config.deeznuts.programs.discord;
+  inherit (lib) mkEnableOption mkIf elem;
+  cfg = config.programs.discord;
   enabled = cfg.enable;
+  hypr = elem "discord" config.wayland.windowManager.hyprland.autostart;
 in {
-  options.deeznuts.programs.discord = {
+  options.programs.discord = {
     enable = mkEnableOption "discord";
-    hyprland = {
-      autostart.enable = mkEnableOption "enable autostart";
-      workspace = mkOption {
-        type = types.int;
-        default = 9;
-        description = "default workspace";
-      };
-    };
   };
 
   config = mkIf enabled {
     wayland.windowManager.hyprland.settings = {
-      windowrulev2 = [
-        "workspace ${toString cfg.hyprland.workspace}, class:^(discord)$"
-        "workspace ${toString cfg.hyprland.workspace}, class:^(vesktop)$"
-      ];
-      exec-once = mkIf cfg.hyprland.autostart.enable [
+      exec-once = mkIf hypr [
         "[silent] discord --start-minimized"
       ];
     };
 
-    home.packages = with pkgs; [
-      vesktop
-      # (discord.override {
-      # withVencord = true;
-      # withOpenASAR = true;
-      # })
-    ];
+    programs.vesktop.enable = true;
+
+    # home.packages = with pkgs; [
+    # (discord.override {
+    #   withVencord = true;
+    #   withOpenASAR = true;
+    # })
+    # ];
   };
 }

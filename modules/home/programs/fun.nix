@@ -17,13 +17,13 @@ in {
         "fullscreen, class:^(cmatrix)$"
       ];
       bind = [
-        "SUPER SHIFT, Z, exec, hyprland-cmatrix"
+        "SUPER SHIFT, Z, exec, hypr_matrix"
       ];
     };
 
     home.packages = with pkgs; [
       cmatrix
-      (writeShellScriptBin "hyprland-cmatrix" ''
+      (writeShellScriptBin "hypr_matrix" ''
         #!/usr/bin/env bash
         hyprctl clients | grep -q 'class:.*cmatrix' &&
           hyprctl dispatch focuswindow class:cmatrix ||

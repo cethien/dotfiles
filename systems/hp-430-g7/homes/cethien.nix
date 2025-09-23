@@ -30,55 +30,45 @@
         "10, monitor:eDP-1" # obs
       ];
     };
+    defaultWorkspaces = {
+      browser = 1;
+      gaming = 4;
+    };
+    autostart = [
+      "zen-browser"
+      "keepassxc"
+      "spotify"
+    ];
   };
 
-  programs.distrobox.enable = true;
+  programs = {
+    kitty.enable = true;
+    zen-browser.enable = true;
+    firefox.enable = true;
+
+    keepassxc.enable = true;
+    distrobox.enable = true;
+    spotify.enable = true;
+    discord.enable = true;
+  };
 
   deeznuts = {
     storage.enable = true;
-
-    desktop.hyprland = {
-      defaultWorkspaces = {
-        browser = 1;
-        gaming = 4;
-      };
-    };
-
-    terminal.kitty.enable = true;
     audio.enable = true;
     browser = {
-      firefox-profile.containers = {
-        "potato-squad.de".enable = true;
-        "creative-europe.net".enable = true;
-      };
-
-      firefox.enable = true;
-      zen-browser.enable = true;
-      zen-browser.hyprland.autostart.enable = true;
+      firefox-profile.containers = [
+        "potato-squad.de"
+        "creative-europe.net"
+      ];
 
       defaultBrowser = "zen-beta";
     };
 
-    programs = {
-      essentials.tmux.hyprland.autostart.enable = true;
-      dev = {
-        chromium.enable = true;
-        containers.enable = true;
-      };
-
-      gaming.enable = true;
-
-      keepassxc.enable = true;
-      keepassxc.hyprland.autostart.enable = true;
-
-      discord.enable = true;
-      spotify.enable = true;
-      spotify.hyprland.autostart.enable = true;
-    };
+    dev.extras = ["containers" "chromium"];
 
     creative = {
       enable = true;
-      mixxx.enable = true;
+      extras = ["mixxx"];
     };
   };
 }

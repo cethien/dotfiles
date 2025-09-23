@@ -4,12 +4,12 @@
   config,
   ...
 }: let
-  inherit (lib) mkIf mkEnableOption;
-  cfg = config.deeznuts.programs.logitech-peripherals;
+  inherit (lib) mkIf mkEnableOption elem;
+  cfg = config.programs.logitech-peripherals;
+  hypr = elem "logitech" config.wayland.windowManager.hyprland.autostart;
 in {
-  options.deeznuts.programs.logitech-peripherals = {
+  options.programs.logitech-peripherals = {
     enable = mkEnableOption "logitech peripherals (requires to enable wireless support on root level)";
-    hyprland.autostart.enable = mkEnableOption "hyprland autostart";
   };
 
   config = mkIf cfg.enable {
@@ -18,7 +18,7 @@ in {
     ];
 
     wayland.windowManager.hyprland.settings = {
-      exec-once = mkIf cfg.hyprland.autostart.enable [
+      exec-once = mkIf hypr [
         "[silent] solaar -w hide"
       ];
     };

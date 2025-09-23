@@ -5,36 +5,28 @@
   spicetify-nix,
   ...
 }: let
-  inherit (lib) mkEnableOption mkOption types mkIf;
-  cfg = config.deeznuts.programs.spotify;
+  inherit (lib) mkEnableOption mkIf elem;
+  cfg = config.programs.spotify;
+  hypr = elem "spotify" config.wayland.windowManager.hyprland.autostart;
 in {
+  options.programs.spotify.enable = mkEnableOption "spotify";
+
   imports = [
     spicetify-nix.homeManagerModules.default
   ];
 
-  options.deeznuts.programs.spotify = {
-    enable = mkEnableOption "spotify";
-    hyprland.workspace = mkOption {
-      type = types.int;
-      default = 7;
-      description = "default hyprland workspace";
-    };
-    hyprland.autostart.enable = mkEnableOption "autostart spotify daemon";
-  };
-
   config = mkIf cfg.enable {
     wayland.windowManager.hyprland.settings = {
-      exec-once = mkIf cfg.hyprland.autostart.enable ["spotify_player -d"];
+      exec-once = mkIf hypr ["spotify_player -d"];
       bind = [
-        "SUPER SHIFT, M, exec, hyprland-spot"
+        "SUPER SHIFT, M, exec, hypr_spot"
       ];
     };
 
-    stylix.targets.spicetify.enable = false;
     home.packages = with pkgs; [
       # spotify
       (mkIf config.wayland.windowManager.hyprland.enable (
-        writeShellScriptBin "hyprland-spot" ''
+        writeShellScriptBin "hypr_spot" ''
           #!/usr/bin/env bash
           hyprctl clients | grep -q 'class:.*Spotify' &&
             hyprctl dispatch focuswindow class:Spotify ||
@@ -43,22 +35,7 @@ in {
       ))
     ];
 
-    home.shellAliases.spot = "spotify_player";
-    home.shellAliases.spotd = "spotify_player -d";
-    programs.spotify-player = {
-      enable = true;
-      settings = {
-        client_id = "9b20bf81c95d4710bee28bff24db41f9";
-
-        enable_notify = false;
-
-        device = {
-          audio_cache = true;
-          normalization = true;
-        };
-      };
-    };
-
+    stylix.targets.spicetify.enable = false;
     programs.spicetify = let
       spicePkgs = spicetify-nix.legacyPackages.${pkgs.stdenv.hostPlatform.system};
     in {
@@ -79,6 +56,18 @@ in {
       ];
 
       theme = spicePkgs.themes.nightlight;
+    };
+
+    programs.spotify-player = {
+      enable = true;
+      settings = {
+        client_id = "9b20bf81c95d4710bee28bff24db41f9";
+        enable_notify = false;
+        device = {
+          audio_cache = true;
+          normalization = true;
+        };
+      };
     };
 
     programs.cava.enable = true;

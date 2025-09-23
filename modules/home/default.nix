@@ -34,8 +34,7 @@ with lib; {
     ./programs/creative.nix
     ./programs/audio.nix
 
-    ./programs/rnote.nix
-    ./programs/gaming
+    ./programs/gaming.nix
   ];
 
   xdg.mimeApps.enable = true;
@@ -48,6 +47,7 @@ with lib; {
 
   deeznuts = {
     stylix.enable = mkDefault true;
+    dev.enable = mkDefault true;
     programs = {
       essentials.enable = mkDefault true;
       neovim.enable = mkDefault true;
@@ -57,7 +57,6 @@ with lib; {
       net.enable = mkDefault true;
 
       qol.enable = mkDefault true;
-      dev.enable = mkDefault true;
       fun.enable = mkDefault true;
       fastfetch.enable = mkDefault true;
     };

@@ -2,8 +2,8 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
+  inherit (lib) mkOption types;
   cfg = config.deeznuts.browser;
 in {
   imports = [
@@ -20,18 +20,9 @@ in {
     };
 
     firefox-profile = {
-      containers = {
-        "potato-squad.de".enable = mkOption {
-          type = types.bool;
-          default = false;
-          description = "enable container for potato-squad.de";
-        };
-
-        "creative-europe.net".enable = mkOption {
-          type = types.bool;
-          default = false;
-          description = "enable container for creative-europe.net";
-        };
+      containers = mkOption {
+        type = types.listOf types.str;
+        default = [];
       };
     };
   };

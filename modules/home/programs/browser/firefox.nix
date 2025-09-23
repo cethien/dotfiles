@@ -4,8 +4,10 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkEnableOption mkOption types mkIf;
-  cfg = config.deeznuts.browser.firefox;
+  inherit (lib) elem mkIf;
+  cfg = config.programs.firefox;
+  hypr = elem "firefox" config.wayland.windowManager.hyprland.autostart;
+  ws = config.wayland.windowManager.hyprland.defaultWorkspaces.browser;
 
   name = "${config.home.username}";
   shared = import ./firefox-profile.nix {inherit config lib pkgs name;};
@@ -25,20 +27,7 @@
     extensions.force = true;
   };
 in {
-  options.deeznuts.browser.firefox = {
-    enable = mkEnableOption "firefox";
-    hyprland = {
-      workspace = mkOption {
-        type = types.int;
-        default = config.deeznuts.desktop.hyprland.defaultWorkspaces.browser;
-        description = "default workspace";
-      };
-      autostart.enable = mkEnableOption "autostart";
-    };
-  };
-
   config = mkIf cfg.enable {
-    programs.firefox.enable = true;
     programs.firefox = {
       inherit (shared) languagePacks nativeMessagingHosts;
       profiles."${name}" = firefoxProfile;
@@ -47,11 +36,11 @@ in {
     stylix.targets.firefox.profileNames = ["${name}"];
 
     wayland.windowManager.hyprland.settings = {
-      exec-once = mkIf cfg.hyprland.autostart.enable [
+      exec-once = mkIf hypr [
         "[silent] firefox"
       ];
       windowrulev2 = [
-        "workspace ${toString cfg.hyprland.workspace}, class:^(firefox)$"
+        "workspace ${toString ws}, class:^(firefox)$"
       ];
     };
   };

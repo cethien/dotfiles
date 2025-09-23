@@ -3,22 +3,12 @@
   config,
   pkgs,
   ...
-}:
-with lib; let
-  cfg = config.deeznuts.programs.essentials.tmux;
+}: let
+  inherit (lib) mkIf;
 in {
   imports = [
     ./option-keymaps.nix
   ];
-
-  options.deeznuts.programs.essentials.tmux = {
-    hyprland.workspace = mkOption {
-      type = types.int;
-      default = 2;
-      description = "default hyprland workspace";
-    };
-    hyprland.autostart.enable = mkEnableOption "autostart terminal with tmux";
-  };
 
   config = mkIf config.programs.tmux.enable {
     home.shellAliases = {
@@ -37,7 +27,7 @@ in {
       historyLimit = 5000;
       keyMode = "vi";
       mouse = true;
-      prefix = "C-SPACE";
+      prefix = "C-a";
       terminal = "tmux-256color";
 
       extraConfig = builtins.readFile ./tmux.conf;
@@ -45,6 +35,7 @@ in {
       sensibleOnTop = true;
       plugins = with pkgs.tmuxPlugins; [
         sensible
+        tmux-floax
         {
           plugin = yank;
           extraConfig = ''
@@ -128,13 +119,7 @@ in {
     };
 
     wayland.windowManager.hyprland.settings = {
-      exec-once = mkMerge [
-        ["tmux start-server"]
-        (mkIf cfg.hyprland.autostart.enable [''[silent] $terminal --class tmux -e bash -i -c "tmux_new"''])
-      ];
-      windowrulev2 = [
-        "workspace ${toString cfg.hyprland.workspace}, class:^(tmux)$"
-      ];
+      exec-once = ["tmux start-server"];
     };
   };
 }

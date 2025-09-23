@@ -4,54 +4,62 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkEnableOption mkIf mkMerge;
-  cfg = config.deeznuts.programs.dev;
+  inherit (lib) mkEnableOption mkIf mkMerge elem types mkOption;
+  cfg = config.deeznuts.dev;
 in {
   imports = [
     ./git.nix
-    ./containers.nix
     ./chromium.nix
   ];
 
-  options.deeznuts.programs.dev = {
+  options.deeznuts.dev = {
     enable = mkEnableOption "dev tools";
-    ide = {
-      vscode.enable = mkEnableOption "vscode";
-      jetbrains = {
-        idea.enable = mkEnableOption "Jetbrains IntelliJ Community IDE";
-        rider.enable = mkEnableOption "Jetbrains Rider IDE";
-      };
+    extras = mkOption {
+      type = types.listOf types.str;
+      default = [];
     };
-    chromium.enable = mkEnableOption "chromium browser";
-    containers.enable = mkEnableOption "enable containers";
   };
 
-  config = mkIf cfg.enable {
-    home.packages = mkMerge [
-      (mkIf cfg.ide.jetbrains.idea.enable [pkgs.jetbrains.idea-community])
-      (mkIf cfg.ide.jetbrains.rider.enable [pkgs.jetbrains.rider])
-      [pkgs.dblab]
-    ];
+  config = let
+    containers = elem "containers" cfg.extras;
 
-    stylix.targets.vscode.enable = false;
-    programs = {
-      chromium.enable = cfg.chromium.enable;
-      vscode.enable = cfg.ide.vscode.enable;
-      direnv.enable = true;
-      direnv = {
-        silent = true;
-        nix-direnv.enable = true;
-        config.global = {
-          hide_env_diff = true;
-          warn_timeout = 0;
+    chromium = elem "chromium" cfg.extras;
+
+    rider = elem "jetbrains-rider" cfg.extras;
+    idea = elem "jetbrains-idea" cfg.extras;
+  in
+    mkIf cfg.enable {
+      home.packages = mkMerge [
+        [pkgs.dblab]
+        (mkIf idea [pkgs.jetbrains.idea-community])
+        (mkIf rider [pkgs.jetbrains.rider])
+
+        (mkIf containers [pkgs.podman-compose pkgs.k3d pkgs.kubectl])
+      ];
+
+      services.podman.enable = containers;
+      home.shellAliases = mkIf containers {lzd = "lazydocker";};
+      programs.lazydocker.enable = containers;
+      programs.chromium.enable = chromium;
+
+      programs = {
+        gh-dash.enable = true;
+        gh.enable = true;
+        gh.settings = {
+          git_protocol = "ssh";
         };
+
+        direnv = {
+          enable = true;
+          silent = true;
+          nix-direnv.enable = true;
+          config.global = {
+            hide_env_diff = true;
+            warn_timeout = 0;
+          };
+        };
+
+        git.enable = true;
       };
-      gh.enable = true;
-      gh-dash.enable = true;
-      gh.settings = {
-        git_protocol = "ssh";
-      };
-      git.enable = true;
     };
-  };
 }

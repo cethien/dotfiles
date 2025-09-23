@@ -5,9 +5,9 @@
   ...
 }:
 with lib; let
-  enabled = config.deeznuts.desktop.hyprland.enable;
+  enabled = config.wayland.windowManager.hyprland.enable;
 in {
-  config = mkIf config.wayland.windowManager.hyprland.enable {
+  config = mkIf enabled {
     home.packages = with pkgs; [
       nautilus
       file-roller
