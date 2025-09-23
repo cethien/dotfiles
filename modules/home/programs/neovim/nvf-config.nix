@@ -74,6 +74,7 @@
     ];
 
     languages = {
+      java.enable = true;
       python.enable = true;
       rust.enable = true;
       clang.enable = true;
@@ -106,6 +107,7 @@
     lsp.enable = true;
     lsp = {
       trouble.enable = true;
+      null-ls.enable = true;
       otter-nvim.enable = true;
 
       inlayHints.enable = true;
@@ -174,8 +176,8 @@
 
     terminal.toggleterm = {
       enable = true;
+      # mappings.open = "<C-q>";
       setupOpts.direction = "float";
-      mappings.open = "<C-q>";
       lazygit.enable = true;
     };
 
@@ -376,6 +378,9 @@
       tabstop = 2;
       shiftwidth = 0;
       conceallevel = 2;
+      linebreak = true;
+      breakindent = true;
+      # colorcolumn = "80";
     };
 
     globals.mapleader = " ";
