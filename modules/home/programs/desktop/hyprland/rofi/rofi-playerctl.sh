@@ -1,43 +1,51 @@
 #!/usr/bin/env bash
 
-status_function () {
-	if playerctl status > /dev/null; then
-			echo "$(playerctl status -f "{{playerName}}"): $(playerctl metadata -f "{{trunc(default(title, \"[Unknown]\"), 25)}} by {{trunc(default(artist, \"[Unknown]\"), 25)}}") ($(playerctl status))"
-	else
-		echo "Nothing is playing"
-	fi
+playerctl="playerctl -p spotify_player"
+
+status_function() {
+  local icon=""
+
+  if $playerctl status >/dev/null 2>&1; then
+    local metadata=$($playerctl metadata -f "{{trunc(default(artist, \"[Unknown]\"), 25)}} - {{trunc(default(title, \"[Unknown]\"), 25)}}")
+    echo " $icon $metadata"
+  else
+    echo " - nothing is playing -"
+  fi
 }
+
+player_status=$($playerctl status 2>/dev/null)
+if [[ "$player_status" == "Playing" ]]; then
+  toggle=" pause" # Pause-Icon
+else
+  toggle=" play" # Play-Icon
+fi
+
 status=$(status_function)
 
 # Options
-toggle="⏯️ Play/Pause"
-next="⏭️ Next"
-prev="⏮ Previous"
-seekminus="⏪ Go back 15 seconds"
-seekplus="⏩ Go ahead 15 seconds"
-switch="🔄 Change selected player"
+next=" next"
+prev=" previous"
+seekminus=" go back 15 seconds"
+seekplus=" go ahead 15 seconds"
 
 # Variable passed to rofi
-options="$toggle\n$next\n$prev\n$seekplus\n$seekminus\n$switch"
+options="$toggle\n$next\n$prev\n$seekplus\n$seekminus"
 
-chosen="$(echo -e "$options" | rofi -show -p "${status^}" -dmenu -selected-row 0)"
+chosen="$(echo -e "$options" | rofi -dmenu -p "${status^}" -selected-row 0 -theme-str 'entry { enabled: false; }')"
 case $chosen in
-    $toggle)
-		playerctl play-pause
-        ;;
-    $next)
-		playerctl next
-        ;;
-    $prev)
-        playerctl previous
-        ;;
-    $seekminus)
-		playerctl position 15-
-        ;;
-    $seekplus)
-		playerctl position 15+
-        ;;
-    $switch)
-        playerctld shift
-        ;;
+$toggle)
+  playerctl -p spotify_player play-pause
+  ;;
+$next)
+  playerctl -p spotify_player next
+  ;;
+$prev)
+  playerctl -p spotify_player previous
+  ;;
+$seekminus)
+  playerctl -p spotify_player position 15-
+  ;;
+$seekplus)
+  playerctl -p spotify_player position 15+
+  ;;
 esac
