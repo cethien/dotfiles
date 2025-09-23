@@ -91,7 +91,6 @@ in {
       cat = "bat -p";
 
       reload = "source ~/.bashrc && clear";
-      rebuild-os = "rebuild -n";
     };
 
     home.file."${config.home.homeDirectory}/.hushlogin".text = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
