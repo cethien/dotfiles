@@ -5,7 +5,8 @@
 }:
 with lib; {
   imports = [
-    ./users
+    ./users/cethien.nix
+
     ./ansible.nix
     ./deployrs.nix
     ./hardware
@@ -52,6 +53,8 @@ with lib; {
     variant = "nodeadkeys";
   };
   console.useXkbConfig = true;
+
+  hardware.uinput.enable = mkDefault true;
 
   networking.networkmanager.enable = mkDefault true;
 

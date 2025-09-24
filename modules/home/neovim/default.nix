@@ -2,14 +2,14 @@
   lib,
   config,
   pkgs,
-  nvf,
+  inputs,
   ...
 }: let
   inherit (lib) mkEnableOption mkIf;
   cfg = config.deeznuts.programs.neovim;
 in {
   imports = [
-    nvf.homeManagerModules.default
+    inputs.nvf.homeManagerModules.default
   ];
 
   options.deeznuts.programs.neovim = {

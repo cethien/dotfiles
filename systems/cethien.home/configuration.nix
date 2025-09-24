@@ -1,6 +1,4 @@
-let
-  users = ["cethien"];
-in {
+{
   imports = [
     ../../modules/nixos
     ../../services/core-infra
@@ -8,9 +6,16 @@ in {
 
   networking.hostName = "srv-home-01";
 
-  deeznuts = {
-    users = users;
+  users.users = {
+    cethien.enable = true;
+  };
 
+  virtualisation.docker = {
+    enable = true;
+    swarm.enable = true;
+  };
+
+  deeznuts = {
     monitoring.enable = true;
     ansible = {
       enable = true;
@@ -28,14 +33,6 @@ in {
         keys = [
           ''ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDaT7VoC4pEM8lE/R11qqYeZl3SgHZRSR9PGntkAwOC/ deployrs@cethien.home''
         ];
-      };
-    };
-
-    virtualisation = {
-      docker = {
-        enable = true;
-        users = users;
-        swarm.enable = true;
       };
     };
   };

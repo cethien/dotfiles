@@ -22,6 +22,8 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
+    xremap.url = "github:xremap/nix-flake";
+
     nur.url = "github:nix-community/NUR";
     nur.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -41,15 +43,10 @@
     deploy-rs,
     nixos-hardware,
     disko,
-    sops-nix,
     home-manager,
     nur,
-    stylix,
-    nvf,
-    zen-browser,
-    spicetify-nix,
     ...
-  }: let
+  } @ inputs: let
     eachSys = flake-utils.lib.eachDefaultSystem;
     eachSysPass = flake-utils.lib.eachDefaultSystemPassThrough;
     pkgsFor = system:
@@ -77,7 +74,7 @@
       };
 
       packages.neovim =
-        (nvf.lib.neovimConfiguration {
+        (inputs.nvf.lib.neovimConfiguration {
           inherit pkgs;
           modules = [
             {config = import ./modules/home/programs/neovim/nvf-config.nix {inherit pkgs;};}
@@ -90,7 +87,7 @@
     in {
       nixosConfigurations."surface-7-pro" = nixpkgs.lib.nixosSystem {
         inherit pkgs;
-        specialArgs = {inherit sops-nix;};
+        specialArgs = {inherit inputs;};
 
         modules = [
           # disko.nixosModules.disko
@@ -121,11 +118,7 @@
                   system
                   home-manager
                   stateVersion
-                  sops-nix
-                  stylix
-                  zen-browser
-                  spicetify-nix
-                  nvf
+                  inputs
                   ;
               };
             };
@@ -156,7 +149,7 @@
 
       nixosConfigurations."hp-430-g7" = nixpkgs.lib.nixosSystem {
         inherit pkgs;
-        specialArgs = {inherit sops-nix;};
+        specialArgs = {inherit inputs;};
 
         modules = [
           nixos-hardware.nixosModules.common-pc-laptop
@@ -182,11 +175,7 @@
                   system
                   home-manager
                   stateVersion
-                  sops-nix
-                  stylix
-                  zen-browser
-                  spicetify-nix
-                  nvf
+                  inputs
                   ;
               };
             };

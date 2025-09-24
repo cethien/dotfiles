@@ -12,21 +12,18 @@
     xpadneo.enable = true;
   };
 
-  deeznuts = let
-    user = "cethien";
-  in {
+  users.users.cethien.enable = true;
+
+  deeznuts = {
     hardware = ["nvidia-gpu" "logitech" "elgato-stream-deck"];
 
-    users = [user];
     virtualisation = {
       docker.enable = true;
-      docker.users = [user];
       libvirt.enable = true;
-      libvirt.users = [user];
     };
 
     desktop = {
-      autologinUser = user;
+      autologinUser = "cethien";
       hyprland.enable = true;
     };
     audio.enable = true;

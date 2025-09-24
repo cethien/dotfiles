@@ -8,14 +8,6 @@
   boot.plymouth.theme = "polaroid";
 
   networking.networkmanager.wifi.backend = "iwd";
-  hardware.enableRedistributableFirmware = true;
-
-  hardware.graphics = {
-    enable = true;
-    extraPackages = with pkgs; [
-      intel-media-driver
-    ];
-  };
 
   environment.sessionVariables = {
     LIBVA_DRIVER_NAME = "iHD";
@@ -24,23 +16,23 @@
   services.openssh.enable = false;
   services.printing.enable = true;
   hardware = {
+    enableRedistributableFirmware = true;
+    graphics = {
+      enable = true;
+      extraPackages = with pkgs; [
+        intel-media-driver
+      ];
+    };
     bluetooth.enable = true;
-    xpadneo.enable = true;
   };
+  virtualisation.docker.enable = true;
+  users.users.cethien.enable = true;
 
-  deeznuts = let
-    user = "cethien";
-  in {
-    users = [user];
+  deeznuts = {
     desktop = {
-      autologinUser = user;
+      autologinUser = "cethien";
       hyprland.enable = true;
     };
     audio.enable = true;
-
-    virtualisation = {
-      docker.enable = true;
-      docker.users = [user];
-    };
   };
 }

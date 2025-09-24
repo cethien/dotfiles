@@ -15,8 +15,9 @@
     bluetooth.enable = true;
   };
 
+  users.users.cethien.enable = true;
+
   deeznuts = {
-    users = ["cethien"];
     desktop.gnome.enable = true;
     audio.enable = true;
   };

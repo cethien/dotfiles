@@ -2,8 +2,9 @@
 with lib; {
   imports = [
     ./assets
-    ./stylix
+    ./stylix.nix
     ./sops.nix
+    ./xremap.nix
 
     ./storage.nix
 
