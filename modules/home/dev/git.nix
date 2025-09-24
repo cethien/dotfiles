@@ -35,6 +35,8 @@ in {
       diff-so-fancy.enable = true;
     };
     programs.lazygit.enable = true;
+    programs.tmux.resurrectPluginProcesses = ["lazygit"];
+
     home.packages = with pkgs; [
       scc
     ];

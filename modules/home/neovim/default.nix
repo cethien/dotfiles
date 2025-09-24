@@ -19,6 +19,7 @@ in {
   config = mkIf cfg.enable {
     home.sessionVariables.EDITOR = "nvim";
     home.shellAliases.v = "nvim";
+    programs.tmux.resurrectPluginProcesses = ["nvim .nvim-wrapped"];
 
     programs.nvf.enable = true;
     programs.nvf.settings = import ./nvf-config.nix {

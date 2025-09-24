@@ -69,6 +69,7 @@ in {
         };
       };
     };
+    programs.tmux.resurrectPluginProcesses = ["spotify_player cava"];
 
     programs.cava.enable = true;
     programs.cava.settings = {

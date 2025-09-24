@@ -28,6 +28,7 @@ in {
           };
         };
       };
+      tmux.resurrectPluginProcesses = ["ssh"];
     };
   };
 }

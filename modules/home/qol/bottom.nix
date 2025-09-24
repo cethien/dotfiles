@@ -27,6 +27,7 @@ with lib; {
       htop = "btm --basic";
     };
 
+    programs.tmux.resurrectPluginProcesses = ["btm"];
     programs.bottom = {
       settings = {
         flags = {

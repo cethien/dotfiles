@@ -4,13 +4,20 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf mkOption types;
+  cfg = config.programs.tmux;
 in {
   imports = [
     ./option-keymaps.nix
   ];
 
-  config = mkIf config.programs.tmux.enable {
+  options.programs.tmux.resurrectPluginProcesses = mkOption {
+    type = types.listOf types.str;
+    default = [];
+    description = "list of processes that will be resurrects. will be concat into a long list, exists for convenience";
+  };
+
+  config = mkIf cfg.enable {
     home.shellAliases = {
       tm = "tmux_new";
       tmls = "tmux ls";
@@ -47,8 +54,7 @@ in {
           plugin = resurrect;
           extraConfig = ''
             set -g @resurrect-capture-panel-contents 'on'
-            set -g @resurrect-processes 'nvim ssh ~ssh spotify_player yazi btm'
-            set -g @resurrect-processes '~ssh'
+            set -g @resurrect-processes '${lib.strings.concatStringsSep " " cfg.resurrectPluginProcesses}'
           '';
         }
         {

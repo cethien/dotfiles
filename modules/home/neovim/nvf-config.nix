@@ -174,13 +174,6 @@
       };
     };
 
-    terminal.toggleterm = {
-      enable = true;
-      # mappings.open = "<C-q>";
-      setupOpts.direction = "float";
-      lazygit.enable = true;
-    };
-
     telescope.enable = true;
     telescope = {
       mappings.findFiles = "<leader><Space>";

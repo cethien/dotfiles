@@ -36,6 +36,7 @@ in {
 
         (mkIf containers [pkgs.podman-compose pkgs.k3d pkgs.kubectl])
       ];
+      programs.tmux.resurrectPluginProcesses = ["dblab"];
 
       services.podman.enable = containers;
       home.shellAliases = mkIf containers {lzd = "lazydocker";};
