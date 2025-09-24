@@ -5,36 +5,36 @@ with lib; {
     ./stylix
     ./sops.nix
 
-    ./programs/storage.nix
+    ./storage.nix
 
-    ./programs/desktop/hyprland
-    ./programs/desktop/gnome.nix
-    ./programs/terminals.nix
+    ./desktop/hyprland
+    ./desktop/gnome.nix
+    ./terminals.nix
 
-    ./programs/qol
-    ./programs/dev
-    ./programs/fun.nix
-    ./programs/essentials
-    ./programs/utils-net.nix
-    ./programs/utils
-    ./programs/neovim
-    ./programs/fastfetch
+    ./qol
+    ./dev
+    ./fun.nix
+    ./essentials
+    ./utils-net.nix
+    ./utils
+    ./neovim
+    ./fastfetch
 
-    ./programs/logitech-peripherals.nix
-    ./programs/elgato-stream-deck.nix
+    ./logitech-peripherals.nix
+    ./elgato-stream-deck.nix
 
-    ./programs/browser
-    ./programs/keepassxc.nix
-    ./programs/pim.nix
-    ./programs/taskwarrior.nix
-    ./programs/slides.nix
+    ./browser
+    ./keepassxc.nix
+    ./pim.nix
+    ./taskwarrior.nix
+    ./slides.nix
 
-    ./programs/spotify.nix
-    ./programs/discord.nix
-    ./programs/creative.nix
-    ./programs/audio.nix
+    ./spotify.nix
+    ./discord.nix
+    ./creative.nix
+    ./audio.nix
 
-    ./programs/gaming.nix
+    ./gaming.nix
   ];
 
   xdg.mimeApps.enable = true;
@@ -45,8 +45,9 @@ with lib; {
   };
   news.display = "silent";
 
+  stylix.enable = mkDefault true;
+
   deeznuts = {
-    stylix.enable = mkDefault true;
     dev.enable = mkDefault true;
     programs = {
       essentials.enable = mkDefault true;
