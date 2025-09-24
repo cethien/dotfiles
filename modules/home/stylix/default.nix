@@ -6,15 +6,11 @@
   ...
 }:
 with lib; let
-  cfg = config.deeznuts.stylix;
+  cfg = config.stylix;
 in {
   imports = [
     stylix.homeModules.stylix
   ];
-
-  options.deeznuts.stylix = {
-    enable = mkEnableOption "Enable theming with stylix";
-  };
 
   config = mkIf cfg.enable {
     # TODO: remove when https://github.com/nix-community/stylix/issues/478 is resolved
@@ -26,8 +22,6 @@ in {
     };
 
     stylix = {
-      enable = true;
-
       image = mkDefault ../../../wallpapers/blueish_river_landscape.jpg;
       polarity = "dark";
       base16Scheme = mkDefault "${pkgs.base16-schemes}/share/themes/tokyo-night-dark.yaml";
