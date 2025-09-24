@@ -4,7 +4,7 @@ set -euo pipefail
 
 REPO=cethien/dotfiles
 HOSTNAME=$(hostname -s | tr 'A-Z' 'a-z')
-if [[ -n $WSL_DISTRO_NAME ]] || grep -qi microsoft /proc/version 2>/dev/null; then
+if [[ -n ${WSL_DISTRO_NAME:-} ]] || grep -qi microsoft /proc/version 2>/dev/null; then
   HOSTNAME=wsl
 fi
 
