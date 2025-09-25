@@ -10,6 +10,7 @@ in {
     ./firefox.nix
     ./zen-browser.nix
     ./picture-in-picture.nix
+    ./qutebrowser.nix
   ];
 
   options.deeznuts.browser = {
@@ -28,6 +29,13 @@ in {
   };
 
   config = {
+    services.xremap.config.keymap = [
+      {
+        name = "apps";
+        remap."SUPER-SHIFT-f".launch = ["${cfg.defaultBrowser}"];
+      }
+    ];
+
     xdg.mimeApps.defaultApplications = let
       mimeTypes = [
         "application/x-extension-htm"
