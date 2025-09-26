@@ -3,11 +3,11 @@
   config,
   pkgs,
   ...
-}:
-with lib; let
-  cfg = config.deeznuts.creative;
+}: let
+  inherit (lib) mkIf elem mkEnableOption mkOption types mkMerge;
+  cfg = config.programs.creativeSuite;
 in {
-  options.deeznuts.creative = {
+  options.programs.creativeSuite = {
     enable = mkEnableOption "enable all media creation tools";
     extras = mkOption {
       type = types.listOf types.str;

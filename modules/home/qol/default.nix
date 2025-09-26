@@ -3,18 +3,20 @@
   config,
   pkgs,
   ...
-}:
-with lib; let
-  cfg = config.deeznuts.programs.qol;
+}: let
+  inherit (lib) mkOption types mkIf mkBefore;
+  cfg = config.programs.qol;
 in {
   imports = [
     ./bottom.nix
-    ./bash-options.nix
     ./yazi.nix
   ];
 
-  options.deeznuts.programs.qol = {
-    enable = mkEnableOption "QoL utils";
+  options.programs.qol = {
+    enable = mkOption {
+      type = types.bool;
+      default = true;
+    };
   };
 
   config = mkIf cfg.enable {
@@ -22,14 +24,18 @@ in {
       procs
       duf
       gdu
+      tealdeer
 
+      # markdown reader
       glow
       mdcat
 
+      # ebooks
       epr
       bk
 
       termshot
+      slides
 
       (writeShellScriptBin "update" (builtins.readFile ./scripts/update.sh))
       (writeShellScriptBin "rebuild" (builtins.readFile ./scripts/rebuild.sh))
@@ -63,12 +69,20 @@ in {
       oh-my-posh.settings = builtins.fromJSON (
         builtins.unsafeDiscardStringContext (builtins.readFile ./oh-my-posh/themes/cethien.omp.json)
       );
-      bash.blesh.enable =
-        true;
+
       bash.enable = true;
+      bash.initExtra = mkBefore ''
+        source ${pkgs.blesh}/share/blesh/ble.sh
+      '';
+    };
+
+    programs.fastfetch = {
+      enable = true;
+      settings = builtins.fromJSON (builtins.unsafeDiscardStringContext (builtins.readFile ./fastfetch-settings.json));
     };
 
     home.shellAliases = {
+      ff = "fastfetch";
       cp = "cp -i";
 
       cdc = "cd ~/.config";
@@ -93,14 +107,7 @@ in {
       reload = "source ~/.bashrc && clear";
     };
 
+    home.file.".config/fastfetch/logo.png".source = ./bernd_pixel.png;
     home.file."${config.home.homeDirectory}/.hushlogin".text = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
-
-    programs.hyprpanel.settings.bar.workspaces.applicationIconMap.yazi = "󰝰";
-    # xdg.mimeApps.defaultApplications."inode/directory" = ["yazi.desktop"];
-    # wayland.windowManager.hyprland.settings = {
-    #   bind = [
-    #     "SUPER, e, exec, $terminal --class yazi -e yazi"
-    #   ];
-    # };
   };
 }

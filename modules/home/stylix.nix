@@ -60,10 +60,10 @@ in {
         };
 
         sizes = {
-          applications = mkDefault 13;
+          applications = mkDefault 14;
           terminal = mkDefault 14;
           desktop = mkDefault 16;
-          popups = mkDefault 12;
+          popups = mkDefault 16;
         };
       };
 

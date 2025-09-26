@@ -18,12 +18,17 @@ in {
   config = mkIf cfg.enable {
     wayland.windowManager.hyprland.settings = {
       exec-once = mkIf hypr ["spotify_player -d"];
+
       bind = [
+        "SUPER, M, exec, rofi-playerctl"
         "SUPER SHIFT, M, exec, hypr_spot"
       ];
     };
 
     home.packages = with pkgs; [
+      playerctl
+      (writeShellScriptBin "rofi-playerctl" (builtins.readFile ./rofi-playerctl.sh))
+
       # spotify
       (mkIf config.wayland.windowManager.hyprland.enable (
         writeShellScriptBin "hypr_spot" ''
@@ -35,7 +40,6 @@ in {
       ))
     ];
 
-    stylix.targets.spicetify.enable = false;
     programs.spicetify = let
       spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.stdenv.hostPlatform.system};
     in {
@@ -57,6 +61,7 @@ in {
 
       theme = spicePkgs.themes.nightlight;
     };
+    stylix.targets.spicetify.enable = false;
 
     programs.spotify-player = {
       enable = true;

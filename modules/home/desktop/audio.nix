@@ -4,19 +4,11 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkEnableOption mkIf;
-  cfg = config.deeznuts.audio;
+  inherit (lib) mkIf;
 in {
-  options.deeznuts.audio = {
-    enable = mkEnableOption "audio related programs";
-  };
-
-  config = mkIf cfg.enable {
-    services.easyeffects.enable = true;
+  config = mkIf config.programs.desktop.isEnabled {
     programs.hyprpanel.settings.bar.workspaces.applicationIconMap."org.pulseaudio.pavucontrol" = "";
     home.packages = with pkgs; [
-      pavucontrol
-      qpwgraph
       wiremix
       (mkIf config.wayland.windowManager.hyprland.enable (
         writeShellScriptBin "hypr_wiremix" ''
@@ -28,10 +20,8 @@ in {
       ))
     ];
 
-    wayland.windowManager.hyprland.settings = {
-      bind = [
-        "SUPER SHIFT, N, exec, hypr_wiremix"
-      ];
-    };
+    wayland.windowManager.hyprland.settings.bind = [
+      "SUPER SHIFT, N, exec, hypr_wiremix"
+    ];
   };
 }

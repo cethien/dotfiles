@@ -5,9 +5,8 @@
   ...
 }: let
   inherit (lib) mkIf;
-  cfg = config.programs.gnome-shell;
 in {
-  config = mkIf cfg.enable {
+  config = mkIf config.programs.gnome-shell.enable {
     programs.gnome-shell = {
       extensions = with pkgs.gnomeExtensions; [
         {package = touchup;}

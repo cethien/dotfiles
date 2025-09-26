@@ -4,41 +4,11 @@
   ...
 }:
 with lib; let
-  enabled = config.deeznuts.desktop.hyprland.enable;
-  cfg = config.deeznuts.desktop.hyprland.hypridle;
+  inherit (lib) mkDefault;
 in {
-  options.deeznuts.desktop.hyprland.hypridle = {
-    enable = mkOption {
-      type = types.bool;
-      default = enabled;
-      description = "hypridle";
-    };
-
-    dimScreen.timeout = mkOption {
-      type = types.int;
-      default = 150; # 2.5 minutes
-      description = "Timeout in seconds before dimming the screen";
-    };
-    lockScreen.timeout = mkOption {
-      type = types.int;
-      default = 300; # 5 minutes
-      description = "Timeout in seconds before locking the screen";
-    };
-    turnOffScreen.timeout = mkOption {
-      type = types.int;
-      default = 330; # 5.5 minutes
-      description = "Timeout in seconds before turning off the screen";
-    };
-    suspendComputer.timeout = mkOption {
-      type = types.int;
-      default = 900; # 15 minutes
-      description = "Timeout in seconds before suspending the computer";
-    };
-  };
-
   config = mkIf config.wayland.windowManager.hyprland.enable {
     services.hypridle = {
-      enable = true;
+      enable = mkDefault true;
 
       settings = {
         general = {
@@ -49,31 +19,25 @@ in {
 
         listener = [
           {
-            timeout = cfg.dimScreen.timeout;
-            on-timeout = "brightnessctl -s set 25%";
+            timeout = mkDefault 150;
+            on-timeout = "systemd-ac-power || brightnessctl -s set 25%";
             on-resume = "brightnessctl -r";
           }
           {
-            timeout = cfg.lockScreen.timeout;
-            on-timeout = "loginctl lock-session";
+            timeout = mkDefault 300;
+            on-timeout = "systemd-ac-power || loginctl lock-session";
           }
           {
-            timeout = cfg.turnOffScreen.timeout;
-            on-timeout = "hyprctl dispatch dpms off";
+            timeout = mkDefault 330;
+            on-timeout = "systemd-ac-power || hyprctl dispatch dpms off";
             on-resume = "hyprctl dispatch dpms on";
           }
           {
-            timeout = cfg.suspendComputer.timeout;
-            on-timeout = "systemctl suspend";
+            timeout = mkDefault 900;
+            on-timeout = "systemd-ac-power || systemctl suspend";
           }
         ];
       };
-    };
-
-    wayland.windowManager.hyprland.settings = {
-      exec-once = [
-        "hypridle"
-      ];
     };
   };
 }

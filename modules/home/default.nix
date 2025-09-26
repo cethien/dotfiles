@@ -1,5 +1,4 @@
-{lib, ...}:
-with lib; {
+{
   imports = [
     ./assets
     ./stylix.nix
@@ -8,18 +7,15 @@ with lib; {
 
     ./storage.nix
 
-    ./desktop/hyprland
-    ./desktop/gnome.nix
+    ./desktop
     ./terminals.nix
 
+    ./essentials.nix
+    ./utils.nix
+    ./utils-net.nix
     ./qol
     ./dev
     ./fun.nix
-    ./essentials
-    ./utils-net.nix
-    ./utils
-    ./neovim
-    ./fastfetch
 
     ./logitech-peripherals.nix
     ./elgato-stream-deck.nix
@@ -27,14 +23,10 @@ with lib; {
     ./browser
     ./keepassxc.nix
     ./pim.nix
-    ./taskwarrior.nix
-    ./slides.nix
 
     ./spotify.nix
     ./discord.nix
     ./creative.nix
-    ./audio.nix
-
     ./gaming.nix
   ];
 
@@ -45,22 +37,5 @@ with lib; {
     frequency = "weekly";
   };
   news.display = "silent";
-
-  stylix.enable = mkDefault true;
-
-  deeznuts = {
-    dev.enable = mkDefault true;
-    programs = {
-      essentials.enable = mkDefault true;
-      neovim.enable = mkDefault true;
-      taskwarrior.enable = true;
-      slides.enable = true;
-      utils.enable = mkDefault true;
-      net.enable = mkDefault true;
-
-      qol.enable = mkDefault true;
-      fun.enable = mkDefault true;
-      fastfetch.enable = mkDefault true;
-    };
-  };
+  stylix.enable = true;
 }

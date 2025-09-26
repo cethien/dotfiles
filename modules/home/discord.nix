@@ -5,14 +5,13 @@
 }: let
   inherit (lib) mkEnableOption mkIf elem;
   cfg = config.programs.discord;
-  enabled = cfg.enable;
   hypr = elem "discord" config.wayland.windowManager.hyprland.autostart;
 in {
   options.programs.discord = {
     enable = mkEnableOption "discord";
   };
 
-  config = mkIf enabled {
+  config = mkIf cfg.enable {
     wayland.windowManager.hyprland.settings = {
       exec-once = mkIf hypr [
         "[silent] discord --start-minimized"

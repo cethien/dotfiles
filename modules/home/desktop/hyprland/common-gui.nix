@@ -27,11 +27,12 @@ in {
       zathura.enable = true;
     };
 
-    wayland.windowManager.hyprland.settings = {
-      bind = [
-        "SUPER, e, exec, nautilus"
-      ];
-    };
+    services.xremap.config.keymap = [
+      {
+        name = "apps";
+        remap."SUPER-e".launch = ["nautilus"];
+      }
+    ];
 
     xdg.mimeApps.defaultApplications = let
       categories = {

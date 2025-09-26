@@ -5,23 +5,17 @@
   inputs,
   ...
 }: let
-  inherit (lib) mkEnableOption mkIf;
-  cfg = config.deeznuts.programs.neovim;
+  inherit (lib) mkIf;
 in {
   imports = [
     inputs.nvf.homeManagerModules.default
   ];
 
-  options.deeznuts.programs.neovim = {
-    enable = mkEnableOption "neovim";
-  };
-
-  config = mkIf cfg.enable {
+  config = mkIf config.programs.nvf.enable {
     home.sessionVariables.EDITOR = "nvim";
     home.shellAliases.v = "nvim";
     programs.tmux.resurrectPluginProcesses = ["nvim .nvim-wrapped"];
 
-    programs.nvf.enable = true;
     programs.nvf.settings = import ./nvf-config.nix {
       inherit pkgs;
       ageFile = config.sops.age.keyFile;

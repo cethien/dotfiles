@@ -13,39 +13,38 @@ status_function() {
   fi
 }
 
-player_status=$($playerctl status 2>/dev/null)
-if [[ "$player_status" == "Playing" ]]; then
-  toggle=" pause" # Pause-Icon
+if [[ "$($playerctl status 2>/dev/null)" == "Playing" ]]; then
+  TOGGLE=" pause"
 else
-  toggle=" play" # Play-Icon
+  TOGGLE=" play"
 fi
 
-status=$(status_function)
+STATUS=$(status_function)
 
 # Options
-next=" next"
-prev=" previous"
-seekminus=" go back 15 seconds"
-seekplus=" go ahead 15 seconds"
+NEXT=" next"
+PREV=" previous"
+SEEK_MINUS=" go back 15 seconds"
+SEEK_PLUS=" go ahead 15 seconds"
 
 # Variable passed to rofi
-options="$toggle\n$next\n$prev\n$seekplus\n$seekminus"
+OPTIONS="$TOGGLE\n$NEXT\n$PREV\n$SEEK_PLUS\n$SEEK_MINUS\n"
 
-chosen="$(echo -e "$options" | rofi -dmenu -p "${status^}" -selected-row 0 -theme-str 'entry { enabled: false; }')"
-case $chosen in
-$toggle)
+SELECTED="$(echo -e "$OPTIONS" | rofi -dmenu -p "${STATUS^}" -selected-row 0 -theme-str 'entry { enabled: false; }')"
+case $SELECTED in
+"$TOGGLE")
   playerctl -p spotify_player play-pause
   ;;
-$next)
+"$NEXT")
   playerctl -p spotify_player next
   ;;
-$prev)
+"$PREV")
   playerctl -p spotify_player previous
   ;;
-$seekminus)
+"$SEEK_MINUS")
   playerctl -p spotify_player position 15-
   ;;
-$seekplus)
+"$SEEK_PLUS")
   playerctl -p spotify_player position 15+
   ;;
 esac

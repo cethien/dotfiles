@@ -4,11 +4,14 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkEnableOption mkIf;
-  cfg = config.deeznuts.programs.fun;
+  inherit (lib) mkOption types mkIf;
+  cfg = config.programs.fun;
 in {
-  options.deeznuts.programs.fun = {
-    enable = mkEnableOption "some utils with no use but kinda cool";
+  options.programs.fun = {
+    enable = mkOption {
+      type = types.bool;
+      default = true;
+    };
   };
 
   config = mkIf cfg.enable {
@@ -32,7 +35,6 @@ in {
       asciiquarium-transparent
       hackertyper
       ttysvr
-
       cowsay
       figlet
       dotacat

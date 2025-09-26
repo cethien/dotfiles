@@ -2,43 +2,20 @@
   lib,
   config,
   ...
-}:
-with lib; let
-  cfg = config.deeznuts.storage;
+}: let
+  inherit (lib) mkDefault;
 in {
-  options.deeznuts.storage = {
-    enable = mkEnableOption "storage apps";
-
-    restic.enable = mkOption {
-      type = types.bool;
-      default = true;
-      description = "Enable restic";
-    };
-
-    rclone.enable = mkOption {
-      type = types.bool;
-      default = true;
-      description = "Enable rclone";
-    };
-
-    syncthing.enable = mkOption {
-      type = types.bool;
-      default = true;
-      description = "Enable syncthing";
-    };
-  };
-
-  config = mkIf cfg.enable {
+  config = {
     services.restic = {
-      enable = cfg.restic.enable;
-      # TODO
+      enable = mkDefault true;
+      # TODO:
       # backups = {};
     };
 
     sops.secrets."rclone/drive/token" = {};
 
     programs.rclone = {
-      enable = cfg.rclone.enable;
+      enable = mkDefault true;
       remotes = {
         "gdrive" = {
           mounts = {
@@ -66,7 +43,7 @@ in {
     };
 
     services.syncthing = {
-      enable = cfg.syncthing.enable;
+      enable = mkDefault true;
       settings = {
         options.urAccepted = -1;
         devices = {

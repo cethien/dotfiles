@@ -6,15 +6,37 @@
 }: let
   inherit (lib) mkIf mkOption types;
   cfg = config.programs.tmux;
-in {
-  imports = [
-    ./option-keymaps.nix
-  ];
 
-  options.programs.tmux.resurrectPluginProcesses = mkOption {
-    type = types.listOf types.str;
-    default = [];
-    description = "list of processes that will be resurrects. will be concat into a long list, exists for convenience";
+  tmuxKeybindings = config.programs.tmux.keybindings or [];
+  formatBind = binding: let
+    table =
+      if binding ? table
+      then "-T ${binding.table} "
+      else "";
+    prefix =
+      if binding.noprefix or false
+      then "-n "
+      else "";
+    repeatable =
+      if binding.repeat or false
+      then "-r "
+      else "";
+    desc =
+      if binding ? description
+      then "-N \"${binding.description}\" "
+      else "";
+  in "bind ${table}${repeatable}${prefix}${desc}${binding.key} ${binding.action}";
+in {
+  options.programs.tmux = {
+    keybindings = mkOption {
+      type = types.listOf types.attrs;
+      default = [];
+    };
+    resurrectPluginProcesses = mkOption {
+      type = types.listOf types.str;
+      default = [];
+      description = "list of processes that will be resurrects. will be concat into a long list";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -25,7 +47,7 @@ in {
       tmks = "tmux kill-server";
     };
 
-    programs.bash.initExtra = builtins.readFile ./tmux.sh;
+    programs.bash.initExtra = builtins.readFile ./tmux_bashinit.sh;
     programs.fzf.tmux.enableShellIntegration = true;
 
     programs.tmux = {
@@ -37,7 +59,10 @@ in {
       prefix = "C-a";
       terminal = "tmux-256color";
 
-      extraConfig = builtins.readFile ./tmux.conf;
+      extraConfig = ''
+        ${builtins.readFile ./tmux.conf}
+        ${lib.concatStringsSep "\n" (map formatBind tmuxKeybindings)}
+      '';
 
       sensibleOnTop = true;
       plugins = with pkgs.tmuxPlugins; [
@@ -103,6 +128,11 @@ in {
           noprefix = true;
           key = "M-Down";
           action = "select-pane -D";
+        }
+        {
+          noprefix = true;
+          key = "M-z";
+          action = "resize-pane -Z";
         }
 
         # switch windows using Ctrl-Alt-Tab

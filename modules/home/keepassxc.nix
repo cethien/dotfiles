@@ -81,13 +81,16 @@ in {
     };
 
     wayland.windowManager.hyprland.settings = {
-      bind = [
-        "SUPER SHIFT, K, exec, hypr_keepassxc"
-      ];
-
       exec-once = mkIf hypr [
         "keepassxc"
       ];
     };
+
+    services.xremap.config.keymap = [
+      {
+        name = "apps";
+        remap."SUPER-SHIFT-k".launch = ["hypr_keepassxc"];
+      }
+    ];
   };
 }

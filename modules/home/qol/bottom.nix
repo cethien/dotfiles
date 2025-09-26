@@ -3,10 +3,20 @@
   config,
   pkgs,
   ...
-}:
-with lib; {
+}: let
+  inherit (lib) mkIf;
+in {
   config = mkIf config.programs.bottom.enable {
     programs.hyprpanel.settings.bar.workspaces.applicationIconMap.btm = "";
+    programs.tmux.resurrectPluginProcesses = ["btm"];
+
+    services.xremap.config.keymap = [
+      {
+        name = "apps";
+        remap."SUPER-SHIFT-p".launch = ["hypr_btm"];
+      }
+    ];
+
     home.packages = [
       (pkgs.writeShellScriptBin "hypr_btm" ''
         #!/usr/bin/env bash
@@ -16,18 +26,11 @@ with lib; {
       '')
     ];
 
-    wayland.windowManager.hyprland.settings = {
-      bind = [
-        "SUPER SHIFT, p, exec, hypr_btm"
-      ];
-    };
-
     home.shellAliases = {
       top = "btm --basic";
       htop = "btm --basic";
     };
 
-    programs.tmux.resurrectPluginProcesses = ["btm"];
     programs.bottom = {
       settings = {
         flags = {

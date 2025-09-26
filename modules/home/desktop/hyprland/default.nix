@@ -11,8 +11,8 @@ in {
     ./common-gui.nix
     ./hypridle.nix
     ./hyprlock.nix
-    ./hyprpanel.nix
     ./hyprshot
+    ./mako.nix
   ];
 
   options.wayland.windowManager.hyprland = {
@@ -39,13 +39,12 @@ in {
       brightnessctl
       hyprpicker
       udiskie
-      playerctl
       wl-clipboard
     ];
     services.clipse.enable = true;
     services.hyprpaper.enable = true;
+    services.mako.enable = true;
     programs.rofi.enable = true;
-    programs.eww.enable = true;
 
     wayland.windowManager.hyprland.settings = {
       monitor = mkDefault [
@@ -89,7 +88,7 @@ in {
         rounding = 8;
 
         active_opacity = 1.0;
-        inactive_opacity = 0.9;
+        inactive_opacity = 1.0;
         fullscreen_opacity = 1.0;
 
         shadow = {
@@ -145,7 +144,6 @@ in {
       "$resizeIncrement" = 25;
 
       bind = [
-        "SUPER SHIFT, R, exec, wf-toggle-record"
         "SUPER SHIFT, C, exec, hyprpicker -a"
 
         "SUPER SHIFT, V, exec, $terminal --class clipse -e clipse"

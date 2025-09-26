@@ -21,9 +21,12 @@
 
   wayland.windowManager.hyprland.settings = {
     "$terminal" = "kitty";
-
-    bind = [
-      "SUPER, Q, exec, $terminal"
-    ];
   };
+
+  services.xremap.config.keymap = [
+    {
+      name = "apps";
+      remap."SUPER-q".launch = ["kitty"];
+    }
+  ];
 }

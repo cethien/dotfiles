@@ -1,24 +1,21 @@
 {
+  pkgs,
   lib,
-  config,
   ...
 }: let
-  inherit (lib) mkEnableOption mkIf mkDefault;
-  cfg = config.deeznuts.programs.essentials;
+  inherit (lib) mkDefault;
 in {
   imports = [
-    ./tmux
+    ./tmux.nix
+    ./neovim
   ];
 
-  options.deeznuts.programs.essentials = {
-    enable = mkEnableOption "essential utils tools";
-  };
-
-  config = mkIf cfg.enable {
+  config = {
     programs = {
       tmux.enable = true;
+      nvf.enable = mkDefault true;
+      ssh.enable = mkDefault true;
       ssh = {
-        enable = true;
         enableDefaultConfig = false;
         matchBlocks = {
           "*" = mkDefault {
@@ -30,5 +27,10 @@ in {
       };
       tmux.resurrectPluginProcesses = ["ssh"];
     };
+
+    home.packages = with pkgs; [
+      curl
+      wget
+    ];
   };
 }

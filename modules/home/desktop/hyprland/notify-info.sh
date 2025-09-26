@@ -24,4 +24,11 @@ else
   NET_LABEL="󰖪 Disconnected"
 fi
 
-echo "$BAT_LABEL • $NET_LABEL"
+CPU=$(grep 'cpu ' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {print int(usage) "%"}')
+RAM=$(free -h | awk '/Mem:/ {print $3 "/" $2}')
+
+notify-send -u low -t 5000 "󰃰 System" "\
+$(date '+%a, %d. %B %Y • %H:%M')
+󰍛 CPU: ${CPU} • 󰍛 RAM: ${RAM}
+${NET_LABEL}
+${BAT_LABEL}"

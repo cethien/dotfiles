@@ -4,11 +4,14 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkEnableOption mkIf;
-  cfg = config.deeznuts.programs.net;
+  inherit (lib) mkOption mkIf types;
+  cfg = config.programs.netUtils;
 in {
-  options.deeznuts.programs.net = {
-    enable = mkEnableOption "common network utilities";
+  options.programs.netUtils = {
+    enable = mkOption {
+      type = types.bool;
+      default = true;
+    };
   };
 
   config = mkIf cfg.enable {

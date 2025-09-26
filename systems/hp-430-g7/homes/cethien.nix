@@ -1,4 +1,8 @@
-{stateVersion, ...}: {
+{
+  stateVersion,
+  pkgs,
+  ...
+}: {
   imports = [
     ../../../modules/home
   ];
@@ -35,7 +39,6 @@
       gaming = 4;
     };
     autostart = [
-      "zen-browser"
       "keepassxc"
       "spotify"
     ];
@@ -44,31 +47,30 @@
   programs = {
     kitty.enable = true;
     zen-browser.enable = true;
-    firefox.enable = true;
-
+    qutebrowser.enable = true;
     keepassxc.enable = true;
-    distrobox.enable = true;
     spotify.enable = true;
     discord.enable = true;
+
+    devSuite.extras = ["containers"];
+    chromium.enable = true;
+    distrobox.enable = true;
+    creativeSuite = {
+      enable = true;
+      extras = ["mixxx"];
+    };
   };
 
+  home.packages = with pkgs; [castnow];
+
   deeznuts = {
-    storage.enable = true;
-    audio.enable = true;
     browser = {
       firefox-profile.containers = [
         "potato-squad.de"
         "creative-europe.net"
       ];
 
-      defaultBrowser = "zen-beta";
-    };
-
-    dev.extras = ["containers" "chromium"];
-
-    creative = {
-      enable = true;
-      extras = ["mixxx"];
+      defaultBrowser = "qutebrowser";
     };
   };
 }
