@@ -2,12 +2,10 @@
 
 BAT_PERCENTAGE=$(cat /sys/class/power_supply/BAT0/capacity)
 BAT_ICONS=("󰂃" "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰁹")
-BAT_CHARGING_ICON="󰂄"
 ICON_INDEX=$((BAT_PERCENTAGE / 10))
 BAT_ICON=${BAT_ICONS[ICON_INDEX]}
-BAT_LABEL="${BAT_ICON} ${BAT_PERCENTAGE}%"
 if [ "$(cat /sys/class/power_supply/BAT0/status)" = "Charging" ]; then
-  BAT_LABEL="${BAT_CHARGING_ICON} ${BAT_PERCENTAGE}% (Charging)"
+  BAT_ICON="󰂄"
 fi
 
 IFACE=$(ip route | awk '/^default/ {print $5; exit}')
@@ -19,9 +17,9 @@ if [ -n "$IFACE" ]; then
   else
     NET_ICON="󰓢" # Generic (USB, VPN, etc.)
   fi
-  NET_LABEL="${NET_ICON} ${IFACE}"
+  NET_LABEL="${NET_ICON}"
 else
-  NET_LABEL="󰖪 Disconnected"
+  NET_LABEL="󰖪"
 fi
 
-echo "$BAT_LABEL • $NET_LABEL"
+echo "${BAT_ICON} ${BAT_PERCENTAGE}% • $NET_LABEL"
