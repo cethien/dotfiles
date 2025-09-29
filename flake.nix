@@ -85,47 +85,6 @@
       pkgs = pkgsFor system;
       stateVersion = "25.05";
     in {
-      nixosConfigurations."surface-7-pro" = nixpkgs.lib.nixosSystem {
-        inherit pkgs;
-        specialArgs = {inherit inputs;};
-
-        modules = [
-          # disko.nixosModules.disko
-          # ./shared/disko/simple
-          nixos-hardware.nixosModules.microsoft-surface-pro-intel
-          {
-            hardware.microsoft-surface.kernelVersion = "stable";
-          }
-          ./systems/surface-7-pro/hardware-configuration.nix
-          ./systems/surface-7-pro/configuration.nix
-          {
-            system.stateVersion = stateVersion;
-          }
-
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              # useGlobalPkgs = true;
-              useUserPackages = true;
-              backupFileExtension = "bak-hm-$(date +%Y%m%d_%H%M%S)";
-
-              users.cethien =
-                ./systems/surface-7-pro/homes/cethien.nix;
-
-              extraSpecialArgs = {
-                inherit
-                  pkgs
-                  system
-                  home-manager
-                  stateVersion
-                  inputs
-                  ;
-              };
-            };
-          }
-        ];
-      };
-
       nixosConfigurations."cethien.home" = nixpkgs.lib.nixosSystem {
         inherit pkgs;
         modules = [
