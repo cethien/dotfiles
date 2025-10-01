@@ -1,6 +1,50 @@
 {pkgs, ...}: {
   config = {
     programs.qutebrowser = {
+      perDomainSettings = {
+        "web.whatsapp.com" = {
+          content.media.audio_capture = true;
+        };
+        "discord.com" = {
+          content = {
+            autoplay = true;
+            media.audio_video_capture = true;
+            desktop_capture = true;
+            javascript.clipboard = "access";
+          };
+        };
+
+        "chatgpt.com" = {
+          content.javascript.clipboard = "access";
+        };
+
+        "github.com" = {
+          colors.webpage.darkmode.enabled = false;
+          content.javascript.clipboard = "access";
+        };
+
+        "maps.google.com" = {
+          content.geolocation = true;
+        };
+      };
+
+      quickmarks = {
+        mail = "https://mail.google.com/";
+        cal = "https://calendar.google.com/";
+        drive = "https://drive.google.com/";
+        notes = "https://keep.google.com/";
+
+        spt = "https://open.spotify.com/";
+        sptpls = "https://playlistsorter.com/";
+        dc = "https://discord.com/";
+        wa = "https://web.whatsapp.com/";
+        yt = "https://youtube.com/";
+
+        chat = "https://chatgpt.com/";
+
+        nvf = "https://notashelf.github.io/nvf/options.html";
+      };
+
       searchEngines = {
         hm = "https://home-manager-options.extranix.com/?query={}&release=master";
 
@@ -21,36 +65,29 @@
         g = "https://www.google.com/search?hl=en&q={}";
       };
 
-      quickmarks = {
-        mail = "https://mail.google.com/";
-        cal = "https://calendar.google.com/";
-        drive = "https://drive.google.com/";
-        notes = "https://keep.google.com/";
-
-        spt = "https://open.spotify.com/";
-        sptpls = "https://playlistsorter.com/";
-        dc = "https://discord.com/";
-        wa = "https://web.whatsapp.com/";
-        yt = "https://youtube.com/";
-
-        chat = "https://chatgpt.com/";
-
-        nvf = "https://notashelf.github.io/nvf/options.html";
-      };
-
-      greasemonkey = [
-        (pkgs.fetchurl {
-          url = "https://raw.githubusercontent.com/afreakk/greasemonkeyscripts/1d1be041a65c251692ee082eda64d2637edf6444/youtube_sponsorblock.js";
-          sha256 = "sha256-e3QgDPa3AOpPyzwvVjPQyEsSUC9goisjBUDMxLwg8ZE=";
-        })
-      ];
-
       keyBindings = {
         normal = {
           "<Alt-Left>" = "back";
           "<Alt-Right>" = "forward";
         };
       };
+
+      greasemonkey = [
+        (pkgs.fetchurl {
+          url = "https://raw.githubusercontent.com/afreakk/greasemonkeyscripts/69df2b309eae2af18bb1d1ff1790f1d92d8e6a5d/youtube_adblock.js";
+          sha256 = "sha256-AyD9VoLJbKPfqmDEwFIEBMl//EIV/FYnZ1+ona+VU9c=";
+        })
+
+        (pkgs.fetchurl {
+          url = "https://raw.githubusercontent.com/afreakk/greasemonkeyscripts/69df2b309eae2af18bb1d1ff1790f1d92d8e6a5d/youtube_shorts_block.js";
+          sha256 = "sha256-e9qCSAuEMoNivepy7W/W5F9D1PJZrPAJoejsBi9ejiY=";
+        })
+
+        (pkgs.fetchurl {
+          url = "https://raw.githubusercontent.com/afreakk/greasemonkeyscripts/69df2b309eae2af18bb1d1ff1790f1d92d8e6a5d/youtube_sponsorblock.js";
+          sha256 = "sha256-nwNade1oHP+w5LGUPJSgAX1+nQZli4Rhe8FFUoF5mLE=";
+        })
+      ];
 
       settings = {
         scrolling.smooth = true;
@@ -61,16 +98,21 @@
 
         tabs = {
           show = "multiple";
-          # tabs_are_windows = true;
         };
 
         statusbar.show = "in-mode";
-        content.notifications.enabled = false;
+        colors.webpage.preferred_color_scheme = "dark";
         completion.use_best_match = true;
         confirm_quit = ["downloads"];
         auto_save.session = true;
         session.lazy_restore = true;
+
+        content = {
+          notifications.enabled = false;
+        };
       };
+
+      loadAutoconfig = true;
     };
   };
 }
