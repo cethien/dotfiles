@@ -40,6 +40,8 @@ in {
   };
 
   config = mkIf cfg.enable {
+    wayland.windowManager.hyprland.settings.exec-once = ["tmux start-server"];
+
     home.shellAliases = {
       tm = "tmux_new";
       tmls = "tmux ls";
@@ -131,7 +133,7 @@ in {
         }
         {
           noprefix = true;
-          key = "M-z";
+          key = "M-f";
           action = "resize-pane -Z";
         }
 
@@ -152,10 +154,6 @@ in {
           action = "copy-mode -u";
         }
       ];
-    };
-
-    wayland.windowManager.hyprland.settings = {
-      exec-once = ["tmux start-server"];
     };
   };
 }
