@@ -96,6 +96,7 @@
       lua.enable = true;
       bash.enable = true;
       yaml.enable = true;
+      typst.enable = true;
       markdown.enable = true;
       markdown.extensions.markview-nvim.enable = true;
 
