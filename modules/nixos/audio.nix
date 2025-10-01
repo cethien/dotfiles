@@ -3,14 +3,9 @@
   config,
   ...
 }: let
-  inherit (lib) mkIf mkEnableOption;
-  cfg = config.deeznuts.audio;
+  inherit (lib) mkIf;
 in {
-  options.deeznuts.audio = {
-    enable = mkEnableOption "audio via pipewire";
-  };
-
-  config = mkIf cfg.enable {
+  config = mkIf config.deeznuts.desktop.isEnabled {
     services.pulseaudio.enable = false;
     security.rtkit.enable = true;
     services.pipewire = {
