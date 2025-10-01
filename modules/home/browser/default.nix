@@ -29,12 +29,7 @@ in {
   };
 
   config = {
-    services.xremap.config.keymap = [
-      {
-        name = "apps";
-        remap."SUPER-SHIFT-f".launch = ["${cfg.defaultBrowser}"];
-      }
-    ];
+    wayland.windowManager.hyprland.settings.bind = ["SUPER SHIFT, F, exec, ${cfg.defaultBrowser}"];
 
     xdg.mimeApps.defaultApplications = let
       mimeTypes = [

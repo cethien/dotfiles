@@ -7,7 +7,6 @@
   inherit (lib) mkIf;
 in {
   config = mkIf config.programs.desktop.isEnabled {
-    programs.hyprpanel.settings.bar.workspaces.applicationIconMap."org.pulseaudio.pavucontrol" = "";
     home.packages = with pkgs; [
       wiremix
       (mkIf config.wayland.windowManager.hyprland.enable (

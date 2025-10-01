@@ -8,7 +8,6 @@
   hypr = elem "keepassxc" config.wayland.windowManager.hyprland.autostart;
 in {
   config = mkIf config.programs.keepassxc.enable {
-    programs.hyprpanel.settings.bar.workspaces.applicationIconMap."org.keepassxc.KeePassXC" = "";
     programs.keepassxc.settings = {
       Browser = {
         Enabled = true;
@@ -84,13 +83,10 @@ in {
       exec-once = mkIf hypr [
         "keepassxc"
       ];
-    };
 
-    services.xremap.config.keymap = [
-      {
-        name = "apps";
-        remap."SUPER-SHIFT-k".launch = ["hypr_keepassxc"];
-      }
-    ];
+      bind = [
+        "SUPER SHIFT, K, exec, hypr_keepassxc"
+      ];
+    };
   };
 }

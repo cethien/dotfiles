@@ -27,12 +27,7 @@ in {
       zathura.enable = true;
     };
 
-    services.xremap.config.keymap = [
-      {
-        name = "apps";
-        remap."SUPER-e".launch = ["nautilus"];
-      }
-    ];
+    wayland.windowManager.hyprland.settings.bind = ["SUPER SHIFT, E, exec, nautilus"];
 
     xdg.mimeApps.defaultApplications = let
       categories = {

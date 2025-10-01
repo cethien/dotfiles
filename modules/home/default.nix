@@ -3,7 +3,6 @@
     ./assets
     ./stylix.nix
     ./sops.nix
-    ./xremap.nix
 
     ./storage.nix
 
