@@ -11,15 +11,26 @@ fi
 IFACE=$(ip route | awk '/^default/ {print $5; exit}')
 if [ -n "$IFACE" ]; then
   if [[ "$IFACE" == wl* ]]; then
-    NET_ICON="󰖩" # Wi-Fi
+    if command -v nmcli &>/dev/null; then
+      SSID=$(nmcli -t -f active,ssid dev wifi | awk -F: '$1=="yes"{print $2}')
+    fi
+
+    if [ -n "$SSID" ]; then
+      NET_ICON="󰖩" # Wi-Fi
+      NET_LABEL="${NET_ICON} ${SSID}"
+    else
+      NET_ICON="󰖩"
+      NET_LABEL="${NET_ICON} ${IFACE}"
+    fi
   elif [[ "$IFACE" == en* ]]; then
     NET_ICON="󰈀" # Ethernet
+    NET_LABEL="${NET_ICON} Ethernet"
   else
     NET_ICON="󰓢" # Generic (USB, VPN, etc.)
+    NET_LABEL="${NET_ICON} ${IFACE}"
   fi
-  NET_LABEL="${NET_ICON}"
 else
-  NET_LABEL="󰖪"
+  NET_LABEL="󰖪 disconnected"
 fi
 
 echo "${BAT_ICON} ${BAT_PERCENTAGE}% • $NET_LABEL"

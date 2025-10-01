@@ -5,9 +5,9 @@
   ...
 }:
 with lib; let
-  enabled = config.deeznuts.desktop.hyprland.enable;
   cfg = config.deeznuts.desktop.hyprland.hyprlock;
 
+  fonts = config.stylix.fonts;
   colors = {
     base01 = "rgba(31, 29, 46, 0.6)"; # base01 - Darker Plum/Gray, subtle transparency
     base02 = "rgba(38, 35, 53, 1.0)"; # base02 - Mid-Dark Plum/Gray, default ring (subtle)
@@ -38,7 +38,14 @@ in {
     programs.hyprlock = {
       enable = true;
 
-      settings = {
+      settings = let
+        shadows = {
+          shadow_passes = 4;
+          shadow_size = 6;
+          shadow_color = "rgb(0,0,0)";
+          shadow_boost = 1.2;
+        };
+      in {
         general = {
           disable_loading_bar = true;
           grace = 0;
@@ -49,86 +56,105 @@ in {
         background = [
           {
             path = "screenshot";
-            blur_passes = 3;
-            blur_size = 8;
+            blur_passes = 4;
+            blur_size = 12;
           }
         ];
 
-        image = [
-          {
+        image = let
+          imgs = pkgs.runCommand "hyprlock.png" {} ''
+            mkdir -p $out
+            cp ${./smiley.png} $out/smiley.png
+            cp ${./logo.png} $out/logo.png
+          '';
+
+          attrs = {
             monitor = cfg.monitor;
-            path = "${config.home.homeDirectory}/Pictures/smiley.png";
-            halign = "center";
-            valign = "center";
-            position = "0, 100";
             size = 200;
+            valign = "center";
+            halign = "center";
             rounding = 0;
             border_size = 0;
-          }
+          };
+        in [
+          (attrs
+            // {
+              path = "${imgs}/smiley.png";
+              position = "-412, -38";
+            })
+
+          (attrs
+            // {
+              path = "${imgs}/logo.png";
+              position = "386, 29";
+            })
         ];
 
         input-field = mkForce [
-          {
-            monitor = cfg.monitor;
-            fade_on_empty = false;
-            font_family = config.stylix.fonts.monospace.name;
+          (shadows
+            // {
+              monitor = cfg.monitor;
+              fade_on_empty = false;
+              font_family = fonts.monospace.name;
 
-            placeholder_color = colors.base04;
-            bar_text_color = colors.base01;
-            bar_color = colors.base01;
-            fail_color = colors.base0E;
+              placeholder_color = colors.base04;
+              bar_text_color = colors.base01;
+              bar_color = colors.base01;
+              fail_color = colors.base0E;
 
-            ring_color = colors.base02;
+              ring_color = colors.base02;
 
-            ring_color_error = colors.base0E;
-            ring_color_clear = colors.base0B;
-            ring_color_caps = colors.base09;
-            ring_color_vkey = colors.base0D;
-            ring_color_verify = colors.base0B;
+              ring_color_error = colors.base0E;
+              ring_color_clear = colors.base0B;
+              ring_color_caps = colors.base09;
+              ring_color_vkey = colors.base0D;
+              ring_color_verify = colors.base0B;
 
-            placeholder_text = "enter password";
+              placeholder_text = "passwd";
 
-            halign = "center";
-            valign = "center";
-            position = "0, -100";
-          }
+              halign = "center";
+              valign = "center";
+              position = "0, 0";
+            })
         ];
 
         label = mkMerge [
           [
-            {
-              monitor = cfg.monitor;
-              color = colors.base05;
-              font_family = config.stylix.fonts.sansSerif.name;
-              font_size = "95";
-              halign = "center";
-              valign = "top";
-              position = "0, -75";
-              text = "$TIME";
-            }
-
-            {
-              monitor = cfg.monitor;
-              color = colors.base05;
-              font_family = config.stylix.fonts.sansSerif.name;
-              font_size = "22";
-              halign = "center";
-              valign = "top";
-              position = "0, -35";
-              text = ''cmd[update:1000] echo $(date +"%A, %B %d")'';
-            }
+            (shadows
+              // {
+                monitor = cfg.monitor;
+                color = colors.base05;
+                font_family = fonts.sansSerif.name;
+                font_size = "95";
+                halign = "center";
+                valign = "center";
+                position = "0, 325";
+                text = "$TIME";
+              })
+            (shadows
+              // {
+                monitor = cfg.monitor;
+                color = colors.base05;
+                font_family = fonts.sansSerif.name;
+                font_size = "22";
+                halign = "center";
+                valign = "center";
+                position = "0, 200";
+                text = ''cmd[update:1000] echo $(date +"%A, %B %d")'';
+              })
           ]
           (mkIf cfg.showBattery [
-            {
-              monitor = cfg.monitor;
-              color = colors.base08;
-              font_family = config.stylix.fonts.sansSerif.name;
-              font_size = "24";
-              halign = "center";
-              valign = "bottom";
-              position = "0, 60";
-              text = ''cmd[update:1000] hyprlock-batterystatus'';
-            }
+            (shadows
+              // {
+                monitor = cfg.monitor;
+                color = colors.base05;
+                font_family = fonts.sansSerif.name;
+                font_size = "22";
+                halign = "center";
+                valign = "center";
+                position = "0, -255";
+                text = ''cmd[update:1000] hyprlock-batterystatus'';
+              })
           ])
         ];
       };
