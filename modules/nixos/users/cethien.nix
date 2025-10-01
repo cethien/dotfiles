@@ -12,7 +12,7 @@ in {
       ["networkmanager" "wheel"]
       (mkIf config.hardware.uinput.enable ["uinput" "input"])
       (mkIf config.virtualisation.docker.enable ["docker"])
-      (mkIf config.virtualisation.libvirtd.enable ["libvirt"])
+      (mkIf config.virtualisation.libvirtd.enable ["libvirtd" "kvm"])
     ];
     hashedPassword = "$y$j9T$OqozgiTqzcpfQ9zbKkhvr0$i4lBjUVMF1xpGCOm57m/jXVWt0KVDh/evHHFq9mF7Z4";
     openssh.authorizedKeys.keys = mkIf config.services.openssh.enable [
