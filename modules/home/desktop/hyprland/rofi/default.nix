@@ -34,7 +34,7 @@ with lib; {
       bind = [
         "SUPER, Space, exec, rofi -show drun"
         "SUPER, Tab, exec, rofi -show window"
-        ''SUPER, escape, exec, rofi -show power-menu -modi "power-menu:rofi-power-menu"''
+        ''SUPER, escape, exec, rofi -show power-menu -modi "power-menu:rofi-power-menu --choices=suspend/reboot/shutdown"''
         "SUPER, N, exec, rofi-wifi-menu"
         "SUPER, B, exec, rofi-bluetooth"
         "SUPER, R, exec, rofi-wl-screenrec"
