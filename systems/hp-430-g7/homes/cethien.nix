@@ -61,8 +61,6 @@
     };
   };
 
-  home.packages = with pkgs; [castnow];
-
   deeznuts = {
     browser = {
       firefox-profile.containers = [

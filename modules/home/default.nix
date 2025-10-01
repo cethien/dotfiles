@@ -13,6 +13,7 @@
     ./essentials.nix
     ./utils.nix
     ./utils-net.nix
+    ./utils-remote.nix
     ./qol
     ./dev
     ./fun.nix

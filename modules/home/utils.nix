@@ -1,5 +1,19 @@
-{pkgs, ...}: {
-  config = {
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}: let
+  inherit (lib) mkIf mkOption types;
+in {
+  options.programs.utils = {
+    enable = mkOption {
+      type = types.bool;
+      default = true;
+    };
+  };
+
+  config = mkIf config.programs.utils.enable {
     home.packages = with pkgs; [
       zip
       unzip
