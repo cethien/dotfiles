@@ -20,7 +20,11 @@ in {
   };
 
   config = mkIf cfg.enable {
-    wayland.windowManager.hyprland.settings.bind = ["SUPER SHIFT, COMMA, exec, hypr_qalc"];
+    wayland.windowManager.hyprland.settings.bind = [
+      "SUPER SHIFT, COMMA, exec, ${
+        (pkgs.cethien.writeHyprLaunchTermScriptBin "qalc").bin
+      }"
+    ];
 
     home.file = {
       ".qalculate" = {
@@ -40,13 +44,6 @@ in {
       tealdeer
 
       libqalculate
-      (pkgs.writeShellScriptBin "hypr_qalc" ''
-        #!/usr/bin/env bash
-        hyprctl clients | grep -q 'class:.*qalc' &&
-          hyprctl dispatch focuswindow class:qalc ||
-          kitty --class qalc -e qalc &
-      '')
-
       # markdown reader
       glow
       mdcat

@@ -9,15 +9,11 @@ in {
   config = mkIf config.programs.bottom.enable {
     programs.tmux.resurrectPluginProcesses = ["btm"];
 
-    home.packages = [
-      (pkgs.writeShellScriptBin "hypr_btm" ''
-        #!/usr/bin/env bash
-        hyprctl clients | grep -q 'class:.*btm' &&
-          hyprctl dispatch focuswindow class:btm ||
-          kitty --class btm -e btm --basic &
-      '')
+    wayland.windowManager.hyprland.settings.bind = [
+      "SUPER SHIFT, P, exec, ${
+        (pkgs.cethien.writeHyprLaunchTermScriptBin "btm").bin
+      }"
     ];
-    wayland.windowManager.hyprland.settings.bind = ["SUPER SHIFT, P, exec, hypr_btm"];
 
     home.shellAliases = {
       top = "btm --basic";

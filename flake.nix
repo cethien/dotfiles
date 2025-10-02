@@ -51,7 +51,10 @@
       import nixpkgs {
         inherit system;
         config.allowUnfree = true;
-        overlays = [nur.overlays.default];
+        overlays = [
+          (import ./overlays/cethien.nix)
+          nur.overlays.default
+        ];
       };
   in
     eachSys

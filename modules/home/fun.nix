@@ -20,18 +20,14 @@ in {
         "fullscreen, class:^(cmatrix)$"
       ];
       bind = [
-        "SUPER SHIFT, Z, exec, hypr_matrix"
+        "SUPER SHIFT, Z, exec, ${
+          (pkgs.cethien.writeHyprLaunchTermScriptBin "cmatrix").bin
+        }"
       ];
     };
 
     home.packages = with pkgs; [
       cmatrix
-      (writeShellScriptBin "hypr_matrix" ''
-        #!/usr/bin/env bash
-        hyprctl clients | grep -q 'class:.*cmatrix' &&
-          hyprctl dispatch focuswindow class:cmatrix ||
-          kitty --class cmatrix -e cmatrix &
-      '')
       asciiquarium-transparent
       hackertyper
       ttysvr

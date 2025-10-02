@@ -21,23 +21,16 @@ in {
 
       bind = [
         "SUPER, M, exec, rofi-playerctl"
-        "SUPER SHIFT, M, exec, hypr_spot"
+        "SUPER SHIFT, M, exec, ${
+          (pkgs.cethien.writeHyprLaunchTermScriptBin "spotify_player").bin
+        }"
       ];
     };
 
     home.packages = with pkgs; [
+      # spotify # commented out since using spicetify
       playerctl
       (writeShellScriptBin "rofi-playerctl" (builtins.readFile ./rofi-playerctl.sh))
-
-      # spotify
-      (mkIf config.wayland.windowManager.hyprland.enable (
-        writeShellScriptBin "hypr_spot" ''
-          #!/usr/bin/env bash
-          hyprctl clients | grep -q 'class:.*Spotify' &&
-            hyprctl dispatch focuswindow class:Spotify ||
-            kitty --class Spotify -e spotify_player &
-        ''
-      ))
     ];
 
     programs.spicetify = let

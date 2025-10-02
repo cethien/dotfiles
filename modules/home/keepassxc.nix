@@ -59,13 +59,6 @@ in {
         #!/usr/bin/env bash
         command sudo -A "$@" 2>/dev/null || command sudo "$@"
       '')
-
-      (writeShellScriptBin "hypr_keepassxc" ''
-        #!/usr/bin/env bash
-        hyprctl clients | grep -q 'class:.*KeePassXC' &&
-          hyprctl dispatch focuswindow class:org.keepassxc.KeePassXC ||
-          keepassxc &
-      '')
     ];
 
     home.sessionVariables.SUDO_ASKPASS = "$HOME/.nix-profile/bin/sudo-askpass";
@@ -85,7 +78,9 @@ in {
       ];
 
       bind = [
-        "SUPER SHIFT, K, exec, hypr_keepassxc"
+        "SUPER SHIFT, K, exec, ${
+          (pkgs.cethien.writeHyprLaunchScriptBin "keepassxc" "keepassxc" "org.keepassxc.KeePassXC").bin
+        }"
       ];
     };
   };
