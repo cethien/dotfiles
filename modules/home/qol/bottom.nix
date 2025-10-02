@@ -23,6 +23,7 @@ in {
     programs.bottom = {
       settings = {
         flags = {
+          basic = true;
           temperature_type = "c"; # Celsius
           tree = true;
           cpu_as_percentage = true;
