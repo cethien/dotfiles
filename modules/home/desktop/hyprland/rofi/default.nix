@@ -38,8 +38,6 @@ with lib; {
         "SUPER, N, exec, rofi-wifi-menu"
         "SUPER, B, exec, rofi-bluetooth"
         "SUPER, R, exec, rofi-wl-screenrec"
-        "SUPER, comma, exec, rofi -show calc -modi calc -no-show-match -no-sort -no-bold -no-history"
-
         ''SUPER, PERIOD, exec, rofimoji --hidden-description --selector-args="-theme ~/.config/rofi/grid.rasi"''
       ];
     };

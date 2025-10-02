@@ -12,7 +12,6 @@ in {
       nautilus
       file-roller
       decibels
-      gnome-calculator
     ];
 
     programs = {
@@ -27,7 +26,9 @@ in {
       zathura.enable = true;
     };
 
-    wayland.windowManager.hyprland.settings.bind = ["SUPER SHIFT, E, exec, nautilus"];
+    wayland.windowManager.hyprland.settings.bind = [
+      "SUPER SHIFT, E, exec, nautilus"
+    ];
 
     xdg.mimeApps.defaultApplications = let
       categories = {

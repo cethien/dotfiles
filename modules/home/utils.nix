@@ -25,8 +25,6 @@ in {
       aria2 # download manager
       parted
 
-      libqalculate
-
       ffmpeg
       (writeShellScriptBin "ffmpeg-convert" (builtins.readFile ./ffmpeg-convert.sh))
 
