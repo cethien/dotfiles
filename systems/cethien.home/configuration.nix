@@ -5,6 +5,7 @@
   ];
 
   networking.hostName = "srv-home-01";
+  services.openssh.enable = true;
 
   users.users = {
     cethien.enable = true;

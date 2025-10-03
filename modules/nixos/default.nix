@@ -19,7 +19,6 @@ with lib; {
   ];
 
   services.openssh = {
-    enable = mkDefault true;
     settings = {
       PasswordAuthentication = false;
       PermitRootLogin = "no";
@@ -73,20 +72,6 @@ with lib; {
   };
 
   boot = {
-    # kernelPackages = mkDefault pkgs.linuxPackages_latest;
-
-    kernelParams = mkDefault [
-      "quiet"
-      "splash"
-      "loglevel=0"
-      "rd.systemd.show_status=false"
-      "systemd.show_status=false"
-      "vt.global_cursor_default=0"
-    ];
-    consoleLogLevel = mkDefault 0;
-    initrd.systemd.enable = mkDefault true;
-    initrd.verbose = mkDefault false;
-
     loader.efi.canTouchEfiVariables = mkDefault true;
     loader.grub = {
       enable = mkDefault true;
@@ -95,7 +80,6 @@ with lib; {
     };
 
     plymouth = {
-      enable = mkDefault true;
       themePackages = mkDefault (with pkgs; [
         nixos-bgrt-plymouth
         adi1090x-plymouth-themes
