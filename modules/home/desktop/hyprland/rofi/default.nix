@@ -20,7 +20,6 @@ with lib; {
     ];
 
     programs.rofi = {
-      package = pkgs.rofi-wayland;
       terminal = "${pkgs.kitty}/bin/kitty";
       extraConfig = {
         show-icons = true;
