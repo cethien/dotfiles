@@ -13,7 +13,7 @@ in {
 
     wayland.windowManager.hyprland.settings.bind = [
       "SUPER SHIFT, N, exec, ${
-        (pkgs.cethien.writeHyprLaunchTermScriptBin "wiremix").bin
+        (pkgs.cethien.hyprland.writeTermLaunchScriptBin "wiremix").bin
       }"
     ];
   };

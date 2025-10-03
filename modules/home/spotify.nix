@@ -22,7 +22,7 @@ in {
       bind = [
         "SUPER, M, exec, rofi-playerctl"
         "SUPER SHIFT, M, exec, ${
-          (pkgs.cethien.writeHyprLaunchTermScriptBin "spotify_player").bin
+          (pkgs.cethien.hyprland.writeTermLaunchScriptBin "spotify_player").bin
         }"
       ];
     };
