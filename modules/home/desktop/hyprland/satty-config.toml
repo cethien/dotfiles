@@ -1,0 +1,7 @@
+[general]
+output-filename = "$HOME/Pictures/Screenshots/$(date '+%Y%m%d-%H:%M:%S').png"
+copy-command = "wl-copy"
+actions-on-enter = ["save-to-clipboard"]
+initial-tool = "brush"
+primary-highlighter = "block"
+annotation-size-factor = 1

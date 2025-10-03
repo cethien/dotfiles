@@ -1,6 +1,0 @@
-[general]
-fullscreen = true
-initial-tool = "brush"
-annotation-size-factor = 1
-primary-highlighter = "block"
-output-filename = "$HOME/Pictures/Screenshots/$(date '+%Y%m%d-%H:%M:%S').png"

@@ -10,11 +10,5 @@ in {
     home.packages = with pkgs; [
       wiremix
     ];
-
-    wayland.windowManager.hyprland.settings.bind = [
-      "SUPER SHIFT, N, exec, ${
-        (pkgs.cethien.hyprland.writeTermLaunchScriptBin "wiremix").bin
-      }"
-    ];
   };
 }

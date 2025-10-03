@@ -20,18 +20,11 @@ in {
       exec-once = mkIf hypr ["spotify_player -d"];
 
       bind = [
-        "SUPER, M, exec, rofi-playerctl"
         "SUPER SHIFT, M, exec, ${
           (pkgs.cethien.hyprland.writeTermLaunchScriptBin "spotify_player").bin
         }"
       ];
     };
-
-    home.packages = with pkgs; [
-      # spotify # commented out since using spicetify
-      playerctl
-      (writeShellScriptBin "rofi-playerctl" (builtins.readFile ./rofi-playerctl.sh))
-    ];
 
     programs.spicetify = let
       spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.stdenv.hostPlatform.system};

@@ -9,13 +9,12 @@ in {
   config = mkIf config.programs.yazi.enable {
     programs.tmux.resurrectPluginProcesses = ["yazi"];
 
-    # xdg.mimeApps.defaultApplications."inode/directory" = ["yazi.desktop"];
-
-    # wayland.windowManager.hyprland.settings = {
-    #   bind = [
-    #     "SUPER, e, exec, $terminal --class yazi -e yazi"
-    #   ];
-    # };
+    xdg.mimeApps.defaultApplications."inode/directory" = ["yazi.desktop"];
+    wayland.windowManager.hyprland.settings = {
+      bind = [
+        "SUPER, e, exec, $terminal --class yazi -e yazi"
+      ];
+    };
 
     programs.yazi = {
       plugins = {

@@ -3,15 +3,13 @@
   config,
   pkgs,
   ...
-}:
-with lib; let
+}: let
+  inherit (lib) mkIf;
   enabled = config.wayland.windowManager.hyprland.enable;
 in {
   config = mkIf enabled {
     home.packages = with pkgs; [
-      nautilus
       file-roller
-      decibels
     ];
 
     programs = {
@@ -25,10 +23,6 @@ in {
       };
       zathura.enable = true;
     };
-
-    wayland.windowManager.hyprland.settings.bind = [
-      "SUPER SHIFT, E, exec, nautilus"
-    ];
 
     xdg.mimeApps.defaultApplications = let
       categories = {
@@ -86,11 +80,6 @@ in {
             "application/x-rar"
             "application/x-cpio"
           ];
-        };
-
-        files = {
-          desktop = "org.gnome.Nautilus.desktop";
-          types = ["inode/directory"];
         };
       };
 

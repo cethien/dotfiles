@@ -3,24 +3,24 @@
   pkgs,
   config,
   ...
-}:
-with lib; {
+}: let
+  inherit (lib) mkIf;
+in {
   config = mkIf config.programs.rofi.enable {
     home.packages = with pkgs; [
       rofimoji
-
       rofi-power-menu
       rofi-bluetooth
 
       libnotify
-      (writeShellScriptBin "rofi-wifi-menu" (builtins.readFile ./rofi-wifi-menu.sh))
-
+      (writeShellScriptBin "rofi-wifi" (builtins.readFile ./rofi-wifi.sh))
+      playerctl
+      (writeShellScriptBin "rofi-audio" (builtins.readFile ./rofi-audio.sh))
       wl-screenrec
-      (writeShellScriptBin "rofi-wl-screenrec" (builtins.readFile ./rofi-wl-screenrec.sh))
+      (writeShellScriptBin "rofi-screenrecord" (builtins.readFile ./rofi-screenrecord.sh))
     ];
-
     programs.rofi = {
-      terminal = "${pkgs.kitty}/bin/kitty";
+      terminal = "kitty";
       extraConfig = {
         show-icons = true;
       };
@@ -34,9 +34,10 @@ with lib; {
         "SUPER, Space, exec, rofi -show drun"
         "SUPER, Tab, exec, rofi -show window"
         ''SUPER, escape, exec, rofi -show power-menu -modi "power-menu:rofi-power-menu --choices=suspend/reboot/shutdown"''
+        "SUPER, M, exec, rofi-audio"
         "SUPER, N, exec, rofi-wifi-menu"
         "SUPER, B, exec, rofi-bluetooth"
-        "SUPER, R, exec, rofi-wl-screenrec"
+        "SUPER, R, exec, rofi-screenrecord"
         ''SUPER, PERIOD, exec, rofimoji --hidden-description --selector-args="-theme ~/.config/rofi/grid.rasi"''
       ];
     };

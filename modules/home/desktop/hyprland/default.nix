@@ -7,11 +7,11 @@
   inherit (lib) mkIf mkDefault mkOption types;
 in {
   imports = [
-    ./rofi
+    ./rofi.nix
     ./common-gui.nix
     ./hypridle.nix
     ./hyprlock.nix
-    ./hyprshot
+    ./screenshot.nix
     ./mako.nix
   ];
 
