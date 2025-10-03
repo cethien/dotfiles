@@ -44,6 +44,8 @@
     ];
   };
 
+  home.packages = [pkgs.simple-scan];
+
   programs = {
     kitty.enable = true;
     zen-browser.enable = true;

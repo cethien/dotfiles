@@ -10,6 +10,7 @@ in {
     isNormalUser = true;
     extraGroups = mkMerge [
       ["networkmanager" "wheel"]
+      (mkIf config.hardware.sane.enable ["scanner"])
       (mkIf config.hardware.uinput.enable ["uinput" "input"])
       (mkIf config.virtualisation.docker.enable ["docker"])
       (mkIf config.virtualisation.libvirtd.enable ["libvirtd" "kvm"])

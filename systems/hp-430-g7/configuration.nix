@@ -2,19 +2,34 @@
   imports = [
     ../../modules/nixos
   ];
-  networking.hostName = "hp-430-g7";
-  boot.loader.grub.device = "/dev/nvme0n1";
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.plymouth.theme = "polaroid";
 
-  networking.networkmanager.wifi.backend = "iwd";
+  boot = {
+    kernelPackages = pkgs.linuxPackages_latest;
+    kernelParams = [
+      "quiet"
+      "splash"
+      "loglevel=0"
+      "rd.systemd.show_status=false"
+      "systemd.show_status=false"
+      "vt.global_cursor_default=0"
+    ];
 
-  environment.sessionVariables = {
-    LIBVA_DRIVER_NAME = "iHD";
+    loader.grub.device = "/dev/nvme0n1";
+
+    consoleLogLevel = 0;
+    initrd.systemd.enable = true;
+    initrd.verbose = false;
+    plymouth.enable = true;
+    plymouth.theme = "polaroid";
   };
 
-  services.openssh.enable = false;
-  services.printing.enable = true;
+  networking.hostName = "hp-430-g7";
+  networking.networkmanager.wifi.backend = "iwd";
+
+  # scanner
+  hardware.sane.enable = true;
+  hardware.sane.extraBackends = [pkgs.hplip];
+
   hardware = {
     enableRedistributableFirmware = true;
     graphics = {
@@ -25,14 +40,19 @@
     };
     bluetooth.enable = true;
   };
+  environment.sessionVariables = {
+    LIBVA_DRIVER_NAME = "iHD";
+  };
+
   virtualisation.docker.enable = true;
-  users.users.cethien.enable = true;
+  virtualisation.libvirtd.enable = true;
 
   deeznuts = {
     desktop = {
       autologinUser = "cethien";
       hyprland.enable = true;
     };
-    audio.enable = true;
   };
+
+  users.users.cethien.enable = true;
 }
