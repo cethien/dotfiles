@@ -136,12 +136,12 @@
       gdrive = {
         name = "Google Drive";
         exec = ''${quteCmd} "https://drive.google.com"'';
-        icon = "gdrive";
+        icon = "google-drive";
       };
       gcal = {
         name = "Google Calendar";
         exec = ''${quteCmd} "https://calendar.google.com"'';
-        icon = "gcalendar";
+        icon = "google-calendar";
       };
       gmail = {
         name = "Google Mail";
