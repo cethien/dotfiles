@@ -7,21 +7,23 @@
   config = lib.mkIf config.services.mako.enable {
     services.mako = {
       settings = {
-        "actionable=true" = {
-          anchor = "top-left";
+        "category=sysinfo" = {
+          anchor = "top-center";
+          height = 200;
+          width = 1280;
         };
         actions = true;
-        anchor = "top-center";
+        anchor = "top-left";
         border-radius = 4;
         default-timeout = 3000;
         ignore-timeout = false;
         height = 400;
         icons = true;
         layer = "top";
-        margin = 12;
-        padding = 8;
+        margin = 8;
+        padding = 16;
         markup = true;
-        width = 400;
+        width = 600;
       };
     };
 

@@ -1,46 +1,67 @@
 #!/usr/bin/env bash
 
-CPU=$(grep 'cpu ' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {print int(usage) "%"}')
+SEPARATOR="─"
+SPACE="                          "
+SECTIONS=()
 
-RAM=$(free -h | awk '/Mem:/ {print $3 "/" $2}')
+TIME="$(date "+%H:%M")"
+DATE="$(date "+%a, %d. %B %Y")"
+SECTIONS+=(
+  "${DATE} ${SEPARATOR} ${TIME}"
+)
 
+CPU="󰍛 CPU: $(awk 'NR==1 {usage=($2+$4)*100/($2+$4+$5); printf "%d%%", usage}' /proc/stat)"
+RAM="󰍛 RAM:  $(free -h | awk '/Mem:/ {print $3 "/" $2}')"
+
+BAT_PERCENTAGE=$(cat /sys/class/power_supply/BAT0/capacity)
+BAT_STATUS=$(cat /sys/class/power_supply/BAT0/status)
+
+BAT_ICONS=("󰂃" "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰁹")
+BAT_CHARGING_ICON="󰂄"
+
+ICON_INDEX=$((BAT_PERCENTAGE / 10))
+[ "$ICON_INDEX" -ge "${#BAT_ICONS[@]}" ] && ICON_INDEX=$((${#BAT_ICONS[@]} - 1))
+BAT_ICON=${BAT_ICONS[ICON_INDEX]}
+
+BAT_LABEL=$([ "$BAT_STATUS" = "Charging" ] && echo "${BAT_CHARGING_ICON} ${BAT_PERCENTAGE}% (Charging)" || echo "${BAT_ICON} ${BAT_PERCENTAGE}%")
+
+SECTIONS+=("$BAT_LABEL $SEPARATOR $CPU $SEPARATOR $RAM")
+
+NET_LABEL="󰖪 Disconnected"
 IFACE=$(ip route | awk '/^default/ {print $5; exit}')
+
 if [ -n "$IFACE" ]; then
   if [[ "$IFACE" == wl* ]]; then
+    SSID=""
+    SIGNAL=0
     if command -v nmcli &>/dev/null; then
-      SSID=$(nmcli -t -f active,ssid dev wifi | awk -F: '$1=="yes"{print $2}')
+      read SSID SIGNAL <<<$(nmcli -t -f active,ssid,signal dev wifi | awk -F: '$1=="yes"{print $2, $3}')
+    fi
+
+    ICON="󰤯"
+    if [ "$SIGNAL" -ge 76 ]; then
+      ICON="󰤥"
+    elif [ "$SIGNAL" -ge 51 ]; then
+      ICON="󰤢"
+    elif [ "$SIGNAL" -ge 26 ]; then
+      ICON="󰤟"
     fi
 
     if [ -n "$SSID" ]; then
-      NET_ICON="󰖩" # Wi-Fi
-      NET_LABEL="${NET_ICON} ${SSID}"
+      NET_LABEL="${ICON} $SSID"
     else
-      NET_ICON="󰖩"
-      NET_LABEL="${NET_ICON} ${IFACE}"
+      NET_LABEL="󰖩 $IFACE"
     fi
   elif [[ "$IFACE" == en* ]]; then
-    NET_ICON="󰈀" # Ethernet
-    NET_LABEL="${NET_ICON} ${IFACE}"
+    NET_LABEL="󰈀 $IFACE" # Ethernet
   else
-    NET_ICON="󰓢" # Generic (USB, VPN, etc.)
-    NET_LABEL="${NET_ICON} ${IFACE}"
+    NET_LABEL="󰓢 $IFACE" # Generic
   fi
-else
-  NET_LABEL="󰖪 Disconnected"
 fi
 
-BAT_PERCENTAGE=$(cat /sys/class/power_supply/BAT0/capacity)
-BAT_ICONS=("󰂃" "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰁹")
-BAT_CHARGING_ICON="󰂄"
-ICON_INDEX=$((BAT_PERCENTAGE / 10))
-BAT_ICON=${BAT_ICONS[ICON_INDEX]}
-BAT_LABEL="${BAT_ICON} ${BAT_PERCENTAGE}%"
-if [ "$(cat /sys/class/power_supply/BAT0/status)" = "Charging" ]; then
-  BAT_LABEL="${BAT_CHARGING_ICON} ${BAT_PERCENTAGE}% (Charging)"
-fi
+SECTIONS+=("${NET_LABEL}")
 
-notify-send -u low -t 5000 "󰃰 System" "\
-$(date '+%a, %d. %B %Y • %H:%M')
-󰍛 CPU: ${CPU} • 󰍛 RAM: ${RAM}
-${NET_LABEL}
-${BAT_LABEL}"
+PANEL=$(printf "%s$SPACE" "${SECTIONS[@]}")
+PANEL="${PANEL%$SPACE}"
+
+notify-send -u low -h string:category:sysinfo -t 5000 "$PANEL"
