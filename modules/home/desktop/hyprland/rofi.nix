@@ -35,7 +35,7 @@ in {
         "SUPER, Tab, exec, rofi -show window"
         ''SUPER, escape, exec, rofi -show power-menu -modi "power-menu:rofi-power-menu --choices=suspend/reboot/shutdown"''
         "SUPER, M, exec, rofi-audio"
-        "SUPER, N, exec, rofi-wifi-menu"
+        "SUPER, N, exec, rofi-wifi"
         "SUPER, B, exec, rofi-bluetooth"
         "SUPER, R, exec, rofi-screenrecord"
         ''SUPER, PERIOD, exec, rofimoji --hidden-description --selector-args="-theme ~/.config/rofi/grid.rasi"''
