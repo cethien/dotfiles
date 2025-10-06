@@ -7,14 +7,14 @@
   inherit (lib) mkIf;
 in {
   config = mkIf config.wayland.windowManager.hyprland.enable {
-    home.file.".config/satty/config.toml".source = ./satty-config.toml;
+    home.packages = [pkgs.gradia];
+
     wayland.windowManager.hyprland.settings.bind = let
-      base_cmd = "${pkgs.hyprshot}/bin/hyprshot --silent --clipboard-only --raw";
-      satty_cmd = "${pkgs.satty}/bin/satty -f - --config ${config.home.homeDirectory}/.config/satty/config.toml";
+      cmd = mode: "${pkgs.hyprshot}/bin/hyprshot -z -o ~/Pictures/Screenshots -m ${mode}";
     in [
-      ", Print, exec, ${base_cmd} -m output | ${satty_cmd}"
-      "ALT, Print, exec, ${base_cmd} -m window | ${satty_cmd}"
-      "SUPER SHIFT, S, exec, ${base_cmd} -m region | ${satty_cmd}"
+      ", Print, exec, ${cmd "output"} -m active"
+      "ALT, Print, exec, ${cmd "window"} -m active"
+      "SUPER SHIFT, S, exec, ${cmd "region"}"
     ];
   };
 }
