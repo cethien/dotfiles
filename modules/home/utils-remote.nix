@@ -19,6 +19,7 @@ in {
       tigervnc
 
       castnow
+      localsend
       jocalsend
     ];
   };
