@@ -48,19 +48,16 @@
 
   programs = {
     kitty.enable = true;
-    zen-browser.enable = true;
-    qutebrowser.enable = true;
-    keepassxc.enable = true;
-    spotify.enable = true;
-    discord.enable = true;
-
-    devSuite.extras = ["containers"];
     chromium.enable = true;
+    keepassxc.enable = true;
+    devSuite.extras = ["containers"];
     distrobox.enable = true;
     creativeSuite = {
       enable = true;
       extras = ["mixxx"];
     };
+    spotify.enable = true;
+    discord.enable = true;
   };
 
   deeznuts = {
@@ -69,8 +66,6 @@
         "potato-squad.de"
         "creative-europe.net"
       ];
-
-      defaultBrowser = "qutebrowser";
     };
   };
 }

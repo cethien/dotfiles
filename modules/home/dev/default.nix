@@ -9,7 +9,6 @@
 in {
   imports = [
     ./git.nix
-    ./chromium.nix
   ];
 
   options.programs.devSuite = {

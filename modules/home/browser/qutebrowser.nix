@@ -121,40 +121,5 @@
 
       loadAutoconfig = true;
     };
-
-    xdg.desktopEntries = let
-      quteCmd = "qutebrowser --target window";
-    in {
-      chatgpt = {
-        name = "ChatGPT";
-        exec = ''${quteCmd} "https://chatgpt.com"'';
-        icon = "chatgpt";
-      };
-      whatsapp-web = {
-        name = "WhatsApp";
-        exec = ''${quteCmd} "https://web.whatsapp.com"'';
-        icon = "whatsapp";
-      };
-      youtube = {
-        name = "YouTube";
-        exec = ''${quteCmd} "https://youtube.com"'';
-        icon = "youtube";
-      };
-      gdrive = {
-        name = "Google Drive";
-        exec = ''${quteCmd} "https://drive.google.com"'';
-        icon = "google-drive";
-      };
-      gcal = {
-        name = "Google Calendar";
-        exec = ''${quteCmd} "https://calendar.google.com"'';
-        icon = "google-calendar";
-      };
-      gmail = {
-        name = "Google Mail";
-        exec = ''${quteCmd} "https://mail.google.com"'';
-        icon = "gmail";
-      };
-    };
   };
 }

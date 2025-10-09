@@ -5,7 +5,6 @@
   ...
 }: let
   inherit (lib) elem mkIf;
-  cfg = config.programs.firefox;
   hypr = elem "firefox" config.wayland.windowManager.hyprland.autostart;
 
   name = "${config.home.username}";
@@ -26,7 +25,7 @@
     extensions.force = true;
   };
 in {
-  config = mkIf cfg.enable {
+  config = mkIf config.programs.firefox.enable {
     programs.firefox = {
       inherit (shared) languagePacks nativeMessagingHosts;
       profiles."${name}" = firefoxProfile;

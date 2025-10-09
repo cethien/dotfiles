@@ -124,7 +124,7 @@
             home-manager = {
               # useGlobalPkgs = true;
               useUserPackages = true;
-              backupFileExtension = "bak-hm-$(date +%Y%m%d_%H%M%S)";
+              backupFileExtension = "hm-bak";
 
               users.cethien =
                 ./systems/hp-430-g7/homes/cethien.nix;
