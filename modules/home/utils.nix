@@ -24,9 +24,16 @@ in {
       lynx # term browser
       aria2 # download manager
       parted
+      openssl
 
       ffmpeg
       (writeShellScriptBin "ffmpeg-convert" (builtins.readFile ./ffmpeg-convert.sh))
+
+      (writeShellScriptBin "switch" (builtins.readFile ./switch.sh))
+      (writeShellScriptBin "update" (builtins.readFile ./update.sh))
+      (writeShellScriptBin "cleanup" (builtins.readFile ./cleanup.sh))
+      (writeShellScriptBin "init" (builtins.readFile ./init.sh))
+      (writeShellScriptBin "clip" (builtins.readFile ./clip.sh))
 
       taskwarrior-tui
       timewarrior
