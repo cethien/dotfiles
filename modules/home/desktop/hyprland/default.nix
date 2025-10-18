@@ -36,17 +36,17 @@ in {
 
   config = mkIf config.wayland.windowManager.hyprland.enable {
     home.packages = with pkgs; [
+      playerctl
       brightnessctl
-      hyprpicker
-      udiskie
       wl-clipboard
     ];
-    services.clipse.enable = true;
     services.hyprpaper.enable = true;
     services.mako.enable = true;
     programs.rofi.enable = true;
 
     wayland.windowManager.hyprland.settings = {
+      exec-once = ["${pkgs.udiskie}/bin/udiskie"];
+
       monitor = mkDefault [
         "eDP-1, 1920x1080@60, 0x0, 1"
       ];
@@ -55,9 +55,6 @@ in {
         "1, monitor:eDP-1, persistent:true, default:true"
         "2, monitor:eDP-1, persistent:true, default:false"
         "3, monitor:eDP-1, persistent:true, default:false"
-        "4, monitor:eDP-1, persistent:true, default:false"
-        "5, monitor:eDP-1, persistent:true, default:false"
-        "6, monitor:eDP-1, persistent:true, default:false"
       ];
 
       xwayland = {
@@ -82,6 +79,7 @@ in {
       dwindle = {
         pseudotile = true;
         preserve_split = true;
+        force_split = 1;
       };
 
       decoration = {
@@ -138,15 +136,14 @@ in {
       input = {
         kb_layout = "de";
         kb_variant = "nodeadkeys";
-        follow_mouse = -1;
+        follow_mouse = 2;
       };
 
       "$resizeIncrement" = 25;
 
       bind = [
-        "SUPER SHIFT, C, exec, hyprpicker -a"
+        "SUPER SHIFT, C, exec, ${pkgs.hyprpicker}/bin/hyprpicker -a"
 
-        "SUPER SHIFT, V, exec, $terminal --class clipse -e clipse"
         # "SUPER, M, exit"
 
         "ALT, F4, killactive"
@@ -206,12 +203,6 @@ in {
         "SUPER ALT, left, resizeactive, -$resizeIncrement 0"
         "SUPER ALT, up, resizeactive, 0 -$resizeIncrement"
         "SUPER ALT, down, resizeactive, 0 $resizeIncrement"
-
-        ", XF86MonBrightnessUp, exec, brightnessctl s 5%+"
-        ", XF86MonBrightnessDown, exec, brightnessctl s 5%-"
-
-        ", XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.2 @DEFAULT_AUDIO_SINK@ 5%+"
-        ", XF86AudioLowerVolume, exec, wpctl set-volume -l 1.2 @DEFAULT_AUDIO_SINK@ 5%-"
       ];
 
       bindm = [
@@ -220,15 +211,17 @@ in {
       ];
 
       bindl = [
+        ", XF86MonBrightnessUp, exec, brightnessctl s 5%+"
+        ", XF86MonBrightnessDown, exec, brightnessctl s 5%-"
+
+        ", XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.2 @DEFAULT_AUDIO_SINK@ 5%+"
+        ", XF86AudioLowerVolume, exec, wpctl set-volume -l 1.2 @DEFAULT_AUDIO_SINK@ 5%-"
+        ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+        ", XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+
         ", XF86AudioPlay, exec, playerctl play-pause"
         ", XF86AudioNext, exec, playerctl next"
         ", XF86AudioPrev, exec, playerctl previous"
-        ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-
-        ", XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
-      ];
-      exec-once = [
-        "udiskie"
       ];
     };
   };
