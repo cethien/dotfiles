@@ -10,7 +10,6 @@ in {
   imports = [
     ./firefox.nix
     ./zen-browser.nix
-    ./picture-in-picture.nix
     ./qutebrowser.nix
     ./chromium.nix
   ];
@@ -72,37 +71,86 @@ in {
       mimeTypes);
 
     xdg.desktopEntries = let
-      quteCmd = url: "chromium --app=${url}";
+      cmd = url: "chromium --app=${url}";
     in {
       chatgpt = {
         name = "ChatGPT";
-        exec = "${quteCmd "https://chatgpt.com"}";
+        exec = "${cmd "https://chatgpt.com"}";
         icon = "chatgpt";
       };
-      whatsapp-web = {
+
+      discord = {
+        name = "Discord";
+        exec = "${cmd "https://discord.com/channels/@me"}";
+        icon = "discord";
+      };
+
+      whatsapp = {
         name = "WhatsApp";
-        exec = "${quteCmd "https://web.whatsapp.com"}";
+        exec = "${cmd "https://web.whatsapp.com"}";
         icon = "whatsapp";
+      };
+      instagram = {
+        name = "Instagram";
+        exec = "${cmd "https://instagram.com"}";
+        icon = "instagram";
       };
       youtube = {
         name = "YouTube";
-        exec = "${quteCmd "https://youtube.com"}";
+        exec = "${cmd "https://youtube.com"}";
         icon = "youtube";
+      };
+
+      gmaps = {
+        name = "Google Maps";
+        exec = "${cmd "https://maps.google.com"}";
+        icon = "google-maps";
+      };
+      gforms = {
+        name = "Google Forms";
+        exec = "${cmd "https://docs.google.com/forms"}";
+        icon = "google-forms";
+      };
+      gdocs = {
+        name = "Google Docs";
+        exec = "${cmd "https://docs.google.com/document"}";
+        icon = "google-docs";
+      };
+      gsheets = {
+        name = "Google Sheets";
+        exec = "${cmd "https://docs.google.com/spreadsheets"}";
+        icon = "google-sheets";
+      };
+      gslides = {
+        name = "Google Slides";
+        exec = "${cmd "https://docs.google.com/presentation"}";
+        icon = "google-slides";
       };
       gdrive = {
         name = "Google Drive";
-        exec = "${quteCmd "https://drive.google.com"}";
+        exec = "${cmd "https://drive.google.com"}";
         icon = "google-drive";
+      };
+      gkeep = {
+        name = "Google Keep";
+        exec = "${cmd "https://keep.google.com"}";
+        icon = "google-keep";
       };
       gcal = {
         name = "Google Calendar";
-        exec = "${quteCmd "https://calendar.google.com"}";
+        exec = "${cmd "https://calendar.google.com"}";
         icon = "google-calendar";
       };
       gmail = {
         name = "Google Mail";
-        exec = "${quteCmd "https://mail.google.com"}";
+        exec = "${cmd "https://mail.google.com"}";
         icon = "gmail";
+      };
+
+      "cethien.home" = {
+        name = "cethien.home";
+        icon = "home";
+        exec = "${cmd "https://cethien.home"}";
       };
     };
   };
