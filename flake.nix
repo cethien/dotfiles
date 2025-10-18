@@ -78,7 +78,7 @@
         (inputs.nvf.lib.neovimConfiguration {
           inherit pkgs;
           modules = [
-            {config = import ./modules/home/programs/neovim/nvf-config.nix {inherit pkgs;};}
+            {config = import ./modules/home/neovim/nvf-config.nix {inherit pkgs;};}
           ];
         }).neovim;
     })
