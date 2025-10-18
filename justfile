@@ -30,7 +30,7 @@ alias fmt := format
     switch --flake .#{{home}} -b bak-hm-$(date +%Y%m%d_%H%M%S)
 
 @switch: clear
-  sudo nixos-rebuild switch --flake .#{{system}}
+  sudo -A nixos-rebuild switch --flake .#{{system}}
 
 @install profile dest: clear
   nix run github:nix-community/nixos-anywhere -- \
