@@ -22,7 +22,7 @@ in {
   config = mkIf cfg.enable {
     wayland.windowManager.hyprland.settings.bind = [
       "SUPER SHIFT, COMMA, exec, ${
-        (pkgs.cethien.hyprland.writeTermLaunchScriptBin "qalc").bin
+        (pkgs.cethien.writeHyprlandTermLaunchScriptBin "qalc").bin
       }"
     ];
 
@@ -54,11 +54,6 @@ in {
 
       termshot
       slides
-
-      (writeShellScriptBin "update" (builtins.readFile ./scripts/update.sh))
-      (writeShellScriptBin "rebuild" (builtins.readFile ./scripts/rebuild.sh))
-      (writeShellScriptBin "cleanup" (builtins.readFile ./scripts/cleanup.sh))
-      (writeShellScriptBin "init" (builtins.readFile ./scripts/init.sh))
     ];
 
     programs = {

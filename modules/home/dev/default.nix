@@ -35,7 +35,7 @@ in {
     home.shellAliases = mkIf containers {lzd = "lazydocker";};
     programs.lazydocker.enable = containers;
 
-    programs.tmux.resurrectPluginProcesses = ["dblab" "lazydocker"];
+    programs.tmux.resurrectPluginProcesses = ["dblab" "lazydocker" "gh-dash"];
 
     programs = {
       gh-dash.enable = true;

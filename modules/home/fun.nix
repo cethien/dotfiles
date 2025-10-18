@@ -21,7 +21,7 @@ in {
       ];
       bind = [
         "SUPER SHIFT, Z, exec, ${
-          (pkgs.cethien.hyprland.writeTermLaunchScriptBin "cmatrix").bin
+          (pkgs.cethien.writeHyprlandTermLaunchScriptBin "cmatrix").bin
         }"
       ];
     };
