@@ -110,7 +110,7 @@ in {
               ring_color_vkey = colors.base0D;
               ring_color_verify = colors.base0B;
 
-              placeholder_text = "passwd";
+              placeholder_text = "pwd";
 
               halign = "center";
               valign = "center";
