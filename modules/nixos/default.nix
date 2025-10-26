@@ -2,8 +2,9 @@
   pkgs,
   lib,
   ...
-}:
-with lib; {
+}: let
+  inherit (lib) mkDefault;
+in {
   imports = [
     ./users/cethien.nix
 
@@ -65,19 +66,12 @@ with lib; {
     };
   };
 
-  boot = {
-    loader.efi.canTouchEfiVariables = mkDefault true;
-    loader.grub = {
+  boot.loader = {
+    efi.canTouchEfiVariables = mkDefault true;
+    grub = {
       enable = mkDefault true;
       efiSupport = mkDefault true;
       timeoutStyle = mkDefault "hidden";
-    };
-
-    plymouth = {
-      themePackages = mkDefault (with pkgs; [
-        nixos-bgrt-plymouth
-      ]);
-      theme = mkDefault "bgrt";
     };
   };
 }

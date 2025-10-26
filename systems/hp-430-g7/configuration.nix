@@ -13,22 +13,32 @@
 
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
+    loader.grub.device = "/dev/nvme0n1";
+
+    plymouth = {
+      enable = true;
+      theme = "polaroid";
+      themePackages = with pkgs; [
+        (adi1090x-plymouth-themes.override {
+          selected_themes = ["polaroid"];
+        })
+      ];
+    };
+
+    # Enable "Silent boot"
+    consoleLogLevel = 3;
+    initrd.verbose = false;
     kernelParams = [
       "quiet"
       "splash"
-      "loglevel=0"
-      "rd.systemd.show_status=false"
-      "systemd.show_status=false"
-      "vt.global_cursor_default=0"
+      "boot.shell_on_fail"
+      "udev.log_priority=3"
+      "rd.systemd.show_status=auto"
     ];
-
-    loader.grub.device = "/dev/nvme0n1";
-
-    consoleLogLevel = 0;
-    initrd.systemd.enable = true;
-    initrd.verbose = false;
-    plymouth.enable = true;
-    plymouth.theme = "polaroid";
+    # Hide the OS choice for bootloaders.
+    # It's still possible to open the bootloader list by pressing any key
+    # It will just not appear on screen unless a key is pressed
+    loader.timeout = 0;
   };
 
   networking.hostName = "hp-430-g7";
