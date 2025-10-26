@@ -12,6 +12,7 @@
           height = 200;
           width = 1280;
         };
+
         actions = true;
         anchor = "top-left";
         border-radius = 4;
@@ -27,13 +28,17 @@
       };
     };
 
-    home.packages = with pkgs; [
-      (writeShellScriptBin "notify-info" (builtins.readFile ./notify-info.sh))
-    ];
-
     wayland.windowManager.hyprland.settings = {
       bind = [
-        "SUPER, p, exec, notify-info"
+        "SUPER, p, exec, ${
+          pkgs.writeShellScriptBin "notify-info" (builtins.readFile ./notify-info.sh)
+        }/bin/notify-info"
+      ];
+
+      exec-once = [
+        "${
+          pkgs.writeShellScriptBin "notify-battery" (builtins.readFile ./notify-battery.sh)
+        }/bin/notify-battery"
       ];
     };
   };
