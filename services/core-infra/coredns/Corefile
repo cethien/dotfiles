@@ -1,10 +1,18 @@
 .:53 {
     hosts {
-        192.168.1.50 openproject.cethien.home 
+        192.168.1.50 weclapp-admin.cethien.home 
+        192.168.1.50 weclapp.cethien.home 
+        192.168.1.50 vaultwarden.cethien.home 
+        
+        192.168.1.50 git.cethien.home 
+        
         192.168.1.50 semaphore.cethien.home 
+        192.168.1.50 cloudbeaver.cethien.home 
+        
         192.168.1.50 grafana.cethien.home 
         192.168.1.50 loki.cethien.home 
         192.168.1.50 prometheus.cethien.home 
+        
         192.168.1.50 cethien.home 
         fallthrough
     }

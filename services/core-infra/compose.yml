@@ -8,7 +8,7 @@ services:
       - dns
       - prometheus
     configs:
-      - source: coredns-Corefile
+      - source: coredns-Corefile7
         target: /Corefile
     deploy:
       mode: replicated
@@ -19,10 +19,10 @@ services:
         homepage.group: infra
         homepage.name: coreDNS
         homepage.icon: coredns.png
-        homepage.description: RESOLVE ALL THE STUFF!
+        homepage.description: resolve deez nuts
 
   blocky:
-    image: ghcr.io/0xerr0r/blocky:latest
+    image: ghcr.io/0xerr0r/blocky:v0.27.0
     environment:
       TZ: Europe/Berlin
     configs:
@@ -41,14 +41,14 @@ services:
       placement:
         constraints: [node.role == manager]
       labels:
-        homepage.group: infra
-        homepage.name: blocky
-        homepage.icon: blocky.png
-        homepage.description: FILTER ALL THE CRAP!
-
         caddy: doh.cethien.home
         caddy.reverse_proxy: /dns-query https://{{.Service.Name}}:8443
         caddy.reverse_proxy.transport.http.tls_insecure_skip_verify: "true"
+
+        homepage.group: infra
+        homepage.name: blocky
+        homepage.icon: blocky.png
+        homepage.description: filter deez nuts
 
   caddy-docker-proxy:
     image: lucaslorentz/caddy-docker-proxy:ci-alpine
@@ -73,7 +73,7 @@ services:
         homepage.group: infra
         homepage.name: caddy
         homepage.icon: caddy.png
-        homepage.description: proxy all the services!
+        homepage.description: proxy deez nuts
 
 volumes:
   caddy-data:
@@ -82,7 +82,7 @@ volumes:
     name: admin_homepage_config
 
 configs:
-  coredns-Corefile:
+  coredns-Corefile7:
     file: ./coredns/Corefile
 
   blocky-config.yml:

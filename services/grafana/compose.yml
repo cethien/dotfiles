@@ -23,7 +23,13 @@ services:
         homepage.name: grafana
         homepage.icon: grafana.png
         homepage.href: https://grafana.cethien.home/
-        homepage.description: MONITOR ALL YOUR STUFF!
+        homepage.description: visualize deez nuts
+
+        homepage.widget.type: grafana
+        homepage.widget.version: 2
+        homepage.widget.url: https://grafana.cethien.home
+        homepage.widget.username: cethien
+        homepage.widget.password: I4yhwdvlb5G2U2JqqTgI37tQ
 
   loki:
     image: grafana/loki:latest
@@ -47,7 +53,7 @@ services:
         homepage.group: monitoring
         homepage.name: loki
         homepage.icon: loki.png
-        homepage.description: MONITOR ALL YOUR LOGS! TO PUT IT INTO GRAFANA!
+        homepage.description: log deez nuts
 
   prometheus:
     image: prom/prometheus:latest
@@ -72,7 +78,10 @@ services:
         homepage.name: prometheus
         homepage.icon: prometheus.png
         homepage.href: https://prometheus.cethien.home/
-        homepage.description: MONITOR ALL YOUR STUFF! TO PUT IT INTO GRAFANA!
+        homepage.description: monitor deez nuts
+
+        homepage.widget.type: prometheus
+        homepage.widget.url: https://prometheus.cethien.home
 
 configs:
   loki.yaml:
