@@ -1,0 +1,44 @@
+services:
+  gitea:
+    image: docker.gitea.com/gitea:1.24.6
+    environment:
+      USER_UID: 1000
+      USER_GID: 1000
+      GITEA__APP_NAME: "cethien's projects"
+      GITEA__ui.meta__DESCRIPTION: "source control deez nuts"
+      GITEA__ROOT_URL: https://git.cethien.home
+      GITEA__repository__DISABLE_HTTP_GIT: "true"
+      GITEA__repository__ENABLE_PUSH_CREATE_USER: "true"
+      GITEA__repository__ENABLE_PUSH_CREATE_ORG: "true"
+      GITEA__service__DISABLE_REGISTRATION: "true"
+      GITEA__database__DB_TYPE: sqlite3
+      GITEA__database__PATH: /data/gitea/gitea.db
+    volumes:
+      - gitea-data:/data
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - 2222:22
+    networks:
+      - caddy
+    deploy:
+      mode: replicated
+      replicas: 1
+      labels:
+        caddy: git.cethien.home
+        caddy.tls: internal
+        caddy.reverse_proxy: "{{ upstreams 3000 }}"
+
+        homepage.group: services
+        homepage.name: gitea
+        homepage.icon: gitea.png
+        homepage.href: https://git.cethien.home
+        homepage.description: source control deez nuts
+
+volumes:
+  gitea-data:
+    name: gitea_data
+
+networks:
+  caddy:
+    name: caddy_net
+    external: true

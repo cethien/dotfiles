@@ -2,6 +2,7 @@
   imports = [
     ../../modules/nixos
     ../../services/core-infra
+    ../../services/git-server
   ];
 
   networking.hostName = "srv-home-01";
