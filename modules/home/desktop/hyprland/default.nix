@@ -62,9 +62,9 @@ in {
       };
 
       general = {
-        gaps_in = 6;
-        gaps_out = 12;
-        border_size = 3;
+        gaps_in = 2;
+        gaps_out = 4;
+        border_size = 4;
         # "col.active_border" = "";
         # "col.inactive_border" = "";
 
@@ -83,10 +83,10 @@ in {
       };
 
       decoration = {
-        rounding = 8;
+        rounding = 6;
 
         active_opacity = 1.0;
-        inactive_opacity = 1.0;
+        inactive_opacity = 0.9;
         fullscreen_opacity = 1.0;
 
         shadow = {
