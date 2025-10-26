@@ -61,7 +61,6 @@
     };
 
     kitty.enable = true;
-    foot.enable = true;
     chromium.enable = true;
     keepassxc.enable = true;
     devSuite.extras = ["containers"];
