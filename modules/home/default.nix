@@ -6,6 +6,8 @@
 
     ./storage.nix
 
+    ./bash.nix
+    ./zsh.nix
     ./desktop
     ./terminals.nix
 
@@ -29,6 +31,11 @@
     ./creative.nix
     ./gaming.nix
   ];
+
+  programs = {
+    bash.enable = true;
+    zsh.enable = true;
+  };
 
   xdg.mimeApps.enable = true;
   programs.home-manager.enable = true;

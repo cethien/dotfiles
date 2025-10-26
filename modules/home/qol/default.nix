@@ -10,6 +10,7 @@ in {
   imports = [
     ./bottom.nix
     ./yazi.nix
+    ./oh-my-posh.nix
   ];
 
   options.programs.qol = {
@@ -57,8 +58,7 @@ in {
     ];
 
     programs = {
-      yazi.enable = true;
-
+      oh-my-posh.enable = true;
       zoxide.enable = true;
       zoxide.options = ["--cmd cd"];
       ripgrep.enable = true;
@@ -77,16 +77,7 @@ in {
       bat.enable = true;
 
       bottom.enable = true;
-
-      oh-my-posh.enable = true;
-      oh-my-posh.settings = builtins.fromJSON (
-        builtins.unsafeDiscardStringContext (builtins.readFile ./oh-my-posh/themes/cethien.omp.json)
-      );
-
-      bash.enable = true;
-      bash.initExtra = mkBefore ''
-        source ${pkgs.blesh}/share/blesh/ble.sh
-      '';
+      yazi.enable = true;
     };
 
     programs.fastfetch = {
@@ -117,7 +108,7 @@ in {
 
       cat = "bat -p";
 
-      reload = "source ~/.bashrc && clear";
+      reload = "source ~/.$(basename $SHELL)rc && clear";
     };
 
     home.file.".config/fastfetch/logo.png".source = ./bernd_pixel.png;

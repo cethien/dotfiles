@@ -42,15 +42,10 @@ in {
   config = mkIf cfg.enable {
     wayland.windowManager.hyprland.settings.exec-once = ["tmux start-server"];
 
-    home.shellAliases = {
-      tm = "tmux_new";
-      tmls = "tmux ls";
-      tmk = "tmux kill-session -t";
-      tmks = "tmux kill-server";
-    };
-
-    programs.bash.initExtra = builtins.readFile ./tmux_bashinit.sh;
+    home.shellAliases.tm = "tmux_new";
     programs.fzf.tmux.enableShellIntegration = true;
+    programs.bash.initExtra = builtins.readFile ./tmux_bashinit.sh;
+    programs.zsh.initContent = builtins.readFile ./tmux_zshinit.sh;
 
     programs.tmux = {
       baseIndex = 1;

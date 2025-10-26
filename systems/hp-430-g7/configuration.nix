@@ -9,7 +9,9 @@
     ../../modules/nixos
   ];
 
+  programs.zsh.enable = true;
   users.users.cethien.enable = true;
+  users.users.cethien.shell = pkgs.zsh;
 
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;

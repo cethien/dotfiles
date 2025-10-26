@@ -2,23 +2,24 @@
   "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
 
   "palette": {
-    "white":"#cdd6f4",
-    "lavender":"#b4befe",
-    "green":"#a6e3a1",
-    "skyblue":"#89dceb",
-    "cyan":"#94e2d5",
-    "violet":"#cba6f7",
-    "red":"#f38ba8",
-    "yellow": "#f9e2af",
+    "white":"#A9B1D6",
+    "lavender":"#BB9AF7",
+    "green":"#9ECE6A",
+    "skyblue":"#2AC3DE",
+    "cyan":"#B4F9F8",
+    "violet":"#BB9AF7",
+    "red":"#F7768E",
+    "yellow":"#0DB9D7",
 
-    "session" : "p:violet",
-    "path" : "p:cyan",
-    "git" : "p:lavender",
-    "shell" : "p:green",
-    "root" : "p:red",
-    "text" : "p:white"
+    "session":"p:violet",
+    "path":"p:skyblue",
+    "git":"p:lavender",
+    "shell":"p:green",
+    "root":"p:red",
+    "text":"p:white",
+    "exitcode":"p:red"
   },
-  
+
   "blocks": [
     {
       "alignment": "left",
@@ -58,10 +59,10 @@
           "template": " {{ .HEAD }} ",
           "foreground": "p:git",
           "foreground_templates": [
-            "{{ if or (.Working.Changed) (.Staging.Changed) }}##f38ba8{{ end }}",
-            "{{ if and (gt .Ahead 0) (gt .Behind 0) }}#ff4500{{ end }}",
-            "{{ if gt .Ahead 0 }}#B388FF{{ end }}",
-            "{{ if gt .Behind 0 }}#B388FF{{ end }}"
+            "{{ if or (.Working.Changed) (.Staging.Changed) }}#F7768E{{ end }}",
+            "{{ if and (gt .Ahead 0) (gt .Behind 0) }}#FF4500{{ end }}",
+            "{{ if gt .Ahead 0 }}#BB9AF7{{ end }}",
+            "{{ if gt .Behind 0 }}#BB9AF7{{ end }}"
           ]
         }
       ],
@@ -93,6 +94,8 @@
       "type": "prompt"
     }
   ],
+
   "final_space": true,
   "version": 3
 }
+
