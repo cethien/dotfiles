@@ -11,14 +11,6 @@
     };
   };
 
-  programs.wezterm.extraConfig =
-    #lua
-    ''
-      return {
-         hide_tab_bar_if_only_one_tab = true;
-      }
-    '';
-
   wayland.windowManager.hyprland.settings = {
     "$terminal" = "kitty";
 
