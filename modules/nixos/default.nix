@@ -16,14 +16,8 @@ with lib; {
     ./steam.nix
     ./ai.nix
     ./monitoring.nix
+    ./ssh.nix
   ];
-
-  services.openssh = {
-    settings = {
-      PasswordAuthentication = false;
-      PermitRootLogin = "no";
-    };
-  };
 
   environment.systemPackages = with pkgs; [
     vim
@@ -61,7 +55,7 @@ with lib; {
     gc = {
       automatic = true;
       dates = "weekly";
-      options = "--delete-older-than 7d";
+      options = "--delete-older-than 14d";
     };
     settings = {
       extra-experimental-features = "nix-command flakes";
@@ -82,7 +76,6 @@ with lib; {
     plymouth = {
       themePackages = mkDefault (with pkgs; [
         nixos-bgrt-plymouth
-        adi1090x-plymouth-themes
       ]);
       theme = mkDefault "bgrt";
     };

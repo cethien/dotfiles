@@ -4,14 +4,14 @@
   ...
 }: {
   imports = [
-    ../../../modules/home
+    ../../modules/home
   ];
 
   home.username = "cethien";
   home.homeDirectory = "/home/cethien";
   home.stateVersion = stateVersion;
 
-  stylix.image = ../../../wallpapers/a_hand_holding_a_cassette_tape.jpg;
+  stylix.image = ../../wallpapers/bliss_minimal.png;
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
@@ -44,10 +44,24 @@
     ];
   };
 
-  home.packages = [pkgs.simple-scan];
+  home.packages = with pkgs; [simple-scan ausweisapp libreoffice];
 
   programs = {
+    ssh.matchBlocksExtra = {
+      "git.cethien.home" = {
+        host = "git.cethien.home";
+        hostname = "git.cethien.home";
+        port = 2222;
+      };
+    };
+
+    git.urlExtra = {
+      "ssh://git@git.cethien.home".insteadOf = "https://git.cethien.home";
+      "git@git.cethien.home:".insteadOf = "home:";
+    };
+
     kitty.enable = true;
+    foot.enable = true;
     chromium.enable = true;
     keepassxc.enable = true;
     devSuite.extras = ["containers"];
@@ -57,15 +71,5 @@
       extras = ["mixxx"];
     };
     spotify.enable = true;
-    discord.enable = true;
-  };
-
-  deeznuts = {
-    browser = {
-      firefox-profile.containers = [
-        "potato-squad.de"
-        "creative-europe.net"
-      ];
-    };
   };
 }

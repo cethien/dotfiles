@@ -1,7 +1,15 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  nixos-hardware,
+  ...
+}: {
   imports = [
+    ./hardware.nix
+    nixos-hardware.nixosModules.common-pc-laptop
     ../../modules/nixos
   ];
+
+  users.users.cethien.enable = true;
 
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
@@ -25,10 +33,16 @@
 
   networking.hostName = "hp-430-g7";
   networking.networkmanager.wifi.backend = "iwd";
-
-  # scanner
-  hardware.sane.enable = true;
-  hardware.sane.extraBackends = [pkgs.hplip];
+  networking.firewall = {
+    allowedTCPPorts = [
+      53317 # localsend
+      24727 # ausweisapp
+    ];
+    allowedUDPPorts = [
+      53317 # localsend
+      24727 # ausweisapp
+    ];
+  };
 
   hardware = {
     enableRedistributableFirmware = true;
@@ -39,6 +53,10 @@
       ];
     };
     bluetooth.enable = true;
+
+    # scanner
+    sane.enable = true;
+    sane.extraBackends = [pkgs.hplip];
   };
   environment.sessionVariables = {
     LIBVA_DRIVER_NAME = "iHD";
@@ -53,6 +71,4 @@
       hyprland.enable = true;
     };
   };
-
-  users.users.cethien.enable = true;
 }

@@ -2,14 +2,14 @@
   lib,
   config,
   pkgs,
-  inputs,
+  stylix,
   ...
 }:
 with lib; let
   cfg = config.stylix;
 in {
   imports = [
-    inputs.stylix.homeModules.stylix
+    stylix.homeModules.stylix
   ];
 
   config = mkIf cfg.enable {

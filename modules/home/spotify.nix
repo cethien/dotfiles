@@ -2,7 +2,7 @@
   lib,
   config,
   pkgs,
-  inputs,
+  spicetify-nix,
   ...
 }: let
   inherit (lib) mkEnableOption mkIf elem;
@@ -12,7 +12,7 @@ in {
   options.programs.spotify.enable = mkEnableOption "spotify";
 
   imports = [
-    inputs.spicetify-nix.homeManagerModules.default
+    spicetify-nix.homeManagerModules.default
   ];
 
   config = mkIf cfg.enable {
@@ -27,7 +27,7 @@ in {
     };
 
     programs.spicetify = let
-      spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+      spicePkgs = spicetify-nix.legacyPackages.${pkgs.stdenv.hostPlatform.system};
     in {
       enable = true;
 

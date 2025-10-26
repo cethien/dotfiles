@@ -1,10 +1,10 @@
 {
   config,
-  inputs,
+  sops-nix,
   ...
 }: {
   imports = [
-    inputs.sops-nix.homeManagerModules.sops
+    sops-nix.homeManagerModules.sops
   ];
 
   sops = {

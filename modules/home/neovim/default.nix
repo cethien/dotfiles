@@ -2,13 +2,13 @@
   lib,
   config,
   pkgs,
-  inputs,
+  nvf,
   ...
 }: let
   inherit (lib) mkIf;
 in {
   imports = [
-    inputs.nvf.homeManagerModules.default
+    nvf.homeManagerModules.default
   ];
 
   config = mkIf config.programs.nvf.enable {

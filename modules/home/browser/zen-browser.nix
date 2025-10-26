@@ -2,7 +2,7 @@
   lib,
   config,
   pkgs,
-  inputs,
+  zen-browser,
   ...
 }: let
   inherit (lib) mkIf elem;
@@ -13,7 +13,7 @@
   shared = import ./firefox-profile.nix {inherit config lib pkgs name;};
 in {
   imports = [
-    inputs.zen-browser.homeModules.beta
+    zen-browser.homeModules.beta
   ];
 
   config = mkIf cfg.enable {

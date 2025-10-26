@@ -34,17 +34,17 @@
     nvf.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = {
+  outputs = inputs @ {
     self,
     flake-utils,
     nixpkgs,
+    nur,
     deploy-rs,
     nixos-hardware,
     disko,
     home-manager,
-    nur,
     ...
-  } @ inputs: let
+  }: let
     eachSys = flake-utils.lib.eachDefaultSystem;
     eachSysPass = flake-utils.lib.eachDefaultSystemPassThrough;
     pkgsFor = system:
@@ -71,6 +71,7 @@
           ansible-lint
           sshpass
           openssl
+          libargon2
         ];
       };
 
@@ -84,7 +85,7 @@
     })
     // eachSysPass (system: let
       pkgs = pkgsFor system;
-      stateVersion = "25.05";
+      latestStateVersion = "25.05";
     in {
       nixosConfigurations."cethien.home" = nixpkgs.lib.nixosSystem {
         inherit pkgs;
@@ -93,7 +94,7 @@
           ./shared/disko/simple
           ./systems/cethien.home/hardware.nix
           ./systems/cethien.home/configuration.nix
-          {system.stateVersion = stateVersion;}
+          {system.stateVersion = latestStateVersion;}
         ];
       };
 
@@ -109,103 +110,27 @@
 
       nixosConfigurations."hp-430-g7" = nixpkgs.lib.nixosSystem {
         inherit pkgs;
-        specialArgs = {inherit inputs;};
-
-        modules = [
-          nixos-hardware.nixosModules.common-pc-laptop
-          ./systems/hp-430-g7/hardware.nix
+        specialArgs = inputs;
+        modules = let
+          user = "cethien";
+        in [
           ./systems/hp-430-g7/configuration.nix
-          {
-            system.stateVersion = stateVersion;
-          }
-
+          {system.stateVersion = latestStateVersion;}
           home-manager.nixosModules.home-manager
           {
             home-manager = {
-              # useGlobalPkgs = true;
-              useUserPackages = true;
               backupFileExtension = "hm-bak";
-
-              users.cethien =
-                ./systems/hp-430-g7/homes/cethien.nix;
-
-              extraSpecialArgs = {
-                inherit
-                  pkgs
-                  system
-                  home-manager
-                  stateVersion
-                  inputs
-                  ;
-              };
+              users."${user}" = ./systems/hp-430-g7/cethien-home.nix;
+              extraSpecialArgs =
+                inputs
+                // {
+                  stateVersion = latestStateVersion;
+                  inherit pkgs system;
+                };
             };
           }
         ];
       };
-
-      # nixosConfigurations."tower-of-power" = nixpkgs.lib.nixosSystem {
-      #   inherit pkgs;
-      #   specialArgs = {inherit sops-nix;};
-      #
-      #   modules = [
-      #     ./systems/tower-of-power/hardware.nix
-      #     ./systems/tower-of-power/configuration.nix
-      #     {
-      #       system.stateVersion = stateVersion;
-      #       boot.kernelPackages = pkgs.linuxPackages_zen;
-      #     }
-      #
-      #     home-manager.nixosModules.home-manager
-      #     {
-      #       home-manager = {
-      #         useUserPackages = true;
-      #         backupFileExtension = "bak-hm-$(date +%Y%m%d_%H%M%S)";
-      #
-      #         users.cethien = ./systems/tower-of-power/homes/cethien.nix;
-      #
-      #         extraSpecialArgs = {
-      #           inherit
-      #             pkgs
-      #             system
-      #             home-manager
-      #             stateVersion
-      #             sops-nix
-      #             stylix
-      #             zen-browser
-      #             spicetify-nix
-      #             nvf
-      #             ;
-      #         };
-      #       };
-      #     }
-      #   ];
-      # };
-      #
-      # homeConfigurations."cethien@wsl" =
-      #   home-manager.lib.homeManagerConfiguration {
-      #     inherit pkgs;
-      #     modules = [
-      #       ./systems/wsl/homes/cethien.nix
-      #       {
-      #         home.stateVersion = stateVersion;
-      #       }
-      #     ];
-      #     extraSpecialArgs = {
-      #       inherit sops-nix stylix nvf;
-      #     };
-      #   }
-      #   import
-      #   ./systems/cethien_wsl/homes/cethien.nix {
-      #     inherit
-      #       pkgs
-      #       system
-      #       home-manager
-      #       stateVersion
-      #       sops-nix
-      #       stylix
-      #       nvf
-      #       ;
-      #   };
 
       checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
 
