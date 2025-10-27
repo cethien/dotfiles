@@ -17,10 +17,10 @@ in {
     home.packages = with pkgs; [
       freerdp
       tigervnc
-
-      castnow
       localsend
       jocalsend
+      castnow
+      croc
     ];
   };
 }
