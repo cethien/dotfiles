@@ -6,14 +6,14 @@ in {
       enable = mkDefault false;
       settings = {
         LogLevel = "VERBOSE";
+
+        PermitRootLogin = "no";
         UsePAM = false;
         PasswordAuthentication = false;
-        PermitRootLogin = "no";
+
         X11Forwarding = false;
-        extraConfig = ''
-          AllowTcpForwarding no
-          AllowAgentForwarding no
-        '';
+        AllowTcpForwarding = "no";
+        AllowAgentForwarding = "no";
       };
     };
   };

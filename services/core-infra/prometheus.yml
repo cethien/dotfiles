@@ -1,0 +1,46 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  # System-level exporters
+  - job_name: "node_exporter"
+    static_configs:
+      - targets:
+          - "192.168.1.50:9100"
+
+  - job_name: "systemd_exporter"
+    static_configs:
+      - targets:
+          - "192.168.1.50:9558"
+
+  - job_name: "cadvisor"
+    static_configs:
+      - targets:
+          - "192.168.1.50:8080"
+
+  - job_name: "prometheus_self"
+    static_configs:
+      - targets:
+          - "localhost:9090"
+
+  # Application services
+  - job_name: "gitea"
+    static_configs:
+      - targets:
+          - "tasks.gitea:3000"
+
+  - job_name: "blocky"
+    static_configs:
+      - targets:
+          - "tasks.blocky:4000"
+
+  - job_name: "coredns"
+    static_configs:
+      - targets:
+          - "tasks.coredns:9153"
+
+  - job_name: "caddy"
+    static_configs:
+      - targets:
+          - "tasks.caddy-docker-proxy:2020"

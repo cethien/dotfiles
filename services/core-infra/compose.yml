@@ -1,15 +1,27 @@
+configs:
+  Corefile_v5:
+    file: ./Corefile
+  blocky.yml:
+    file: ./blocky.yml
+  loki.yaml:
+    file: ./loki.yaml
+  prometheus.yml_v6:
+    file: ./prometheus.yml
+
 services:
   coredns:
     image: coredns/coredns:1.12.4
+    configs:
+      - source: Corefile_v5
+        target: /Corefile
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
     ports:
       - 53:53/tcp
       - 53:53/udp
     networks:
-      - dns
+      - coredns
       - prometheus
-    configs:
-      - source: coredns-Corefile7
-        target: /Corefile
     deploy:
       mode: replicated
       replicas: 1
@@ -26,12 +38,12 @@ services:
     environment:
       TZ: Europe/Berlin
     configs:
-      - source: blocky-config.yml
+      - source: blocky.yml
         target: /app/config.yml
     volumes:
       - /etc/localtime:/etc/localtime:ro
     networks:
-      dns:
+      coredns:
         ipv4_address: 10.10.0.10
       caddy:
       prometheus:
@@ -41,17 +53,13 @@ services:
       placement:
         constraints: [node.role == manager]
       labels:
-        caddy: doh.cethien.home
-        caddy.reverse_proxy: /dns-query https://{{.Service.Name}}:8443
-        caddy.reverse_proxy.transport.http.tls_insecure_skip_verify: "true"
-
         homepage.group: infra
         homepage.name: blocky
         homepage.icon: blocky.png
         homepage.description: filter deez nuts
 
   caddy-docker-proxy:
-    image: lucaslorentz/caddy-docker-proxy:ci-alpine
+    image: docker.io/lucaslorentz/caddy-docker-proxy:ci-alpine
     ports:
       - "80:80"
       - "443:443"
@@ -60,8 +68,11 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - caddy-data:/data
+      - step-ca-data:/step-ca
     networks:
       - caddy
+      - step-ca
+      - prometheus
     deploy:
       replicas: 1
       placement:
@@ -75,22 +86,117 @@ services:
         homepage.icon: caddy.png
         homepage.description: proxy deez nuts
 
+        homepage.widget.type: caddy
+        homepage.widget.url: https://tasks.caddy-docker-proxy:2020
+
+        caddy_0.email: admin@cethien.home
+        caddy_0.acme_ca: https://tasks.step-ca:9000/acme/acme/directory
+
+        caddy_0:
+        caddy_0.servers:
+        caddy_0.servers.metrics:
+
+        caddy_1: ":2020"
+        caddy_1.metrics: "/metrics"
+        caddy_1.metrics.disable_openmetrics:
+
+        caddy_1.handle: /reverse_proxy/upstreams
+        caddy_1.handle.reverse_proxy: localhost:2019
+        caddy_1.handle.reverse_proxy.header_up: Host localhost:2019
+
+  step-ca:
+    image: docker.io/smallstep/step-ca:latest
+    environment:
+      DOCKER_STEPCA_INIT_NAME: "cethien.home"
+      DOCKER_STEPCA_INIT_DNS_NAMES: "localhost,$$(hostname -f)"
+      DOCKER_STEPCA_INIT_PASSWORD: "stepca"
+    volumes:
+      - step-ca-data:/home/step
+    networks:
+      - step-ca
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+      labels:
+        homepage.group: infra
+        homepage.name: step-ca
+        homepage.icon: step-ca.png
+        homepage.description: acme deez nuts
+
+  loki:
+    image: grafana/loki:latest
+    configs:
+      - target: /etc/loki/config.yaml
+        source: loki.yaml
+    volumes:
+      - loki:/loki
+    networks:
+      - loki
+      - caddy
+    deploy:
+      mode: replicated
+      replicas: 1
+      labels:
+        caddy: loki.cethien.home
+        caddy.tls: internal
+        caddy.reverse_proxy: "{{upstreams 3100}}"
+
+        homepage.group: infra
+        homepage.name: loki
+        homepage.icon: loki.png
+        homepage.description: log deez nuts
+
+  prometheus:
+    image: prom/prometheus:latest
+    configs:
+      - source: prometheus.yml_v6
+        target: /etc/prometheus/prometheus.yml
+    volumes:
+      - prometheus:/prometheus
+    networks:
+      - prometheus
+      - caddy
+    deploy:
+      mode: replicated
+      replicas: 1
+      labels:
+        caddy: prometheus.cethien.home
+        caddy.tls: internal
+        caddy.reverse_proxy: "{{upstreams 9090}}"
+
+        homepage.group: infra
+        homepage.name: prometheus
+        homepage.icon: prometheus.png
+        homepage.href: https://prometheus.cethien.home
+        homepage.description: scrape deez nuts
+
+        homepage.widget.type: prometheus
+        homepage.widget.url: https://prometheus.cethien.home
+
 volumes:
+  step-ca-data:
+    name: step-ca_data
   caddy-data:
     name: caddy_data
-  homepage-config:
-    name: admin_homepage_config
-
-configs:
-  coredns-Corefile7:
-    file: ./coredns/Corefile
-
-  blocky-config.yml:
-    file: ./blocky/config.yml
+  prometheus:
+    name: prometheus_data
+  loki:
+    name: loki_data
 
 networks:
-  dns:
-    name: dns_net
+  coredns:
+    name: coredns_net
+    driver: overlay
+    attachable: true
+
+  step-ca:
+    name: step-ca_net
+    driver: overlay
+    attachable: true
 
   caddy:
     name: caddy_net
@@ -99,5 +205,10 @@ networks:
 
   prometheus:
     name: prometheus_net
+    driver: overlay
+    attachable: true
+
+  loki:
+    name: loki_net
     driver: overlay
     attachable: true

@@ -13,12 +13,16 @@ services:
       GITEA__service__DISABLE_REGISTRATION: "true"
       GITEA__database__DB_TYPE: sqlite3
       GITEA__database__PATH: /data/gitea/gitea.db
+      GITEA__metrics__ENABLED: "true"
+      GITEA__metrics__ENABLED_ISSUE_BY_REPOSITORY: "true"
+      GITEA__metrics__ENABLED_ISSUE_BY_LABEL: "true"
     volumes:
       - gitea-data:/data
       - /etc/localtime:/etc/localtime:ro
     ports:
       - 2222:22
     networks:
+      - coredns
       - caddy
     deploy:
       mode: replicated
@@ -27,6 +31,8 @@ services:
         caddy: git.cethien.home
         caddy.tls: internal
         caddy.reverse_proxy: "{{ upstreams 3000 }}"
+
+        coredns-dockerdiscovery.host: git.cethien.home
 
         homepage.group: services
         homepage.name: gitea
@@ -39,6 +45,9 @@ volumes:
     name: gitea_data
 
 networks:
+  coredns:
+    name: coredns_net
+    external: true
   caddy:
     name: caddy_net
     external: true

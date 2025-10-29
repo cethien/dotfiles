@@ -1,0 +1,24 @@
+.:53 {
+    hosts {
+      192.168.1.50 cloudbeaver.cethien.home
+      192.168.1.50 semaphore.cethien.home
+      192.168.1.50 git.cethien.home
+      192.168.1.50 grafana.cethien.home
+      
+      192.168.1.50 prometheus.cethien.home
+      192.168.1.50 loki.cethien.home
+      
+      192.168.1.50 cethien.home
+      
+      fallthrough
+    }
+    
+
+    forward . 10.10.0.10:53
+    
+    cache 20
+    log
+    errors
+    prometheus :9153
+}
+
