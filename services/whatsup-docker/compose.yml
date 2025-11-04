@@ -1,0 +1,31 @@
+services:
+  whats-up-docker:
+    image: ghcr.io/getwud/wud
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - caddy
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+      labels:
+        caddy: whats-up-docker.cethien.home
+        caddy.reverse_proxy: "{{ upstreams 3000 }}"
+        caddy.tls: internal
+
+        homepage.group: monitoring
+        homepage.name: whats-up-docker
+        homepage.icon: whats-up-docker.png
+        homepage.href: https://whats-up-docker.cethien.home
+        homepage.description: docker updates deez nuts
+        homepage.widget.type: whatsupdocker
+        homepage.widget.url: http://tasks.whats-up-docker:3000
+
+networks:
+  caddy:
+    name: caddy_net
+    external: true

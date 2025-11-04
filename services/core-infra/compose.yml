@@ -1,18 +1,18 @@
 configs:
-  Corefile_v5:
+  Corefile_v2:
     file: ./Corefile
   blocky.yml:
     file: ./blocky.yml
   loki.yaml:
     file: ./loki.yaml
-  prometheus.yml_v6:
+  prometheus.yml:
     file: ./prometheus.yml
 
 services:
   coredns:
     image: coredns/coredns:1.12.4
     configs:
-      - source: Corefile_v5
+      - source: Corefile_v2
         target: /Corefile
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
@@ -28,7 +28,7 @@ services:
       placement:
         constraints: [node.role == manager]
       labels:
-        homepage.group: infra
+        homepage.group: dns
         homepage.name: coreDNS
         homepage.icon: coredns.png
         homepage.description: resolve deez nuts
@@ -53,7 +53,7 @@ services:
       placement:
         constraints: [node.role == manager]
       labels:
-        homepage.group: infra
+        homepage.group: dns
         homepage.name: blocky
         homepage.icon: blocky.png
         homepage.description: filter deez nuts
@@ -81,7 +81,7 @@ services:
         condition: on-failure
         max_attempts: 3
       labels:
-        homepage.group: infra
+        homepage.group: reverse-proxy
         homepage.name: caddy
         homepage.icon: caddy.png
         homepage.description: proxy deez nuts
@@ -122,7 +122,7 @@ services:
         condition: on-failure
         max_attempts: 3
       labels:
-        homepage.group: infra
+        homepage.group: reverse-proxy
         homepage.name: step-ca
         homepage.icon: step-ca.png
         homepage.description: acme deez nuts
@@ -145,7 +145,7 @@ services:
         caddy.tls: internal
         caddy.reverse_proxy: "{{upstreams 3100}}"
 
-        homepage.group: infra
+        homepage.group: metrics
         homepage.name: loki
         homepage.icon: loki.png
         homepage.description: log deez nuts
@@ -153,7 +153,7 @@ services:
   prometheus:
     image: prom/prometheus:latest
     configs:
-      - source: prometheus.yml_v6
+      - source: prometheus.yml
         target: /etc/prometheus/prometheus.yml
     volumes:
       - prometheus:/prometheus
@@ -168,7 +168,7 @@ services:
         caddy.tls: internal
         caddy.reverse_proxy: "{{upstreams 9090}}"
 
-        homepage.group: infra
+        homepage.group: metrics
         homepage.name: prometheus
         homepage.icon: prometheus.png
         homepage.href: https://prometheus.cethien.home

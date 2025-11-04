@@ -13,13 +13,14 @@ services:
     deploy:
       mode: replicated
       replicas: 1
+      # placement:
+      #   constraints: [node.role == worker]
       labels:
         caddy: grafana.cethien.home
-        caddy.tls: internal
         caddy.reverse_proxy: "{{upstreams 3000}}"
-        coredns-dockerdiscovery.host: grafana.cethien.home
+        caddy.tls: internal
 
-        homepage.group: admin
+        homepage.group: monitoring
         homepage.name: grafana
         homepage.icon: grafana.png
         homepage.href: https://grafana.cethien.home/
