@@ -17,17 +17,25 @@
     swarm.enable = true;
   };
 
-  deeznuts = {
-    monitoring.enable = true;
-    ansible = {
-      enable = true;
-      user = {
-        passwordHash = ''$y$j9T$Sb/HaF3.s2MzZa6a303.P1$s1zqCQkZVBWM.k/AC0PN6eYuheeS8vd345vRco8SHK'';
-        keys = [
-          ''ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIComNrX0wHUEL5YG/cC2XFCC/FZKWdrgkRKlZVXk3Kfo ansible@cethien.home''
-        ];
+  services = {
+    promtail.enable = true;
+    promtail.configuration.clients = [
+      {
+        url = "https://loki.cethien.home/loki/api/v1/push";
+        tls_config.insecure_skip_verify = true;
+      }
+    ];
+    cadvisor.enable = true;
+
+    prometheus = {
+      exporters = {
+        node.enable = true;
+        systemd.enable = true;
       };
     };
+  };
+
+  deeznuts = {
     deployrs = {
       enable = true;
       user = {

@@ -11,7 +11,7 @@ in {
     ./common-gui.nix
     ./hypridle.nix
     ./hyprlock.nix
-    ./screenshot.nix
+    ./hyprshot.nix
     ./mako.nix
   ];
 
