@@ -89,7 +89,7 @@
     in {
       homeConfigurations."bsotnikow@wsl" = home-manager.lib.homeManagerConfiguration {
         modules = [(import ./systems/tmsproshop.de/home.nix)];
-        extraSpecialArgs = inputs;
+        extraSpecialArgs = inputs // {stateVersion = latestStateVersion;};
         inherit pkgs;
       };
 
