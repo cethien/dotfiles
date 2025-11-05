@@ -87,6 +87,12 @@
       pkgs = pkgsFor system;
       latestStateVersion = "25.05";
     in {
+      homeConfigurations."bsotnikow@wsl" = home-manager.lib.homeManagerConfiguration {
+        modules = [(import ./systems/tmsproshop.de/home.nix)];
+        extraSpecialArgs = inputs;
+        inherit pkgs;
+      };
+
       nixosConfigurations."cethien.home" = nixpkgs.lib.nixosSystem {
         inherit pkgs;
         modules = [
