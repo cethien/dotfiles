@@ -7,7 +7,7 @@
 in {
   config = {
     services.restic = {
-      enable = mkDefault true;
+      enable = mkDefault false;
       # TODO:
       # backups = {};
     };
@@ -15,7 +15,7 @@ in {
     sops.secrets."rclone/drive/token" = {};
 
     programs.rclone = {
-      enable = mkDefault true;
+      enable = mkDefault false;
       remotes = {
         "gdrive" = {
           mounts = {
@@ -43,7 +43,7 @@ in {
     };
 
     services.syncthing = {
-      enable = mkDefault true;
+      enable = mkDefault false;
       settings = {
         options.urAccepted = -1;
         devices = {

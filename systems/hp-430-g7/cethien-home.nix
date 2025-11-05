@@ -46,7 +46,11 @@
 
   home.packages = with pkgs; [simple-scan ausweisapp libreoffice];
 
+  services.syncthing.enable = true;
+
   programs = {
+    rclone.enable = true;
+
     ssh.matchBlocksExtra = {
       "git.cethien.home" = {
         host = "git.cethien.home";
