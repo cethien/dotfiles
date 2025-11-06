@@ -5,6 +5,7 @@
 }: {
   imports = [
     ../../modules/home
+    ../../modules/home/users/cethien
   ];
 
   home.username = "cethien";
@@ -47,10 +48,10 @@
   home.packages = with pkgs; [simple-scan ausweisapp libreoffice];
 
   services.syncthing.enable = true;
+  services.restic.enable = true;
+  programs.rclone.enable = true;
 
   programs = {
-    rclone.enable = true;
-
     ssh.matchBlocksExtra = {
       "git.cethien.home" = {
         host = "git.cethien.home";
@@ -67,8 +68,12 @@
     kitty.enable = true;
     chromium.enable = true;
     keepassxc.enable = true;
+
+    thunderbird.enable = true;
+    thunderbird.profiles."borislaw.sotnikow@gmx.de".isDefault = true;
+
     devSuite.extras = ["containers"];
-    distrobox.enable = true;
+
     creativeSuite = {
       enable = true;
       extras = ["mixxx"];

@@ -22,7 +22,7 @@ in {
     };
 
     stylix = {
-      image = mkDefault ../../../wallpapers/blueish_river_landscape.jpg;
+      # image = mkDefault ../../../wallpapers/blueish_river_landscape.jpg;
       polarity = "dark";
       base16Scheme = mkDefault "${pkgs.base16-schemes}/share/themes/tokyo-night-dark.yaml";
 

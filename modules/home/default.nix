@@ -1,6 +1,5 @@
 {
   imports = [
-    ./assets
     ./stylix.nix
     ./sops.nix
 
@@ -24,7 +23,7 @@
 
     ./browser
     ./keepassxc.nix
-    ./pim.nix
+    ./office.nix
 
     ./spotify.nix
     ./discord.nix

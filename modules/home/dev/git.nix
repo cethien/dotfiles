@@ -24,6 +24,7 @@ in {
         name = mkDefault "cethien";
         email = mkDefault "borislaw.sotnikow@gmx.de";
       };
+
       alias = {
         ignore = "!gi() { ${pkgs.git-ignore}/bin/git-ignore $@ ;}; gi";
         license = "!gl() { ${pkgs.license-go}/bin/license $@ ;}; gl";

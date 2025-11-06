@@ -1,7 +1,10 @@
 {
+  pkgs,
+  lib,
+}: {
   config = {
-    # bash.initExtra = mkBefore ''
-    #   source ${pkgs.blesh}/share/blesh/ble.sh
-    # '';
+    bash.initExtra = lib.mkBefore ''
+      source ${pkgs.blesh}/share/blesh/ble.sh
+    '';
   };
 }
