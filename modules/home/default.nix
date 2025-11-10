@@ -19,7 +19,6 @@
     ./fun.nix
 
     ./logitech-peripherals.nix
-    ./elgato-stream-deck.nix
 
     ./browser
     ./keepassxc.nix
