@@ -126,7 +126,7 @@
           {
             home-manager = {
               backupFileExtension = "hm-bak";
-              users."${user}" = ./systems/hp-430-g7/cethien-home.nix;
+              users."${user}" = ./systems/hp-430-g7/home.nix;
               extraSpecialArgs =
                 inputs
                 // {
