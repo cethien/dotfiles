@@ -53,10 +53,9 @@
 
   programs = {
     ssh.matchBlocksExtra = {
-      "git.cethien.home" = {
-        host = "git.cethien.home";
-        hostname = "git.cethien.home";
-        port = 2222;
+      "srv-home-01" = {
+        host = "srv-home-01";
+        hostname = "192.168.1.50";
       };
     };
 
