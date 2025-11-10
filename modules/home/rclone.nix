@@ -3,19 +3,11 @@
   config,
   ...
 }: let
-  inherit (lib) mkDefault;
+  inherit (lib) mkIf;
 in {
-  config = {
-    services.restic = {
-      enable = mkDefault false;
-      # TODO:
-      # backups = {};
-    };
-
+  config = mkIf config.programs.rclone.enable {
     sops.secrets."rclone/drive/token" = {};
-
     programs.rclone = {
-      enable = mkDefault false;
       remotes = {
         "gdrive" = {
           mounts = {
@@ -37,21 +29,6 @@ in {
           };
           secrets = {
             token = config.sops.secrets."rclone/drive/token".path;
-          };
-        };
-      };
-    };
-
-    services.syncthing = {
-      enable = mkDefault false;
-      settings = {
-        options.urAccepted = -1;
-        devices = {
-          "xiaomi-15" = {
-            id = "RA74I3V-6MMZBHA-A6I7XCH-7HGDYPF-WDFNPZX-2WOO3OS-267B4MY-HL7VJA5";
-          };
-          "hp-430-g7" = {
-            id = "QQAPR6F-HZE4V4M-JTSTNLO-6SBXQFY-FTEH4ZQ-QDBFFXX-SL5SQOM-LD5XXQU";
           };
         };
       };
