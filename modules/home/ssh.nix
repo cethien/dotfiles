@@ -39,6 +39,6 @@ in {
       ];
     };
 
-    programs.tmux.resurrectPluginProcesses = ["ssh"];
+    programs.tmux.resurrectPluginProcesses = ["ssh" "sshs"];
   };
 }
