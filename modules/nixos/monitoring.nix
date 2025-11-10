@@ -3,17 +3,12 @@
   lib,
   ...
 }: let
-  inherit (lib) mkIf mkEnableOption;
-  cfg = config.deeznuts.monitoring;
+  inherit (lib) mkIf mkMerge mkDefault;
 in {
-  options.deeznuts.monitoring = {
-    enable = mkEnableOption "monitoring";
-  };
-
-  config = mkIf cfg.enable {
+  config = {
     services.prometheus.exporters = {
       node = {
-        enable = true;
+        enable = mkDefault false;
         openFirewall = true;
         enabledCollectors = [
           "cpu"
@@ -33,14 +28,15 @@ in {
       };
 
       systemd = {
-        enable = true;
+        enable = mkDefault false;
         openFirewall = true;
       };
     };
 
     services.cadvisor = {
-      enable = true;
+      enable = mkDefault false;
       port = 8080;
+
       listenAddress = "0.0.0.0";
       extraOptions = [
         "--docker_only"
@@ -48,19 +44,12 @@ in {
     };
 
     services.promtail = {
-      enable = true;
+      enable = mkDefault false;
       configuration = {
         server = {
           http_listen_port = 9080;
           gprc_listen_port = 0;
         };
-
-        clients = [
-          {
-            url = "https://loki.cethien.home/loki/api/v1/push";
-            tls_config.insecure_skip_verify = true;
-          }
-        ];
 
         positions = {
           filename = "/var/lib/promtail/positions.yaml";
@@ -87,13 +76,18 @@ in {
         ];
       };
     };
-    systemd.tmpfiles.rules = ["d /var/lib/promtail 0755 promtail promtail -"];
-    systemd.services.promtail.serviceConfig.ReadWritePaths = ["/var/lib/promtail"];
+
+    systemd.tmpfiles.rules = mkIf config.services.promtail.enable [
+      "d /var/lib/promtail 0755 promtail promtail -"
+    ];
+    systemd.services.promtail.serviceConfig.ReadWritePaths = mkIf config.services.promtail.enable [
+      "/var/lib/promtail"
+    ];
 
     networking.firewall = {
-      allowedTCPPorts = [
-        9080 # promtail
-        8080 # CAdvisor
+      allowedTCPPorts = mkMerge [
+        (mkIf config.services.promtail.enable [9080])
+        (mkIf config.services.cadvisor.enable [8080])
       ];
     };
   };

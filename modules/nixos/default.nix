@@ -23,7 +23,6 @@ in {
   environment.systemPackages = with pkgs; [
     vim
     tmux
-    htop
   ];
   programs.command-not-found.enable = true;
 
