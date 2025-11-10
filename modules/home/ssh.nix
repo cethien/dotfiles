@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }: let
   inherit (lib) mkOption types mkMerge;
@@ -23,6 +24,7 @@ in {
   };
 
   config = {
+    home.packages = with pkgs; [sshs];
     programs.ssh = {
       enableDefaultConfig = false;
       matchBlocks = mkMerge [
