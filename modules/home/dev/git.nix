@@ -28,7 +28,7 @@ in {
       alias = {
         ignore = "!gi() { ${pkgs.git-ignore}/bin/git-ignore $@ ;}; gi";
         license = "!gl() { ${pkgs.license-go}/bin/license $@ ;}; gl";
-        stat = "!gscc() {${pkgs.scc}/bin/scc $@ ;}; gscc";
+        stat = "!gscc() {${pkgs.scc}/bin/scc ;}; gscc";
       };
       core = {
         eol = "lf";
