@@ -33,21 +33,6 @@
             require("octo").setup({})
           '';
       };
-      biscuits = {
-        package = nvim-biscuits;
-        setup =
-          #lua
-          ''
-            require("nvim-biscuits").setup({
-              cursor_line_only = true,
-              language_config = {
-                markdown = {
-                  disabled = true,
-                }
-              }
-            })
-          '';
-      };
       codesnap = {
         package = codesnap-nvim;
         setup =
@@ -166,7 +151,19 @@
       images.image-nvim.enable = true;
       images.image-nvim.setupOpts.backend = "kitty";
 
+      icon-picker.enable = true;
+      ccc.enable = true;
+
+      nvim-biscuits.enable = true;
+      nvim-biscuits.setupOpts = {
+        cursor_line_only = true;
+        languageConfig = {
+          markdown.disabled = true;
+        };
+      };
+      diffview-nvim.enable = true;
       oil-nvim.enable = true;
+      direnv.enable = true;
       yazi-nvim.enable = true;
       yazi-nvim.setupOpts.open_for_directories = true;
 
@@ -225,7 +222,19 @@
       };
     };
 
+    terminal.toggleterm = {
+      enable = true;
+      lazygit.enable = true;
+      lazygit.direction = "float";
+    };
+
     spellcheck.enable = true;
+    spellcheck.languages = [
+      "en"
+      # "de"
+      # "ru"
+    ];
+    spellcheck.programmingWordlist.enable = true;
     diagnostics.enable = true;
     diagnostics.config = {
       signs.text = {
