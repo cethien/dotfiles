@@ -54,6 +54,7 @@ in {
             cookie-autodelete
             link-cleaner
             yang
+            flagfox
 
             stylus
             darkreader
