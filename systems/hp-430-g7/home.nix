@@ -78,5 +78,6 @@
       extras = ["mixxx"];
     };
     spotify.enable = true;
+    vesktop.enable = true;
   };
 }
