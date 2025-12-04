@@ -41,7 +41,7 @@ in {
       rar
       p7zip
 
-      poppler_utils # pdf stuff
+      poppler-utils # pdf stuff
       lynx # term browser
       aria2 # download manager
       parted
