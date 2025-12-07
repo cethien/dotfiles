@@ -1,0 +1,65 @@
+networks:
+  step-ca:
+    name: step-ca_net
+    driver: overlay
+    attachable: true
+
+  caddy:
+    name: caddy_net
+    driver: overlay
+    attachable: true
+
+volumes:
+  step-ca-data:
+    name: step-ca_data
+  caddy-data:
+    name: caddy_data
+
+services:
+  caddy-docker-proxy:
+    image: docker.io/lucaslorentz/caddy-docker-proxy:ci-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      CADDY_INGRESS_NETWORKS: caddy_net
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - caddy-data:/data
+      - step-ca-data:/step-ca
+    networks:
+      - caddy
+      - step-ca
+    deploy:
+      replicas: 1
+      update_config:
+        order: start-first
+      placement:
+        constraints: [node.role == manager]
+      labels:
+        homepage.group: reverse-proxy
+        homepage.name: caddy
+        homepage.icon: caddy.png
+        homepage.description: proxy deez nuts
+
+  step-ca:
+    image: docker.io/smallstep/step-ca:latest
+    environment:
+      DOCKER_STEPCA_INIT_NAME: "cethien.home"
+      DOCKER_STEPCA_INIT_DNS_NAMES: "localhost,$$(hostname -f)"
+      DOCKER_STEPCA_INIT_PASSWORD: "stepca"
+    volumes:
+      - step-ca-data:/home/step
+    networks:
+      - step-ca
+    deploy:
+      replicas: 1
+      update_config:
+        order: start-first
+      placement:
+        constraints: [node.role == manager]
+      labels:
+        homepage.group: reverse-proxy
+        homepage.name: step-ca
+        homepage.icon: step-ca.png
+        homepage.description: acme deez nuts

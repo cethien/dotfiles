@@ -1,0 +1,79 @@
+networks:
+  caddy:
+    name: caddy_net
+    external: true
+
+  prometheus:
+    name: prometheus_net
+    driver: overlay
+    attachable: true
+
+  loki:
+    name: loki_net
+    driver: overlay
+    attachable: true
+
+volumes:
+  prometheus:
+    name: prometheus_data
+  loki:
+    name: loki_data
+
+configs:
+  loki.yaml:
+    file: ./loki.yaml
+  prometheus.yml:
+    file: ./prometheus.yml
+
+services:
+  loki:
+    image: grafana/loki:latest
+    configs:
+      - target: /etc/loki/config.yaml
+        source: loki.yaml
+    volumes:
+      - loki:/loki
+    networks:
+      - loki
+      - caddy
+    deploy:
+      replicas: 1
+      update_config:
+        order: start-first
+      labels:
+        caddy: loki.cethien.home
+        caddy.tls: internal
+        caddy.reverse_proxy: "{{upstreams 3100}}"
+
+        homepage.group: metrics
+        homepage.name: loki
+        homepage.icon: loki.png
+        homepage.description: log deez nuts
+
+  prometheus:
+    image: prom/prometheus:latest
+    configs:
+      - source: prometheus.yml
+        target: /etc/prometheus/prometheus.yml
+    volumes:
+      - prometheus:/prometheus
+    networks:
+      - prometheus
+      - caddy
+    deploy:
+      replicas: 1
+      update_config:
+        order: start-first
+      labels:
+        caddy: prometheus.cethien.home
+        caddy.tls: internal
+        caddy.reverse_proxy: "{{upstreams 9090}}"
+
+        homepage.group: metrics
+        homepage.name: prometheus
+        homepage.icon: prometheus.png
+        homepage.href: https://prometheus.cethien.home
+        homepage.description: scrape deez nuts
+
+        homepage.widget.type: prometheus
+        homepage.widget.url: https://prometheus.cethien.home

@@ -1,24 +1,17 @@
 {
   imports = [
     ../../modules/nixos
-    ../../services/core-infra
-    ../../services/git-server
   ];
 
-  networking.hostName = "srv-home-01";
   services.openssh.enable = true;
 
-  users.users = {
-    cethien.enable = true;
-  };
+  users.users.cethien.enable = true;
 
-  virtualisation.docker = {
-    enable = true;
-    swarm.enable = true;
-  };
+  virtualisation.docker.enable = true;
+  virtualisation.docker.swarm.enable = true;
 
   services = {
-    promtail.enable = true;
+    # promtail.enable = true;
     promtail.configuration.clients = [
       {
         url = "https://loki.cethien.home/loki/api/v1/push";

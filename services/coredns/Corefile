@@ -5,7 +5,6 @@
       192.168.1.50 cloudbeaver.cethien.home
       192.168.1.50 semaphore.cethien.home
       192.168.1.50 grafana.cethien.home
-      192.168.1.50 freshrss.cethien.home
       192.168.1.50 cethien.home
       
       192.168.1.50 prometheus.cethien.home
@@ -16,9 +15,12 @@
     }
     
 
-    forward . 10.10.0.10:53
+    forward . tls://9.9.9.9 {
+       tls_servername dns.quad9.net
+       health_check 5s
+    }
     
-    cache 20
+    cache 30
     log
     errors
     prometheus :9153

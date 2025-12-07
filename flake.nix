@@ -2,53 +2,61 @@
   description = "cethien's dotfiles";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     flake-utils.url = "github:numtide/flake-utils";
+
+    nixos-hardware.url = "github:nixos/nixos-hardware";
 
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
-    nixos-hardware.url = "github:nixos/nixos-hardware";
-
     deploy-rs.url = "github:serokell/deploy-rs";
     deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
-
-    stylix.url = "github:nix-community/stylix";
-    stylix.inputs.nixpkgs.follows = "nixpkgs";
 
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+
     home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs-unstable";
+
+    stylix.url = "github:nix-community/stylix";
+    stylix.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
     nur.url = "github:nix-community/NUR";
-    nur.inputs.nixpkgs.follows = "nixpkgs";
+    nur.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
+    zen-browser.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
-    spicetify-nix.inputs.nixpkgs.follows = "nixpkgs";
+    spicetify-nix.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
     nvf.url = "github:notashelf/nvf";
-    nvf.inputs.nixpkgs.follows = "nixpkgs";
+    nvf.inputs.nixpkgs.follows = "nixpkgs-unstable";
   };
 
   outputs = inputs @ {
     self,
     flake-utils,
     nixpkgs,
-    nur,
-    deploy-rs,
     nixos-hardware,
     disko,
+    deploy-rs,
+    nixpkgs-unstable,
     home-manager,
+    nur,
     ...
   }: let
+    stateVersion = "25.05";
     eachSys = flake-utils.lib.eachDefaultSystem;
     eachSysPass = flake-utils.lib.eachDefaultSystemPassThrough;
-    pkgsFor = system:
-      import nixpkgs {
+
+    pkgsFor = system: import nixpkgs {inherit system;};
+
+    pkgsUnstableFor = system:
+      import nixpkgs-unstable {
         inherit system;
         config.allowUnfree = true;
         overlays = [
@@ -61,97 +69,102 @@
     (system: let
       pkgs = pkgsFor system;
     in {
-      devShells.default = pkgs.mkShell {
-        packages = with pkgs; [
-          git
-          just
-          nixpkgs-fmt
-          sops
-          ansible
-          ansible-lint
-          sshpass
-          openssl
-          libargon2
-        ];
-      };
-
-      packages.neovim =
-        (inputs.nvf.lib.neovimConfiguration {
-          inherit pkgs;
-          modules = [
-            {config = import ./modules/home/neovim/nvf-config.nix {inherit pkgs;};}
-          ];
-        }).neovim;
+      devShells.default = import ./devShell.nix {inherit pkgs;};
     })
     // eachSysPass (system: let
+      lib = nixpkgs.lib;
+
       pkgs = pkgsFor system;
-      latestStateVersion = "25.05";
+      pkgsUnstable = pkgsUnstableFor system;
+
+      hosts = import ./hosts.nix {inherit lib;};
+      clients = import ./clients {inherit lib;};
     in {
-      homeConfigurations."bsotnikow@wsl" = home-manager.lib.homeManagerConfiguration {
-        modules = [(import ./systems/tmsproshop.de/home.nix)];
-        extraSpecialArgs = inputs // {stateVersion = latestStateVersion;};
-        inherit pkgs;
-      };
+      # homeConfigurations."bsotnikow@wsl" = home-manager.lib.homeManagerConfiguration {
+      #   modules = [(import ./homes/tmsproshop.de)];
+      #   extraSpecialArgs = inputs // {inherit stateVersion;};
+      #   pkgs = pkgsUnstable;
+      # };
 
-      nixosConfigurations."cethien.home" = nixpkgs.lib.nixosSystem {
-        inherit pkgs;
-        modules = [
-          disko.nixosModules.disko
-          ./shared/disko/simple
-          ./systems/cethien.home/hardware.nix
-          ./systems/cethien.home/configuration.nix
-          {system.stateVersion = latestStateVersion;}
-        ];
-      };
+      nixosConfigurations = let
+        hostNodes =
+          lib.mapAttrs (
+            name: n:
+              lib.nixosSystem {
+                inherit pkgs;
+                modules = [
+                  disko.nixosModules.disko
+                  ./disko/simple.nix
+                  ./hosts/${n.hostName}/hardware-configuration.nix
+                  ./hosts/${n.hostName}/configuration.nix
+                  {
+                    system = {inherit stateVersion;};
+                    networking = {
+                      inherit (n) hostName;
+                      interfaces.eth0.ipv4.addresses = [
+                        {
+                          inherit (n) address;
+                          prefixLength = 24;
+                        }
+                      ];
+                      inherit (n) defaultGateway nameservers;
+                    };
+                  }
+                ];
+              }
+          )
+          hosts;
 
-      deploy.nodes."cethien.home" = {
-        hostname = "192.168.1.50";
-        profiles.system = {
-          path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations."cethien.home";
-          user = "root";
-          sshUser = "deployrs";
-          sshOpts = ["-i" "~/.ssh/id_deployrs_cethien.home"];
-        };
-      };
-
-      nixosConfigurations."hp-430-g7" = nixpkgs.lib.nixosSystem {
-        inherit pkgs;
-        specialArgs = inputs;
-        modules = let
-          user = "cethien";
-        in [
-          ./systems/hp-430-g7/configuration.nix
-          {system.stateVersion = latestStateVersion;}
-          home-manager.nixosModules.home-manager
+        clientNodes = lib.mapAttrs (name: n:
+          lib.nixosSystem
           {
-            home-manager = {
-              backupFileExtension = "hm-bak";
-              users."${user}" = ./systems/hp-430-g7/home.nix;
-              extraSpecialArgs =
-                inputs
-                // {
-                  stateVersion = latestStateVersion;
-                  inherit pkgs system;
+            pkgs = pkgsUnstable;
+            modules = let
+              user = "cethien";
+            in [
+              ./clients/${n.hostName}/hardware-configuration.nix
+              ./clients/${n.hostName}/configuration.nix
+              {
+                system = {inherit stateVersion;};
+              }
+              home-manager.nixosModules.home-manager
+              {
+                home-manager = {
+                  backupFileExtension = "hm-bak";
+                  users."${user}" = ./clients/${n.hostName}/home.nix;
+                  extraSpecialArgs =
+                    inputs
+                    // {
+                      pkgs = pkgsUnstable;
+                      inherit system stateVersion;
+                    };
                 };
-            };
-          }
-        ];
-      };
+              }
+            ];
+            specialArgs = inputs;
+          })
+        clients;
+      in
+        clientNodes // hostNodes;
 
-      checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
+      deploy.nodes =
+        lib.mapAttrs (_: n: {
+          hostname = n.address;
+          profiles.system = {
+            user = "root";
+            sshUser = "deployrs";
+            sshOpts = ["-i" "~/.ssh/id_deployrs_cethien.home"];
+            path =
+              deploy-rs.lib.${system}.activate.nixos
+              self.nixosConfigurations.${n.hostName};
+          };
+        })
+        hosts;
 
-      templates = {
-        default = self.templates.empty;
+      checks = builtins.mapAttrs (system: deployLib:
+        deployLib.deployChecks self.deploy)
+      deploy-rs.lib;
 
-        empty = {
-          path = ./templates/empty-project;
-          description = "A basic project";
-        };
-
-        go = {
-          path = ./templates/go-project;
-          description = "go project";
-        };
-      };
+      templates = import ./templates;
     });
 }

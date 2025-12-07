@@ -1,0 +1,29 @@
+[hosts.defaults]
+os = "nixos"
+default_gateway = "192.168.1.1"
+nameservers = ["192.168.1.1", "1.1.1.1"]
+
+[hosts.homelab]
+address = "192.168.1.50"
+
+[services.caddy]
+host = "homelab"
+
+[services.prometheus]
+host = "homelab"
+
+[services.whats-up-docker]
+host = "homelab"
+
+[services.coredns]
+host = "homelab"
+
+[services.homepage]
+host = "homelab"
+
+[services.grafana]
+host = "homelab"
+
+[services.gitea]
+host = "homelab"
+

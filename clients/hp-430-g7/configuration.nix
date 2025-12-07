@@ -4,7 +4,6 @@
   ...
 }: {
   imports = [
-    ./hardware.nix
     nixos-hardware.nixosModules.common-pc-laptop
     ../../modules/nixos
   ];

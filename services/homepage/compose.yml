@@ -1,3 +1,24 @@
+networks:
+  caddy:
+    name: caddy_net
+    external: true
+
+volumes:
+  config:
+    name: admin_homepage_config
+
+configs:
+  bookmarks.yaml:
+    file: ./bookmarks.yaml
+  widgets.yaml:
+    file: ./widgets.yaml
+  services.yaml:
+    file: ./services.yaml
+  settings.yaml:
+    file: ./settings.yaml
+  docker.yaml:
+    file: ./docker.yaml
+
 services:
   homepage:
     image: ghcr.io/gethomepage/homepage:v1.5.0
@@ -18,42 +39,14 @@ services:
       - config:/app/config
       - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
-      - coredns
       - caddy
     deploy:
       replicas: 1
-      restart_policy:
-        condition: on-failure
-        max_attempts: 5
+      update_config:
+        order: start-first
       placement:
         constraints: [node.role == manager]
       labels:
         caddy: cethien.home
-        caddy.tls: internal
         caddy.reverse_proxy: "{{upstreams 3000}}"
-
-        coredns.dockerdiscover.host: cethien.home
-
-volumes:
-  config:
-    name: admin_homepage_config
-
-configs:
-  bookmarks.yaml:
-    file: ./bookmarks.yaml
-  widgets.yaml:
-    file: ./widgets.yaml
-  services.yaml:
-    file: ./services.yaml
-  settings.yaml:
-    file: ./settings.yaml
-  docker.yaml:
-    file: ./docker.yaml
-
-networks:
-  coredns:
-    name: coredns_net
-    external: true
-  caddy:
-    name: caddy_net
-    external: true
+        caddy.tls: internal

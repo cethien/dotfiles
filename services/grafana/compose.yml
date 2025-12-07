@@ -1,37 +1,3 @@
-services:
-  grafana:
-    image: grafana/grafana-oss:latest
-    environment:
-      GF_SERVER_ROOT_URL: https://grafana.cethien.home/
-      GF_PANELS_DISABLE_SANITIZE_HTML: "true"
-      GF_INSTALL_PLUGINS: grafana-piechart-panel
-    volumes:
-      - grafana:/var/lib/grafana
-    networks:
-      - grafana
-      - caddy
-    deploy:
-      mode: replicated
-      replicas: 1
-      # placement:
-      #   constraints: [node.role == worker]
-      labels:
-        caddy: grafana.cethien.home
-        caddy.reverse_proxy: "{{upstreams 3000}}"
-        caddy.tls: internal
-
-        homepage.group: monitoring
-        homepage.name: grafana
-        homepage.icon: grafana.png
-        homepage.href: https://grafana.cethien.home/
-        homepage.description: visualize deez nuts
-
-        homepage.widget.type: grafana
-        homepage.widget.version: 2
-        homepage.widget.url: https://grafana.cethien.home
-        homepage.widget.username: cethien
-        homepage.widget.password: I4yhwdvlb5G2U2JqqTgI37tQ
-
 networks:
   grafana:
     name: grafana_net
@@ -45,3 +11,30 @@ networks:
 volumes:
   grafana:
     name: grafana_data
+
+services:
+  grafana:
+    image: grafana/grafana-oss:latest
+    environment:
+      GF_SERVER_ROOT_URL: https://grafana.cethien.home/
+      GF_PANELS_DISABLE_SANITIZE_HTML: "true"
+      GF_INSTALL_PLUGINS: grafana-piechart-panel
+    volumes:
+      - grafana:/var/lib/grafana
+    networks:
+      - grafana
+      - caddy
+    deploy:
+      replicas: 1
+      update_config:
+        order: start-first
+      labels:
+        caddy: grafana.cethien.home
+        caddy.reverse_proxy: "{{upstreams 3000}}"
+        caddy.tls: internal
+
+        homepage.group: monitoring
+        homepage.name: grafana
+        homepage.icon: grafana.png
+        homepage.href: https://grafana.cethien.home/
+        homepage.description: visualize deez nuts

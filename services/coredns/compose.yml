@@ -1,0 +1,67 @@
+networks:
+  coredns:
+    name: coredns_net
+    driver: overlay
+    attachable: true
+
+  prometheus:
+    name: prometheus_net
+    external: true
+
+configs:
+  Corefile:
+    file: ./Corefile
+  blocky.yml:
+    file: ./blocky.yml
+
+services:
+  coredns:
+    image: coredns/coredns:1.12.4
+    configs:
+      - source: Corefile
+        target: /Corefile
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    ports:
+      - 53:53/tcp
+      - 53:53/udp
+    networks:
+      - coredns
+      - prometheus
+    deploy:
+      replicas: 1
+      update_config:
+        order: start-first
+      placement:
+        constraints: [node.role == manager]
+      labels:
+        homepage.group: dns
+        homepage.name: coreDNS
+        homepage.icon: coredns.png
+        homepage.description: resolve deez nuts
+#
+# blocky:
+#   image: ghcr.io/0xerr0r/blocky:v0.27.0
+#   environment:
+#     TZ: Europe/Berlin
+#   configs:
+#     - source: blocky.yml
+#       target: /app/config.yml
+#   volumes:
+#     - /etc/localtime:/etc/localtime:ro
+#   networks:
+#     coredns:
+#       ipv4_address: 10.10.0.10
+#     caddy:
+#     prometheus:
+#   deploy:
+#     replicas: 1
+#   update_config:
+#     order: start-first
+#     placement:
+#       constraints: [node.role == manager]
+#     labels:
+#       homepage.group: dns
+#       homepage.name: blocky
+#       homepage.icon: blocky.png
+#       homepage.description: filter deez nuts
