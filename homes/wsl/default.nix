@@ -1,11 +1,18 @@
 {lib, ...}: let
-  inherit (lib) mkDefault mkBefore;
+  inherit (lib) mkBefore;
 in {
-  home.username = mkDefault "cethien";
-  home.homeDirectory = mkDefault "/home/cethien";
-  programs.bash.bashrcExtra = mkBefore ''
-    if [ -f ~/.nix-profile/etc/profile.d/nix.sh ]; then
-      source ~/.nix-profile/etc/profile.d/nix.sh
-    fi
-  '';
+  imports = [
+    ../../modules/home
+  ];
+
+  programs = let
+    sourceNix = ''
+      if [ -f ~/.nix-profile/etc/profile.d/nix.sh ]; then
+            source ~/.nix-profile/etc/profile.d/nix.sh
+      fi
+    '';
+  in {
+    bash.bashrcExtra = mkBefore sourceNix;
+    zsh.initContent = mkBefore sourceNix;
+  };
 }

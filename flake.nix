@@ -79,12 +79,35 @@
 
       hosts = import ./hosts.nix {inherit lib;};
       clients = import ./clients {inherit lib;};
+      homes = import ./homes {inherit lib;};
     in {
-      # homeConfigurations."bsotnikow@wsl" = home-manager.lib.homeManagerConfiguration {
-      #   modules = [(import ./homes/tmsproshop.de)];
-      #   extraSpecialArgs = inputs // {inherit stateVersion;};
-      #   pkgs = pkgsUnstable;
-      # };
+      homeConfigurations = let
+        configs = builtins.listToAttrs (map (n: let
+            host =
+              if n.type == "wsl"
+              then "wsl"
+              else n.hostname;
+          in {
+            name = "${n.username}@${host}";
+            value = home-manager.lib.homeManagerConfiguration {
+              pkgs = pkgsUnstable;
+              modules = [
+                (import ./homes/${n.hostname})
+                {
+                  home = let
+                    inherit (n) username;
+                  in {
+                    inherit stateVersion username;
+                    homeDirectory = "/home/${username}";
+                  };
+                }
+              ];
+              extraSpecialArgs = inputs;
+            };
+          })
+          homes);
+      in
+        configs;
 
       nixosConfigurations = let
         hostNodes =

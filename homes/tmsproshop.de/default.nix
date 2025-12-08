@@ -1,29 +1,23 @@
-{
-  stateVersion,
-  lib,
-  ...
-}: let
+{lib, ...}: let
   inherit (lib) mkBefore;
-  username = "bsotnikow";
 in {
   imports = [
     ../../modules/home
   ];
 
-  home.username = username;
-  home.homeDirectory = "/home/${username}";
-  home.stateVersion = stateVersion;
-
-  programs = {
+  programs = let
+    sourceNix = ''
+      if [ -f ~/.nix-profile/etc/profile.d/nix.sh ]; then
+            source ~/.nix-profile/etc/profile.d/nix.sh
+      fi
+    '';
+  in {
     firefox.enable = true;
     thunderbird.enable = true;
     thunderbird.profiles."b.sotnikow@tmspro.shop".isDefault = true;
 
-    bash.bashrcExtra = mkBefore ''
-      if [ -f ~/.nix-profile/etc/profile.d/nix.sh ]; then
-        source ~/.nix-profile/etc/profile.d/nix.sh
-      fi
-    '';
+    bash.bashrcExtra = mkBefore sourceNix;
+    zsh.initContent = mkBefore sourceNix;
 
     ssh.matchBlocksExtra = {
       "*".identityFile = "~/.ssh/id_ed25519";
