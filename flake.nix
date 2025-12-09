@@ -57,15 +57,6 @@
     eachSys = flake-utils.lib.eachDefaultSystem;
     eachSysPass = flake-utils.lib.eachDefaultSystemPassThrough;
 
-    homeManagerModules.default = [
-      {
-        _module.args = {
-          inherit stylix zen-browser spicetify-nix nvf;
-        };
-      }
-      ./modules/home
-    ];
-
     pkgsFor = system: import nixpkgs {inherit system;};
     pkgsUnstableFor = system:
       import nixpkgs-unstable {
@@ -78,7 +69,14 @@
       };
   in
     {
-      inherit homeManagerModules;
+      homeModules.default = [
+        ./modules/home
+        {
+          _module.args = {
+            inherit stylix nvf zen-browser spicetify-nix;
+          };
+        }
+      ];
     }
     // eachSys
     (system: let
