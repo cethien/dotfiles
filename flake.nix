@@ -18,14 +18,14 @@
 
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    nur.url = "github:nix-community/NUR";
+    nur.inputs.nixpkgs.follows = "nixpkgs-unstable";
+
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
     stylix.url = "github:nix-community/stylix";
     stylix.inputs.nixpkgs.follows = "nixpkgs-unstable";
-
-    nur.url = "github:nix-community/NUR";
-    nur.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
     zen-browser.inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -45,15 +45,26 @@
     disko,
     deploy-rs,
     nixpkgs-unstable,
-    home-manager,
     nur,
+    home-manager,
+    stylix,
+    zen-browser,
+    spicetify-nix,
+    nvf,
     ...
   }: let
     stateVersion = "25.05";
     eachSys = flake-utils.lib.eachDefaultSystem;
     eachSysPass = flake-utils.lib.eachDefaultSystemPassThrough;
 
-    homeModules.default = import ./modules/home;
+    homeModules.default = {...} @ args:
+      import ./modules/home
+      (
+        args
+        // {
+          inherit stylix zen-browser spicetify-nix nvf;
+        }
+      );
 
     pkgsFor = system: import nixpkgs {inherit system;};
     pkgsUnstableFor = system:
