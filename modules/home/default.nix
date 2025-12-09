@@ -1,4 +1,9 @@
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   imports = [
     ./stylix.nix
     ./sops.nix
