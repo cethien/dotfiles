@@ -53,8 +53,9 @@
     eachSys = flake-utils.lib.eachDefaultSystem;
     eachSysPass = flake-utils.lib.eachDefaultSystemPassThrough;
 
-    pkgsFor = system: import nixpkgs {inherit system;};
+    homeModules.default = import ./modules/home;
 
+    pkgsFor = system: import nixpkgs {inherit system;};
     pkgsUnstableFor = system:
       import nixpkgs-unstable {
         inherit system;
@@ -65,7 +66,10 @@
         ];
       };
   in
-    eachSys
+    {
+      inherit homeModules;
+    }
+    // eachSys
     (system: let
       pkgs = pkgsFor system;
     in {
