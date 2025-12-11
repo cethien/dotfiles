@@ -69,8 +69,19 @@ in {
       fzf.enable = true;
       fzf = {
         defaultCommand = "fd --type f";
+
         fileWidgetCommand = "fd --type f";
+        fileWidgetOptions = [
+          "--preview 'head {}'"
+        ];
+
         changeDirWidgetCommand = "fd --type d";
+
+        defaultOptions = [
+          "--preview-window right:50%"
+          "--color bg:-1"
+          # "--border"
+        ];
       };
       fd.enable = true;
       eza.enable = true;

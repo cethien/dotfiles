@@ -30,6 +30,8 @@
     ./discord.nix
     ./creative.nix
     ./gaming.nix
+
+    ./freerdp.nix
   ];
 
   programs = {

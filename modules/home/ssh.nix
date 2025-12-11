@@ -24,7 +24,9 @@ in {
   };
 
   config = {
-    home.packages = with pkgs; [sshs];
+    home.packages = with pkgs; [
+      (writeShellScriptBin "ssf" (builtins.readFile ./fzf-ssh.sh))
+    ];
     programs.ssh = {
       enableDefaultConfig = false;
       matchBlocks = mkMerge [
@@ -39,6 +41,6 @@ in {
       ];
     };
 
-    programs.tmux.resurrectPluginProcesses = ["ssh" "sshs"];
+    programs.tmux.resurrectPluginProcesses = ["ssh"];
   };
 }
