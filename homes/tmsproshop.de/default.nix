@@ -5,6 +5,8 @@ in {
     ../../modules/home
   ];
 
+  accounts.email.accounts = import ./email.nix;
+
   programs = let
     sourceNix = ''
       if [ -f ~/.nix-profile/etc/profile.d/nix.sh ]; then
@@ -14,65 +16,35 @@ in {
   in {
     firefox.enable = true;
     thunderbird.enable = true;
-    thunderbird.profiles."b.sotnikow@tmspro.shop".isDefault = true;
+    thunderbird.profiles."b.sotnikow@tmsproshop.de".isDefault = true;
+    ssh.matchBlocksExtra = import ./ssh.nix;
+    freerdp.enable = true;
+    # freerdp.connections = let
+    #   domain = "ad.tmpsproshop.de";
+    #   username = "Administrator";
+    # in {
+    #   "hyper-v" = {
+    #     inherit domain username;
+    #     "full address" = "10.102.99.89";
+    #   };
+    #
+    #   "ad" = {
+    #     inherit domain username;
+    #     "full address" = "10.102.99.98";
+    #   };
+    #
+    #   "exchange" = {
+    #     inherit domain username;
+    #     "full address" = "10.102.99.99";
+    #   };
+    #   "timas" = {
+    #     "full address" = "10.180.80.155";
+    #     username = "LocalAdmin";
+    #     domain = "";
+    #   };
+    # };
 
     bash.bashrcExtra = mkBefore sourceNix;
     zsh.initContent = mkBefore sourceNix;
-
-    ssh.matchBlocksExtra = {
-      "*".identityFile = "~/.ssh/id_ed25519";
-      "*".user = "bso";
-
-      "srv-bitbucket-runner".hostname = "10.180.80.220";
-      "srv-magento-content".hostname = "10.102.99.215";
-
-      "lxc-wp-test-1" = {
-        user = "sysadmin";
-        hostname = "10.180.80.92";
-      };
-      "lxc-anna-auftrag" = {
-        user = "sysadmin";
-        hostname = "10.102.99.85";
-      };
-
-      "lxc-sdg" = {
-        user = "sysadmin";
-        hostname = "10.102.99.92";
-      };
-      "lxc-phone-search" = {
-        user = "sysadmin";
-        hostname = "10.102.99.91";
-      };
-      "lxc-toja-prod" = {
-        user = "sysadmin";
-        hostname = "10.102.99.205";
-      };
-      "lxc-sherlock-prod" = {
-        user = "sysadmin";
-        hostname = "10.102.99.90";
-      };
-      "srv-bnl" = {
-        user = "root";
-        hostname = "10.102.99.93";
-      };
-      "srv-weclapp-prod" = {
-        user = "root";
-        hostname = "10.180.80.97";
-      };
-      "srv-weclapp-test".hostname = "10.180.80.94";
-      "srv-docker-prod-1".hostname = "10.180.80.93";
-      "srv-admin-docker-cluster-node-01".hostname = "10.180.80.201";
-      "pve-01".hostname = "10.180.80.252";
-      "pve-02".hostname = "10.180.80.250";
-
-      "maxcluster--srv-prod" = {
-        user = "web-user";
-        hostname = "109.71.72.118";
-      };
-      "maxcluster--srv-staging" = {
-        user = "web-user";
-        hostname = "109.71.72.244";
-      };
-    };
   };
 }
