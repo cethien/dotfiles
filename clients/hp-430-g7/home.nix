@@ -12,7 +12,7 @@
   home.homeDirectory = "/home/cethien";
   home.stateVersion = stateVersion;
 
-  stylix.image = ../../wallpapers/bliss_minimal.png;
+  stylix.image = ../../wallpapers/boy_and_cat_sitting_on_stairs.jpeg;
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
@@ -67,6 +67,7 @@
     kitty.enable = true;
     chromium.enable = true;
     keepassxc.enable = true;
+    gemini-cli.enable = true;
 
     thunderbird.enable = true;
     thunderbird.profiles."borislaw.sotnikow@gmx.de".isDefault = true;

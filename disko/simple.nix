@@ -1,12 +1,8 @@
-{ lib, ... }:
-let
-  inherit (lib) mkDefault;
-in
-{
+{diskId, ...}: {
   disko.devices = {
     disk = {
       main = {
-        device = mkDefault "/dev/sda";
+        device = "/dev/disk/by-id/${diskId}";
         type = "disk";
         content = {
           type = "gpt";
@@ -22,7 +18,7 @@ in
                 type = "filesystem";
                 format = "vfat";
                 mountpoint = "/boot";
-                mountOptions = [ "umask=0077" ];
+                mountOptions = ["umask=0077"];
               };
             };
             root = {

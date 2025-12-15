@@ -32,7 +32,7 @@ home := env("USER") + "@" + hostname
 
 deploy-service service: clear
   #!/usr/bin/env bash
-  tq="tq -f deploy.toml"
+  tq="tq -f inventory.toml"
   hostname=$($tq services.{{service}}.host | tr -d '"')
   host=$($tq hosts."$hostname".address | tr -d '"')
   echo "🚀 deploying {{service}} to $hostname"
@@ -41,7 +41,7 @@ deploy-service service: clear
 
 remove-service service: clear
   #!/usr/bin/env bash
-  tq="tq -f deploy.toml"
+  tq="tq -f inventory.toml"
   hostname=$($tq services.{{service}}.host | tr -d '"')
   host=$($tq hosts."$hostname".address | tr -d '"')
   echo "❌ removing {{service}} from $hostname"

@@ -72,106 +72,98 @@
       devShells.default = import ./devShell.nix {inherit pkgs;};
     })
     // eachSysPass (system: let
-      lib = nixpkgs.lib;
-
       pkgs = pkgsFor system;
-      pkgsUnstable = pkgsUnstableFor system;
-
-      hosts = import ./hosts.nix {inherit lib;};
-      clients = import ./clients {inherit lib;};
-      homes = import ./homes {inherit lib;};
-    in {
-      homeConfigurations = let
-        configs = builtins.listToAttrs (map (n: let
-            host =
-              if n.type == "wsl"
-              then "wsl"
-              else n.hostname;
-          in {
-            name = "${n.username}@${host}";
-            value = home-manager.lib.homeManagerConfiguration {
-              pkgs = pkgsUnstable;
+      hosts = import ./hosts.nix;
+      hostConfigs =
+        builtins.mapAttrs (
+          name: n:
+            nixpkgs.lib.nixosSystem {
+              inherit pkgs;
               modules = [
-                (import ./homes/${n.hostname})
+                disko.nixosModules.disko
+                (import ./disko/simple.nix {inherit (n) diskId;})
+                ./hosts/${n.hostName}/hardware-configuration.nix
+                ./hosts/${n.hostName}/configuration.nix
                 {
-                  home = let
-                    inherit (n) username;
-                  in {
-                    inherit stateVersion username;
-                    homeDirectory = "/home/${username}";
+                  system = {inherit stateVersion;};
+                  networking = {
+                    inherit (n) hostName;
+                    interfaces.eth0.ipv4.addresses = [
+                      {
+                        inherit (n) address;
+                        prefixLength = 24;
+                      }
+                    ];
+                    inherit (n) defaultGateway nameservers;
                   };
                 }
               ];
-              extraSpecialArgs = inputs;
-            };
-          })
-          homes);
-      in
-        configs;
+            }
+        )
+        hosts;
 
-      nixosConfigurations = let
-        hostNodes =
-          lib.mapAttrs (
-            name: n:
-              lib.nixosSystem {
-                inherit pkgs;
-                modules = [
-                  disko.nixosModules.disko
-                  ./disko/simple.nix
-                  ./hosts/${n.hostName}/hardware-configuration.nix
-                  ./hosts/${n.hostName}/configuration.nix
-                  {
-                    system = {inherit stateVersion;};
-                    networking = {
-                      inherit (n) hostName;
-                      interfaces.eth0.ipv4.addresses = [
-                        {
-                          inherit (n) address;
-                          prefixLength = 24;
-                        }
-                      ];
-                      inherit (n) defaultGateway nameservers;
-                    };
-                  }
-                ];
-              }
-          )
-          hosts;
+      pkgsUnstable = pkgsUnstableFor system;
+      clients = import ./clients;
+      clientConfigs = builtins.mapAttrs (name: n:
+        nixpkgs-unstable.lib.nixosSystem
+        {
+          pkgs = pkgsUnstable;
+          modules = let
+            user = "cethien";
+          in [
+            ./clients/${n.hostName}/hardware-configuration.nix
+            ./clients/${n.hostName}/configuration.nix
+            {system = {inherit stateVersion;};}
 
-        clientNodes = lib.mapAttrs (name: n:
-          lib.nixosSystem
-          {
+            home-manager.nixosModules.home-manager
+            {
+              home-manager = {
+                backupFileExtension = "hm-bak";
+                users."${user}" = ./clients/${n.hostName}/home.nix;
+                extraSpecialArgs =
+                  inputs
+                  // {
+                    pkgs = pkgsUnstable;
+                    inherit system stateVersion;
+                  };
+              };
+            }
+          ];
+          specialArgs = inputs // {nixpkgs = nixpkgs-unstable;};
+        })
+      clients;
+
+      homes = import ./homes;
+      homeConfigs = builtins.listToAttrs (map (n: let
+          host =
+            if n.type == "wsl"
+            then "wsl"
+            else n.hostname;
+        in {
+          name = "${n.username}@${host}";
+          value = home-manager.lib.homeManagerConfiguration {
             pkgs = pkgsUnstable;
-            modules = let
-              user = "cethien";
-            in [
-              ./clients/${n.hostName}/hardware-configuration.nix
-              ./clients/${n.hostName}/configuration.nix
+            modules = [
+              (import ./homes/${n.hostname})
               {
-                system = {inherit stateVersion;};
-              }
-              home-manager.nixosModules.home-manager
-              {
-                home-manager = {
-                  backupFileExtension = "hm-bak";
-                  users."${user}" = ./clients/${n.hostName}/home.nix;
-                  extraSpecialArgs =
-                    inputs
-                    // {
-                      pkgs = pkgsUnstable;
-                      inherit system stateVersion;
-                    };
+                home = let
+                  inherit (n) username;
+                in {
+                  inherit stateVersion username;
+                  homeDirectory = "/home/${username}";
                 };
               }
             ];
-            specialArgs = inputs;
-          })
-        clients;
-      in
-        clientNodes // hostNodes;
+            extraSpecialArgs = inputs;
+          };
+        })
+        homes);
+    in {
+      homeConfigurations = homeConfigs;
+      nixosConfigurations = hostConfigs // clientConfigs;
 
       deploy.nodes =
-        lib.mapAttrs (_: n: {
+        builtins.mapAttrs (_: n: {
           hostname = n.address;
           profiles.system = {
             user = "root";

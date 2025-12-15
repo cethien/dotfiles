@@ -5,6 +5,7 @@ nameservers = ["192.168.1.1", "1.1.1.1"]
 
 [hosts.homelab]
 address = "192.168.1.50"
+disk_id = "wwn-0x56479a7001514900"
 
 [services.caddy]
 host = "homelab"
