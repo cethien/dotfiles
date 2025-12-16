@@ -15,8 +15,6 @@ in {
 
   config = mkIf config.programs.remoteUtils.enable {
     home.packages = with pkgs; [
-      freerdp
-      tigervnc
       localsend
       jocalsend
       castnow

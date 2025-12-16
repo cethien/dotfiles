@@ -55,8 +55,6 @@ in {
     programs.lazygit.enable = true;
     programs.diff-so-fancy.enable = true;
     programs.diff-so-fancy.enableGitIntegration = true;
-
     programs.tmux.resurrectPluginProcesses = ["lazygit"];
-    home.shellAliases.lzg = "lazygit";
   };
 }

@@ -8,6 +8,7 @@ in {
     address = email;
     realName = "Borislaw Sotnikow";
 
+    userName = email;
     smtp = {
       host = "mail.gmx.net";
       port = 587;
@@ -21,7 +22,6 @@ in {
       port = 993;
       tls.enable = true;
     };
-    userName = email;
     passwordCommand = "secret-tool lookup smtp-host ${smtp.host} smtp-user ${address}";
   };
 }

@@ -3,8 +3,6 @@
     ./stylix.nix
     ./sops.nix
 
-    ./rclone.nix
-    ./syncthing.nix
     ./restic.nix
 
     ./bash.nix
