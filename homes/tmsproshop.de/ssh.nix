@@ -5,7 +5,7 @@
   "monitoring-01".hostname = "10.0.40.11";
   "monitoring-02".hostname = "10.0.40.12";
 
-  "bitbucket-runner".hostname = "10.180.80.220";
+  "bitbucket-runner".hostname = "10.0.30.20";
   "magento-content".hostname = "10.102.99.215";
 
   "wp-test".user = "sysadmin";
