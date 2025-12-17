@@ -1,5 +1,5 @@
 let
-  inventory = builtins.fromTOML (builtins.readFile ./inventory.toml);
+  inventory = builtins.fromTOML (builtins.readFile ../inventory.toml);
   inherit (inventory.hosts) defaults;
   mergeHost = host: defaults // host;
   mkHost = name: merged: {

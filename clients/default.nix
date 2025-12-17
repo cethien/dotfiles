@@ -1,17 +1,9 @@
 let
-  clients = [
-    {
-      hostName = "hp-430-g7";
-      diskId = "nvme-eui.002538a301b0c2cd";
-    }
-    # {
-    #   hostName = "tower-of-power";
-    #   diskId = null;
-    # }
-  ];
+  inventory = builtins.fromTOML (builtins.readFile ../inventory.toml);
 in
-  builtins.listToAttrs (map (c: {
-      name = c.hostName;
-      value = {inherit (c) hostName diskId;};
-    })
-    clients)
+  builtins.mapAttrs (name: c: {
+    hostName = name;
+    diskId = c.disk_id;
+  })
+  inventory.clients
+

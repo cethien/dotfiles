@@ -1,3 +1,11 @@
+[clients.hp-430-g7]
+os = "nixos"
+disk_id = "nvme-eui.002538a301b0c2cd"
+
+# [clients.tower-of-power]
+# os = "nixos"
+#
+
 [hosts.defaults]
 os = "nixos"
 default_gateway = "192.168.1.1"

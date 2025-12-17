@@ -73,7 +73,7 @@
     })
     // eachSysPass (system: let
       pkgs = pkgsFor system;
-      hosts = import ./hosts.nix;
+      hosts = import ./hosts;
       hostConfigs =
         builtins.mapAttrs (
           name: n:
