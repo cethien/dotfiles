@@ -71,19 +71,14 @@
 			"format": "{#90}┌{$1} Software {$1}{$1}┐{#}"
 		},
 		{
-			"key": "OS",
-			"type": "os",
-			"keyColor": "33"
-		},
-		{
 			"key": "Kernel",
 			"type": "kernel",
 			"keyColor": "93"
 		},
-		{
-			"key": "DM",
-			"type": "lm",
-			"keyColor": "35"
+    {
+			"key": "OS",
+			"type": "os",
+			"keyColor": "33"
 		},
 		{
 			"key": "DE",
@@ -113,16 +108,6 @@
 		{
 			"key": "Font",
 			"type": "terminalfont",
-			"keyColor": "34"
-		},
-		{
-			"key": "Terminal",
-			"type": "terminal",
-			"keyColor": "94"
-		},
-		{
-			"key": "Shell",
-			"type": "shell",
 			"keyColor": "34"
 		},
 		{
