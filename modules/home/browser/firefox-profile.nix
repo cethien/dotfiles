@@ -6,11 +6,13 @@
   ...
 }: let
   inherit (lib) elem mkIf mkMerge;
-  cfg = config.deeznuts.browser;
+  cfg = config.programs.browser;
 in {
   profiles."${name}" = let
     potato = elem "potato-squad.de" cfg.firefox-profile.containers;
     creative = elem "creative-europe.net" cfg.firefox-profile.containers;
+    tms = elem "tmsproshop.de" cfg.firefox-profile.containers;
+    tms-admin = elem "tmsproshop.de/admin" cfg.firefox-profile.containers;
   in {
     id = 0;
     inherit name;
@@ -38,6 +40,18 @@ in {
         id = 4;
         color = "yellow";
         icon = "vacation";
+      };
+
+      "tmsproshop.de" = mkIf tms {
+        id = 5;
+        color = "green";
+        icon = "briefcase";
+      };
+
+      "tmsproshop.de/admin" = mkIf tms-admin {
+        id = 6;
+        color = "red";
+        icon = "briefcase";
       };
     };
 

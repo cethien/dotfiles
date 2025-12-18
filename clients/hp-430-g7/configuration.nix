@@ -76,6 +76,10 @@
   virtualisation.docker.enable = true;
   virtualisation.libvirtd.enable = true;
 
+  services.tailscale.enable = true;
+  services.tailscale.extraSetFlags = ["--operator=cethien"];
+  services.tailscale.extraUpFlags = ["--accept-routes"];
+
   deeznuts = {
     desktop = {
       autologinUser = "cethien";

@@ -53,11 +53,12 @@
 
   programs = {
     ssh.matchBlocksExtra = {
-      "srv-home-01" = {
-        host = "srv-home-01";
+      "homelab" = {
+        host = "homelab";
         hostname = "192.168.1.50";
       };
     };
+    browser.firefox-profile.containers = ["tmsproshop.de" "tmsproshop.de/admin"];
 
     git.urlExtra = {
       "ssh://git@git.cethien.home".insteadOf = "https://git.cethien.home";
@@ -66,6 +67,7 @@
 
     kitty.enable = true;
     chromium.enable = true;
+    zen-browser.enable = true;
     keepassxc.enable = true;
     gemini-cli.enable = true;
 

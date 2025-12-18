@@ -10,6 +10,8 @@ SEPARATOR="-----"
 OPT_SHOW_WIFI_INFO="  show wi-fi info"
 OPT_WIFI_ENABLE="󰖩  enable wi-fi"
 OPT_WIFI_DISABLE="󰖪  disable wi-fi"
+OPT_TAILSCALE_ENABLE="󰖩  enable tailscale"
+OPT_TAILSCALE_DISABLE="󰖪  disable tailscale"
 
 # ===== HELPERS =====
 show_wifi_info() {
@@ -43,6 +45,14 @@ wifi_enable() {
 
 wifi_disable() {
   nmcli radio wifi off && notify-send "󰖪 wifi disabled"
+}
+
+tailscale_enable() {
+  tailscale up && notify-send "󰖩 tailscale enabled"
+}
+
+tailscale_disable() {
+  tailscale down && notify-send "󰖪 tailscale disabled"
 }
 
 # ===== GENERATE WIFI MENU =====
@@ -181,6 +191,14 @@ main() {
     MENU+=("$OPT_WIFI_DISABLE")
   fi
 
+  if command -v tailscale &>/dev/null; then
+    if tailscale status | grep -q "Tailscale is stopped"; then
+      MENU+=("$OPT_TAILSCALE_ENABLE")
+    else
+      MENU+=("$OPT_TAILSCALE_DISABLE")
+    fi
+  fi
+
   if [[ "$WIFI_STATUS" == "enabled" ]]; then
     MENU+=("$SEPARATOR")
     generate_wifi_list
@@ -194,6 +212,8 @@ main() {
   "$OPT_SHOW_WIFI_INFO") show_wifi_info ;;
   "$OPT_WIFI_ENABLE") wifi_enable ;;
   "$OPT_WIFI_DISABLE") wifi_disable ;;
+  "$OPT_TAILSCALE_ENABLE") tailscale_enable ;;
+  "$OPT_TAILSCALE_DISABLE") tailscale_disable ;;
   "$SEPARATOR") ;; # do nothing
   *) handle_connection "${WIFI_PLAIN_MENU[$(($(printf "%s\n" "${WIFI_DISPLAY_MENU[@]}" | grep -nx "$CHOICE" | cut -d: -f1) - 1))]}" ;;
   esac

@@ -5,7 +5,7 @@
   ...
 }: let
   inherit (lib) mkOption types mkPackageOption;
-  cfg = config.deeznuts.browser;
+  cfg = config.programs.browser;
 in {
   imports = [
     ./firefox.nix
@@ -14,7 +14,7 @@ in {
     ./chromium.nix
   ];
 
-  options.deeznuts.browser = {
+  options.programs.browser = {
     defaultBrowser = mkPackageOption pkgs "chromium" {};
 
     firefox-profile = {
