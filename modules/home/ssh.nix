@@ -25,7 +25,7 @@ in {
 
   config = {
     home.packages = with pkgs; [
-      (writeShellScriptBin "ssf" (builtins.readFile ./fzf-ssh.sh))
+      (writeShellScriptBin "sshz" (builtins.readFile ./fzf-ssh.sh))
     ];
     programs.ssh = {
       enableDefaultConfig = false;

@@ -91,7 +91,8 @@
 
   # Dynamically generate the connection submodule options from rdpOptions.
   connectionType = types.submodule {
-    options = lib.mapAttrs'
+    options =
+      lib.mapAttrs'
       (name: optionDef:
         lib.nameValuePair name (mkOption (
           {
@@ -99,7 +100,7 @@
           }
           // (
             if builtins.hasAttr "default" optionDef
-            then { default = optionDef.default; }
+            then {default = optionDef.default;}
             else {}
           )
         )))
@@ -113,26 +114,27 @@
     # which have `null` values.
     filteredAttrs = lib.filterAttrs (n: v: !isNull v) attrs;
 
-    lines = lib.mapAttrsToList (
-      name: value: let
-        optionDef = rdpOptions.${name};
-        rdpName = optionDef.name;
-        rdpValue =
-          if builtins.isBool value
-          then "i:${
-            if value
-            then "1"
-            else "0"
-          }"
-          else if builtins.isInt value
-          then "i:${toString value}"
-          else if builtins.isString value
-          then "s:${value}"
-          else null; # Should not happen due to type checking
-      in
-        assert rdpValue != null;
-        "${rdpName}:${rdpValue}"
-    ) filteredAttrs;
+    lines =
+      lib.mapAttrsToList (
+        name: value: let
+          optionDef = rdpOptions.${name};
+          rdpName = optionDef.name;
+          rdpValue =
+            if builtins.isBool value
+            then "i:${
+              if value
+              then "1"
+              else "0"
+            }"
+            else if builtins.isInt value
+            then "i:${toString value}"
+            else if builtins.isString value
+            then "s:${value}"
+            else null; # Should not happen due to type checking
+        in
+          assert rdpValue != null; "${rdpName}:${rdpValue}"
+      )
+      filteredAttrs;
   in
     lib.concatStringsSep "\n" lines + "\n";
 in {
@@ -158,7 +160,7 @@ in {
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
       freerdp
-      (writeShellScriptBin "rdpf" (builtins.readFile ./fzf-freerdp.sh))
+      (writeShellScriptBin "rdpz" (builtins.readFile ./fzf-freerdp.sh))
     ];
 
     home.file =

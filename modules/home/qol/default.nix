@@ -39,12 +39,11 @@ in {
     };
 
     home.packages = with pkgs; [
-      procs
-      duf
-      gdu
-      tealdeer
+      up
+      moor
 
       libqalculate
+
       # markdown reader
       glow
       mdcat
@@ -55,17 +54,23 @@ in {
 
       termshot
       slides
+      sysz
     ];
 
     programs = {
       oh-my-posh.enable = true;
+
       zoxide.enable = true;
       zoxide.options = ["--cmd cd"];
+
       ripgrep.enable = true;
       ripgrep.arguments = [
         "--max-columns-preview"
         "--colors=line:style:bold"
       ];
+
+      tealdeer.enable = true;
+
       fzf.enable = true;
       fzf = {
         defaultCommand = "fd --type f";
@@ -83,9 +88,23 @@ in {
           # "--border"
         ];
       };
+
       fd.enable = true;
+
       eza.enable = true;
+      eza = {
+        git = true;
+        icons = "always";
+        extraOptions = [
+          "--group-directories-first"
+        ];
+      };
+
       bat.enable = true;
+      bat.config = {
+        pager = "moor";
+        style = "plain";
+      };
 
       bottom.enable = true;
       yazi.enable = true;
@@ -97,30 +116,22 @@ in {
     };
 
     home.shellAliases = {
-      ff = "fastfetch";
+      cdd = "cd ~/Downloads";
+      cdc = "cd ~/.config";
+      mkdir = "mkdir -p";
       cp = "cp -i";
 
-      cdc = "cd ~/.config";
-      cdd = "cd ~/Downloads";
-
-      mkdir = "mkdir -p";
-
-      ps = "procs";
-
-      fdf = "fd --type f";
-      fdd = "fd --type d";
-
-      ll = "eza -la --icons --group-directories-first --git";
-      ls = "eza -1a --icons --group-directories-first --git";
-      tree = "eza -T --icons";
-
-      df = "duf";
-      du = "duf";
-
-      cat = "bat -p";
+      cat = "bat";
+      tree = "eza -T";
+      ff = "fastfetch";
+      ps = "${pkgs.procs}/bin/procs";
+      df = "${pkgs.duf}/bin/duf";
+      du = "${pkgs.gdu}/bin/gdu";
 
       reload = "source ~/.$(basename $SHELL)rc && clear";
     };
+
+    home.sessionVariables.PAGER = "moor";
 
     home.file.".config/fastfetch/logo.png".source = ./bernd_pixel.png;
     home.file."${config.home.homeDirectory}/.hushlogin".text = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
