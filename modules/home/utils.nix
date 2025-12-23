@@ -14,22 +14,6 @@ in {
   };
 
   config = mkIf config.programs.utils.enable {
-    home.shellAliases.uln =
-      # bash
-      ''
-        uln() {
-          if [ -z "$1" ]; then
-            echo "usage: uln <symlink>"
-            return 1
-          fi
-          if [ ! -L "$1" ]; then
-            echo "'$1' is not a symlink"
-            return 1
-          fi
-          cp -aL "$1" "$1"
-        }
-      '';
-
     home.packages = with pkgs; [
       gnutar
       gzip
@@ -55,6 +39,7 @@ in {
       (writeShellScriptBin "cleanup" (builtins.readFile ./cleanup.sh))
       (writeShellScriptBin "init" (builtins.readFile ./init.sh))
       (writeShellScriptBin "clip" (builtins.readFile ./clip.sh))
+      (writeShellScriptBin "uln" (builtins.readFile ./uln.sh))
 
       taskwarrior-tui
       timewarrior
