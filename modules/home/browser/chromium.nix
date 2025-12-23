@@ -31,7 +31,20 @@ in {
       # package = pkgs.ungoogled-chromium;
       extensions = mkMerge [
         [
-          # yangs
+          # ublock lite
+          {id = "ddkjiahejlhfcafbddmgiahcphecmpfh";}
+          # decentraleyes
+          {id = "ldpochfccmkkmhdbclfhpagapcfdljkj";}
+          # constant-o-matic
+          {id = "mdjildafknihdffpkfmmpnpoiajfjnjd";}
+          # i still dont care about cookies
+          {id = "edibdbjcniadpccecjdfdjjppcpchdlm";}
+          # dont fuck with paste
+          {id = "efaagigdgamehbpimpiagfpoihlkgamh";}
+          # link cleaner
+          {id = "pclbemffjpghlfbdjdifapggphgokeok";}
+
+          # yang
           {id = "ecboojkidbdghfhifefbpdkdollfhicb";}
           # steamdb
           {id = "kdbmhfkmnlmbkgbabkdealhhbfhlmmon";}
@@ -39,14 +52,12 @@ in {
           {id = "jdpblpklojajpopllbckephjndibljbc";}
           # return youtube dislikes
           {id = "gebbhagfogifgggkldgodflihgfeippi";}
-          # i still dont care about cookies
-          {id = "edibdbjcniadpccecjdfdjjppcpchdlm";}
           # sponsorblock yt
           {id = "mnjggcdmjocbbbhaepdhchncahnbgone";}
-          # ublock lite
-          {id = "ddkjiahejlhfcafbddmgiahcphecmpfh";}
+
           # dark reader
           {id = "eimadpbcbfnmbkopoojfekhnkhdbieeh";}
+
           {
             id = "dcpihecpambacapedldabdbpakmachpb";
             updateUrl = "https://raw.githubusercontent.com/iamadamdev/bypass-paywalls-chrome/master/updates.xml";

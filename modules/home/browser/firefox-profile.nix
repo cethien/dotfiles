@@ -62,21 +62,23 @@ in {
             multi-account-containers
 
             ublock-origin
-            unpaywall
-            istilldontcareaboutcookies
+            decentraleyes
             consent-o-matic
+            istilldontcareaboutcookies
             cookie-autodelete
-            link-cleaner
-            yang
-            flagfox
-
-            stylus
-            darkreader
-
+            don-t-fuck-with-paste
+            unpaywall
             sponsorblock
             return-youtube-dislikes
             twitch-auto-points
+            link-cleaner
+
+            flagfox
+            yang
             steam-database
+
+            # darkreader
+            dark-mode-website-switcher
           ]
 
           (mkIf config.programs.keepassxc.enable [
