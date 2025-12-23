@@ -51,10 +51,14 @@ in {
       ];
     };
 
-    programs.kitty.enableGitIntegration = true;
-    programs.lazygit.enable = true;
+    programs.kitty.enableGitIntegration = config.programs.kitty.enable;
     programs.diff-so-fancy.enable = true;
     programs.diff-so-fancy.enableGitIntegration = true;
+
+    programs.lazygit = {
+      enable = config.programs.git.enable;
+      shellWrapperName = "lzg";
+    };
     programs.tmux.resurrectPluginProcesses = ["lazygit"];
   };
 }

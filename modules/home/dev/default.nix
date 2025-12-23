@@ -25,7 +25,6 @@ in {
     idea = elem "jetbrains-idea" cfg.extras;
   in {
     home.packages = mkMerge [
-      [pkgs.dblab]
       (mkIf idea [pkgs.jetbrains.idea-community])
       (mkIf rider [pkgs.jetbrains.rider])
       (mkIf containers [pkgs.podman-compose pkgs.k3d pkgs.kubectl])
@@ -38,6 +37,8 @@ in {
     programs.tmux.resurrectPluginProcesses = ["dblab" "lazydocker" "gh-dash"];
 
     programs = {
+      lazysql.enable = true;
+
       gh-dash.enable = true;
       gh.enable = true;
       gh.settings = {
