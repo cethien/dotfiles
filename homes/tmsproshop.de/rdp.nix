@@ -6,8 +6,9 @@ let
     dynamicResolution = true;
   };
 in {
-  "ad_dc_dns" = shared // {fullAddress = "10.102.99.98";};
+  "hyper-v" = shared // {fullAddress = "10.102.99.89";};
   "exchange" = shared // {fullAddress = "10.102.99.99";};
+  "ad_dc_dns" = shared // {fullAddress = "10.102.99.98";};
   "timas" =
     shared
     // {
@@ -15,5 +16,4 @@ in {
       domain = "";
       username = "LocalAdmin";
     };
-  "hyper-v" = shared // {fullAddress = "10.102.99.89";};
 }
