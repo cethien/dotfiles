@@ -160,7 +160,6 @@ in {
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
       freerdp
-      (writeShellScriptBin "rdpz" (builtins.readFile ./fzf-freerdp.sh))
     ];
 
     home.file =
