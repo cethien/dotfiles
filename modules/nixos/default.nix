@@ -18,6 +18,7 @@ in {
     ./ai.nix
     ./monitoring.nix
     ./ssh.nix
+    ./net-tools.nix
   ];
 
   environment.systemPackages = with pkgs; [

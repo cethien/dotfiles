@@ -15,6 +15,10 @@ in {
   };
 
   config = mkIf cfg.enable {
+    programs = {
+      trippy.enable = true;
+    };
+
     home.packages = with pkgs; [
       curl
       wget
@@ -23,7 +27,10 @@ in {
       nettools
 
       nmap
+      havn
+
       dig
+      doggo
       tcpdump
       dhcpdump
       iperf
@@ -33,6 +40,7 @@ in {
       bmon
       arp-scan
       whois
+
       tshark
       termshark
     ];

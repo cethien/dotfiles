@@ -85,5 +85,6 @@
       autologinUser = "cethien";
       hyprland.enable = true;
     };
+    net-tools.enable = true;
   };
 }
