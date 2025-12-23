@@ -52,12 +52,17 @@
   programs.rclone.enable = true;
 
   programs = {
-    ssh.matchBlocksExtra = {
-      "homelab" = {
-        host = "homelab";
-        hostname = "192.168.1.50";
+    ssh.matchBlocksExtra =
+      (import ../../homes/tmsproshop.de/ssh.nix)
+      // {
+        "homelab" = {
+          user = "cethien";
+          host = "homelab";
+          hostname = "192.168.1.50";
+        };
       };
-    };
+    freerdp.enable = true;
+    freerdp.connections = import ../../homes/tmsproshop.de/rdp.nix;
     browser.firefox-profile.containers = ["tmsproshop.de" "tmsproshop.de/admin"];
 
     git.urlExtra = {
@@ -67,7 +72,7 @@
 
     kitty.enable = true;
     chromium.enable = true;
-    zen-browser.enable = true;
+    # zen-browser.enable = true;
     keepassxc.enable = true;
     gemini-cli.enable = true;
 
