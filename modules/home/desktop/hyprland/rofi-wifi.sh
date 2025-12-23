@@ -64,6 +64,9 @@ generate_wifi_list() {
   local menu_connected=()
   local menu_saved=()
   local menu_new=()
+  local security_connected=()
+  local security_saved=()
+  local security_new=()
 
   while IFS=: read -r SIGNAL SSID SECURITY; do
     [[ -z "$SSID" ]] && continue
@@ -81,16 +84,20 @@ generate_wifi_list() {
         icon="󰤨"
       fi
       menu_connected+=("$icon  $SSID")
+      security_connected+=("$SECURITY")
     elif echo "$saved" | grep -qx "$SSID"; then
       icon="󰸋"
       menu_saved+=("$icon  $SSID")
+      security_saved+=("$SECURITY")
     else
-      [[ "$SECURITY" == "--" ]] && icon="" || icon=""
+      [[ "$SECURITY" == "WPA2" ]] && icon="󱚿" || icon="󱛃"
       menu_new+=("$icon  $SSID")
+      security_new+=("$SECURITY")
     fi
   done < <(nmcli -t -f SIGNAL,SSID,SECURITY device wifi list ifname "$WIFI_IFACE")
 
   WIFI_DISPLAY_MENU=("${menu_connected[@]}" "${menu_saved[@]}" "${menu_new[@]}")
+  WIFI_SECURITY_MENU=("${security_connected[@]}" "${security_saved[@]}" "${security_new[@]}")
   WIFI_PLAIN_MENU=()
   for item in "${WIFI_DISPLAY_MENU[@]}"; do
     WIFI_PLAIN_MENU+=("${item:3}") # strip icon + space
@@ -128,6 +135,18 @@ handle_saved_connection() {
 
 handle_new_connection() {
   local SSID="$1"
+  local SECURITY="$2"
+
+  if [[ -z "$SECURITY" ]]; then
+    if nmcli device wifi connect "$SSID"; then
+      notify-send "󰤟 Wi-Fi connected" "$SSID"
+      xdg-open http://neverssl.com
+    else
+      notify-send "󰤨 Wi-Fi connection failed" "$SSID"
+    fi
+    return
+  fi
+
   local pwd
   local from_secret=0
   local store_choice
@@ -169,10 +188,11 @@ handle_new_connection() {
 
 handle_connection() {
   local SSID="$1"
+  local SECURITY="$2"
   if nmcli -t -f NAME connection show | grep -qx "$SSID"; then
     handle_saved_connection "$SSID"
   else
-    handle_new_connection "$SSID"
+    handle_new_connection "$SSID" "$SECURITY"
   fi
 }
 
@@ -212,7 +232,11 @@ main() {
   "$OPT_TAILSCALE_ENABLE") tailscale_enable ;;
   "$OPT_TAILSCALE_DISABLE") tailscale_disable ;;
   "$SEPARATOR") ;; # do nothing
-  *) handle_connection "${WIFI_PLAIN_MENU[$(($(printf "%s\n" "${WIFI_DISPLAY_MENU[@]}" | grep -nx "$CHOICE" | cut -d: -f1) - 1))]}" ;;
+  *)
+    local index
+    index=$(($(printf "%s\n" "${WIFI_DISPLAY_MENU[@]}" | grep -nx "$CHOICE" | cut -d: -f1) - 1))
+    handle_connection "${WIFI_PLAIN_MENU[$index]}" "${WIFI_SECURITY_MENU[$index]}"
+    ;;
   esac
 }
 
