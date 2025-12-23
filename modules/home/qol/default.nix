@@ -74,18 +74,16 @@ in {
       fzf.enable = true;
       fzf = {
         defaultCommand = "fd --type f";
+        defaultOptions = [];
 
         fileWidgetCommand = "fd --type f";
         fileWidgetOptions = [
-          "--preview 'head {}'"
+          "--preview 'bat {} --color=always --plain'"
         ];
 
         changeDirWidgetCommand = "fd --type d";
-
-        defaultOptions = [
-          "--preview-window right:50%"
-          "--color bg:-1"
-          # "--border"
+        changeDirWidgetOptions = [
+          "--preview 'eza {} -1a --icons=always --color=always'"
         ];
       };
 
