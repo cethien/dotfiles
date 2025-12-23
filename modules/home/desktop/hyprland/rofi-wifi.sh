@@ -4,14 +4,14 @@
 HOTSPOT_SSID="$(hostname)"
 HOTSPOT_CONN_NAME="${HOTSPOT_SSID}_hotspot"
 WIFI_IFACE=$(nmcli device status | awk '/wifi/ {print $1; exit}')
-SEPARATOR="-----"
+SEPARATOR="------"
 
 # ===== OPTIONS =====
 OPT_SHOW_WIFI_INFO="  show wi-fi info"
 OPT_WIFI_ENABLE="󰖩  enable wi-fi"
 OPT_WIFI_DISABLE="󰖪  disable wi-fi"
-OPT_TAILSCALE_ENABLE="󰖩  enable tailscale"
-OPT_TAILSCALE_DISABLE="󰖪  disable tailscale"
+OPT_TAILSCALE_ENABLE="󰲝  enable tailscale"
+OPT_TAILSCALE_DISABLE="󰲜  disable tailscale"
 
 # ===== HELPERS =====
 show_wifi_info() {
@@ -185,28 +185,25 @@ main() {
 
   [[ -n "$CONNECTED_SSID" ]] && MENU+=("$OPT_SHOW_WIFI_INFO")
 
-  if [[ "$WIFI_STATUS" == "disabled" ]]; then
-    MENU+=("$OPT_WIFI_ENABLE")
-  else
-    MENU+=("$OPT_WIFI_DISABLE")
-  fi
-
-  if command -v tailscale &>/dev/null; then
-    if tailscale status | grep -q "Tailscale is stopped"; then
-      MENU+=("$OPT_TAILSCALE_ENABLE")
-    else
-      MENU+=("$OPT_TAILSCALE_DISABLE")
-    fi
-  fi
+  [[ "$WIFI_STATUS" == "disabled" ]] && MENU+=("$OPT_WIFI_ENABLE")
 
   if [[ "$WIFI_STATUS" == "enabled" ]]; then
+    if command -v tailscale &>/dev/null; then
+      if tailscale status | grep -q "Tailscale is stopped"; then
+        MENU+=("$OPT_TAILSCALE_ENABLE")
+      else
+        MENU+=("$OPT_TAILSCALE_DISABLE")
+      fi
+    fi
+
+    MENU+=("$OPT_WIFI_DISABLE")
     MENU+=("$SEPARATOR")
     generate_wifi_list
     MENU+=("${WIFI_DISPLAY_MENU[@]}")
   fi
 
   local CHOICE
-  CHOICE=$(printf "%s\n" "${MENU[@]}" | rofi -dmenu -i -p "wifi menu") || exit
+  CHOICE=$(printf "%s\n" "${MENU[@]}" | rofi -dmenu -i -p "networking > ") || exit
 
   case "$CHOICE" in
   "$OPT_SHOW_WIFI_INFO") show_wifi_info ;;
