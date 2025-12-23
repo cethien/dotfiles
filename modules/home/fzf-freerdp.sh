@@ -26,8 +26,8 @@ CHOICE=$(
 PROFILE=$(rdp_path_from_name "$CHOICE")
 
 if [ "${WAYLAND_DISPLAY:-}" != "" ]; then
-  wlfreerdp $PROFILE
+  sfreerdp "$PROFILE"
   return
 fi
 
-xfreerdp $PROFILE
+xfreerdp "$PROFILE"
