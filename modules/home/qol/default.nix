@@ -74,7 +74,7 @@ in {
       fzf.enable = true;
       fzf = {
         defaultCommand = "fd --type f";
-        defaultOptions = [];
+        defaultOptions = ["--border --layout=reverse"];
 
         fileWidgetCommand = "fd --type f";
         fileWidgetOptions = [

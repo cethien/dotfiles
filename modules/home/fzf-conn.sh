@@ -47,7 +47,7 @@ list_connections() {
 
 # --- main logic ---
 CHOICE=$(
-  list_connections | fzf --cycle \
+  list_connections | fzf \
     --prompt="󰣀 connection > " \
     --delimiter='\t' --with-nth=2 \
     --preview "$0 --preview {}" \
@@ -72,4 +72,3 @@ rdp)
   fi
   ;;
 esac
-
