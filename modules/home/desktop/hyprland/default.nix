@@ -36,9 +36,11 @@ in {
 
   config = mkIf config.wayland.windowManager.hyprland.enable {
     home.packages = with pkgs; [
+      libnotify
       playerctl
       brightnessctl
       wl-clipboard
+      wl-screenrec
     ];
     services.hyprpaper.enable = true;
     services.mako.enable = true;
