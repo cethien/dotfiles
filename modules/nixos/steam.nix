@@ -1,21 +1,31 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }: let
-  inherit (lib) mkIf mkEnableOption;
-  cfg = config.deeznuts.steam;
+  cfg = config.programs.steam;
 in {
-  options.deeznuts.steam = {
-    enable = mkEnableOption "steam";
-  };
-
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     programs.steam = {
-      enable = true;
+      package = pkgs.steam.override {
+        extraEnv = {
+          OBS_VKCAPTURE = true;
+        };
+        extraLibraries = p:
+          with p; [
+            atk
+            libgdiplus
+            openssl
+          ];
+      };
+      extraPackages = with pkgs; [
+        gamescope
+      ];
+      extraCompatPackages = [pkgs.proton-ge-bin];
       protontricks.enable = true;
-      gamescopeSession.enable = true;
     };
+
     programs.gamemode.enable = true;
   };
 }

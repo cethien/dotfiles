@@ -11,11 +11,11 @@ in {
     ./ansible.nix
     ./deployrs.nix
     ./hardware
-    ./virtualisation
     ./audio.nix
     ./desktop
+    ./docker.nix
+    ./libvirt.nix
     ./steam.nix
-    ./ai.nix
     ./monitoring.nix
     ./ssh.nix
     ./net-tools.nix

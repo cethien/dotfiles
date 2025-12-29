@@ -8,9 +8,58 @@
     ../../modules/nixos
   ];
 
+  services.tailscale = {
+    enable = true;
+    extraSetFlags = ["--operator=cethien"];
+    extraUpFlags = ["--accept-routes"];
+  };
+
   programs.zsh.enable = true;
   users.users.cethien.enable = true;
   users.users.cethien.shell = pkgs.zsh;
+
+  networking.networkmanager.wifi.backend = "iwd";
+  networking.firewall = {
+    allowedTCPPorts = [
+      53317 # localsend
+      24727 # ausweisapp
+    ];
+    allowedUDPPorts = [
+      53317 # localsend
+      24727 # ausweisapp
+    ];
+  };
+
+  virtualisation.docker.enable = true;
+  virtualisation.libvirtd.enable = true;
+
+  hardware = {
+    enableRedistributableFirmware = true;
+    graphics = {
+      enable = true;
+      extraPackages = with pkgs; [
+        intel-media-driver
+      ];
+    };
+    bluetooth.enable = true;
+
+    # scanner
+    sane.enable = true;
+    sane.extraBackends = [pkgs.hplip];
+  };
+  environment.sessionVariables = {
+    LIBVA_DRIVER_NAME = "iHD";
+  };
+
+  deeznuts = {
+    desktop = {
+      autologinUser = "cethien";
+      hyprland.enable = true;
+    };
+    net-tools.enable = true;
+  };
+
+  networking.hostName = "hp-430-g7";
 
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
@@ -40,51 +89,5 @@
     # It's still possible to open the bootloader list by pressing any key
     # It will just not appear on screen unless a key is pressed
     loader.timeout = 0;
-  };
-
-  networking.hostName = "hp-430-g7";
-  networking.networkmanager.wifi.backend = "iwd";
-  networking.firewall = {
-    allowedTCPPorts = [
-      53317 # localsend
-      24727 # ausweisapp
-    ];
-    allowedUDPPorts = [
-      53317 # localsend
-      24727 # ausweisapp
-    ];
-  };
-
-  hardware = {
-    enableRedistributableFirmware = true;
-    graphics = {
-      enable = true;
-      extraPackages = with pkgs; [
-        intel-media-driver
-      ];
-    };
-    bluetooth.enable = true;
-
-    # scanner
-    sane.enable = true;
-    sane.extraBackends = [pkgs.hplip];
-  };
-  environment.sessionVariables = {
-    LIBVA_DRIVER_NAME = "iHD";
-  };
-
-  virtualisation.docker.enable = true;
-  virtualisation.libvirtd.enable = true;
-
-  services.tailscale.enable = true;
-  services.tailscale.extraSetFlags = ["--operator=cethien"];
-  services.tailscale.extraUpFlags = ["--accept-routes"];
-
-  deeznuts = {
-    desktop = {
-      autologinUser = "cethien";
-      hyprland.enable = true;
-    };
-    net-tools.enable = true;
   };
 }

@@ -3,7 +3,6 @@ with lib; {
   imports = [
     ./nvidia-gpu.nix
     ./logitech-peripherals.nix
-    ./elgato-stream-deck.nix
   ];
 
   options.deeznuts.hardware = mkOption {

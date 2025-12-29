@@ -14,17 +14,7 @@ in {
   };
 
   config = {
-    stylix.targets.mangohud.enable = false;
-    programs.mangohud = {
-      enable = elem "steam" cfg;
-      settings = {
-        fps_only = true;
-        fps_limit = 240;
-      };
-    };
-
     home.packages = mkMerge [
-      (mkIf (elem "steam" cfg) [pkgs.protonup])
       (mkIf (elem "r2modman" cfg) [pkgs.r2modman])
       (mkIf (elem "minecraft" cfg) [pkgs.prismlauncher])
       (mkIf (elem "pokemmo" cfg) [pkgs.pokemmo-installer])
@@ -39,10 +29,6 @@ in {
           ])
       ])
     ];
-
-    home.sessionVariables = mkIf (elem "steam" cfg) {
-      STEAM_EXTRA_COMPAT_TOOLS_PATH = "~/.stream/root/compatibilitytools.d";
-    };
 
     services.syncthing.settings = mkIf (config.services.syncthing.enable
       && (elem "retroarch" cfg)) {

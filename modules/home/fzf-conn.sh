@@ -51,7 +51,7 @@ CHOICE=$(
     --prompt="󰣀 connection > " \
     --delimiter='\t' --with-nth=2 \
     --preview "$0 --preview {}" \
-    --preview-label="connection info"
+    --preview-label="connection"
 )
 
 [ -z "$CHOICE" ] && exit 0
