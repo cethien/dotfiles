@@ -44,6 +44,9 @@ in {
           # link cleaner
           {id = "pclbemffjpghlfbdjdifapggphgokeok";}
 
+          # yet another flags
+          {id = "dmchcmgddbhmbkakammmklpoonoiiomk";}
+
           # yang
           {id = "ecboojkidbdghfhifefbpdkdollfhicb";}
           # steamdb
