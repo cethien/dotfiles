@@ -5,55 +5,124 @@
   name,
   ...
 }: let
-  inherit (lib) elem mkIf mkMerge;
+  inherit (lib) mkIf mkMerge;
   cfg = config.programs.browser;
 in {
   profiles."${name}" = let
-    potato = elem "potato-squad.de" cfg.firefox-profile.containers;
-    creative = elem "creative-europe.net" cfg.firefox-profile.containers;
-    tms = elem "tmsproshop.de" cfg.firefox-profile.containers;
-    tms-admin = elem "tmsproshop.de/admin" cfg.firefox-profile.containers;
+    additionalContainers = [
+      {
+        name = "potato-squad.de";
+        color = "orange";
+        icon = "fruit";
+      }
+      {
+        name = "creative-europe.net";
+        color = "yellow";
+        icon = "vacation";
+      }
+      {
+        name = "tmsproshop.de";
+        color = "green";
+        icon = "briefcase";
+      }
+      {
+        name = "tmsproshop.de/admin";
+        color = "red";
+        icon = "briefcase";
+      }
+    ];
+
+    activeContainers = builtins.filter (c: builtins.elem c.name cfg.firefox-profile.containers) additionalContainers;
+
+    containerSet = builtins.listToAttrs (builtins.genList (i: let
+      c = builtins.elemAt activeContainers i;
+    in {
+      name = c.name;
+      value = {
+        id = i + 3;
+        inherit (c) color icon;
+      };
+    }) (builtins.length activeContainers));
   in {
     id = 0;
     inherit name;
 
-    containers = {
-      "alt acc" = {
-        id = 1;
-        color = "turquoise";
-        icon = "circle";
-      };
-
-      admin = {
-        id = 2;
-        color = "red";
-        icon = "circle";
-      };
-
-      "potato-squad.de" = mkIf potato {
-        id = 3;
-        color = "orange";
-        icon = "fruit";
-      };
-
-      "creative-europe.net" = mkIf creative {
-        id = 4;
-        color = "yellow";
-        icon = "vacation";
-      };
-
-      "tmsproshop.de" = mkIf tms {
-        id = 5;
-        color = "green";
-        icon = "briefcase";
-      };
-
-      "tmsproshop.de/admin" = mkIf tms-admin {
-        id = 6;
-        color = "red";
-        icon = "briefcase";
-      };
+    bookmarks = {
+      force = true;
+      settings = [
+        {
+          bookmarks = [
+            {
+              name = "mail";
+              url = "https://mail.google.com/";
+            }
+            {
+              name = "cal";
+              url = "https://calendar.google.com/";
+            }
+            {
+              name = "drive";
+              url = "https://drive.google.com/";
+            }
+            {
+              name = "notes";
+              url = "https://keep.google.com/";
+            }
+            {
+              name = "gemini";
+              url = "https://gemini.google.com/";
+            }
+            {
+              name = "chatgpt";
+              url = "https://chatgpt.com/";
+            }
+            {
+              name = "spotify";
+              url = "https://open.spotify.com/";
+            }
+            {
+              name = "spotify-playlist-sorter";
+              url = "https://playlistsorter.com/";
+            }
+            {
+              name = "discord";
+              url = "https://discord.com/";
+            }
+            {
+              name = "whatsapp";
+              url = "https://web.whatsapp.com/";
+            }
+            {
+              name = "youtube";
+              url = "https://youtube.com/";
+            }
+          ];
+        }
+      ];
     };
+
+    search = {
+      default = "google";
+      privateDefault = "ddg";
+      order = ["google" "ddg"];
+    };
+
+    containers =
+      {
+        "alt acc" = {
+          id = 1;
+          color = "turquoise";
+          icon = "circle";
+        };
+
+        admin = {
+          id = 2;
+          color = "red";
+          icon = "circle";
+        };
+      }
+      // containerSet;
+    containersForce = true;
 
     extensions = {
       packages = with pkgs.nur.repos.rycee.firefox-addons;
@@ -87,39 +156,51 @@ in {
         ];
     };
 
-    search = {
-      default = "google";
-      privateDefault = "ddg";
-      order = ["google" "ddg"];
-    };
-
     settings = {
-      "browser.aboutwelcome.enabled" = false;
-      "browser.crashReports.unsubmittedCheck.autoSubmit2" = true;
-      "browser.discovery.enabled" = false;
-      "browser.laterrun.enabled" = true;
-      "browser.warnOnQuitShortcut" = false;
-      "browser.tabs.loadBookmarksInTabs" = true;
-      "browser.tabs.warnOnClose" = true;
-      "toolkit.telemetry.reportingpolicy.firstRun" = false;
-      "trailhead.firstrun.didSeeAboutWelcome" = true;
-      "signon.management.page.breach-alerts.enabled" = false;
-      "extensions.formautofill.addresses.enabled" = false;
-      "extensions.formautofill.creditCards.enabled" = false;
-      "privacy.donottrackheader.enabled" = true;
-      "privacy.globalprivacycontrol.enabled" = true;
-      "browser.urlbar.suggest.quicksuggest.sponsored" = false;
-      "browser.urlbar.quicksuggest.scenario" = "bookmarks";
-      "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
-      "browser.aboutConfig.showWarning" = false;
-      "browser.ssb.enabled" = true;
-      "browser.ctrlTab.sortByRecentlyUsed" = true;
-      "extensions.autoDisableScopes" = 0;
-      "media.videocontrols.picture-in-picture.video-toggle.has-used" = true;
-      "signon.rememberSignons" = false;
-      "signon.autofillForms" = false;
-      "browser.startup.page" = 3;
-      "browser.shell.checkDefaultBrowser" = false;
+      browser = {
+        aboutConfig.showWarning = false;
+        crashReports.unsubmittedCheck.autoSubmit2 = true;
+        ctrlTab.sortByRecentlyUsed = true;
+        discovery.enabled = false;
+        laterrun.enabled = true;
+        newtabpage.activity-stream.showSponsoredTopSites = false;
+        shell.checkDefaultBrowser = false;
+        ssb.enabled = true;
+        startup.page = 3;
+        tabs = {
+          loadBookmarksInTabs = true;
+          warnOnClose = true;
+        };
+        urlbar = {
+          quicksuggest.scenario = "bookmarks";
+          suggest.quicksuggest.sponsored = false;
+        };
+        warnOnQuitShortcut = false;
+      };
+
+      media.videocontrols.picture-in-picture.video-toggle.has-used = true;
+
+      extensions = {
+        autoDisableScopes = 0;
+        formautofill = {
+          addresses.enabled = false;
+          creditCards.enabled = false;
+        };
+      };
+
+      privacy = {
+        donottrackheader.enabled = true;
+        globalprivacycontrol.enabled = true;
+      };
+
+      signon = {
+        autofillForms = false;
+        management.page.breach-alerts.enabled = false;
+        rememberSignons = false;
+      };
+
+      toolkit.telemetry.reportingpolicy.firstRun = false;
+      trailhead.firstrun.didSeeAboutWelcome = true;
     };
   };
 

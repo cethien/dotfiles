@@ -83,5 +83,37 @@ in {
         (mkIf config.programs.keepassxc.enable [keepassxcChromium])
       ];
     };
+
+    xdg.desktopEntries = let
+      cmd = url: "${pkgs.chromium}/bin/chromium --app=${url}";
+    in {
+      chatgpt = {
+        name = "ChatGPT";
+        exec = "${cmd "https://chatgpt.com"}";
+        icon = "chatgpt";
+      };
+
+      discord = {
+        name = "Discord";
+        exec = "${cmd "https://discord.com/channels/@me"}";
+        icon = "discord";
+      };
+
+      whatsapp = {
+        name = "WhatsApp";
+        exec = "${cmd "https://web.whatsapp.com"}";
+        icon = "whatsapp";
+      };
+      instagram = {
+        name = "Instagram";
+        exec = "${cmd "https://instagram.com"}";
+        icon = "instagram";
+      };
+      youtube = {
+        name = "YouTube";
+        exec = "${cmd "https://youtube.com"}";
+        icon = "youtube";
+      };
+    };
   };
 }

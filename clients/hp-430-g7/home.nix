@@ -72,7 +72,6 @@
 
     kitty.enable = true;
     chromium.enable = true;
-    # zen-browser.enable = true;
     keepassxc.enable = true;
     gemini-cli.enable = true;
 
