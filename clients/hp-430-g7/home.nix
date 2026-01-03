@@ -54,13 +54,7 @@
   programs = {
     ssh.matchBlocksExtra =
       (import ../../homes/tmsproshop.de/ssh.nix)
-      // {
-        "homelab" = {
-          user = "cethien";
-          host = "homelab";
-          hostname = "192.168.1.50";
-        };
-      };
+      // (import ../../homes/ssh.nix);
     freerdp.enable = true;
     freerdp.connections = import ../../homes/tmsproshop.de/rdp.nix;
     browser.firefox-profile.containers = ["tmsproshop.de" "tmsproshop.de/admin"];

@@ -111,6 +111,8 @@
           modules = let
             user = "cethien";
           in [
+            disko.nixosModules.disko
+            (import ./disko/simple.nix {inherit (n) diskId;})
             ./clients/${n.hostName}/hardware-configuration.nix
             ./clients/${n.hostName}/configuration.nix
             {system = {inherit stateVersion;};}

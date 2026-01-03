@@ -29,11 +29,19 @@ in {
         source = "${pkgs.trippy}/bin/trip";
       };
 
+      tshark-cap = {
+        owner = "root";
+        group = "nettools";
+        permissions = "u=rx,g=rx,o=";
+        capabilities = "cap_net_raw,cap_net_admin=ep";
+        source = "${pkgs.tshark}/bin/dumpcap";
+      };
+
       termshark-cap = {
         owner = "root";
         group = "nettools";
         permissions = "u=rx,g=rx,o=";
-        capabilities = "cap_net_raw+ep";
+        capabilities = "cap_net_raw,cap_net_admin+eip";
         source = "${pkgs.termshark}/bin/termshark";
       };
     };

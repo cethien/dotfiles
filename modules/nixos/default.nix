@@ -10,13 +10,12 @@ in {
 
     ./ansible.nix
     ./deployrs.nix
-    ./hardware
     ./audio.nix
     ./desktop
     ./docker.nix
     ./libvirt.nix
     ./steam.nix
-    ./monitoring.nix
+    ./monitoring
     ./ssh.nix
     ./net-tools.nix
   ];

@@ -19,14 +19,14 @@ in {
       (mkIf (elem "minecraft" cfg) [pkgs.prismlauncher])
       (mkIf (elem "pokemmo" cfg) [pkgs.pokemmo-installer])
       (mkIf (elem "retroarch" cfg) [
-        pkgs.retroarch.withCores
-        (cores:
-          with cores; [
-            mgba #GB / GBC / GBA
-            dolphin #GC / Wii
-            melonds #NDS
-            citra #N3DS
-          ])
+        (pkgs.retroarch.withCores
+          (cores:
+            with cores; [
+              mgba #GB / GBC / GBA
+              dolphin #GC / Wii
+              melonds #NDS
+              citra #N3DS
+            ]))
       ])
     ];
 
@@ -35,7 +35,7 @@ in {
       folders.retroarch = {
         id = "retroach";
         path = "${config.home.homeDirectory}/.config/retroarch";
-        devices = ["hp-430-g7" "xiaomi-15"];
+        devices = ["hp-430-g7" "xiaomi-15" "tower-of-power"];
       };
     };
 
