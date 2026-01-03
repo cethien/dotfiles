@@ -14,7 +14,7 @@
     settings = {
       monitor = [
         "DP-1, 2560x1440@240, 0x0, 1"
-        "HDMI-A-1, 1920x1080@100, 640x1440, 1"
+        "HDMI-A-1, 1920x1080@100, 320x1440, 1"
       ];
 
       workspace = [
@@ -22,13 +22,9 @@
         "2, monitor:DP-1, persistent:true" # general
         "3, monitor:DP-1, persistent:true" # general
         "4, monitor:DP-1, persistent:true" # general
-        "5, monitor:DP-1, persistent:true" # general
 
-        "6, monitor:HDMI-A-1, persistent:true" # video
-        "7, monitor:HDMI-A-1, persistent:true" # spotify
-        "8, monitor:HDMI-A-1" # btm
-        "9, monitor:HDMI-A-1" # discord
-        "10, monitor:HDMI-A-1" # obs
+        "5, monitor:HDMI-A-1, persistent:true"
+        "6, monitor:HDMI-A-1, persistent:true"
       ];
     };
     defaultWorkspaces = {

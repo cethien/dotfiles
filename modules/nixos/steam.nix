@@ -24,6 +24,9 @@ in {
       ];
       extraCompatPackages = [pkgs.proton-ge-bin];
       protontricks.enable = true;
+
+      remotePlay.openFirewall = true;
+      localNetworkGameTransfers.openFirewall = true;
     };
 
     programs.gamemode.enable = true;
