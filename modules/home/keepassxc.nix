@@ -12,6 +12,7 @@ in {
       Browser = {
         Enabled = true;
         AlwaysAllowAccess = true;
+        UpdateBinaryPath = false;
         CustomProxyLocation = "";
       };
 
