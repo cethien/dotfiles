@@ -22,17 +22,13 @@
       ];
 
       workspace = [
-        "1, monitor:HDMI-A-1, persistent:true" # browser
-        "2, monitor:HDMI-A-1, persistent:true" # general
-        "3, monitor:HDMI-A-1, persistent:true" # general
-        "4, monitor:HDMI-A-1, persistent:true" # general
-        "5, monitor:HDMI-A-1, persistent:true" # general
+        "1, monitor:HDMI-A-1, persistent:true"
+        "2, monitor:eDP-1, persistent:true"
+        "3, monitor:eDP-1, persistent:true"
+        "4, monitor:eDP-1, persistent:true"
 
-        "6, monitor:eDP-1, persistent:true" # general
-        "7, monitor:eDP-1, persistent:true" # spotify
-        "8, monitor:eDP-1" # btm
-        "9, monitor:eDP-1" # discord
-        "10, monitor:eDP-1" # obs
+        "5, monitor:HDMI-A-1, persistent:true"
+        "6, monitor:HDMI-A-1, persistent:true"
       ];
     };
     defaultWorkspaces = {
@@ -41,7 +37,7 @@
     };
     autostart = [
       "keepassxc"
-      "spotify"
+      # "spotify"
     ];
   };
 
@@ -53,8 +49,8 @@
 
   programs = {
     ssh.matchBlocksExtra =
-      (import ../../homes/tmsproshop.de/ssh.nix)
-      // (import ../../homes/ssh.nix);
+      (import ../../homes/ssh.nix)
+      // (import ../../homes/tmsproshop.de/ssh.nix);
     freerdp.enable = true;
     freerdp.connections = import ../../homes/tmsproshop.de/rdp.nix;
     browser.firefox-profile.containers = ["tmsproshop.de" "tmsproshop.de/admin"];
@@ -79,6 +75,5 @@
       extras = ["mixxx"];
     };
     spotify.enable = true;
-    vesktop.enable = true;
   };
 }
