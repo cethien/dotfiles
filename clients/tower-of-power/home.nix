@@ -25,28 +25,28 @@
 
       workspace = [
         "1, monitor:HDMI-A-1, persistent:true" # browser
-        "2, monitor:DP-1, persistent:true" # general
-        "3, monitor:DP-1, persistent:true" # general
-        "4, monitor:DP-1, persistent:true" # general
+        "2, monitor:DP-1, persistent:true"
+        "3, monitor:DP-1, persistent:true"
 
+        "4, monitor:HDMI-A-1, persistent:true"
         "5, monitor:HDMI-A-1, persistent:true"
-        "6, monitor:HDMI-A-1, persistent:true"
       ];
     };
     defaultWorkspaces = {
       browser = 1;
-      gaming = 4;
+      gaming = 3;
     };
 
     autostart = [
       "keepassxc"
-      "chromium"
     ];
   };
 
   services.syncthing.enable = true;
   services.restic.enable = true;
   programs.rclone.enable = true;
+
+  home.packages = with pkgs; [simple-scan ausweisapp libreoffice];
 
   programs = {
     ssh.matchBlocksExtra = import ../../homes/ssh.nix;
@@ -71,13 +71,11 @@
     };
     spotify.enable = true;
     discord.enable = true;
-  };
 
-  deeznuts.gaming = [
-    "steam"
-    "r2modman"
-    "minecraft"
-    "retroarch"
-    "pokemmo"
-  ];
+    steam.enable = true;
+    r2modman.enable = true;
+    prismlauncher.enable = true;
+    retroarch.enable = true;
+    pokemmo.enable = true;
+  };
 }

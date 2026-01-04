@@ -27,7 +27,7 @@
     ./spotify.nix
     ./discord.nix
     ./creative.nix
-    ./gaming.nix
+    ./gaming
 
     ./freerdp.nix
   ];
