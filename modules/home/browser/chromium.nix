@@ -98,6 +98,7 @@ in {
 
     xdg.desktopEntries = let
       cmd = url: "${pkgs.chromium}/bin/chromium --app=${url}";
+      showDiscordWeb = !config.programs.discord.enable && !config.programs.vesktop.enable;
     in {
       chatgpt = {
         name = "ChatGPT";
@@ -105,8 +106,8 @@ in {
         icon = "chatgpt";
       };
 
-      discord-web = {
-        name = "Discord (Chrome)";
+      discord = mkIf showDiscordWeb {
+        name = "Discord";
         exec = "${cmd "https://discord.com/channels/@me"}";
         icon = "discord";
       };
