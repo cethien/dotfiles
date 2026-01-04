@@ -4,9 +4,10 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkOption types mkMerge mkIf elem;
+  inherit (lib) mkOption types mkMerge mkIf;
   cfg = config.deeznuts.gaming;
   ws = config.wayland.windowManager.hyprland.defaultWorkspaces.gaming;
+  as = config.wayland.windowManager.hyprland.autostart;
 in {
   options.deeznuts.gaming = mkOption {
     type = types.listOf types.str;
@@ -15,10 +16,10 @@ in {
 
   config = {
     home.packages = mkMerge [
-      (mkIf (elem "r2modman" cfg) [pkgs.r2modman])
-      (mkIf (elem "minecraft" cfg) [pkgs.prismlauncher])
-      (mkIf (elem "pokemmo" cfg) [pkgs.pokemmo-installer])
-      (mkIf (elem "retroarch" cfg) [
+      (mkIf (builtins.elem "r2modman" cfg) [pkgs.r2modman])
+      (mkIf (builtins.elem "minecraft" cfg) [pkgs.prismlauncher])
+      (mkIf (builtins.elem "pokemmo" cfg) [pkgs.pokemmo-installer])
+      (mkIf (builtins.elem "retroarch" cfg) [
         (pkgs.retroarch.withCores
           (cores:
             with cores; [
@@ -31,7 +32,7 @@ in {
     ];
 
     services.syncthing.settings = mkIf (config.services.syncthing.enable
-      && (elem "retroarch" cfg)) {
+      && (builtins.elem "retroarch" cfg)) {
       folders.retroarch = {
         id = "retroach";
         path = "${config.home.homeDirectory}/.config/retroarch";
@@ -40,7 +41,7 @@ in {
     };
 
     home.file = mkIf (config.services.syncthing.enable
-      && (elem "retroarch" cfg)) {
+      && (builtins.elem "retroarch" cfg)) {
       ".config/retroarch/.stignore".text = ''
         assets
         autoconfig
@@ -71,21 +72,25 @@ in {
     };
 
     wayland.windowManager.hyprland.settings = {
+      exec-once = mkIf (builtins.elem "steam" as) ["steam -silent"];
+
       windowrulev2 = mkMerge [
-        (mkIf (elem "steam" cfg) [
-          "workspace ${toString ws}, title:^(steam)$"
+        (mkIf (builtins.elem "steam" cfg) [
+          "workspace ${toString ws}, initialClass:^(steam_app_.*)$"
+          "immediate, initialClass:^(steam_app_.*)$"
         ])
-        (mkIf (elem "retroarch" cfg) [
+        (mkIf (builtins.elem "retroarch" cfg) [
           "workspace ${toString ws}, class:^(com\.libretro\.RetroArch)$"
         ])
-        (mkIf (elem "pokemmo" cfg) [
-          "workspace ${toString ws}, title:PokeMMO"
-          "fullscreen, title:PokeMMO"
+        (mkIf (builtins.elem "pokemmo" cfg) [
+          "workspace ${toString ws}, title:^(.*PokeMMO.*)$"
+          "fullscreen, title:^(.*PokeMMO.*)$"
+          "immediate, title:^(.*PokeMMO.*)$"
         ])
-        (mkIf (elem "minecraft" cfg) [
-          "workspace ${toString ws}, class:org.prismlauncher.PrismLauncher"
-          "workspace ${toString ws}, class:^Minecraft.*"
-          "fullscreen, class:^Minecraft.*"
+        (mkIf (builtins.elem "minecraft" cfg) [
+          "workspace ${toString ws}, class:^(Minecraft.*)$"
+          "fullscreen, class:^(Minecraft.*)$"
+          "immediate, class:^(Minecraft.*)$"
         ])
       ];
     };

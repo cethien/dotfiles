@@ -25,8 +25,17 @@
     name = "keepassxc-with-chromium";
     paths = [pkgs.keepassxc keepassxcChromiumHost];
   };
+
+  hypr = builtins.elem "keepassxc" config.wayland.windowManager.hyprland.autostart;
+  ws = config.wayland.windowManager.hyprland.defaultWorkspaces.browser;
 in {
   config = mkIf config.programs.chromium.enable {
+    wayland.windowManager.hyprland.settings = {
+      exec-once = mkIf hypr [
+        "[workspace ${toString ws} silent] chromium"
+      ];
+    };
+
     programs.chromium = {
       # package = pkgs.ungoogled-chromium;
       extensions = mkMerge [

@@ -4,8 +4,8 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkIf elem;
-  hypr = elem "keepassxc" config.wayland.windowManager.hyprland.autostart;
+  inherit (lib) mkIf;
+  hypr = builtins.elem "keepassxc" config.wayland.windowManager.hyprland.autostart;
 in {
   config = mkIf config.programs.keepassxc.enable {
     programs.keepassxc.settings = {
