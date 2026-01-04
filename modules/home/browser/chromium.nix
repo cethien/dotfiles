@@ -26,7 +26,7 @@
     paths = [pkgs.keepassxc keepassxcChromiumHost];
   };
 
-  hypr = builtins.elem "keepassxc" config.wayland.windowManager.hyprland.autostart;
+  hypr = builtins.elem "chromium" config.wayland.windowManager.hyprland.autostart;
   ws = config.wayland.windowManager.hyprland.defaultWorkspaces.browser;
 in {
   config = mkIf config.programs.chromium.enable {
