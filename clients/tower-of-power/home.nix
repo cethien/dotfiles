@@ -12,7 +12,7 @@
   home.username = "cethien";
   home.homeDirectory = "/home/cethien";
 
-  stylix.image = ../../wallpapers/triangular-5120x2880-19678.jpg;
+  stylix.image = ../../wallpapers/lake-mountains-rocks-sunrise-daylight-scenery-illustration-3840x2160-3773.jpg;
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
@@ -39,8 +39,8 @@
     };
 
     autostart = [
-      "chromium"
       "keepassxc"
+      "chromium"
     ];
   };
 
