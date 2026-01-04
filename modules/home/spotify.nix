@@ -16,16 +16,6 @@ in {
   ];
 
   config = mkIf cfg.enable {
-    wayland.windowManager.hyprland.settings = {
-      exec-once = mkIf hypr ["spotify_player -d"];
-
-      bind = [
-        "SUPER SHIFT, M, exec, ${
-          (pkgs.cethien.writeHyprlandTermLaunchScriptBin "spotify_player").bin
-        }"
-      ];
-    };
-
     programs.spicetify = let
       spicePkgs = spicetify-nix.legacyPackages.${pkgs.stdenv.hostPlatform.system};
     in {
@@ -33,19 +23,16 @@ in {
 
       enabledExtensions = with spicePkgs.extensions; [
         adblock
+        autoSkipVideo
         hidePodcasts
-        shuffle # shuffle+ (special characters are sanitized out of extension names)
       ];
       enabledCustomApps = with spicePkgs.apps; [
         newReleases
-        ncsVisualizer
       ];
       enabledSnippets = with spicePkgs.snippets; [
-        rotatingCoverart
         pointer
+        fixMainViewWidth
       ];
-
-      theme = spicePkgs.themes.nightlight;
     };
     stylix.targets.spicetify.enable = false;
 
@@ -60,7 +47,28 @@ in {
         };
       };
     };
-    programs.tmux.resurrectPluginProcesses = ["spotify_player cava"];
+    programs.tmux.resurrectPluginProcesses = ["spotify_player"];
+
+    wayland.windowManager.hyprland.settings = {
+      exec-once = mkIf hypr ["spotify_player -d"];
+
+      bind = [
+        "SUPER SHIFT, M, exec, ${
+          (pkgs.cethien.writeHyprlandTermLaunchScriptBin "spotify_player").bin
+        }"
+      ];
+
+      bindl = let
+        # TODO: currently spotify_player is broken
+        pl = "${pkgs.playerctl}/bin/playerctl --player=spotify";
+      in [
+        ", XF86AudioPlay, exec, ${pl} play-pause"
+        ", XF86AudioNext, exec, ${pl} next"
+        ", XF86AudioPrev, exec, ${pl} previous"
+        ", XF86AudioRaiseVolume, exec, ${pl} volume 0.05+"
+        ", XF86AudioLowerVolume, exec, ${pl} volume 0.05-"
+      ];
+    };
 
     programs.cava.enable = true;
     programs.cava.settings = {

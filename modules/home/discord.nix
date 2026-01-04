@@ -6,6 +6,8 @@
   inherit (lib) mkIf elem mkMerge;
 in {
   config = {
+    stylix.targets.vesktop.enable = false;
+    stylix.targets.nixcord.enable = false;
     wayland.windowManager.hyprland.settings = let
       auto = elem "discord" config.wayland.windowManager.hyprland.autostart;
     in {

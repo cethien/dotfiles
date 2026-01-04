@@ -105,8 +105,8 @@ in {
         icon = "chatgpt";
       };
 
-      discord = {
-        name = "Discord";
+      discord-web = {
+        name = "Discord (Chrome)";
         exec = "${cmd "https://discord.com/channels/@me"}";
         icon = "discord";
       };

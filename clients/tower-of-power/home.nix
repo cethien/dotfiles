@@ -41,9 +41,6 @@
     autostart = [
       "chromium"
       "keepassxc"
-      "spotify"
-      "discord"
-      "steam"
     ];
   };
 
@@ -73,7 +70,7 @@
       enable = true;
     };
     spotify.enable = true;
-    vesktop.enable = true;
+    discord.enable = true;
   };
 
   deeznuts.gaming = [
