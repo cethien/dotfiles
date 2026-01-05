@@ -22,18 +22,17 @@
       ];
 
       workspace = [
-        "1, monitor:HDMI-A-1, persistent:true"
+        "1, monitor:eDP-1, persistent:true"
         "2, monitor:eDP-1, persistent:true"
-        "3, monitor:eDP-1, persistent:true"
-        "4, monitor:eDP-1, persistent:true"
 
+        "3, monitor:HDMI-A-1, persistent:true"
+        "4, monitor:HDMI-A-1, persistent:true"
         "5, monitor:HDMI-A-1, persistent:true"
-        "6, monitor:HDMI-A-1, persistent:true"
       ];
     };
     defaultWorkspaces = {
       browser = 1;
-      gaming = 4;
+      gaming = 2;
     };
     autostart = [
       "keepassxc"

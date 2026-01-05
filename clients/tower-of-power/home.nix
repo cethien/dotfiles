@@ -24,21 +24,22 @@
       exec-once = ["${pkgs.xorg.xrandr} --output DP-1 --primary"];
 
       workspace = [
-        "1, monitor:HDMI-A-1, persistent:true" # browser
+        "1, monitor:DP-1, persistent:true"
         "2, monitor:DP-1, persistent:true"
-        "3, monitor:DP-1, persistent:true"
 
+        "3, monitor:HDMI-A-1, persistent:true"
         "4, monitor:HDMI-A-1, persistent:true"
         "5, monitor:HDMI-A-1, persistent:true"
       ];
     };
     defaultWorkspaces = {
       browser = 1;
-      gaming = 3;
+      gaming = 2;
     };
 
     autostart = [
       "keepassxc"
+      # "spotify"
     ];
   };
 
