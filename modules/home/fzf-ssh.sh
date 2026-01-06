@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# --- configuration ---
 SSH_CONFIG="$HOME/.ssh/config"
 RDP_DIR="$HOME/.rdp"
 
@@ -25,9 +24,7 @@ if [[ "${1:-}" == "--preview" ]]; then
   exit 0
 fi
 
-# --- helper functions ---
-list_connections() {
-  # List SSH hosts
+list_ssh_connections() {
   if [ -f "$SSH_CONFIG" ]; then
     awk '/^Host[ 	]/ {
         for (i = 2; i <= NF; i++) {
@@ -36,13 +33,19 @@ list_connections() {
     }
 ' "$SSH_CONFIG"
   fi
+}
 
-  # List RDP connections
+list_rdp_connections() {
   if [ -d "$RDP_DIR" ]; then
     for f in "$RDP_DIR"/*.rdp; do
       [ -f "$f" ] && echo -e "rdp\t󰢹 $(basename "${f%.*}")"
     done
   fi
+}
+
+list_connections() {
+  list_rdp_connections
+  list_ssh_connections
 }
 
 # --- main logic ---
@@ -66,7 +69,7 @@ ssh)
 rdp)
   PROFILE="$RDP_DIR/$NAME.rdp"
   if [ -n "${WAYLAND_DISPLAY:-}" ]; then
-    sfreerdp "$PROFILE"
+    sdl-freerdp "$PROFILE"
   else
     xfreerdp "$PROFILE"
   fi
