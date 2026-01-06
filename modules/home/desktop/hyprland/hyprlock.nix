@@ -3,9 +3,9 @@
   config,
   pkgs,
   ...
-}:
-with lib; let
-  cfg = config.deeznuts.desktop.hyprland.hyprlock;
+}: let
+  inherit (lib) mkIf;
+  cfg = config.programs.hyprlock;
 
   fonts = config.stylix.fonts;
   colors = {
@@ -20,17 +20,9 @@ with lib; let
     base0E = "rgba(231, 130, 132, 1.0)"; # base0E - Red Accent for errors
   };
 in {
-  options.deeznuts.desktop.hyprland.hyprlock = {
-    monitor = mkOption {
-      type = types.str;
-      default = "eDP-1";
-      description = "Monitor to use for the hyprlock background";
-    };
-    showBattery = mkOption {
-      type = types.bool;
-      default = true;
-      description = "show battery label";
-    };
+  options.programs.hyprlock.monitor = lib.mkOption {
+    type = lib.types.str;
+    default = "eDP-1";
   };
 
   config = mkIf config.wayland.windowManager.hyprland.enable {
@@ -90,7 +82,7 @@ in {
             })
         ];
 
-        input-field = mkForce [
+        input-field = lib.mkForce [
           (shadows
             // {
               monitor = cfg.monitor;
@@ -118,7 +110,7 @@ in {
             })
         ];
 
-        label = mkMerge [
+        label = lib.mkMerge [
           [
             (shadows
               // {
@@ -142,8 +134,6 @@ in {
                 position = "0, 200";
                 text = ''cmd[update:1000] echo $(date +"%A, %B %d")'';
               })
-          ]
-          (mkIf cfg.showBattery [
             (shadows
               // {
                 monitor = cfg.monitor;
@@ -153,16 +143,12 @@ in {
                 halign = "center";
                 valign = "center";
                 position = "0, -255";
-                text = ''cmd[update:1000] hyprlock-batterystatus'';
+                text = ''cmd[update:1000] ${pkgs.writeShellScriptBin "hyprlock-batterystatus" (builtins.readFile ./hyprlock-batterystatus.sh)}/bin/hyprlock-batterystatus'';
               })
-          ])
+          ]
         ];
       };
     };
-
-    home.packages = [
-      (pkgs.writeShellScriptBin "hyprlock-batterystatus" (builtins.readFile ./hyprlock-batterystatus.sh))
-    ];
 
     wayland.windowManager.hyprland.settings = {
       bind = [

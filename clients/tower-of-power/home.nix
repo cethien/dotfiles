@@ -42,6 +42,7 @@
       # "spotify"
     ];
   };
+  programs.hyprlock.monitor = "DP-1";
 
   services.syncthing.enable = true;
   services.restic.enable = true;

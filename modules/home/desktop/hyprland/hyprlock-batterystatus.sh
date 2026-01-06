@@ -23,8 +23,10 @@ if [ -n "$IFACE" ]; then
       NET_LABEL="${NET_ICON} ${IFACE}"
     fi
   elif [[ "$IFACE" == en* ]]; then
-    NET_ICON="󰈀" # Ethernet
-    NET_LABEL="${NET_ICON} Ethernet"
+    # NET_ICON="󰈀" # Ethernet
+    # NET_LABEL="${NET_ICON} Ethernet"
+    NET_ICON=""
+    NET_LABEL=""
   else
     NET_ICON="󰓢" # Generic (USB, VPN, etc.)
     NET_LABEL="${NET_ICON} ${IFACE}"
@@ -33,4 +35,8 @@ else
   NET_LABEL="󰖪 disconnected"
 fi
 
-echo "${BAT_ICON} ${BAT_PERCENTAGE}% • $NET_LABEL"
+if [ -d "/sys/class/power_supply/BAT0" ]; then
+  echo "${BAT_ICON} ${BAT_PERCENTAGE}% • $NET_LABEL"
+else
+  echo "$NET_LABEL"
+fi
