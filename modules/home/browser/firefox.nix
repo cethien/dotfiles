@@ -5,7 +5,6 @@
   ...
 }: let
   inherit (lib) elem mkIf;
-  hypr = elem "firefox" config.wayland.windowManager.hyprland.autostart;
 
   name = "${config.home.username}";
   shared = import ./firefox-profile.nix {inherit config lib pkgs name;};
@@ -24,6 +23,9 @@
     };
     extensions.force = true;
   };
+
+  as = elem "firefox" config.wayland.windowManager.hyprland.autostart;
+  ws = config.wayland.windowManager.hyprland.defaultWorkspaces.browser;
 in {
   config = mkIf config.programs.firefox.enable {
     programs.firefox = {
@@ -34,7 +36,8 @@ in {
     stylix.targets.firefox.profileNames = ["${name}"];
 
     wayland.windowManager.hyprland.settings = {
-      exec-once = mkIf hypr ["[silent] firefox"];
+      exec-once = mkIf as ["[silent] firefox"];
+      windowrulev2 = ["workspace ${toString ws}, initialClass:^(firefox)$"];
     };
   };
 }

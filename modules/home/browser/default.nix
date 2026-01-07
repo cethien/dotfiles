@@ -14,7 +14,7 @@ in {
   ];
 
   options.programs.browser = {
-    defaultBrowser = mkPackageOption pkgs "chromium" {};
+    default = mkPackageOption pkgs "chromium" {};
 
     firefox-profile = {
       containers = mkOption {
@@ -26,12 +26,12 @@ in {
 
   config = let
     browserDesktop =
-      if builtins.isAttrs cfg.defaultBrowser
+      if builtins.isAttrs cfg.default
       then
-        if builtins.hasAttr "desktopFileName" cfg.defaultBrowser.meta
-        then cfg.defaultBrowser.meta.desktopFileName
-        else "${cfg.defaultBrowser.pname}.desktop"
-      else "${cfg.defaultBrowser}.desktop";
+        if builtins.hasAttr "desktopFileName" cfg.default.meta
+        then cfg.default.meta.desktopFileName
+        else "${cfg.default.pname}.desktop"
+      else "${cfg.default}.desktop";
 
     mimeTypes = [
       "application/javascript"

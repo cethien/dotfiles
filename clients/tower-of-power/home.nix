@@ -33,7 +33,7 @@
       ];
     };
     defaultWorkspaces = {
-      browser = 1;
+      browser = 3;
       gaming = 2;
     };
 

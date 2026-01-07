@@ -88,7 +88,7 @@ in {
         rounding = 6;
 
         active_opacity = 1.0;
-        inactive_opacity = 0.9;
+        inactive_opacity = 0.95;
         fullscreen_opacity = 1.0;
 
         shadow = {
@@ -143,7 +143,38 @@ in {
 
       "$resizeIncrement" = 25;
 
-      bind = [
+      bind = let
+        vol-app = pkgs.writeShellScriptBin "vol-app" ''
+          # 1. Aktive PID von Hyprland holen
+          ACTIVE_PID=$(hyprctl activewindow -j | ${pkgs.jq}/bin/jq '.pid')
+
+          if [ "$ACTIVE_PID" = "null" ] || [ -z "$ACTIVE_PID" ]; then exit 0; fi
+
+          # 2. Die PipeWire Node-ID finden, die zu dieser PID (oder deren Child-Prozessen) gehört
+          # Wir dumpen die Nodes und suchen nach dem process.id match
+          NODE_ID=$(${pkgs.pipewire}/bin/pw-dump | ${pkgs.jq}/bin/jq -r ".[] | select(.info.props[\"process.id\"] == $ACTIVE_PID or .info.props[\"application.process.id\"] == \"$ACTIVE_PID\") | .id" | head -n1)
+
+          # 3. Falls nichts gefunden (wegen Proton/Steam), suchen wir nach Child-PIDs
+          if [ -z "$NODE_ID" ] || [ "$NODE_ID" = "null" ]; then
+              CHILD_PIDS=$(pgrep -P "$ACTIVE_PID")
+              for CPID in $CHILD_PIDS; do
+                  NODE_ID=$(${pkgs.pipewire}/bin/pw-dump | ${pkgs.jq}/bin/jq -r ".[] | select(.info.props[\"process.id\"] == $CPID or .info.props[\"application.process.id\"] == \"$CPID\") | .id" | head -n1)
+                  [ -n "$NODE_ID" ] && [ "$NODE_ID" != "null" ] && break
+              done
+          fi
+
+          # 4. Lautstärke via wpctl anpassen, wenn eine Node gefunden wurde
+          if [ -n "$NODE_ID" ] && [ "$NODE_ID" != "null" ]; then
+              ${pkgs.wireplumber}/bin/wpctl set-volume "$NODE_ID" "$1"
+          else
+              # Optional: Falls kein App-Stream gefunden, mach halt Default
+              ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ "$1"
+          fi
+        '';
+      in [
+        "CTRL ALT, XF86AudioRaiseVolume, exec, ${vol-app}/bin/vol-app 5%+"
+        "CTRL ALT, XF86AudioLowerVolume, exec, ${vol-app}/bin/vol-app 5%-"
+
         "SUPER SHIFT, C, exec, ${pkgs.hyprpicker}/bin/hyprpicker -a"
 
         # "SUPER, M, exit"

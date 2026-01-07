@@ -26,14 +26,13 @@
     paths = [pkgs.keepassxc keepassxcChromiumHost];
   };
 
-  hypr = builtins.elem "chromium" config.wayland.windowManager.hyprland.autostart;
+  as = builtins.elem "chromium" config.wayland.windowManager.hyprland.autostart;
   ws = config.wayland.windowManager.hyprland.defaultWorkspaces.browser;
 in {
   config = mkIf config.programs.chromium.enable {
     wayland.windowManager.hyprland.settings = {
-      exec-once = mkIf hypr [
-        "[workspace ${toString ws} silent] chromium"
-      ];
+      exec-once = mkIf as ["[silent] chromium"];
+      windowrulev2 = ["workspace ${toString ws}, initialClass:^(chromium-browser)$"];
     };
 
     programs.chromium = {
