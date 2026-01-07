@@ -53,35 +53,6 @@ in {
           }
         ];
 
-        # image = let
-        #   imgs = pkgs.runCommand "hyprlock.png" {} ''
-        #     mkdir -p $out
-        #     cp ${./smiley.png} $out/smiley.png
-        #     cp ${./logo.png} $out/logo.png
-        #   '';
-        #
-        #   attrs = {
-        #     monitor = cfg.monitor;
-        #     size = 200;
-        #     valign = "center";
-        #     halign = "center";
-        #     rounding = 0;
-        #     border_size = 0;
-        #   };
-        # in [
-        #   (attrs
-        #     // {
-        #       path = "${imgs}/smiley.png";
-        #       position = "-412, -38";
-        #     })
-        #
-        #   (attrs
-        #     // {
-        #       path = "${imgs}/logo.png";
-        #       position = "386, 29";
-        #     })
-        # ];
-
         input-field = lib.mkForce [
           (shadows
             // {
