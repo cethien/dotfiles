@@ -9,7 +9,7 @@ in {
   options.services.pipewire.active-mic = lib.mkOption {
     type = lib.types.nullOr lib.types.str;
     default = null;
-    description = "Das exakte Mic-Device für ANC. Wenn null, wird kein ANC geladen.";
+    description = "mic device for anc. null = nothing";
   };
 
   config = mkIf config.deeznuts.desktop.isEnabled {
