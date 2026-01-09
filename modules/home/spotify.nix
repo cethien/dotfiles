@@ -59,8 +59,7 @@ in {
       ];
 
       bindl = let
-        # TODO: currently spotify_player is broken
-        pl = "${pkgs.playerctl}/bin/playerctl --player=spotify";
+        pl = "${pkgs.playerctl}/bin/playerctl --player=spotify_player";
       in [
         ", XF86AudioPlay, exec, ${pl} play-pause"
         ", XF86AudioNext, exec, ${pl} next"
