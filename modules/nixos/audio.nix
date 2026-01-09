@@ -6,6 +6,12 @@
 }: let
   inherit (lib) mkIf;
 in {
+  options.services.pipewire.active-mic = lib.mkOption {
+    type = lib.types.nullOr lib.types.str;
+    default = null;
+    description = "Das exakte Mic-Device für ANC. Wenn null, wird kein ANC geladen.";
+  };
+
   config = mkIf config.deeznuts.desktop.isEnabled {
     services.pulseaudio.enable = false;
     security.rtkit.enable = true;
@@ -19,7 +25,7 @@ in {
       wireplumber.enable = true;
 
       extraConfig.pipewire."99-input-denoising" = let
-        mic = "alsa_input.usb-3142_Fifine_Microphone-00.mono-fallback";
+        mic = config.services.pipewire.active-mic;
       in {
         "context.modules" = [
           {

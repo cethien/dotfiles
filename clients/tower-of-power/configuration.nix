@@ -21,6 +21,8 @@
     package = config.boot.kernelPackages.nvidiaPackages.beta;
   };
 
+  services.pipewire.active-mic = "alsa_input.usb-3142_Fifine_Microphone-00.mono-fallback";
+
   services.printing.enable = true;
   hardware = {
     bluetooth.enable = true;
