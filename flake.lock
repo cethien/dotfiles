@@ -379,6 +379,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-pr-spotify": {
+      "locked": {
+        "lastModified": 1767975789,
+        "narHash": "sha256-+yjY2Ts+CuHlaqfndeZ3T5xSvXlHBIprpx2nb6td0wE=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "c389b67329489d7668c40ff8dcb1cbd808ce9107",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "pull/478453/head",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 1766651565,
@@ -490,6 +506,7 @@
         "home-manager": "home-manager",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
+        "nixpkgs-pr-spotify": "nixpkgs-pr-spotify",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nur": "nur",
         "nvf": "nvf",

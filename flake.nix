@@ -33,6 +33,8 @@
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     spicetify-nix.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
+    nixpkgs-pr-spotify.url = "github:nixos/nixpkgs/pull/478453/head";
+
     nvf.url = "github:notashelf/nvf";
     nvf.inputs.nixpkgs.follows = "nixpkgs-unstable";
   };
@@ -62,6 +64,15 @@
         overlays = [
           (import ./overlays/cethien.nix)
           nur.overlays.default
+
+          # TODO: remove when merged - https://github.com/NixOS/nixpkgs/pull/478453
+          (final: prev: {
+            spotify-player =
+              (import inputs.nixpkgs-pr-spotify {
+                inherit system;
+                config.allowUnfree = true;
+              }).spotify-player;
+          })
         ];
       };
   in
