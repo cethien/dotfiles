@@ -7,7 +7,7 @@
 }: let
   inherit (lib) mkEnableOption mkIf elem;
   cfg = config.programs.spotify;
-  hypr = elem "spotify" config.wayland.windowManager.hyprland.autostart;
+  as = elem "spotify" config.wayland.windowManager.hyprland.autostart;
 in {
   options.programs.spotify.enable = mkEnableOption "spotify";
 
@@ -50,7 +50,7 @@ in {
     programs.tmux.resurrectPluginProcesses = ["spotify_player"];
 
     wayland.windowManager.hyprland.settings = {
-      exec-once = mkIf hypr ["spotify_player -d"];
+      exec-once = mkIf as ["spotify_player -d"];
 
       bind = [
         "SUPER SHIFT, M, exec, ${
@@ -59,7 +59,7 @@ in {
       ];
 
       bindl = let
-        pl = "${pkgs.playerctl}/bin/playerctl --player=spotify_player";
+        pl = "playerctl --player=spotify_player";
       in [
         ", XF86AudioPlay, exec, ${pl} play-pause"
         ", XF86AudioNext, exec, ${pl} next"

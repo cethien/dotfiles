@@ -21,7 +21,7 @@
         "HDMI-A-1, 1920x1080@100, 320x1440, 1"
       ];
       general.allow_tearing = true;
-      exec-once = ["${pkgs.xorg.xrandr} --output DP-1 --primary"];
+      exec-once = [''${pkgs.xorg.xrandr} --output "DP-1" --primary''];
 
       workspace = [
         "1, monitor:DP-1, persistent:true"
@@ -39,7 +39,9 @@
 
     autostart = [
       "keepassxc"
-      # "spotify"
+      "spotify"
+      "discord"
+      "steam"
     ];
   };
   programs.hyprlock.monitor = "DP-1";

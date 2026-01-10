@@ -36,7 +36,6 @@
     };
     autostart = [
       "keepassxc"
-      # "spotify"
     ];
   };
 
