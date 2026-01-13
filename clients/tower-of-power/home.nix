@@ -26,18 +26,21 @@
       workspace = [
         "1, monitor:DP-1, persistent:true"
         "2, monitor:DP-1, persistent:true"
+        "3, monitor:DP-1, persistent:true"
 
-        "3, monitor:HDMI-A-1, persistent:true"
         "4, monitor:HDMI-A-1, persistent:true"
         "5, monitor:HDMI-A-1, persistent:true"
       ];
+
+      windowrule = ["match:class discord, workspace 5"];
     };
     defaultWorkspaces = {
-      browser = 3;
+      browser = 4;
       gaming = 2;
     };
 
     autostart = [
+      "logitech"
       "keepassxc"
       "spotify"
       "discord"
@@ -82,4 +85,5 @@
     retroarch.enable = true;
     pokemmo.enable = true;
   };
+  programs.logitech-peripherals.enable = true;
 }
