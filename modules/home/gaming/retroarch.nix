@@ -1,5 +1,6 @@
 {
   lib,
+  pkgs,
   config,
   ...
 }: let
@@ -54,8 +55,6 @@ in {
       '';
     };
 
-    wayland.windowManager.hyprland.settings.windowrulev2 = [
-      "workspace ${toString ws}, class:^(com\.libretro\.RetroArch)$"
-    ];
+    wayland.windowManager.hyprland.settings.windowrule = pkgs.cethien.mkHyprGameWindowRule "match:class ^(com\.libretro\.RetroArch)$" "${toString ws}";
   };
 }

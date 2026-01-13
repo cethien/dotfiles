@@ -27,6 +27,10 @@
     nur.url = "github:nix-community/NUR";
     nur.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
+    nvf.url = "github:notashelf/nvf/bbc99da250d715f60f6df3cc19a28e514acb7a73";
+    nixpkgs-nvf.url = "github:nixos/nixpkgs/cad22e7d996aea55ecab064e84834289143e44a0";
+    nvf.inputs.nixpkgs.follows = "nixpkgs-nvf";
+
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
     zen-browser.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
@@ -34,9 +38,6 @@
     spicetify-nix.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
     nixpkgs-pr-spotify.url = "github:nixos/nixpkgs/pull/478453/head";
-
-    nvf.url = "github:notashelf/nvf";
-    nvf.inputs.nixpkgs.follows = "nixpkgs-unstable";
   };
 
   outputs = inputs @ {
@@ -86,7 +87,8 @@
       pkgs = pkgsFor system;
       hosts = import ./hosts;
       hostConfigs =
-        builtins.mapAttrs (
+        builtins.mapAttrs
+        (
           name: n:
             nixpkgs.lib.nixosSystem {
               inherit pkgs;
@@ -115,39 +117,42 @@
 
       pkgsUnstable = pkgsUnstableFor system;
       clients = import ./clients;
-      clientConfigs = builtins.mapAttrs (name: n:
-        nixpkgs-unstable.lib.nixosSystem
-        {
-          pkgs = pkgsUnstable;
-          modules = let
-            user = "cethien";
-          in [
-            disko.nixosModules.disko
-            (import ./disko/simple.nix {inherit (n) diskId;})
-            ./clients/${n.hostName}/hardware-configuration.nix
-            ./clients/${n.hostName}/configuration.nix
-            {system = {inherit stateVersion;};}
+      clientConfigs =
+        builtins.mapAttrs
+        (name: n:
+          nixpkgs-unstable.lib.nixosSystem
+          {
+            pkgs = pkgsUnstable;
+            modules = let
+              user = "cethien";
+            in [
+              disko.nixosModules.disko
+              (import ./disko/simple.nix {inherit (n) diskId;})
+              ./clients/${n.hostName}/hardware-configuration.nix
+              ./clients/${n.hostName}/configuration.nix
+              {system = {inherit stateVersion;};}
 
-            home-manager.nixosModules.home-manager
-            {
-              home-manager = {
-                backupFileExtension = "hm-bak";
-                users."${user}" = ./clients/${n.hostName}/home.nix;
-                extraSpecialArgs =
-                  inputs
-                  // {
-                    pkgs = pkgsUnstable;
-                    inherit system stateVersion;
-                  };
-              };
-            }
-          ];
-          specialArgs = inputs // {nixpkgs = nixpkgs-unstable;};
-        })
-      clients;
+              home-manager.nixosModules.home-manager
+              {
+                home-manager = {
+                  backupFileExtension = "hm-bak";
+                  users."${user}" = ./clients/${n.hostName}/home.nix;
+                  extraSpecialArgs =
+                    inputs
+                    // {
+                      pkgs = pkgsUnstable;
+                      inherit system stateVersion;
+                    };
+                };
+              }
+            ];
+            specialArgs = inputs // {nixpkgs = nixpkgs-unstable;};
+          })
+        clients;
 
       homes = import ./homes;
-      homeConfigs = builtins.listToAttrs (map (n: let
+      homeConfigs = builtins.listToAttrs (map
+        (n: let
           host =
             if n.type == "wsl"
             then "wsl"
@@ -176,7 +181,8 @@
       nixosConfigurations = hostConfigs // clientConfigs;
 
       deploy.nodes =
-        builtins.mapAttrs (_: n: {
+        builtins.mapAttrs
+        (_: n: {
           hostname = n.address;
           profiles.system = {
             user = "root";
@@ -189,9 +195,11 @@
         })
         hosts;
 
-      checks = builtins.mapAttrs (system: deployLib:
-        deployLib.deployChecks self.deploy)
-      deploy-rs.lib;
+      checks =
+        builtins.mapAttrs
+        (system: deployLib:
+          deployLib.deployChecks self.deploy)
+        deploy-rs.lib;
 
       templates = import ./templates;
     });

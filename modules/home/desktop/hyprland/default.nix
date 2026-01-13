@@ -43,6 +43,7 @@ in {
       wl-screenrec
     ];
     services.hyprpaper.enable = true;
+    services.hyprpaper.settings.splash = false;
     services.mako.enable = true;
     programs.rofi.enable = true;
 
@@ -88,7 +89,7 @@ in {
         rounding = 6;
 
         active_opacity = 1.0;
-        inactive_opacity = 0.95;
+        inactive_opacity = 0.975;
         fullscreen_opacity = 1.0;
 
         shadow = {
@@ -122,9 +123,9 @@ in {
         ];
       };
 
-      windowrulev2 = [
-        "suppressevent maximize, class:.*" # Ignore maximize requests from apps. You'll probably like this.
-        "nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0" # Fix some dragging issues with XWayland
+      windowrule = [
+        "suppress_event maximize, match:class .*"
+        "no_focus on, match:class ^$, match:title ^$, match:xwayland 1, match:float 1, match:fullscreen 0, match:pin 0"
       ];
 
       misc = {
@@ -143,92 +144,94 @@ in {
 
       "$resizeIncrement" = 25;
 
-      bind = let
-        vol-app = pkgs.writeShellScriptBin "vol-app" ''
-          # 1. Aktive PID von Hyprland holen
-          ACTIVE_PID=$(hyprctl activewindow -j | ${pkgs.jq}/bin/jq '.pid')
+      bind =
+        # let
+        # vol-app = pkgs.writeShellScriptBin "vol-app" ''
+        #   # 1. Aktive PID von Hyprland holen
+        #   ACTIVE_PID=$(hyprctl activewindow -j | ${pkgs.jq}/bin/jq '.pid')
+        #
+        #   if [ "$ACTIVE_PID" = "null" ] || [ -z "$ACTIVE_PID" ]; then exit 0; fi
+        #
+        #   # 2. Die PipeWire Node-ID finden, die zu dieser PID (oder deren Child-Prozessen) gehört
+        #   # Wir dumpen die Nodes und suchen nach dem process.id match
+        #   NODE_ID=$(${pkgs.pipewire}/bin/pw-dump | ${pkgs.jq}/bin/jq -r ".[] | select(.info.props[\"process.id\"] == $ACTIVE_PID or .info.props[\"application.process.id\"] == \"$ACTIVE_PID\") | .id" | head -n1)
+        #
+        #   # 3. Falls nichts gefunden (wegen Proton/Steam), suchen wir nach Child-PIDs
+        #   if [ -z "$NODE_ID" ] || [ "$NODE_ID" = "null" ]; then
+        #       CHILD_PIDS=$(pgrep -P "$ACTIVE_PID")
+        #       for CPID in $CHILD_PIDS; do
+        #           NODE_ID=$(${pkgs.pipewire}/bin/pw-dump | ${pkgs.jq}/bin/jq -r ".[] | select(.info.props[\"process.id\"] == $CPID or .info.props[\"application.process.id\"] == \"$CPID\") | .id" | head -n1)
+        #           [ -n "$NODE_ID" ] && [ "$NODE_ID" != "null" ] && break
+        #       done
+        #   fi
+        #
+        #   # 4. Lautstärke via wpctl anpassen, wenn eine Node gefunden wurde
+        #   if [ -n "$NODE_ID" ] && [ "$NODE_ID" != "null" ]; then
+        #       ${pkgs.wireplumber}/bin/wpctl set-volume "$NODE_ID" "$1"
+        #   else
+        #       # Optional: Falls kein App-Stream gefunden, mach halt Default
+        #       ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ "$1"
+        #   fi
+        # '';
+        # in
+        [
+          # "CTRL ALT, XF86AudioRaiseVolume, exec, ${vol-app}/bin/vol-app 5%+"
+          # "CTRL ALT, XF86AudioLowerVolume, exec, ${vol-app}/bin/vol-app 5%-"
+          #
+          "SUPER SHIFT, C, exec, ${pkgs.hyprpicker}/bin/hyprpicker -a"
 
-          if [ "$ACTIVE_PID" = "null" ] || [ -z "$ACTIVE_PID" ]; then exit 0; fi
+          # "SUPER, M, exit"
 
-          # 2. Die PipeWire Node-ID finden, die zu dieser PID (oder deren Child-Prozessen) gehört
-          # Wir dumpen die Nodes und suchen nach dem process.id match
-          NODE_ID=$(${pkgs.pipewire}/bin/pw-dump | ${pkgs.jq}/bin/jq -r ".[] | select(.info.props[\"process.id\"] == $ACTIVE_PID or .info.props[\"application.process.id\"] == \"$ACTIVE_PID\") | .id" | head -n1)
+          "ALT, F4, killactive"
+          "SUPER, C, killactive"
 
-          # 3. Falls nichts gefunden (wegen Proton/Steam), suchen wir nach Child-PIDs
-          if [ -z "$NODE_ID" ] || [ "$NODE_ID" = "null" ]; then
-              CHILD_PIDS=$(pgrep -P "$ACTIVE_PID")
-              for CPID in $CHILD_PIDS; do
-                  NODE_ID=$(${pkgs.pipewire}/bin/pw-dump | ${pkgs.jq}/bin/jq -r ".[] | select(.info.props[\"process.id\"] == $CPID or .info.props[\"application.process.id\"] == \"$CPID\") | .id" | head -n1)
-                  [ -n "$NODE_ID" ] && [ "$NODE_ID" != "null" ] && break
-              done
-          fi
+          "SUPER, V, togglefloating"
+          "SUPER, P, pseudo"
+          "SUPER, J, togglesplit"
+          "SUPER, F, fullscreen"
 
-          # 4. Lautstärke via wpctl anpassen, wenn eine Node gefunden wurde
-          if [ -n "$NODE_ID" ] && [ "$NODE_ID" != "null" ]; then
-              ${pkgs.wireplumber}/bin/wpctl set-volume "$NODE_ID" "$1"
-          else
-              # Optional: Falls kein App-Stream gefunden, mach halt Default
-              ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ "$1"
-          fi
-        '';
-      in [
-        "CTRL ALT, XF86AudioRaiseVolume, exec, ${vol-app}/bin/vol-app 5%+"
-        "CTRL ALT, XF86AudioLowerVolume, exec, ${vol-app}/bin/vol-app 5%-"
+          # move focus
+          "SUPER, left, movefocus, l"
+          "SUPER, right, movefocus, r"
+          "SUPER, up, movefocus, u"
+          "SUPER, down, movefocus, d"
 
-        "SUPER SHIFT, C, exec, ${pkgs.hyprpicker}/bin/hyprpicker -a"
+          # move windows around inside a workspace
+          "SUPER SHIFT, left, movewindow, l"
+          "SUPER SHIFT, right, movewindow, r"
+          "SUPER SHIFT, up, movewindow, u"
+          "SUPER SHIFT, down, movewindow, d"
 
-        # "SUPER, M, exit"
+          # scroll through existing workspaces
+          "SUPER CTRL, right, workspace, e+1"
+          "SUPER CTRL, left, workspace, e-1"
 
-        "ALT, F4, killactive"
-        "SUPER, C, killactive"
+          # navigate workspaces
+          "SUPER, 1, workspace, 1"
+          "SUPER, 2, workspace, 2"
+          "SUPER, 3, workspace, 3"
+          "SUPER, 4, workspace, 4"
+          "SUPER, 5, workspace, 5"
+          "SUPER, 6, workspace, 6"
+          "SUPER, 7, workspace, 7"
+          "SUPER, 8, workspace, 8"
+          "SUPER, 9, workspace, 9"
+          "SUPER, 0, workspace, 10"
 
-        "SUPER, V, togglefloating"
-        "SUPER, P, pseudo"
-        "SUPER, J, togglesplit"
-        "SUPER, F, fullscreen"
-
-        # move focus
-        "SUPER, left, movefocus, l"
-        "SUPER, right, movefocus, r"
-        "SUPER, up, movefocus, u"
-        "SUPER, down, movefocus, d"
-
-        # move windows around inside a workspace
-        "SUPER SHIFT, left, movewindow, l"
-        "SUPER SHIFT, right, movewindow, r"
-        "SUPER SHIFT, up, movewindow, u"
-        "SUPER SHIFT, down, movewindow, d"
-
-        # scroll through existing workspaces
-        "SUPER CTRL, right, workspace, e+1"
-        "SUPER CTRL, left, workspace, e-1"
-
-        # navigate workspaces
-        "SUPER, 1, workspace, 1"
-        "SUPER, 2, workspace, 2"
-        "SUPER, 3, workspace, 3"
-        "SUPER, 4, workspace, 4"
-        "SUPER, 5, workspace, 5"
-        "SUPER, 6, workspace, 6"
-        "SUPER, 7, workspace, 7"
-        "SUPER, 8, workspace, 8"
-        "SUPER, 9, workspace, 9"
-        "SUPER, 0, workspace, 10"
-
-        # move window to workspace
-        "SUPER CTRL SHIFT, right, movetoworkspace, e+1"
-        "SUPER CTRL SHIFT, left, movetoworkspace, e-1"
-        "SUPER CTRL SHIFT, 1, movetoworkspace, 1"
-        "SUPER CTRL SHIFT, 2, movetoworkspace, 2"
-        "SUPER CTRL SHIFT, 3, movetoworkspace, 3"
-        "SUPER CTRL SHIFT, 4, movetoworkspace, 4"
-        "SUPER CTRL SHIFT, 5, movetoworkspace, 5"
-        "SUPER CTRL SHIFT, 6, movetoworkspace, 6"
-        "SUPER CTRL SHIFT, 7, movetoworkspace, 7"
-        "SUPER CTRL SHIFT, 8, movetoworkspace, 8"
-        "SUPER CTRL SHIFT, 9, movetoworkspace, 9"
-        "SUPER CTRL SHIFT, 0, movetoworkspace, 10"
-      ];
+          # move window to workspace
+          "SUPER CTRL SHIFT, right, movetoworkspace, e+1"
+          "SUPER CTRL SHIFT, left, movetoworkspace, e-1"
+          "SUPER CTRL SHIFT, 1, movetoworkspace, 1"
+          "SUPER CTRL SHIFT, 2, movetoworkspace, 2"
+          "SUPER CTRL SHIFT, 3, movetoworkspace, 3"
+          "SUPER CTRL SHIFT, 4, movetoworkspace, 4"
+          "SUPER CTRL SHIFT, 5, movetoworkspace, 5"
+          "SUPER CTRL SHIFT, 6, movetoworkspace, 6"
+          "SUPER CTRL SHIFT, 7, movetoworkspace, 7"
+          "SUPER CTRL SHIFT, 8, movetoworkspace, 8"
+          "SUPER CTRL SHIFT, 9, movetoworkspace, 9"
+          "SUPER CTRL SHIFT, 0, movetoworkspace, 10"
+        ];
 
       binde = [
         # resize windows

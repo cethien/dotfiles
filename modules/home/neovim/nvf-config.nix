@@ -154,13 +154,16 @@
       icon-picker.enable = true;
       ccc.enable = true;
 
-      nvim-biscuits.enable = true;
-      nvim-biscuits.setupOpts = {
-        cursor_line_only = true;
-        languageConfig = {
-          markdown.disabled = true;
-        };
-      };
+      # TODO: https://github.com/NotAShelf/nvf/issues/1312#issuecomment-3741078541
+      #
+      # nvim-biscuits.enable = true;
+      # nvim-biscuits.setupOpts = {
+      #   cursor_line_only = true;
+      #   languageConfig = {
+      #     markdown.disabled = true;
+      #   };
+      # };
+
       diffview-nvim.enable = true;
       oil-nvim.enable = true;
       direnv.enable = true;

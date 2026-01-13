@@ -32,7 +32,7 @@ in {
   config = mkIf config.programs.chromium.enable {
     wayland.windowManager.hyprland.settings = {
       exec-once = mkIf as ["[silent] chromium"];
-      windowrulev2 = ["workspace ${toString ws}, initialClass:^(chromium-browser)$"];
+      windowrule = ["match:initial_class ^(chromium-browser)$, workspace ${toString ws}"];
     };
 
     programs.chromium = {

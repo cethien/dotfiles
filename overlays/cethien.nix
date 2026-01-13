@@ -1,5 +1,11 @@
 self: super: {
   cethien = {
+    mkHyprGameWindowRule = match: workspace: [
+      "${match}, fullscreen on"
+      "${match}, content game"
+      "${match}, workspace ${toString workspace}"
+    ];
+
     writeHyprlandLaunchScriptBin = name: exec: class: let
       drv =
         super.writeShellScriptBin "hypr_${name}"

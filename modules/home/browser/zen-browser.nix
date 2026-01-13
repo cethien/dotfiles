@@ -61,7 +61,7 @@ in {
 
     wayland.windowManager.hyprland.settings = {
       exec-once = mkIf as ["[silent] zen-beta"];
-      windowrulev2 = ["workspace ${toString ws}, initialClass:^(zen-beta)$"];
+      windowrule = ["match:initial_class ^(zen-beta)$, workspace ${toString ws}"];
     };
   };
 }

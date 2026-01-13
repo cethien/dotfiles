@@ -27,17 +27,14 @@ in {
 
     wayland.windowManager.hyprland.settings = {
       exec-once = mkIf (config.programs.steam.enable && (builtins.elem "steam" as)) ["steam -silent"];
-      windowrulev2 = mkMerge [
-        (mkIf config.programs.steam.enable [
-          "workspace ${toString ws}, initialClass:^(steam_app_.*)$"
-          "immediate, initialClass:^(steam_app_.*)$"
-        ])
-        (mkIf config.programs.pokemmo.enable [
-          "workspace ${toString ws}, title:^(.*PokeMMO.*)$"
-          "fullscreen, title:^(.*PokeMMO.*)$"
-          "immediate, title:^(.*PokeMMO.*)$"
-        ])
-      ];
+      windowrule = let
+        mkGame = match: pkgs.cethien.mkHyprGameWindowRule match "${toString ws}";
+      in
+        mkMerge [
+          (mkIf config.programs.steam.enable (mkGame "match:initial_class ^(steam_app_.*)$"))
+          (mkIf config.programs.steam.enable (mkGame "match:initial_class (?i).*\.exe$"))
+          (mkIf config.programs.pokemmo.enable (mkGame "match:title ^(.*PokeMMO.*)$"))
+        ];
     };
   };
 }

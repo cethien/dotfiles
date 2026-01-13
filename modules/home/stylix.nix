@@ -22,7 +22,6 @@ in {
     };
 
     stylix = {
-      # image = mkDefault ../../../wallpapers/blueish_river_landscape.jpg;
       polarity = "dark";
       base16Scheme = mkDefault "${pkgs.base16-schemes}/share/themes/tokyo-night-dark.yaml";
 
@@ -32,7 +31,7 @@ in {
         name = "Simp1e-Tokyo-Night";
       };
 
-      iconTheme = {
+      icons = {
         enable = true;
         package = pkgs.tela-icon-theme;
         dark = "Tela-dracula-dark";

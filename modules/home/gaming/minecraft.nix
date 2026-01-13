@@ -26,10 +26,6 @@ in {
       })
     ];
 
-    wayland.windowManager.hyprland.settings.windowrulev2 = [
-      "workspace ${toString ws}, class:^(Minecraft.*)$"
-      "fullscreen, class:^(Minecraft.*)$"
-      "immediate, class:^(Minecraft.*)$"
-    ];
+    wayland.windowManager.hyprland.settings.windowrule = pkgs.cethien.mkHyprGameWindowRule "match:class ^(Minecraft.*)$" "${toString ws}";
   };
 }
