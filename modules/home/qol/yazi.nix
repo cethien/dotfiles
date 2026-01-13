@@ -17,6 +17,11 @@ in {
     };
 
     programs.yazi = {
+      extraPackages = with pkgs; [
+        glow
+        ouch
+      ];
+
       plugins = {
         inherit
           (pkgs.yaziPlugins)
@@ -25,6 +30,10 @@ in {
           chmod
           smart-paste
           git
+          restore
+          glow
+          jump-to-char
+          compress
           ;
       };
       settings.plugin.prepend_fetchers = [
@@ -70,7 +79,7 @@ in {
           run = "plugin smart-paste";
         }
         {
-          on = ["c" "m"];
+          on = ["u" "m"];
           run = "plugin chmod";
         }
       ];
