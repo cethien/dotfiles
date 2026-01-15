@@ -3,8 +3,10 @@
   ageFile ? "$HOME/.config/sops/age/keys.txt",
   ...
 }: {
-  vim = with pkgs.vimPlugins; {
-    extraPlugins = {
+  vim = {
+    extraPackages = with pkgs; [fzf lazygit sops gh];
+
+    extraPlugins = with pkgs.vimPlugins; {
       sops = {
         package = nvim-sops;
         setup =
@@ -175,23 +177,16 @@
       };
     };
 
-    telescope.enable = true;
-    telescope = {
-      mappings.findFiles = "<leader><Space>";
-      extensions = [
-        {
-          name = "fzf";
-          packages = [pkgs.vimPlugins.telescope-fzf-native-nvim];
-          setup = {fzf = {fuzzy = true;};};
-        }
-      ];
-      setupOpts.defaults = {
-        layouts_stategy = "horizontal";
-        layout_config = {
+    fzf-lua = {
+      enable = true;
+      setupOpts = {
+        winopts = {
           height = 0.8;
-          width = 0.95;
-          horizontal.prompt_position = "top";
-          preview_cutoff = 1;
+          width = 0.9;
+          # preview = {
+          #   layout = "horizontal";
+          #   horizontal = "right:50%";
+          # };
         };
         file_ignore_patterns = [
           "node_modules"
@@ -204,6 +199,36 @@
         ];
       };
     };
+
+    # telescope.enable = true;
+    # telescope = {
+    #   mappings.findFiles = "<leader><Space>";
+    #   extensions = [
+    #     {
+    #       name = "fzf";
+    #       packages = [pkgs.vimPlugins.telescope-fzf-native-nvim];
+    #       setup = {fzf = {fuzzy = true;};};
+    #     }
+    #   ];
+    #   setupOpts.defaults = {
+    #     layouts_stategy = "horizontal";
+    #     layout_config = {
+    #       height = 0.8;
+    #       width = 0.95;
+    #       horizontal.prompt_position = "top";
+    #       preview_cutoff = 1;
+    #     };
+    #     file_ignore_patterns = [
+    #       "node_modules"
+    #       "%.git/"
+    #       "%.direnv/"
+    #       "dist/"
+    #       "build/"
+    #       "target/"
+    #       "result/"
+    #     ];
+    #   };
+    # };
 
     git = {
       gitsigns.enable = true;
@@ -294,8 +319,39 @@
     keymaps = [
       {
         mode = "n";
-        key = "<leader>gh";
-        action = "<cmd>Octo actions<CR>";
+        key = "<leader><Space>";
+        action = "<cmd>FzfLua files<CR>";
+      }
+      {
+        mode = "n";
+        key = "<leader>fb";
+        action = "<cmd>FzfLua buffers<CR>";
+      }
+      {
+        mode = "n";
+        key = "<leader>fg";
+        action = "<cmd>FzfLua live_grep<CR>";
+      }
+      {
+        mode = "n";
+        key = "<leader>fc";
+        action = "<cmd>FzfLua git_commits<CR>";
+      }
+
+      {
+        mode = "n";
+        key = "<leader>oi";
+        action = "<cmd>Octo issue list<CR>";
+      }
+      {
+        mode = "n";
+        key = "<leader>op";
+        action = "<cmd>Octo pr list<CR>";
+      }
+      {
+        mode = "n";
+        key = "<leader>od";
+        action = "<cmd>Octo discussions list<CR>";
       }
 
       {
