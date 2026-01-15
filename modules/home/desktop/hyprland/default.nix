@@ -42,8 +42,8 @@ in {
       wl-clipboard
       wl-screenrec
     ];
-    services.hyprpaper.enable = true;
-    services.hyprpaper.settings.splash = false;
+
+    services.wpaperd.enable = true;
     services.mako.enable = true;
     programs.rofi.enable = true;
 
