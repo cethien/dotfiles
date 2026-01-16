@@ -15,6 +15,8 @@ in {
     home.sessionVariables.EDITOR = "nvim";
     home.shellAliases.v = "nvim";
     programs.tmux.resurrectPluginProcesses = ["nvim .nvim-wrapped"];
+    home.packages = [pkgs.nvimpager];
+    home.sessionVariables.PAGER = "nvimpager";
 
     programs.nvf.settings = import ./nvf-config.nix {
       inherit pkgs;

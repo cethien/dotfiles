@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkOption types mkIf mkBefore;
+  inherit (lib) mkOption types mkIf;
   cfg = config.programs.qol;
 in {
   imports = [
@@ -27,20 +27,8 @@ in {
       }"
     ];
 
-    home.file = {
-      ".qalculate" = {
-        text =
-          #ini
-          ''
-            [General]
-            AutoCalc=true
-          '';
-      };
-    };
-
     home.packages = with pkgs; [
       up
-      moor
 
       libqalculate
 
@@ -100,7 +88,7 @@ in {
 
       bat.enable = true;
       bat.config = {
-        pager = "moor";
+        pager = "${pkgs.nvimpager}/bin/nvimpager";
         style = "plain";
       };
 
@@ -128,8 +116,6 @@ in {
 
       reload = "source ~/.$(basename $SHELL)rc && clear";
     };
-
-    home.sessionVariables.PAGER = "moor";
 
     home.file.".config/fastfetch/logo.png".source = ./bernd_pixel.png;
     home.file."${config.home.homeDirectory}/.hushlogin".text = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
