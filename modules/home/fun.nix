@@ -24,15 +24,31 @@ in {
       ];
     };
 
-    home.packages = with pkgs; [
-      cmatrix
-      asciiquarium-transparent
-      hackertyper
-      ttysvr
-      cowsay
-      figlet
-      dotacat
-    ];
+    home.packages = let
+      reasonsJson = builtins.fetchurl {
+        url = "https://raw.githubusercontent.com/hotheadhacker/no-as-a-service/refs/heads/main/reasons.json";
+        sha256 = "sha256:00a16hrbc99i3fcrihg6xf61fip6kc9dbd0brsvrd5kw0zwbjdgm";
+      };
+      suffContent = builtins.readFile ./suff.txt;
+    in
+      with pkgs; [
+        cmatrix
+        asciiquarium-transparent
+        hackertyper
+        ttysvr
+        cowsay
+        figlet
+        dotacat
+
+        (pkgs.writeShellScriptBin "nope" ''
+          ${pkgs.jq}/bin/jq -r '.[]' ${reasonsJson} | shuf -n 1
+        '')
+        (pkgs.writeShellScriptBin "suff" ''
+          cat << 'EOF' | ${pkgs.coreutils}/bin/shuf -n 1
+          ${suffContent}
+          EOF
+        '')
+      ];
 
     home.shellAliases = {
       lolcat = "dotacat";
