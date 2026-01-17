@@ -12,11 +12,9 @@
         setup =
           #lua
           ''
-            require("nvim_sops").setup({
-              defaults = {
-                ageKeyFile = '${ageFile}'
-              }
-            })
+            require("nvim_sops").setup {
+              defaults = { ageKeyFile = '${ageFile}' }
+            }
           '';
       };
       csv = {
@@ -24,7 +22,7 @@
         setup =
           #lua
           ''
-            require("csvview").setup({})
+            require("csvview").setup {}
           '';
       };
       octo = {
@@ -32,7 +30,9 @@
         setup =
           #lua
           ''
-            require("octo").setup({})
+            require("octo").setup {
+              picker = "fzf-lua",
+            }
           '';
       };
       codesnap = {
@@ -40,14 +40,14 @@
         setup =
           #lua
           ''
-            require("codesnap").setup({
+            require("codesnap").setup {
               save_path = "~/Pictures/CodeSnap",
               has_breadcrumbs = true,
               show_workspace = true,
               has_line_number = true,
               bg_theme = "grape",
               watermark = "",
-            })
+            }
           '';
       };
     };
@@ -351,7 +351,7 @@
       {
         mode = "n";
         key = "<leader>od";
-        action = "<cmd>Octo discussions list<CR>";
+        action = "<cmd>Octo discussion list<CR>";
       }
 
       {
