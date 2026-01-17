@@ -43,6 +43,7 @@ in {
       wl-screenrec
     ];
 
+    services.hyprpaper.enable = lib.mkForce false; # due to stylix which enables
     services.wpaperd.enable = true;
     services.mako.enable = true;
     programs.rofi.enable = true;
