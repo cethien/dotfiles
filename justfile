@@ -13,7 +13,7 @@ alias fmt := format
 hostname := if env("WSL_DISTRO_NAME", "empty") == "empty" { lowercase(shell("hostname")) } else { "wsl" }
 system := hostname
 @switch: clear
-  sudo -A nixos-rebuild switch --flake .#{{system}}
+  sudo nixos-rebuild switch --flake .#{{system}}
 
 home := env("USER") + "@" + hostname
 @switch-home: clear
