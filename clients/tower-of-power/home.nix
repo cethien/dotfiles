@@ -21,7 +21,7 @@
         "HDMI-A-1, 1920x1080@100, 320x1440, 1"
       ];
       general.allow_tearing = true;
-      exec-once = [''${pkgs.xorg.xrandr} --output "DP-1" --primary''];
+      exec-once = [''xrandr --output "DP-1" --primary''];
 
       workspace = [
         "1, monitor:DP-1, persistent:true"
@@ -32,7 +32,10 @@
         "5, monitor:HDMI-A-1, persistent:true"
       ];
 
-      windowrule = ["match:class discord, workspace 5"];
+      windowrule = [
+        "match:class discord, workspace 5"
+        "match:class steam, match:title ^(Friends List)$, workspace 5"
+      ];
     };
     defaultWorkspaces = {
       browser = 4;

@@ -36,6 +36,7 @@ in {
 
   config = mkIf config.wayland.windowManager.hyprland.enable {
     home.packages = with pkgs; [
+      xrandr
       libnotify
       playerctl
       brightnessctl
