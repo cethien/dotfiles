@@ -38,19 +38,19 @@ read -n 1 -s -p 'press any key to close...'
 }
 
 wifi_enable() {
-  nmcli radio wifi on && notify-send "󰖩 wifi enabled"
+  nmcli radio wifi on && notify-send "󰖩  wifi" " enabled"
 }
 
 wifi_disable() {
-  nmcli radio wifi off && notify-send "󰖪 wifi disabled"
+  nmcli radio wifi off && notify-send "󰖩  wifi" "disabled"
 }
 
 tailscale_enable() {
-  tailscale up && notify-send "󰖩 tailscale enabled"
+  tailscale up && notify-send "󰲝  tailscale" "enabled"
 }
 
 tailscale_disable() {
-  tailscale down && notify-send "󰖪 tailscale disabled"
+  tailscale down && notify-send "󰲝  tailscale" "disabled"
 }
 
 # ===== GENERATE WIFI MENU =====
@@ -194,7 +194,7 @@ main() {
   MENU=()
 
   if command -v tailscale &>/dev/null; then
-    if tailscale status | grep -q "tailscale is stopped"; then
+    if tailscale status | grep -q "Tailscale is stopped"; then
       MENU+=("$OPT_TAILSCALE_ENABLE")
     else
       MENU+=("$OPT_TAILSCALE_DISABLE")

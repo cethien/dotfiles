@@ -67,15 +67,15 @@ case "$SELECTED" in
   # Startet daemon entkoppelt vom script
   spotify_player -d >/dev/null 2>&1 &
   disown
-  notify-send "Spotify" "Starting daemon..."
+  notify-send "󰓇  spotify" "starting daemon"
   ;;
 "$OPT_SPOTIFY_PLAY") $SPOTIFYCTL play ;;
 "$OPT_SPOTIFY_PAUSE") $SPOTIFYCTL pause ;;
 "$OPT_SPOTIFY_NEXT") $SPOTIFYCTL next ;;
 "$OPT_SPOTIFY_PREV") $SPOTIFYCTL previous ;;
-"$OPT_MIC_MUTE") wpctl set-mute @DEFAULT_AUDIO_SOURCE@ 1 ;;
-"$OPT_MIC_UNMUTE") wpctl set-mute @DEFAULT_AUDIO_SOURCE@ 0 ;;
-"$OPT_SPEAKER_MUTE") wpctl set-mute @DEFAULT_SINK@ 1 ;;
-"$OPT_SPEAKER_UNMUTE") wpctl set-mute @DEFAULT_SINK@ 0 ;;
+"$OPT_MIC_MUTE") wpctl set-mute @DEFAULT_AUDIO_SOURCE@ 1 && notify-send "󰍭  microphone" "muted" ;;
+"$OPT_MIC_UNMUTE") wpctl set-mute @DEFAULT_AUDIO_SOURCE@ 0 && notify-send "󰍬  microphone" "unmuted" ;;
+"$OPT_SPEAKER_MUTE") wpctl set-mute @DEFAULT_SINK@ 1 && notify-send "󰓄  speaker" "muted" ;;
+"$OPT_SPEAKER_UNMUTE") wpctl set-mute @DEFAULT_SINK@ 0 notify-send "󰓃  speaker" "unmuted" ;;
 "$OPT_MIXER") kitty --class wiremix -e wiremix ;;
 esac
