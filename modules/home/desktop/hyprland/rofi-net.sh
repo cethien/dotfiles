@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 
 # ===== CONFIG =====
-HOTSPOT_SSID="$(hostname)"
-HOTSPOT_CONN_NAME="${HOTSPOT_SSID}_hotspot"
 WIFI_IFACE=$(nmcli device status | awk '/wifi/ {print $1; exit}')
 SEPARATOR="------"
 
@@ -195,39 +193,49 @@ handle_connection() {
 main() {
   MENU=()
 
-  CONNECTED_SSID=$(nmcli -t -f ACTIVE,SSID dev wifi | awk -F: '$1=="yes"{print $2}')
-  WIFI_STATUS=$(nmcli radio wifi)
+  if command -v tailscale &>/dev/null; then
+    if tailscale status | grep -q "tailscale is stopped"; then
+      MENU+=("$OPT_TAILSCALE_ENABLE")
+    else
+      MENU+=("$OPT_TAILSCALE_DISABLE")
+    fi
+  fi
 
-  [[ -n "$CONNECTED_SSID" ]] && MENU+=("$OPT_SHOW_WIFI_INFO")
+  if [[ -n "$WIFI_IFACE" ]]; then
+    CONNECTED_SSID=$(nmcli -t -f ACTIVE,SSID dev wifi | awk -F: '$1=="yes"{print $2}')
+    WIFI_STATUS=$(nmcli radio wifi)
 
-  [[ "$WIFI_STATUS" == "disabled" ]] && MENU+=("$OPT_WIFI_ENABLE")
+    [[ -n "$CONNECTED_SSID" ]] && MENU+=("$OPT_SHOW_WIFI_INFO")
+    [[ "$WIFI_STATUS" == "disabled" ]] && MENU+=("$OPT_WIFI_ENABLE")
 
-  if [[ "$WIFI_STATUS" == "enabled" ]]; then
-    if command -v tailscale &>/dev/null; then
-      if tailscale status | grep -q "Tailscale is stopped"; then
-        MENU+=("$OPT_TAILSCALE_ENABLE")
-      else
-        MENU+=("$OPT_TAILSCALE_DISABLE")
+    if [[ "$WIFI_STATUS" == "enabled" ]]; then
+      MENU+=("$OPT_WIFI_DISABLE")
+
+      generate_wifi_list
+
+      if [[ ${#WIFI_DISPLAY_MENU[@]} -gt 0 ]]; then
+        MENU+=("$SEPARATOR")
+        MENU+=("${WIFI_DISPLAY_MENU[@]}")
       fi
     fi
+  fi
 
-    MENU+=("$OPT_WIFI_DISABLE")
-    MENU+=("$SEPARATOR")
-    generate_wifi_list
-    MENU+=("${WIFI_DISPLAY_MENU[@]}")
+  if [[ ${#MENU[@]} -eq 0 ]]; then
+    notify-send "networking" "no network features to configure"
+    exit 0
   fi
 
   local CHOICE
   CHOICE=$(printf "%s\n" "${MENU[@]}" | rofi -dmenu -i -p "networking > ") || exit
 
   case "$CHOICE" in
-  "$SEPARATOR") echo "deez nuts" ;; # do nothing
+  "$SEPARATOR") ;;
   "$OPT_SHOW_WIFI_INFO") show_wifi_info ;;
   "$OPT_WIFI_ENABLE") wifi_enable ;;
   "$OPT_WIFI_DISABLE") wifi_disable ;;
   "$OPT_TAILSCALE_ENABLE") tailscale_enable ;;
   "$OPT_TAILSCALE_DISABLE") tailscale_disable ;;
-  *) handle_connection "${CHOICE:3}" ;;
+  *) [[ -n "$CHOICE" ]] && handle_connection "${CHOICE:3}" ;;
   esac
 }
 
