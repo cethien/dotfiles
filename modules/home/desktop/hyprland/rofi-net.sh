@@ -30,7 +30,7 @@ echo
 echo 'ip: ${IP:-n/a}'
 echo 'gateway: ${GW:-n/a}'
 echo 'signal: ${SIGNAL:-n/a} %'
-echo 'frequency: ${FREQ:-n/a} mhz'
+echo 'frequency: ${FREQ:-n/a}'
 echo 'speed: ${RATE:-n/a} mb/s'
 echo
 read -n 1 -s -p 'press any key to close...'
@@ -192,8 +192,22 @@ handle_connection() {
 # ===== MAIN MENU =====
 main() {
   MENU=()
+  HEADER="networking >"
 
-  if command -v tailscale &>/dev/null; then
+  HAS_WAN=false
+  [[ $(nmcli networking connectivity check) == "full" ]] && HAS_WAN=true
+
+  # WIFI_STATUS=$(nmcli radio wifi)
+  WIFI_STATUS=$(nmcli radio wifi 2>/dev/null)
+
+  # 1. WIFI INFO
+  if [[ -n "$WIFI_IFACE" && "$WIFI_STATUS" != "disabled" ]]; then
+    CONNECTED_SSID=$(nmcli -t -f ACTIVE,SSID dev wifi | awk -F: '$1=="yes"{print $2}')
+    [[ -n "$CONNECTED_SSID" ]] && MENU+=("$OPT_SHOW_WIFI_INFO")
+  fi
+
+  # 2. TAILSCALE only if internet
+  if [[ "$HAS_WAN" == "true" ]] && command -v tailscale &>/dev/null; then
     if tailscale status | grep -q "Tailscale is stopped"; then
       MENU+=("$OPT_TAILSCALE_ENABLE")
     else
@@ -202,31 +216,30 @@ main() {
   fi
 
   if [[ -n "$WIFI_IFACE" ]]; then
-    CONNECTED_SSID=$(nmcli -t -f ACTIVE,SSID dev wifi | awk -F: '$1=="yes"{print $2}')
-    WIFI_STATUS=$(nmcli radio wifi)
-
-    [[ -n "$CONNECTED_SSID" ]] && MENU+=("$OPT_SHOW_WIFI_INFO")
-    [[ "$WIFI_STATUS" == "disabled" ]] && MENU+=("$OPT_WIFI_ENABLE")
-
-    if [[ "$WIFI_STATUS" == "enabled" ]]; then
+    if [[ "$WIFI_STATUS" == "disabled" ]]; then
+      [[ "$HAS_WAN" == "false" ]] && HEADER="󰲛  no connection"
+      MENU+=("$OPT_WIFI_ENABLE")
+    else
       MENU+=("$OPT_WIFI_DISABLE")
 
       generate_wifi_list
-
       if [[ ${#WIFI_DISPLAY_MENU[@]} -gt 0 ]]; then
         MENU+=("$SEPARATOR")
         MENU+=("${WIFI_DISPLAY_MENU[@]}")
       fi
     fi
+  else
+    [[ "$HAS_WAN" == "false" ]] && HEADER="󰲛  no connection (no wifi device)"
   fi
 
+  # Fallback
   if [[ ${#MENU[@]} -eq 0 ]]; then
     notify-send "networking" "no network features to configure"
     exit 0
   fi
 
   local CHOICE
-  CHOICE=$(printf "%s\n" "${MENU[@]}" | rofi -dmenu -i -p "networking > ") || exit
+  CHOICE=$(printf "%s\n" "${MENU[@]}" | rofi -dmenu -i -p "$HEADER") || exit
 
   case "$CHOICE" in
   "$SEPARATOR") ;;
