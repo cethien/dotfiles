@@ -71,9 +71,6 @@
     keepassxc.enable = true;
     gemini-cli.enable = true;
 
-    thunderbird.enable = true;
-    thunderbird.profiles."borislaw.sotnikow@gmx.de".isDefault = true;
-
     devSuite.extras = ["containers"];
 
     creativeSuite = {

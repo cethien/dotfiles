@@ -10,7 +10,14 @@ in {
   config = mkIf enabled {
     home.packages = with pkgs; [
       file-roller
+      geary
     ];
+
+    wayland.windowManager.hyprland.settings = let
+      ws = config.wayland.windowManager.hyprland.defaultWorkspaces.browser;
+    in {
+      windowrule = ["match:initial_class geary, workspace ${toString ws}"];
+    };
 
     programs = {
       imv.enable = true;
