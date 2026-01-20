@@ -24,6 +24,16 @@ in {
     };
   };
 
+  options.wayland.windowManager.hyprland = {
+    defaultWorkspaces = {
+      browser = mkOption {
+        type = types.nullOr types.int;
+        default = null;
+        description = "default browser workspace";
+      };
+    };
+  };
+
   config = let
     browserDesktop =
       if builtins.isAttrs cfg.default

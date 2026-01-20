@@ -20,18 +20,6 @@ in {
       type = types.listOf types.str;
       default = [];
     };
-    defaultWorkspaces = {
-      browser = mkOption {
-        type = types.int;
-        default = 1;
-        description = "default browser workspace";
-      };
-      gaming = mkOption {
-        type = types.int;
-        default = 3;
-        description = "default gaming workspace";
-      };
-    };
   };
 
   config = mkIf config.wayland.windowManager.hyprland.enable {

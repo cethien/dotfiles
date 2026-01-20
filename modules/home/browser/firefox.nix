@@ -37,7 +37,7 @@ in {
 
     wayland.windowManager.hyprland.settings = {
       exec-once = mkIf as ["[silent] firefox"];
-      windowrule = ["match:initial_class ^(firefox)$, workspace ${toString ws}"];
+      windowrule = mkIf (!isNull ws) ["match:initial_class ^(firefox)$, workspace ${toString ws}"];
     };
   };
 }

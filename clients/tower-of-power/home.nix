@@ -31,15 +31,11 @@
         "4, monitor:HDMI-A-1, persistent:true"
         "5, monitor:HDMI-A-1, persistent:true"
       ];
-
-      windowrule = [
-        "match:class discord, workspace 5"
-        "match:class steam, match:title ^(Friends List)$, workspace 5"
-      ];
     };
     defaultWorkspaces = {
       browser = 4;
       gaming = 2;
+      chat = 5;
     };
 
     autostart = [
@@ -77,7 +73,7 @@
       enable = true;
     };
     spotify.enable = true;
-    discord.enable = true;
+    vesktop.enable = true;
 
     steam.enable = true;
     r2modman.enable = true;

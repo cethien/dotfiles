@@ -30,10 +30,7 @@
         "5, monitor:HDMI-A-1, persistent:true"
       ];
     };
-    defaultWorkspaces = {
-      browser = 1;
-      gaming = 2;
-    };
+
     autostart = [
       "keepassxc"
     ];
