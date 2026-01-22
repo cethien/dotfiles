@@ -1,9 +1,25 @@
 {pkgs, ...}:
 pkgs.mkShell {
-  packages = with pkgs; [
-    nixpkgs-fmt
-    sops
-    tomlq
-    just
-  ];
+  packages = let
+    runPkg = pkgs.writeShellApplication {
+      name = "run";
+      runtimeInputs = with pkgs; [bash argc jq yq-go openssh];
+      checkPhase = ''
+        export LC_ALL=en_US.UTF-8
+        runHook preCheck
+        # shellcheck "$target"
+        runHook postCheck
+      '';
+      text = builtins.readFile ./run.sh;
+    };
+  in
+    with pkgs; [
+      nixpkgs-fmt
+      sops
+
+      jq
+      yq-go
+      argc
+      runPkg
+    ];
 }

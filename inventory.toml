@@ -6,25 +6,7 @@ disk_id = "nvme-eui.002538a301b0c2cd"
 os = "nixos"
 disk_id = "nvme-eui.00000000000000000026b7685ce299b5"
 
-[hosts.defaults]
-os = "nixos"
-default_gateway = "192.168.1.1"
-nameservers = ["192.168.1.1", "1.1.1.1"]
-
-[hosts.homelab]
-address = "192.168.1.50"
-disk_id = "wwn-0x56479a7001514900"
-
-[services.caddy]
-host = "homelab"
-
-[services.prometheus]
-host = "homelab"
-
-[services.whats-up-docker]
-host = "homelab"
-
-[services.coredns]
+[services.gitea]
 host = "homelab"
 
 [services.homepage]
@@ -33,6 +15,25 @@ host = "homelab"
 [services.grafana]
 host = "homelab"
 
-[services.gitea]
+[services.whats-up-docker]
 host = "homelab"
+
+[services.prometheus]
+host = "homelab"
+
+[services.coredns]
+host = "homelab"
+
+[services.caddy]
+host = "homelab"
+
+[hosts.homelab]
+address = "192.168.1.50"
+disk_id = "wwn-0x56479a7001514900"
+
+[defaults.hosts]
+os = "nixos"
+default_gateway = "192.168.1.1"
+nameservers = ["192.168.1.1", "1.1.1.1"]
+
 
