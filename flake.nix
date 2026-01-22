@@ -27,17 +27,14 @@
     nur.url = "github:nix-community/NUR";
     nur.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
-    nvf.url = "github:notashelf/nvf/bbc99da250d715f60f6df3cc19a28e514acb7a73";
-    nixpkgs-nvf.url = "github:nixos/nixpkgs/cad22e7d996aea55ecab064e84834289143e44a0";
-    nvf.inputs.nixpkgs.follows = "nixpkgs-nvf";
+    nvf.url = "github:notashelf/nvf";
+    nvf.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
     zen-browser.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     spicetify-nix.inputs.nixpkgs.follows = "nixpkgs-unstable";
-
-    nixpkgs-pr-spotify.url = "github:nixos/nixpkgs/pull/478453/head";
   };
 
   outputs = inputs @ {
@@ -65,15 +62,6 @@
         overlays = [
           (import ./overlays/cethien.nix)
           nur.overlays.default
-
-          # TODO: remove when merged - https://github.com/NixOS/nixpkgs/pull/478453
-          (final: prev: {
-            spotify-player =
-              (import inputs.nixpkgs-pr-spotify {
-                inherit system;
-                config.allowUnfree = true;
-              }).spotify-player;
-          })
         ];
       };
   in
