@@ -190,5 +190,8 @@
         deploy-rs.lib;
 
       templates = import ./templates;
-    });
+    }) // {
+      homeModules.default = import ./modules/home;
+      homeManagerModules = self.homeModules;
+    };
 }
