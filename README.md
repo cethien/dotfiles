@@ -9,16 +9,14 @@ infra...
 
 ## remote usage
 
-### setup home
+### bootstrapping (home-manager)
 
-for first time installation.
+installs nix + home-manager, sets some permissions.
 
-installs nix, sets some permissions and builds home-manager.
-
-check [`setup file`](./setup-home.sh) for details.
+check [`file`](./bootstrap.sh) for details.
 
 ```bash
-sh <(curl -fsSL -H 'Cache-Control: no-cache' "https://raw.githubusercontent.com/cethien/dotfiles/main/setup-home.sh")
+sh <(curl -fsSL -H 'Cache-Control: no-cache' "https://raw.githubusercontent.com/cethien/dotfiles/main/bootstrap.sh")
 ```
 
 ### neovim

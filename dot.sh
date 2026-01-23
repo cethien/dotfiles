@@ -156,6 +156,22 @@ switch() {
   exit 1
 }
 
+# @cmd for when i forgor to add bootstrap profile
+# @arg profile Overwrite the default user@hostname profile
+bootstrap-home() {
+  local target="${argc_profile:-$(whoami)@$(hostname | tr '[:upper:]' '[:lower:]')}"
+
+  _log "🚀 bootstrapping home-manager for $target"
+
+  if ! nix flake show --json . | jq -e ".homeConfigurations.\"$target\"" >/dev/null; then
+    _log-error "config $target not found in local flake."
+    _log-info "edit homes/defaults.nix and try again."
+    return 1
+  fi
+
+  nix run .#homeConfigurations."$target".activationPackage
+}
+
 # -------
 # HELPERS
 # -------
