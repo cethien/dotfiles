@@ -190,7 +190,10 @@
         deploy-rs.lib;
 
       templates = import ./templates;
-    }) // {
+    })
+    // {
+      overlays.default = import ./overlays/cethien.nix;
+
       homeModules.default = import ./modules/home;
       homeManagerModules = self.homeModules;
     };
