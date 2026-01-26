@@ -116,15 +116,15 @@
             in [
               disko.nixosModules.disko
               (import ./disko/simple.nix {inherit (n) diskId;})
-              ./clients/${n.hostName}/hardware-configuration.nix
-              ./clients/${n.hostName}/configuration.nix
+              ./clients/${n.hostname}/hardware-configuration.nix
+              ./clients/${n.hostname}/configuration.nix
               {system = {inherit stateVersion;};}
 
               home-manager.nixosModules.home-manager
               {
                 home-manager = {
                   backupFileExtension = "hm-bak";
-                  users."${user}" = ./clients/${n.hostName}/home.nix;
+                  users."${user}" = ./clients/${n.hostname}/home.nix;
                   extraSpecialArgs =
                     inputs
                     // {
@@ -140,23 +140,17 @@
 
       homes = import ./homes;
       homeConfigs = builtins.listToAttrs (map
-        (n: let
-          host =
-            if n.type == "wsl"
-            then "wsl"
-            else n.hostname;
-        in {
-          name = "${n.username}@${host}";
+        (n: {
+          name = "${n.username}@${n.hostname}";
           value = home-manager.lib.homeManagerConfiguration {
             pkgs = pkgsUnstable;
             modules = [
               (import ./homes/${n.hostname})
               {
-                home = let
+                home = {
+                  inherit stateVersion;
                   inherit (n) username;
-                in {
-                  inherit stateVersion username;
-                  homeDirectory = "/home/${username}";
+                  homeDirectory = "/home/${n.username}";
                 };
               }
             ];
