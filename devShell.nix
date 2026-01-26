@@ -3,7 +3,7 @@ pkgs.mkShell {
   packages = let
     runPkg = pkgs.writeShellApplication {
       name = "dot";
-      runtimeInputs = with pkgs; [bash argc jq yq-go openssh];
+      runtimeInputs = with pkgs; [bash argc yq-go openssh];
       checkPhase = ''
         export LC_ALL=en_US.UTF-8
         runHook preCheck
@@ -17,7 +17,7 @@ pkgs.mkShell {
       nixpkgs-fmt
       sops
 
-      jq
+      python3
       yq-go
       argc
       runPkg
