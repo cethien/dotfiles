@@ -1,12 +1,10 @@
-[
-  {
-    username = "cethien";
-    hostname = "wsl";
-    type = "wsl";
-  }
-  {
-    username = "bsotnikow";
-    hostname = "tmsproshop.de";
-    type = "wsl";
-  }
-]
+let
+  toml = builtins.fromTOML (builtins.readFile ../inventory.toml);
+  homes =
+    builtins.mapAttrs (name: h: {
+      hostname = name;
+      username = h.user;
+    })
+    toml.homes;
+in
+  homes
