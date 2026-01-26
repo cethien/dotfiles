@@ -60,7 +60,7 @@ in {
         "text/x-sass"
         "text/x-scss"
         "text/css"
-        "text/html"
+        # "text/html"
         "application/javascript"
         "application/x-javascript"
         "application/json"
