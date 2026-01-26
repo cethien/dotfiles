@@ -44,23 +44,6 @@ in {
       else "${cfg.default}.desktop";
 
     mimeTypes = [
-      "application/javascript"
-      "application/json"
-      "application/ld+json"
-      "application/manifest+json"
-      "application/x-extension-htm"
-      "application/x-extension-html"
-      "application/x-extension-shtml"
-      "application/x-extension-xht"
-      "application/x-extension-xhtml"
-      "application/x-www-form-urlencoded"
-      "application/xhtml+xml"
-      "application/xml"
-      "multipart/form-data"
-      "text/css"
-      "text/html"
-      "text/plain"
-      "text/xml"
       "x-scheme-handler/about"
       "x-scheme-handler/chrome"
       "x-scheme-handler/http"
