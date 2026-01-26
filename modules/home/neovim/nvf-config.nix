@@ -334,8 +334,8 @@
       }
       {
         mode = "n";
-        key = "<leader>fc";
-        action = "<cmd>FzfLua git_commits<CR>";
+        key = "<leader>fw";
+        action = "<cmd>FzfLua git_worktrees<CR>";
       }
 
       {
