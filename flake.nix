@@ -137,7 +137,14 @@
         deploy-rs.lib;
 
       templates = import ./templates;
-    });
+    })
+    // {
+      overlays.cethien = import ./overlays/cethien.nix;
+      overlays.default = self.overlays.cethien;
+
+      homeManagerModules.default = import ./modules/home;
+      homeModules.default = self.homeManagerModules.default;
+    };
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
