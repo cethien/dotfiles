@@ -1,6 +1,3 @@
-[homes.desktop-t81o38v]
-user = "bsotnikow"
-
 [clients.hp-430-g7]
 os = "nixos"
 disk_id = "nvme-eui.002538a301b0c2cd"

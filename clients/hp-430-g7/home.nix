@@ -43,13 +43,7 @@
   programs.rclone.enable = true;
 
   programs = {
-    ssh.matchBlocksExtra =
-      (import ../../homes/ssh.nix)
-      // (import ../../homes/tmsproshop.de/ssh.nix);
-    freerdp.enable = true;
-    freerdp.connections = import ../../homes/tmsproshop.de/rdp.nix;
-    browser.firefox-profile.containers = ["tmsproshop.de" "tmsproshop.de/admin"];
-
+    ssh.matchBlocksExtra = import ../../homes/ssh.nix;
     git.urlExtra = {
       "ssh://git@git.cethien.home".insteadOf = "https://git.cethien.home";
       "git@git.cethien.home:".insteadOf = "home:";
