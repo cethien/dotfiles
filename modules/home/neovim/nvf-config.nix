@@ -183,10 +183,6 @@
         winopts = {
           height = 0.8;
           width = 0.9;
-          # preview = {
-          #   layout = "horizontal";
-          #   horizontal = "right:50%";
-          # };
         };
         file_ignore_patterns = [
           "node_modules"
@@ -199,36 +195,6 @@
         ];
       };
     };
-
-    # telescope.enable = true;
-    # telescope = {
-    #   mappings.findFiles = "<leader><Space>";
-    #   extensions = [
-    #     {
-    #       name = "fzf";
-    #       packages = [pkgs.vimPlugins.telescope-fzf-native-nvim];
-    #       setup = {fzf = {fuzzy = true;};};
-    #     }
-    #   ];
-    #   setupOpts.defaults = {
-    #     layouts_stategy = "horizontal";
-    #     layout_config = {
-    #       height = 0.8;
-    #       width = 0.95;
-    #       horizontal.prompt_position = "top";
-    #       preview_cutoff = 1;
-    #     };
-    #     file_ignore_patterns = [
-    #       "node_modules"
-    #       "%.git/"
-    #       "%.direnv/"
-    #       "dist/"
-    #       "build/"
-    #       "target/"
-    #       "result/"
-    #     ];
-    #   };
-    # };
 
     git = {
       gitsigns.enable = true;
