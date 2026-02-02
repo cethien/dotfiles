@@ -7,9 +7,7 @@
     ../../modules/nixos
   ];
 
-  programs.zsh.enable = true;
   users.users.cethien.enable = true;
-  users.users.cethien.shell = pkgs.zsh;
 
   programs.steam.enable = true;
 

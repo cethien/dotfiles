@@ -16,9 +16,7 @@
     extraUpFlags = ["--accept-routes"];
   };
 
-  programs.zsh.enable = true;
   users.users.cethien.enable = true;
-  users.users.cethien.shell = pkgs.zsh;
 
   networking.networkmanager.wifi.backend = "iwd";
   networking.firewall = {
