@@ -58,6 +58,7 @@ in {
     programs.lazygit = {
       enable = config.programs.git.enable;
       shellWrapperName = "lzg";
+      settings.os.openDirInEditor = "$EDITOR";
     };
     programs.tmux.resurrectPluginProcesses = ["lazygit"];
   };
