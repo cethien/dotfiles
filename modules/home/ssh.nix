@@ -25,6 +25,7 @@ in {
 
   config = {
     home.packages = with pkgs; [
+      sshfs
       (writeShellScriptBin "sshz" (builtins.readFile ./fzf-ssh.sh))
     ];
     programs.ssh = {
