@@ -5,8 +5,6 @@
 
     ./restic.nix
 
-    ./bash.nix
-    ./zsh.nix
     ./desktop
     ./terminals.nix
 
@@ -32,10 +30,8 @@
     ./freerdp.nix
   ];
 
-  programs = {
-    bash.enable = true;
-    zsh.enable = true;
-  };
+  programs.bash.enable = true;
+  stylix.enable = true;
 
   xdg.mimeApps.enable = true;
   programs.home-manager.enable = true;
@@ -44,5 +40,4 @@
     frequency = "weekly";
   };
   news.display = "silent";
-  stylix.enable = true;
 }
