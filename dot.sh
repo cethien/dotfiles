@@ -118,8 +118,7 @@ _resolve_service() {
   export DOCKER_HOST="ssh://$ADDR"
 }
 
-# @cmd
-
+# @cmd switch to nixos-configuration / home-manager config
 switch() {
   export TARGET_HOST
   TARGET_HOST=$(hostname | tr '[:upper:]' '[:lower:]')
@@ -164,7 +163,7 @@ bootstrap-home() {
 
   if ! _q '.homes.[env(TARGET_HOST)].user == env(USER)' &>/dev/null; then
     _log-error "config $target not found in local flake."
-    _log-info "edit homes/defaults.nix and try again."
+    _log-info "edit inventory.toml and try again."
     return 1
   fi
 
