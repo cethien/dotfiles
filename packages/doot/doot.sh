@@ -5,12 +5,15 @@
 # @flag -y --yes $SKIP_CONFIRM skip confirm messages
 
 # @cmd
-hosts() { :; }
+deploy() { :; }
+
+# @cmd
+list() { :; }
 
 # @cmd
 # @arg host[`_nixos_host_names`]
 # @arg args* Pass-through flags for deploy-rs
-hosts::deploy-nixos() {
+deploy::hosts() {
   _validate-inventory
   command nix run github:serokell/deploy-rs -- --targets ".#${argc_host:-}" "${argc_args[@]}"
 }
@@ -19,7 +22,7 @@ hosts::deploy-nixos() {
 # @arg host+[`_nixos_host_names`]
 # @arg addr="192.168.1.115"
 # @arg user="nixos"
-hosts::install-nixos() {
+deploy::nixos-installation() {
   clear
   _validate-inventory
   _log-info "checking if $argc_addr is reachable..."
@@ -41,7 +44,7 @@ _nixos_host_names() {
 
 # @cmd
 # @arg os[`_hosts_os_names`]
-hosts::list() {
+list::hosts() {
   _validate-inventory
   os="${argc_os:-}"
   if [ ! -z "$os" ]; then
@@ -65,21 +68,11 @@ _hosts_by_os() {
       )
   '
 }
-
 # @cmd
 # @meta require-tools docker
-services() { :; }
-
-# @cmd
-services::list() {
-  _validate-inventory
-  _q '.services'
-}
-
-# @cmd
 # @arg service+[`_service_names`]
 # @option --host <hostname>   Override host from inventory
-services::deploy() {
+deploy::service() {
   _validate-inventory
   _resolve_service
   clear
@@ -88,14 +81,9 @@ services::deploy() {
 }
 
 # @cmd
-# @arg service+[`_service_names`]
-# @option --host <hostname>   Override host from inventory
-services::remove() {
+list::services() {
   _validate-inventory
-  _resolve_service
-  clear
-  _confirm "remove $SERVICE from $HOST ($ADDR)?" || exit 1
-  command docker stack rm "$SERVICE"
+  _q '.services'
 }
 
 _service_names() {
