@@ -30,8 +30,10 @@
     eachSys
     (system: let
       pkgs = pkgsFor system;
+      doot = pkgs.callPackage ./packages/doot {};
     in {
-      devShells.default = import ./devShell.nix {inherit pkgs;};
+      packages.doot = doot;
+      devShells.default = import ./devShell.nix {inherit pkgs doot;};
     })
     // eachSysPass (system: let
       pkgsUnstable = pkgsUnstableFor system;

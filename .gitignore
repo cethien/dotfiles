@@ -1,2 +1,4 @@
 .direnv/
+.devshell/
+/doot
 result
