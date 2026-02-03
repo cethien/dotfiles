@@ -12,8 +12,6 @@
     ...
   }: let
     stateVersion = "25.05";
-    eachSys = flake-utils.lib.eachDefaultSystem;
-    eachSysPass = flake-utils.lib.eachDefaultSystemPassThrough;
 
     pkgsFor = system: import nixpkgs {inherit system;};
 
@@ -27,15 +25,14 @@
         ];
       };
   in
-    eachSys
-    (system: let
+    flake-utils.lib.eachDefaultSystem (system: let
       pkgs = pkgsFor system;
       doot = pkgs.callPackage ./packages/doot {};
     in {
       packages.doot = doot;
       devShells.default = import ./devShell.nix {inherit pkgs doot;};
     })
-    // eachSysPass (system: let
+    // flake-utils.lib.eachDefaultSystemPassThrough (system: let
       pkgsUnstable = pkgsUnstableFor system;
       homes = import ./homes;
       homeConfigs = builtins.mapAttrs (name: n:
