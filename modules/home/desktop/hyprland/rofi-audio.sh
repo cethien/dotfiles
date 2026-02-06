@@ -1,81 +1,126 @@
 #!/usr/bin/env bash
 
+# --- config ---
+SPOTIFYCTL="playerctl -p spotify_player"
 SEPARATOR="-----"
 
-# ===== OPTIONS =====
-OPT_DAEMON_START="  start daemon"
-OPT_SPOTIFY_PLAY="  play"
-OPT_SPOTIFY_PAUSE="  pause"
-OPT_SPOTIFY_NEXT="  next"
-OPT_SPOTIFY_PREV="  previous"
+# --- helfer ---
+is_daemon_running() { pgrep -x "spotify_player" >/dev/null; }
+sink_muted() { wpctl get-volume @DEFAULT_SINK@ | grep -q MUTED; }
+source_muted() { wpctl get-volume @DEFAULT_AUDIO_SOURCE@ | grep -q MUTED; }
 
-OPT_SPEAKER_MUTE="󰓃  mute speaker"
-OPT_SPEAKER_UNMUTE="󰓄  unmute speaker"
-OPT_MIC_MUTE="󰍬  mute microphone"
-OPT_MIC_UNMUTE="󰍭  unmute microphone"
-
-OPT_MIXER="󰕾  open mixer"
-
-SPOTIFYCTL="playerctl -p spotify_player"
-
-# ===== HELPERS =====
-is_daemon_running() {
-  pgrep -x "spotify_player" >/dev/null
+# --- aktionen ---
+run_action() {
+  case "$1" in
+  "play_pause") $SPOTIFYCTL play-pause ;;
+  "next") $SPOTIFYCTL next ;;
+  "prev") $SPOTIFYCTL previous ;;
+  "daemon")
+    spotify_player -d >/dev/null 2>&1 &
+    disown
+    notify-send "󰓇 spotify" "starting daemon"
+    ;;
+  "mixer") kitty --class wiremix -e wiremix ;;
+  "afk_on")
+    wpctl set-mute @DEFAULT_SINK@ 1
+    wpctl set-mute @DEFAULT_AUDIO_SOURCE@ 1
+    notify-send "󰒲 afk" "mic & speaker muted"
+    ;;
+  "afk_off")
+    wpctl set-mute @DEFAULT_SINK@ 0
+    wpctl set-mute @DEFAULT_AUDIO_SOURCE@ 0
+    notify-send "󰒲 back" "everything unmuted"
+    ;;
+  "toggle_sink")
+    if sink_muted; then
+      wpctl set-mute @DEFAULT_SINK@ 0
+      notify-send "󰓄 speaker" "unmuted"
+    else
+      wpctl set-mute @DEFAULT_SINK@ 1
+      notify-send "󰓃 speaker" "muted"
+    fi
+    ;;
+  "toggle_src")
+    if source_muted; then
+      wpctl set-mute @DEFAULT_AUDIO_SOURCE@ 0
+      notify-send "󰍬 mic" "unmuted"
+    else
+      wpctl set-mute @DEFAULT_AUDIO_SOURCE@ 1
+      notify-send "󰍭 mic" "muted"
+    fi
+    ;;
+  *) exit 0 ;;
+  esac
 }
 
-sink_muted() {
-  wpctl get-volume @DEFAULT_SINK@ | grep -q MUTED
-}
-
-source_muted() {
-  wpctl get-volume @DEFAULT_AUDIO_SOURCE@ | grep -q MUTED
-}
-
-# ===== LOGIC =====
+# --- menü-struktur ---
 OPTIONS=()
+ACTIONS=()
 
+# 1-3: spotify (keys: 1, 2, 3)
 if is_daemon_running; then
-  # Spotify Controls
-  STATUS_MSG=$($SPOTIFYCTL status 2>/dev/null)
-  if [[ "$STATUS_MSG" == "Playing" ]]; then
-    OPTIONS+=("$OPT_SPOTIFY_PAUSE")
-  else
-    OPTIONS+=("$OPT_SPOTIFY_PLAY")
-  fi
-  OPTIONS+=("$OPT_SPOTIFY_NEXT" "$OPT_SPOTIFY_PREV" "$SEPARATOR")
+  METADATA=$($SPOTIFYCTL metadata -f "{{artist}} - {{title}}" 2>/dev/null | tr '[:upper:]' '[:lower:]')
+  HEADER=" ${METADATA:-spotify playing}"
 
-  # Metadata for Header
-  METADATA=$($SPOTIFYCTL metadata -f "{{trunc(default(artist, \"[Unknown]\"),25)}} - {{trunc(default(title, \"[Unknown]\"),50)}}" 2>/dev/null)
-  HEADER="   ${METADATA:-No track info}"
+  OPTIONS+=("[1] 󰐊/󰏤 play/pause")
+  ACTIONS+=("play_pause")
+  OPTIONS+=("[2] 󰒭 next")
+  ACTIONS+=("next")
+  OPTIONS+=("[3] 󰒮 previous")
+  ACTIONS+=("prev")
 else
-  # Daemon Start Option
-  OPTIONS+=("$OPT_DAEMON_START" "$SEPARATOR")
-  HEADER=" - daemon is not running -"
+  HEADER="󰓇 daemon offline"
+  OPTIONS+=("[1] 󰓇 start daemon")
+  ACTIONS+=("daemon")
+  OPTIONS+=("---")
+  ACTIONS+=("none")
+  OPTIONS+=("---")
+  ACTIONS+=("none")
 fi
 
-# Audio Options (Always there)
-sink_muted && OPTIONS+=("$OPT_SPEAKER_UNMUTE") || OPTIONS+=("$OPT_SPEAKER_MUTE")
-source_muted && OPTIONS+=("$OPT_MIC_UNMUTE") || OPTIONS+=("$OPT_MIC_MUTE")
-OPTIONS+=("$OPT_MIXER")
+# trenner (nimmt platz 4 ein, kein keybind)
+OPTIONS+=("$SEPARATOR")
+ACTIONS+=("none")
 
-# ===== UI =====
-SELECTED="$(printf '%s\n' "${OPTIONS[@]}" |
-  rofi -dmenu -p "${HEADER}" -theme-str 'entry { enabled: false; }')"
+# m, a, s, d: audio block
+OPTIONS+=("[m] 󰕾 open mixer")
+ACTIONS+=("mixer")
 
-case "$SELECTED" in
-"$OPT_DAEMON_START")
-  # Startet daemon entkoppelt vom script
-  spotify_player -d >/dev/null 2>&1 &
-  disown
-  notify-send "󰓇  spotify" "starting daemon"
-  ;;
-"$OPT_SPOTIFY_PLAY") $SPOTIFYCTL play ;;
-"$OPT_SPOTIFY_PAUSE") $SPOTIFYCTL pause ;;
-"$OPT_SPOTIFY_NEXT") $SPOTIFYCTL next ;;
-"$OPT_SPOTIFY_PREV") $SPOTIFYCTL previous ;;
-"$OPT_MIC_MUTE") wpctl set-mute @DEFAULT_AUDIO_SOURCE@ 1 && notify-send "󰍭  microphone" "muted" ;;
-"$OPT_MIC_UNMUTE") wpctl set-mute @DEFAULT_AUDIO_SOURCE@ 0 && notify-send "󰍬  microphone" "unmuted" ;;
-"$OPT_SPEAKER_MUTE") wpctl set-mute @DEFAULT_SINK@ 1 && notify-send "󰓄  speaker" "muted" ;;
-"$OPT_SPEAKER_UNMUTE") wpctl set-mute @DEFAULT_SINK@ 0 notify-send "󰓃  speaker" "unmuted" ;;
-"$OPT_MIXER") kitty --class wiremix -e wiremix ;;
-esac
+if sink_muted && source_muted; then
+  OPTIONS+=("[a] 󰒲 back (unmute all)")
+  ACTIONS+=("afk_off")
+else
+  OPTIONS+=("[a] 󰒲 afk (mute all)")
+  ACTIONS+=("afk_on")
+fi
+
+if sink_muted; then
+  OPTIONS+=("[s] 󰓄 unmute speaker")
+  ACTIONS+=("toggle_sink")
+else
+  OPTIONS+=("[s] 󰓃 mute speaker")
+  ACTIONS+=("toggle_sink")
+fi
+
+if source_muted; then
+  OPTIONS+=("[S] 󰍭 unmute mic")
+  ACTIONS+=("toggle_src")
+else
+  OPTIONS+=("[S] 󰍬 mute mic")
+  ACTIONS+=("toggle_src")
+fi
+
+# --- rofi ui ---
+IDX=$(printf '%s\n' "${OPTIONS[@]}" | rofi -dmenu -p "$HEADER" -format 'i' \
+  -kb-select-1 "1" \
+  -kb-select-2 "2" \
+  -kb-select-3 "3" \
+  -kb-select-5 "m" \
+  -kb-select-6 "a" \
+  -kb-select-7 "s" \
+  -kb-select-8 "S" \
+  -theme-str 'entry { enabled: false; }')
+
+if [[ -n "$IDX" ]]; then
+  run_action "${ACTIONS[$IDX]}"
+fi
