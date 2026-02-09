@@ -23,7 +23,17 @@
 
   services.printing.enable = true;
   hardware = {
+    enableRedistributableFirmware = true;
+    enableAllFirmware = true;
+
     bluetooth.enable = true;
+    bluetooth.settings = {
+      General = {
+        ControllerMode = "bredr";
+        FastConnectable = "true";
+      };
+    };
+
     logitech.wireless.enable = true;
     xpadneo.enable = true;
 
@@ -71,6 +81,8 @@
       "boot.shell_on_fail"
       "udev.log_priority=3"
       "rd.systemd.show_status=auto"
+
+      "btusb.enable_autosuspend=n"
     ];
     # Hide the OS choice for bootloaders.
     # It's still possible to open the bootloader list by pressing any key
