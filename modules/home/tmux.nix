@@ -94,12 +94,23 @@ in {
             TMUX_FZF_OPTIONS="-p -w 90% -h 90% -m"
             TMUX_FZF_ORDER="command|keybinding|session|window|pane"
             TMUX_FZF_SESSION_FORMAT="#{session_windows} windows"
-            bind-key s run-shell -b "${pkgs.tmuxPlugins.tmux-fzf}/share/tmux-plugins/tmux-fzf/scripts/session.sh switch"
           '';
         }
       ];
 
-      keybindings = [
+      keybindings = let
+        tmuxFzfAction = action: ''
+          run-shell -b "${pkgs.tmuxPlugins.tmux-fzf}/share/tmux-plugins/tmux-fzf/scripts/session.sh ${action}"
+        '';
+      in [
+        {
+          key = "s";
+          action = tmuxFzfAction "switch";
+        }
+        {
+          key = "k";
+          action = tmuxFzfAction "kill";
+        }
         {
           key = "r";
           action = "source-file ~/.config/tmux/tmux.conf";
