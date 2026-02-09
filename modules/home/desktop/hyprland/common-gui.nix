@@ -16,7 +16,7 @@ in {
     wayland.windowManager.hyprland.settings = let
       ws = config.wayland.windowManager.hyprland.defaultWorkspaces.browser;
     in {
-      windowrule = ["match:initial_class geary, workspace ${toString ws}"];
+      windowrule = mkIf (!isNull ws) ["match:initial_class geary, workspace ${toString ws}"];
     };
 
     programs = {
