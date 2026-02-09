@@ -177,7 +177,10 @@ _validate-inventory() {
 }
 
 _confirm() {
-  [[ -n "${argc_yes:-}" ]] && return 0
+  if [[ -n "${argc_yes:-}" ]]; then
+    _log-warn "confirmation skipped"
+    return 0
+  fi
 
   read -rp "$(_log "❓ $1 [y/N] > ")" reply
   [[ "$reply" =~ ^[yY]$ ]]
