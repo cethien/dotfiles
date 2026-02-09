@@ -88,6 +88,8 @@ in {
       commandLineArgs = [
         "--enable-logging=stderr"
         "--ignore-gpu-blocklist"
+        "--restore-last-session"
+        "--hide-crash-restore-bubble"
       ];
 
       nativeMessagingHosts = mkMerge [
