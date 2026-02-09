@@ -3,6 +3,7 @@
 
 # @describe tooling for deez nuts
 # @flag -y --yes $SKIP_CONFIRM skip confirm messages
+# @flag -f --skip-validation $SKIP_VALIDATION skip inventory validation
 
 # @cmd
 deploy() { :; }
@@ -168,6 +169,11 @@ validate-inventory() {
 # -------
 
 _validate-inventory() {
+  if [[ -n "${argc_skip_validation:-}" ]]; then
+    _log-warn "validation skipped"
+    return 0
+  fi
+
   if python3 validate_inventory.py; then
     _log-success "inventory validation passed"
   else
