@@ -270,18 +270,6 @@
     clipboard.enable = true;
     clipboard.providers.wl-copy.enable = true;
 
-    notes.obsidian = {
-      enable = true;
-      setupOpts = {
-        workspaces = [
-          {
-            name = "notes";
-            path = "~/notes";
-          }
-        ];
-      };
-    };
-
     keymaps = [
       {
         mode = "n";
