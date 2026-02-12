@@ -2,10 +2,12 @@
   "*".identityFile = "~/.ssh/id_ed25519";
   "*".user = "bso";
 
+  "dns-01".hostname = "10.0.30.5";
+  "dns-02".hostname = "10.0.30.6";
+
+  "rclone".hostname = "10.0.30.21";
   "bitbucket-runner".hostname = "10.0.30.20";
-  "magento-content".hostname = "10.102.99.201";
-  "magento-qa".hostname = "10.102.99.203";
-  "magento-qa".user = "root";
+  "magento".hostname = "10.0.30.40";
 
   "wp-test".hostname = "10.180.80.92";
   "wp-test".user = "sysadmin";
@@ -29,13 +31,12 @@
   "bnl".user = "root";
 
   "weclapp-prod".hostname = "10.102.99.97";
-  "weclapp-test".hostname = "10.102.99.96";
-  "weclapp-update-test".hostname = "10.0.30.31";
+  "weclapp-update-test".hostname = "10.0.30.96";
 
   "docker-prod-1".hostname = "10.102.99.95";
 
-  "monitoring-01".hostname = "10.0.40.11";
-  "monitoring-02".hostname = "10.0.40.12";
+  "scvs-01".hostname = "10.0.30.10";
+  "mgmt-01".hostname = "10.0.40.10";
 
   # --- INFRA
 
@@ -45,15 +46,12 @@
 
   # --- EXTERNAL
 
-  "maxcluster-prod" = {
-    user = "web-user";
-    hostname = "109.71.72.118";
-  };
-  "maxcluster-staging" = {
-    user = "web-user";
-    hostname = "109.71.72.244";
-  };
+  "maxcluster-prod".hostname = "109.71.72.118";
+  "maxcluster-prod".user = "web-user";
 
-  "allinkl-ftp".hostname = "w01516e3.kasserver.com";
-  "allinkl-ftp".user = "ssh-w01516e3";
+  "maxcluster-staging".hostname = "109.71.72.244";
+  "maxcluster-staging".user = "web-user";
+
+  "kasserver-cdn".hostname = "w01516e3.kasserver.com";
+  "kasserver-cdn".user = "ssh-w01516e3";
 }
