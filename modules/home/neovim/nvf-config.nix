@@ -1,6 +1,6 @@
 {
   pkgs,
-  ageFile ? "$HOME/.config/sops/age/keys.txt",
+  ageFile ? "$HOME/.sops/age/keys.txt",
   ...
 }: {
   vim = {
