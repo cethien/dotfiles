@@ -7,10 +7,7 @@ let
     address = merged.address;
     defaultGateway = merged.default_gateway or defaults.default_gateway;
     nameservers = merged.nameservers or defaults.nameservers;
-    diskId =
-      if merged ? "disk_id"
-      then merged.disk_id
-      else builtins.warn "Host ${name} is missing 'disk_id' in inventory.toml" null;
+    diskId = merged.disk_id;
   };
 
   hosts = map (name: let

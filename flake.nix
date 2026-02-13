@@ -57,20 +57,35 @@
         nixpkgs-unstable.lib.nixosSystem
         {
           pkgs = pkgsUnstable;
-          modules = let
-            user = "cethien";
-          in [
+          modules = [
             disko.nixosModules.disko
             (import ./disko/simple.nix {inherit (n) diskId;})
-            ./clients/${n.hostname}/hardware-configuration.nix
-            ./clients/${n.hostname}/configuration.nix
-            {system = {inherit stateVersion;};}
+            ./clients/${n.hostName}/hardware-configuration.nix
+            ./clients/${n.hostName}/configuration.nix
+            {
+              system = {inherit stateVersion;};
+              networking.hostName = n.hostName;
+              users.users = {
+                "${n.user}" = {enable = true;};
+              };
+            }
 
             home-manager.nixosModules.home-manager
             {
               home-manager = {
                 backupFileExtension = "hm-bak";
-                users."${user}" = ./clients/${n.hostname}/home.nix;
+
+                users."${n.user}" =
+                  (import ./clients/${n.hostName}/home.nix {
+                    pkgs = pkgsUnstable;
+                    # add any extra args home.nix expects here
+                  })
+                  // {
+                    home.stateVersion = stateVersion;
+                    home.username = n.user;
+                    home.homeDirectory = "/home/${n.user}";
+                  };
+
                 extraSpecialArgs =
                   inputs
                   // {

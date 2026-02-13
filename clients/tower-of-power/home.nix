@@ -1,16 +1,8 @@
-{
-  stateVersion,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   imports = [
     ../../modules/home
     ../../modules/home/users/cethien
   ];
-
-  home.stateVersion = stateVersion;
-  home.username = "cethien";
-  home.homeDirectory = "/home/cethien";
 
   stylix.image = ../../wallpapers/lake-mountains-rocks-sunrise-daylight-scenery-illustration-3840x2160-3773.jpg;
   wayland.windowManager.hyprland = {
