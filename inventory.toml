@@ -1,6 +1,10 @@
 [homes.bso-lenovo]
 user = "bsotnikow"
 
+[clients.bso-lenovo]
+user = "bsotnikow"
+disk_id = "nvme-SKHynix_HFS256GDE9X081N_CYA4N025511404A1C"
+
 [clients.hp-430-g7]
 disk_id = "nvme-WDS100T1X0E-00AFY0_21413H442704"
 
