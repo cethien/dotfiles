@@ -2,11 +2,9 @@
 user = "bsotnikow"
 
 [clients.hp-430-g7]
-os = "nixos"
 disk_id = "nvme-eui.002538a301b0c2cd"
 
 [clients.tower-of-power]
-os = "nixos"
 disk_id = "nvme-eui.00000000000000000026b7685ce299b5"
 
 [services.gitea]
@@ -33,6 +31,10 @@ host = "homelab"
 [hosts.homelab]
 address = "192.168.1.50"
 disk_id = "wwn-0x56479a7001514900"
+
+[defaults.clients]
+os = "nixos"
+user = "cethien"
 
 [defaults.hosts]
 os = "nixos"

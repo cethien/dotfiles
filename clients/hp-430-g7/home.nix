@@ -1,16 +1,8 @@
-{
-  stateVersion,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   imports = [
     ../../modules/home
     ../../modules/home/users/cethien
   ];
-
-  home.username = "cethien";
-  home.homeDirectory = "/home/cethien";
-  home.stateVersion = stateVersion;
 
   stylix.image = ../../wallpapers/boy_and_cat_sitting_on_stairs.jpeg;
   wayland.windowManager.hyprland = {
