@@ -21,26 +21,53 @@ deploy::hosts() {
 
 # @cmd
 # @arg host+[`_nixos_host_names`]
-# @arg addr="192.168.1.115"
-# @arg user="nixos"
-deploy::nixos-installation() {
-  clear
-  _validate-inventory
-  _log-info "checking if $argc_addr is reachable..."
-  if ! ssh-keyscan -T 5 "$argc_addr" 2>/dev/null | grep -q .; then
-    _log-error "$argc_addr is not reachable via ssh"
-    return 1
-  fi
-
-  _confirm "install $argc_host to $argc_addr?" || exit 1
-  command nix run github:nix-community/nixos-anywhere -- \
-    --flake ".#$argc_host" \
-    --generate-hardware-config nixos-generate-config ./hosts/$argc_host/hardware-configuration.nix \
-    "$argc_user@$argc_addr"
+# @arg addr!
+# @option --user="nixos"
+install-host() {
+  _install-nixos "hosts" "$argc_host" "$argc_addr" "$argc_user"
 }
 
 _nixos_host_names() {
   _q '.hosts | with_entries(select(.value.os == null)) | keys | .[]'
+}
+
+# @cmd
+# @arg host+[`_nixos_client_names`]
+# @arg addr!
+# @option --user="nixos"
+install-client() {
+  _install-nixos "clients" "$argc_host" "$argc_addr" "$argc_user"
+}
+
+_nixos_client_names() {
+  _q '.clients | with_entries(select(.value.os == null)) | keys | .[]'
+}
+
+# @cmd
+# @arg query!
+q() { _q $argc_query; }
+
+_install-nixos() {
+  local kind="$1" # "hosts" or "clients"
+  local host="$2"
+  local addr="$3"
+  local user="$4"
+
+  clear
+  _validate-inventory
+
+  _log-info "checking if $addr is reachable..."
+  if ! ssh-keyscan -T 5 "$addr" 2>/dev/null | grep -q .; then
+    _log-error "$addr is not reachable via ssh"
+    return 1
+  fi
+
+  _confirm "install $host to $addr?" || exit 1
+
+  command nix run github:nix-community/nixos-anywhere -- \
+    --flake ".#$host" \
+    --generate-hardware-config nixos-generate-config "./$kind/$host/hardware-configuration.nix" \
+    "$user@$addr"
 }
 
 # @cmd
