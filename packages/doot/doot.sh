@@ -2,6 +2,7 @@
 # shellcheck disable=SC2154
 
 # @describe tooling for deez nuts
+# @meta inherit-flag-options
 # @flag -y --yes $SKIP_CONFIRM skip confirm messages
 # @flag -f --skip-validation $SKIP_VALIDATION skip inventory validation
 
