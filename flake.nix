@@ -74,17 +74,16 @@
             {
               home-manager = {
                 backupFileExtension = "hm-bak";
+                useUserPackages = true;
 
-                users."${n.user}" =
-                  (import ./clients/${n.hostName}/home.nix {
-                    pkgs = pkgsUnstable;
-                    # add any extra args home.nix expects here
-                  })
-                  // {
-                    home.stateVersion = stateVersion;
-                    home.username = n.user;
-                    home.homeDirectory = "/home/${n.user}";
-                  };
+                users."${n.user}" = {
+                  imports = [
+                    ./clients/${n.hostName}/home.nix
+                  ];
+                  home.stateVersion = stateVersion;
+                  home.username = n.user;
+                  home.homeDirectory = "/home/${n.user}";
+                };
 
                 extraSpecialArgs =
                   inputs
