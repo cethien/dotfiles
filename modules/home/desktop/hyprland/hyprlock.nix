@@ -114,7 +114,7 @@ in {
                 halign = "center";
                 valign = "center";
                 position = "0, -255";
-                text = ''cmd[update:1000] ${pkgs.writeShellScriptBin "hyprlock-batterystatus" (builtins.readFile ./hyprlock-batterystatus.sh)}/bin/hyprlock-batterystatus'';
+                text = ''cmd[update:1000] ${pkgs.writeShellScriptBin "hyprlock-status" (builtins.readFile ./hyprlock-status.sh)}/bin/hyprlock-status'';
               })
           ]
         ];
