@@ -41,10 +41,6 @@
     freerdp.enable = true;
     browser.firefox-profile.containers = ["tmsproshop.de" "tmsproshop.de/admin"];
 
-    git.urlExtra = {
-      "ssh://git@git.cethien.home".insteadOf = "https://git.cethien.home";
-      "git@git.cethien.home:".insteadOf = "home:";
-    };
     freerdp.connections = import ../../homes/bso-lenovo/rdp.nix;
 
     kitty.enable = true;
