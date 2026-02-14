@@ -36,16 +36,16 @@
 
   programs = {
     ssh.matchBlocksExtra =
-      (import ../../homes/ssh.nix)
-      // (import ../../homes/tmsproshop.de/ssh.nix);
+      (import ../../homes/bso-lenovo/ssh.nix)
+      // import ../../homes/ssh.nix;
     freerdp.enable = true;
-    freerdp.connections = import ../../homes/tmsproshop.de/rdp.nix;
     browser.firefox-profile.containers = ["tmsproshop.de" "tmsproshop.de/admin"];
 
     git.urlExtra = {
       "ssh://git@git.cethien.home".insteadOf = "https://git.cethien.home";
       "git@git.cethien.home:".insteadOf = "home:";
     };
+    freerdp.connections = import ../../homes/bso-lenovo/rdp.nix;
 
     kitty.enable = true;
     chromium.enable = true;
