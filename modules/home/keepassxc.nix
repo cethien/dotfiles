@@ -56,6 +56,16 @@ in {
       libsecret
     ];
 
+    # home.sessionVariables.SUDO_ASKPASS = "${pkgs.writeShellScriptBin "sudo-askpass" ''
+    #   #!/usr/bin/env bash
+    #   secret-tool lookup id "$(whoami)@$(hostname)" sudo yes 2>/dev/null | head -n1
+    # ''}/bin/sudo-askpass";
+    #
+    # home.shellAliases.sudo = "${pkgs.writeShellScriptBin "sudo-wrapper" ''
+    #   #!/usr/bin/env bash
+    #   command sudo -A "$@" 2>/dev/null || command sudo "$@"
+    # ''}/bin/sudo-wrapper";
+
     services.syncthing.settings = mkIf config.services.syncthing.enable {
       folders.keepass = {
         id = "keepass";
