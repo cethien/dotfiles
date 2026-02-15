@@ -72,17 +72,37 @@ in {
               for = "unix";
             }
           ];
+
+          mpv = [
+            {
+              run = ''mpv "$@"'';
+              desc = "mpv";
+              for = "unix";
+            }
+          ];
+
+          ocenaudio = [
+            {
+              run = ''ocenaudio "$@"'';
+              desc = "ocenaudio";
+              for = "unix";
+            }
+          ];
         };
 
         open = {
-          rules = [
+          prepend_rules = [
             {
-              mime = "image/*";
-              use = ["imv" "pinta" "pinta"];
+              mime = "audio/*";
+              use = ["mpv" "ocenaudio"];
             }
             {
               mime = "image/svg+xml";
               use = ["imv" "inkscape"];
+            }
+            {
+              mime = "image/*";
+              use = ["imv" "pinta" "gimp"];
             }
           ];
         };
@@ -111,11 +131,8 @@ in {
 
         require("git"):setup()
       '';
+
       keymap.mgr.prepend_keymap = [
-        {
-          on = "!";
-          run = "shell '$SHELL' --block";
-        }
         {
           on = "y";
           run = [
@@ -124,13 +141,14 @@ in {
           ];
         }
         {
-          on = "M";
-          run = "plugin mount";
-        }
-        {
           on = "p";
           run = "plugin smart-paste";
         }
+        {
+          on = ["g" "M"];
+          run = "plugin mount";
+        }
+
         {
           on = ["c" "m"];
           run = "plugin chmod";

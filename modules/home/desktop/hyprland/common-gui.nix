@@ -33,8 +33,8 @@ in {
 
     xdg.mimeApps.defaultApplications = let
       categories = {
-        audio = {
-          desktop = "org.gnome.Decibels.desktop";
+        videos = {
+          desktop = "umpv.desktop";
           types = [
             "audio/mpeg"
             "audio/x-wav"
@@ -45,12 +45,7 @@ in {
             "audio/aac"
             "audio/webm"
             "audio/mp4"
-          ];
-        };
 
-        videos = {
-          desktop = "umpv.desktop";
-          types = [
             "video/mp4"
             "video/webm"
             "video/x-matroska"
