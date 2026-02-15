@@ -58,9 +58,6 @@
   networking.hostName = "tower-of-power";
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
-    # loader.grub.device = "/dev/nvme0n1";
-
     loader.grub.splashImage = ./grub.jpg;
     plymouth = {
       enable = true;

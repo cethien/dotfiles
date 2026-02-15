@@ -68,6 +68,7 @@
               users.users = {
                 "${n.user}" = {enable = true;};
               };
+              boot.kernelPackages = pkgsUnstable.linuxPackages_latest;
             }
 
             home-manager.nixosModules.home-manager
