@@ -6,17 +6,13 @@
 # @flag -y --yes $SKIP_CONFIRM skip confirm messages
 # @flag -f --skip-validation $SKIP_VALIDATION skip inventory validation
 
-# @cmd
-# @flag --all
-# @flag --clients
-# @flag --devshell
+# @cmd updates inputs
+# @describe to update individuals or all packages do manually
+# @flag --clients only update client related inputs
 flake-update() {
-  INPUTS="nixpkgs"
-  [ -n "$argc_all" ] && INPUTS=" "
-  [ -n "$argc_clients" ] && INPUTS+=" nixpkgs-unstable nixos-hardware home-manager stylix nvf nur spicetify-nix zen-browser"
-  [ -n "$argc_devshell" ] && INPUTS+=" flake-utils disko deploy-rs"
-
-  command nix flake update "$INPUTS"
+  INPUTS="nixpkgs flake-utils deploy-rs disko"
+  [ -n "$argc_clients" ] && INPUTS="nixpkgs-unstable nixos-hardware home-manager stylix nvf nur spicetify-nix zen-browser"
+  command nix flake update $INPUTS
 }
 
 # @cmd
@@ -30,7 +26,7 @@ list() { :; }
 # @arg args* Pass-through flags for deploy-rs
 deploy::hosts() {
   _validate-inventory
-  command nix run github:serokell/deploy-rs -- --targets ".#${argc_host:-}" "${argc_args[@]}"
+  command nix run ".#deploy-rs" -- --targets ".#${argc_host:-}" "${argc_args[@]}"
 }
 
 # @cmd
