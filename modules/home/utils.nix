@@ -6,11 +6,6 @@
 }: let
   inherit (lib) mkIf mkOption types;
 
-  ffpmeg-convert = pkgs.cethien.mkArgcBashBin {
-    src = ./ffmpeg-convert.sh;
-    extraRuntimeDeps = [pkgs.ffmpeg pkgs.gawk];
-  };
-
   init = pkgs.cethien.mkArgcBashBin' ./init.sh;
 in {
   options.programs.utils = {
@@ -39,7 +34,6 @@ in {
       openssl
 
       ffmpeg
-      ffpmeg-convert
 
       init
       (writeShellScriptBin "switch" (builtins.readFile ./switch.sh))

@@ -20,9 +20,11 @@ in {
       extraPackages = with pkgs; [
         glow
         ouch
+        ffmpeg
       ];
 
       plugins = {
+        ffmpeg-convert = ./yazi-plugins/ffmpeg-convert;
         inherit
           (pkgs.yaziPlugins)
           mount
@@ -79,8 +81,12 @@ in {
           run = "plugin smart-paste";
         }
         {
-          on = ["u" "m"];
+          on = ["c" "m"];
           run = "plugin chmod";
+        }
+        {
+          on = ["c" "c"];
+          run = "plugin ffmpeg-convert";
         }
       ];
     };
