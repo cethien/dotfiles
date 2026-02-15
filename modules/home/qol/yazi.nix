@@ -38,18 +38,69 @@ in {
           compress
           ;
       };
-      settings.plugin.prepend_fetchers = [
-        {
-          id = "git";
-          name = "";
-          run = "git";
-        }
-        {
-          id = "git";
-          name = "*/";
-          run = "git";
-        }
-      ];
+      settings = {
+        opener = {
+          imv = [
+            {
+              run = ''imv-dir "$@"'';
+              desc = "imv";
+              for = "unix";
+            }
+          ];
+          gimp = [
+            {
+              run = ''gimp "$@"'';
+              desc = "GIMP";
+              orphan = true;
+              for = "unix";
+            }
+          ];
+          pinta = [
+            {
+              run = ''pinta "$@"'';
+              desc = "Pinta";
+              orphan = true;
+              for = "unix";
+            }
+          ];
+
+          inkscape = [
+            {
+              run = ''inkscape "$@"'';
+              desc = "Inkscape";
+              orphan = true;
+              for = "unix";
+            }
+          ];
+        };
+
+        open = {
+          rules = [
+            {
+              mime = "image/*";
+              use = ["imv" "pinta" "pinta"];
+            }
+            {
+              mime = "image/svg+xml";
+              use = ["imv" "inkscape"];
+            }
+          ];
+        };
+
+        plugin.prepend_fetchers = [
+          {
+            id = "git";
+            name = "";
+            run = "git";
+          }
+          {
+            id = "git";
+            name = "*/";
+            run = "git";
+          }
+        ];
+      };
+
       initLua = ''
         th.git = th.git or {}
 
