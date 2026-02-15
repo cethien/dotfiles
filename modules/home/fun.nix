@@ -19,7 +19,7 @@ in {
       windowrule = ["match:class ^(cmatrix)$, fullscreen on"];
       bind = [
         "SUPER SHIFT, Z, exec, ${
-          (pkgs.cethien.writeHyprlandTermLaunchScriptBin "cmatrix").bin
+          (pkgs.cethien.mkHyprLaunchBin' "cmatrix").bin
         }"
       ];
     };

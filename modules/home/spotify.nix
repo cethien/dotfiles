@@ -54,7 +54,7 @@ in {
 
       bind = [
         "SUPER SHIFT, M, exec, ${
-          (pkgs.cethien.writeHyprlandTermLaunchScriptBin "spotify_player").bin
+          (pkgs.cethien.mkHyprLaunchBin' "spotify_player").bin
         }"
       ];
 

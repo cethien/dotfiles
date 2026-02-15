@@ -11,7 +11,7 @@ in {
 
     wayland.windowManager.hyprland.settings.bind = [
       "SUPER SHIFT, P, exec, ${
-        (pkgs.cethien.writeHyprlandTermLaunchScriptBin "btm").bin
+        (pkgs.cethien.mkHyprLaunchBin' "btm").bin
       }"
     ];
 

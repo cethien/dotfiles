@@ -23,7 +23,7 @@ in {
   config = mkIf cfg.enable {
     wayland.windowManager.hyprland.settings.bind = [
       "SUPER SHIFT, COMMA, exec, ${
-        (pkgs.cethien.writeHyprlandTermLaunchScriptBin "qalc").bin
+        (pkgs.cethien.mkHyprLaunchBin' "qalc").bin
       }"
     ];
 

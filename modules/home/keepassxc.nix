@@ -81,7 +81,7 @@ in {
 
       bind = [
         "SUPER SHIFT, K, exec, ${
-          (pkgs.cethien.writeHyprlandLaunchScriptBin "keepassxc" "keepassxc" "org.keepassxc.KeePassXC").bin
+          (pkgs.cethien.mkHyprLaunchBin "keepassxc" "keepassxc" "org.keepassxc.KeePassXC").bin
         }"
       ];
     };

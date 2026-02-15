@@ -40,7 +40,7 @@ self: super: {
       "${match}, workspace ${toString workspace}"
     ];
 
-    writeHyprlandLaunchScriptBin = name: exec: class: let
+    mkHyprLaunchBin = name: exec: class: let
       drv =
         super.writeShellScriptBin "hypr_${name}"
         ''
@@ -55,6 +55,8 @@ self: super: {
       bin = "${drv.out}/bin/${drv.name}";
     };
 
-    writeHyprlandTermLaunchScriptBin = exec: (self.cethien.writeHyprlandLaunchScriptBin exec "kitty --class ${exec} -e ${exec}" exec);
+    mkHyprLaunchBin' = exec: (
+      self.cethien.mkHyprLaunchBin exec "kitty --class ${exec} -e ${exec}" exec
+    );
   };
 }
