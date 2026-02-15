@@ -5,6 +5,13 @@
   ...
 }: let
   inherit (lib) mkIf mkOption types;
+
+  ffpmeg-convert = pkgs.cethien.mkArgcBashBin {
+    src = ./ffmpeg-convert.sh;
+    extraRuntimeDeps = [pkgs.ffmpeg pkgs.gawk];
+  };
+
+  init = pkgs.cethien.mkArgcBashBin' ./init.sh;
 in {
   options.programs.utils = {
     enable = mkOption {
@@ -32,12 +39,12 @@ in {
       openssl
 
       ffmpeg
-      (writeShellScriptBin "ffmpeg-convert" (builtins.readFile ./ffmpeg-convert.sh))
+      ffpmeg-convert
 
+      init
       (writeShellScriptBin "switch" (builtins.readFile ./switch.sh))
       (writeShellScriptBin "update" (builtins.readFile ./update.sh))
       (writeShellScriptBin "cleanup" (builtins.readFile ./cleanup.sh))
-      (writeShellScriptBin "init" (builtins.readFile ./init.sh))
       (writeShellScriptBin "clip" (builtins.readFile ./clip.sh))
       (writeShellScriptBin "uln" (builtins.readFile ./uln.sh))
 

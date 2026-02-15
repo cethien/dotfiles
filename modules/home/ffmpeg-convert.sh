@@ -1,24 +1,27 @@
 #!/usr/bin/env bash
 
-if [ $# -lt 2 ]; then
-  echo "ℹ️ usage: ffmpeg-convert <target-format> <file> [<another-file> ...]"
-  return 1
-fi
+# @describe convert files
+# @meta require-tools ffmpeg
+# @option -f --format![?`_choice_format`] format
+# @arg files*
 
-ext="$1"
-shift
+_choice_format() {
+  ffmpeg -v quiet -muxers | awk 'NR>4 {print $2}'
+}
 
-for input in "$@"; do
+eval "$(argc --argc-eval "$0" "$@")"
+
+for input in "${argc_files[@]}"; do
   if [ ! -f "$input" ]; then
     echo "⚠️ file not found: $input"
     continue
   fi
 
   base="${input%.*}"
-  output="${base}.${ext}"
+  output="${base}.${argc_format}"
 
   echo "🎥 converting '$input' → '$output'..."
-  if ffmpeg -i "$input" "$output"; then
+  if ffmpeg -i "$input" "$output" -y; then
     echo "✅ successfully converted '$input'!"
   else
     echo "❌ failed to convert '$input'."
