@@ -7,6 +7,19 @@
 # @flag -f --skip-validation $SKIP_VALIDATION skip inventory validation
 
 # @cmd
+# @flag --all
+# @flag --clients
+# @flag --devshell
+flake-update() {
+  INPUTS="nixpkgs"
+  [ -n "$argc_all" ] && INPUTS=" "
+  [ -n "$argc_clients" ] && INPUTS+=" nixpkgs-unstable nixos-hardware home-manager stylix nvf nur spicetify-nix zen-browser"
+  [ -n "$argc_devshell" ] && INPUTS+=" flake-utils disko deploy-rs"
+
+  command nix flake update "$INPUTS"
+}
+
+# @cmd
 deploy() { :; }
 
 # @cmd
