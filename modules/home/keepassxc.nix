@@ -14,6 +14,7 @@ in {
         AlwaysAllowAccess = true;
         UpdateBinaryPath = false;
         CustomProxyLocation = "";
+        SearchInAllDatabases = true;
       };
 
       FdoSecrets = {
