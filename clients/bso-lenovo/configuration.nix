@@ -3,6 +3,11 @@
     ../../modules/nixos
   ];
 
+  services.tailscale = {
+    enable = true;
+    extraSetFlags = ["--operator=cethien"];
+    extraUpFlags = ["--accept-routes"];
+  };
   # services.pipewire.active-mic = "alsa_input.usb-3142_Fifine_Microphone-00.mono-fallback";
 
   services.printing.enable = true;

@@ -15,6 +15,7 @@
       ];
       general.allow_tearing = true;
 
+      exec-once = ["[silent] slack -u"];
       workspace = [
         "1, monitor:DP-1, persistent:true"
         "2, monitor:DP-1, persistent:true"
@@ -28,15 +29,27 @@
 
     autostart = [
       "keepassxc"
-      "spotify"
     ];
   };
   programs.hyprlock.monitor = "DP-1";
+  home.packages = with pkgs; [
+    simple-scan
+    libreoffice
 
-  home.packages = with pkgs; [simple-scan libreoffice];
+    slack
+    rustdesk-flutter
+  ];
+
+  xdg.desktopEntries.outlook = {
+    name = "Outlook (web)";
+    icon = "outlook";
+    exec = "${pkgs.chromium}/bin/chromium --app=https://outlook.tmsproshop.de/";
+  };
 
   programs = {
     ssh.matchBlocksExtra = import ../../homes/bso-lenovo/ssh.nix;
+    freerdp.enable = true;
+    freerdp.connections = import ../../homes/bso-lenovo/rdp.nix;
 
     kitty.enable = true;
     chromium.enable = true;
