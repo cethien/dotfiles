@@ -1,7 +1,10 @@
 keys:
   - &cethien age1yscl4s5k2nqeuuwy5nf6vv6vlv5gg6sra27azn7n4uwtq8gtaeuqh7pu7m
+  - &bso age1je3sgapfwhs57fyapxaagxr9428d084384vvaxmxmpnqfwajne5qvqfpwl
+
 creation_rules:
   - path_regex: .*secrets\.yaml$
     key_groups:
       - age:
+          - *bso
           - *cethien

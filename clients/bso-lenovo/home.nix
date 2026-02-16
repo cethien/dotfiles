@@ -2,6 +2,7 @@
   imports = [
     ../../modules/home
     ../../modules/home/users/cethien
+    ./smb.nix
   ];
 
   stylix.image = ../../wallpapers/bliss-windows-night-nologo-8k-unofficial.png;
