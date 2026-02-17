@@ -59,11 +59,7 @@
     net-tools.enable = true;
   };
 
-  networking.hostName = "hp-430-g7";
-
   boot = {
-    loader.grub.device = "/dev/nvme0n1";
-
     loader.grub.splashImage = ./grub.jpg;
     plymouth = {
       enable = true;

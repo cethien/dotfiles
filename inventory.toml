@@ -2,7 +2,7 @@
 user = "bsotnikow"
 
 [clients.hp-430-g7]
-disk_id = "nvme-eui.002538a301b0c2cd"
+disk_id = "nvme-WDS100T1X0E-00AFY0_21413H442704"
 
 [clients.tower-of-power]
 disk_id = "nvme-eui.00000000000000000026b7685ce299b5"
