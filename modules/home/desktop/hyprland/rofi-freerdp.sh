@@ -3,7 +3,16 @@ set -euo pipefail
 
 RDP_DIR="$HOME/.rdp"
 
-CHOICE=$(find "$RDP_DIR" -maxdepth 1 -type f,l -name "*.rdp" -printf "%f\n" | sed 's/\.rdp$//' | sort -V | rofi -dmenu -i -p "󰢹  RDP > ")
+SESSIONS=$(
+  find "$RDP_DIR" -maxdepth 1 -type f,l -name "*.rdp" -printf "%f\n" 2>/dev/null |
+    sed 's/\.rdp$//' | sort -V
+)
+if [ -z "$SESSIONS" ]; then
+  notify-send "RDP" "no sessions configured"
+  exit 1
+fi
+
+CHOICE=$(echo "$SESSIONS" | rofi -dmenu -i -p "󰢹  RDP > ")
 [ -z "$CHOICE" ] && exit 0
 
 PROFILE="$RDP_DIR/$CHOICE.rdp"
