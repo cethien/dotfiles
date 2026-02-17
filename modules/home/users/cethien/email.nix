@@ -1,10 +1,10 @@
-let
+{lib, ...}: let
   email = "borislaw.sotnikow@gmx.de";
 in {
   config.accounts.email.accounts.${email} = rec {
+    enable = lib.mkDefault false;
     thunderbird.enable = true;
 
-    primary = true;
     address = email;
     realName = "Borislaw Sotnikow";
 
