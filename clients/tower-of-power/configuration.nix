@@ -55,8 +55,6 @@
     net-tools.enable = true;
   };
 
-  networking.hostName = "tower-of-power";
-
   boot = {
     loader.grub.splashImage = ./grub.jpg;
     plymouth = {
