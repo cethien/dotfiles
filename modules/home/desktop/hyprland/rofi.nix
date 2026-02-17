@@ -33,6 +33,10 @@ in {
           pkgs.writeShellScriptBin "rofi-net" (builtins.readFile ./rofi-net.sh)
         }/bin/rofi-net"
 
+        "SUPER, W, exec, ${
+          pkgs.writeShellScriptBin "rofi-freerdp" (builtins.readFile ./rofi-freerdp.sh)
+        }/bin/rofi-freerdp"
+
         "SUPER, B, exec, ${pkgs.rofi-bluetooth}/bin/rofi-bluetooth"
 
         "SUPER, R, exec, ${

@@ -162,6 +162,12 @@ in {
       freerdp
     ];
 
+    wayland.windowManager.hyprland.settings = {
+      windowrule = [
+        "match:initial_class ^(com\.freerdp\.client\..*)$, tile on"
+        "match:initial_title ^(FreeRDP).*$, tile on"
+      ];
+    };
     home.file =
       lib.attrsets.mapAttrs'
       (
