@@ -8,6 +8,11 @@
   hypr = builtins.elem "keepassxc" config.wayland.windowManager.hyprland.autostart;
 in {
   config = mkIf config.programs.keepassxc.enable {
+    xdg.mimeApps.defaultApplications = {
+      "application/x-keepass2" = ["org.keepassxc.KeePassXC.desktop"];
+      "application/x-keepassxc" = ["org.keepassxc.KeePassXC.desktop"];
+    };
+
     programs.keepassxc.settings = {
       Browser = {
         Enabled = true;
