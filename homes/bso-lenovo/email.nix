@@ -32,14 +32,16 @@ let
     })
     accNames);
 
-  primary = let
-    name = "b.sotnikow@tmsproshop.de";
-  in {
-    ${name} = {
+  primary = "b.sotnikow@tmsproshop.de";
+
+  primaryAcc = {
+    ${primary} = {
       primary = true;
-      userName = name;
-      address = name;
+      userName = primary;
+      address = primary;
     };
   };
-in
-  primary // accs
+in {
+  accounts.email.accounts = primaryAcc // accs;
+  programs.thunderbird.profiles."${primary}".isDefault = true;
+}

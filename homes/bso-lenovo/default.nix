@@ -1,15 +1,15 @@
 {
   imports = [
     ../../modules/home
+    ./email.nix
+    ./smb.nix
+    ./ssh.nix
   ];
-
-  accounts.email.accounts = import ./email.nix;
 
   programs = {
     firefox.enable = true;
     thunderbird.enable = true;
-    thunderbird.profiles."b.sotnikow@tmsproshop.de".isDefault = true;
-    ssh.matchBlocksExtra = import ./ssh.nix;
+
     freerdp.enable = true;
     freerdp.connections = import ./rdp.nix;
     bash.bashrcExtra = ''
