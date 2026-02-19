@@ -39,7 +39,6 @@
     net-tools.enable = true;
   };
 
-  networking.hostName = "bso-lenovo";
   networking.networkmanager.wifi.backend = "iwd";
 
   boot = {
