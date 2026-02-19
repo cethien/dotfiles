@@ -1,8 +1,4 @@
-{
-  pkgs,
-  ageFile ? "$HOME/.sops/age/keys.txt",
-  ...
-}: {
+{pkgs, ...}: {
   vim = {
     extraPackages = with pkgs; [fzf lazygit sops gh];
 
@@ -13,7 +9,7 @@
           #lua
           ''
             require("nvim_sops").setup {
-              defaults = { ageKeyFile = '${ageFile}' }
+              defaults = { ageKeyFile = '$HOME/.sops/age/keys.txt' }
             }
           '';
       };

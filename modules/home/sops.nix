@@ -8,8 +8,8 @@
   ];
 
   sops = {
-    age.keyFile = "${config.home.homeDirectory}/.sops/age/keys.txt";
-    defaultSopsFile = ./users/cethien/secrets.yaml;
+    age.sshKeyPaths = ["${config.home.homeDirectory}/.ssh/id_ed25519"];
+    defaultSopsFile = ../../secrets.yaml;
     defaultSopsFormat = "yaml";
   };
 }

@@ -6,8 +6,16 @@
   inherit (lib) mkIf;
 in {
   config = mkIf config.programs.rclone.enable {
-    sops.secrets."rclone/drive/token" = {};
+    sops.secrets."rclone_gdrive_token" = {
+      sopsFile = ./secrets.yaml;
+    };
     programs.rclone.remotes."gdrive" = {
+      config = {
+        type = "drive";
+        scope = "drive";
+      };
+      secrets.token = config.sops.secrets."rclone_gdrive_token".path;
+
       mounts = {
         "" = {
           enable = true;
@@ -20,12 +28,6 @@ in {
           };
         };
       };
-
-      config = {
-        type = "drive";
-        scope = "drive";
-      };
-      secrets.token = config.sops.secrets."rclone/drive/token".path;
     };
   };
 }

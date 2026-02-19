@@ -6,6 +6,8 @@ pkgs.mkShell {
   packages = with pkgs; [
     nixpkgs-fmt
     sops
+    age
+    ssh-to-age
 
     python3
     yq-go

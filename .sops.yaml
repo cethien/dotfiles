@@ -1,7 +1,7 @@
 keys:
   - &cethien age1yscl4s5k2nqeuuwy5nf6vv6vlv5gg6sra27azn7n4uwtq8gtaeuqh7pu7m
 creation_rules:
-  - path_regex: modules/home/users/cethien/secrets\.yaml$
+  - path_regex: .*secrets\.yaml$
     key_groups:
       - age:
           - *cethien
