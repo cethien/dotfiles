@@ -8,7 +8,7 @@ SESSIONS=$(
     sed 's/\.rdp$//' | sort -V
 )
 if [ -z "$SESSIONS" ]; then
-  notify-send "RDP" "no sessions configured"
+  notify-send "󰢹  rdp" "no sessions configured"
   exit 1
 fi
 
