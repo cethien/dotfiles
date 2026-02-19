@@ -40,6 +40,7 @@
   };
 
   networking.hostName = "bso-lenovo";
+  networking.networkmanager.wifi.backend = "iwd";
 
   boot = {
     plymouth = {
