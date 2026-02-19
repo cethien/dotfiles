@@ -5,6 +5,8 @@
     "Keepass 2"
     "Keepass 3"
     "Privatlaufwerk BSO"
+    "Media"
+    "Produktbilder"
   ];
 in {
   sops.secrets."rclone_smb_pass" = {
@@ -18,7 +20,7 @@ in {
       type = "smb";
       host = "10.102.99.213";
       user = "b.sotnikow";
-      domain = "TMSPROSHOP";
+      domain = "ad.tmsproshop.de";
     };
     secrets.pass = config.sops.secrets."rclone_smb_pass".path;
 

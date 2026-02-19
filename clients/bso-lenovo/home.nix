@@ -9,7 +9,9 @@ in {
   imports = [
     ../../modules/home
     ../../modules/home/users/cethien
-    ./smb.nix
+    ../../homes/bso-lenovo/smb.nix
+    ../../homes/bso-lenovo/email.nix
+    ../../homes/bso-lenovo/ssh.nix
   ];
 
   stylix.image = ../../wallpapers/bliss-windows-night-nologo-8k-unofficial.png;
@@ -21,7 +23,6 @@ in {
         "${monIn}, 1920x1080@60, 480x1200, 1"
       ];
       general.allow_tearing = true;
-
 
       workspace = [
         "1, monitor:${monEx}, persistent:true"
@@ -54,20 +55,15 @@ in {
     rustdesk-flutter
   ];
 
-  xdg.desktopEntries.outlook = {
-    name = "Outlook (web)";
-    icon = "outlook";
-    exec = "${pkgs.chromium}/bin/chromium --app=https://outlook.tmsproshop.de/";
-  };
-
   programs = {
-    ssh.matchBlocksExtra = import ../../homes/bso-lenovo/ssh.nix;
     slack.enable = true;
     freerdp.enable = true;
     freerdp.connections = import ../../homes/bso-lenovo/rdp.nix;
 
     kitty.enable = true;
-    chromium.enable = true;
+    zen-browser.enable = true;
+    browser.default = config.programs.zen-browser.package;
+    # thunderbird.enable = true;
     keepassxc.enable = true;
     gemini-cli.enable = true;
 
