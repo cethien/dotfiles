@@ -22,7 +22,7 @@
         height = 400;
         icons = true;
         layer = "top";
-        margin = 8;
+        margin = "16,8,8";
         padding = 16;
         markup = true;
         width = 600;
