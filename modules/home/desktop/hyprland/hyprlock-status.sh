@@ -16,9 +16,25 @@ if [ -n "$WLAN_IFACE" ]; then
   CURRENT_IFACE=$(ip route | grep '^default' | awk '{print $5; exit}')
 
   if [ "$CURRENT_IFACE" = "$WLAN_IFACE" ]; then
-    SSID=$(nmcli -t -f active,ssid dev wifi 2>/dev/null | awk -F: '$1=="yes"{print $2}')
+    WIFI_INFO=$(nmcli -t -f active,ssid,signal dev wifi 2>/dev/null | awk -F: '$1=="yes"{print $2":"$3}')
+    SSID=$(echo "$WIFI_INFO" | cut -d: -f1)
+    SIGNAL=$(echo "$WIFI_INFO" | cut -d: -f2)
+
     [ -z "$SSID" ] && SSID="$WLAN_IFACE"
-    NET_LABEL="󰖩 ${SSID}"
+    [ -z "$SIGNAL" ] && SIGNAL=0
+
+    # Signal strength icons
+    if ((SIGNAL >= 75)); then
+      icon="󰤟"
+    elif ((SIGNAL >= 50)); then
+      icon="󰤢"
+    elif ((SIGNAL >= 25)); then
+      icon="󰤥"
+    else
+      icon="󰤨"
+    fi
+
+    NET_LABEL="${icon} ${SSID}"
   else
     NET_LABEL="󰖪 disconnected"
   fi
