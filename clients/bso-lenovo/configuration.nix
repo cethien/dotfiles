@@ -3,6 +3,11 @@
     ../../modules/nixos
   ];
 
+  security.pki.certificateFiles = [
+    ./root_ca.crt
+    ./intermediate_ca.crt
+  ];
+
   services.tailscale = {
     enable = true;
     extraSetFlags = ["--operator=cethien"];
