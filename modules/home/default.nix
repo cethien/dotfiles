@@ -28,6 +28,7 @@
     ./gaming
 
     ./freerdp.nix
+    ./slack.nix
   ];
 
   programs.bash.enable = true;
