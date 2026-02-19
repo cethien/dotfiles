@@ -5,16 +5,17 @@
   ...
 }: {
   config = lib.mkIf config.services.mako.enable {
+    stylix.targets.mako.opacity.enable = false;
+
     services.mako = {
       settings = {
         "category=sysinfo" = {
-          anchor = "top-center";
           height = 200;
           width = 1280;
         };
 
         actions = true;
-        anchor = "top-left";
+        anchor = "top-center";
         border-radius = 4;
         default-timeout = 3000;
         ignore-timeout = false;
