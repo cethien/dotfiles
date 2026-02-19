@@ -22,7 +22,6 @@ in {
       ];
       general.allow_tearing = true;
 
-      exec-once = ["[silent] slack -u"];
 
       workspace = [
         "1, monitor:${monEx}, persistent:true"
@@ -37,10 +36,13 @@ in {
 
     autostart = [
       "keepassxc"
+      "slack"
       "zen"
     ];
+
     defaultWorkspaces = {
       browser = 4;
+      chat = 5;
     };
   };
   programs.hyprlock.monitor = "${monIn}";
@@ -49,7 +51,6 @@ in {
     simple-scan
     libreoffice
 
-    slack
     rustdesk-flutter
   ];
 
@@ -61,6 +62,7 @@ in {
 
   programs = {
     ssh.matchBlocksExtra = import ../../homes/bso-lenovo/ssh.nix;
+    slack.enable = true;
     freerdp.enable = true;
     freerdp.connections = import ../../homes/bso-lenovo/rdp.nix;
 
