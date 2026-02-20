@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
   imports = [
     ../../modules/home
     ../../modules/home/users/cethien
@@ -44,7 +48,8 @@
     freerdp.connections = import ../../homes/bso-lenovo/rdp.nix;
 
     kitty.enable = true;
-    chromium.enable = true;
+    zen-browser.enable = true;
+    browser.default = config.programs.zen-browser.package;
     keepassxc.enable = true;
     gemini-cli.enable = true;
 
