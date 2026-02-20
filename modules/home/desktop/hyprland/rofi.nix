@@ -17,6 +17,16 @@ in {
 
     home.file.".config/rofi/grid.rasi".source = ./grid.rasi;
 
+    xdg.desktopEntries.rofi-freerdp = {
+      name = "FreeRDP";
+      comment = "Launch the FreeRDP menu via Rofi";
+      exec = "${pkgs.writeShellScriptBin "rofi-freerdp" (builtins.readFile ./rofi-freerdp.sh)}/bin/rofi-freerdp";
+      icon = "remote-desktop";
+      terminal = false;
+      type = "Application";
+      categories = ["Network" "Utility"];
+    };
+
     wayland.windowManager.hyprland.settings = {
       bind = [
         "SUPER, Space, exec, rofi -show drun"
@@ -32,10 +42,6 @@ in {
         "SUPER, N, exec, ${
           pkgs.writeShellScriptBin "rofi-net" (builtins.readFile ./rofi-net.sh)
         }/bin/rofi-net"
-
-        "SUPER, W, exec, ${
-          pkgs.writeShellScriptBin "rofi-freerdp" (builtins.readFile ./rofi-freerdp.sh)
-        }/bin/rofi-freerdp"
 
         "SUPER, B, exec, ${pkgs.rofi-bluetooth}/bin/rofi-bluetooth"
 
