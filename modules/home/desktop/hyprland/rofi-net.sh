@@ -1,18 +1,101 @@
 #!/usr/bin/env bash
 
-# ===== CONFIG =====
-WIFI_IFACE=$(nmcli device status | awk '/wifi/ {print $1; exit}')
-SEPARATOR="------"
+TITLE="󰖟 networking"
+notify() { notify-send "$TITLE" "$1"; }
 
-# ===== OPTIONS =====
+nmcli -t -f TYPE device | grep -q "wifi" && HAS_WIFI=1
+nmcli -t -f TYPE,STATE device | grep -q "ethernet:connected" && HAS_ETH=1
+ping -c 1 -W 1 1.1.1.1 >/dev/null 2>&1 && HAS_INTERNET=1
+
+if [ -z "$HAS_WIFI" ] && [ -z "$HAS_ETH" ]; then
+  notify "nothing to configure\nno wifi receiver or ethernet cable detected"
+  exit 0
+fi
+
+if [ -n "$HAS_ETH" ] && [ -z "$HAS_INTERNET" ]; then
+  notify "no internet access"
+  exit 0
+fi
+
+SELECTED_SSID="$1"
+ROFI_TITLE="$TITLE > "
+MENU_OPTIONS=()
+
+OPT_NET_CONNECT="󱘖  connect"
+handle_net_connect() {
+  nmcli connection up "$SELECTED_SSID" &&
+    notify "connected to '$SELECTED_SSID'"
+}
+
+OPT_NET_DISCONNECT="  disconnect"
+handle_net_disconnect() {
+  nmcli connection down "$SELECTED_SSID" &&
+    notify "disconnected from '$SELECTED_SSID'"
+}
+
+OPT_NET_AUTOCONNECT_ON="󰁪  enable autoconnect"
+handle_net_autoconnect_on() {
+  nmcli connection modify "$SELECTED_SSID" connection.autoconnect yes &&
+    notify "'$SELECTED_SSID' autoconnect on"
+}
+
+OPT_NET_AUTOCONNECT_OFF="󱧧  disable autoconnect"
+handle_net_autoconnect_off() {
+  nmcli connection modify "$SELECTED_SSID" connection.autoconnect no &&
+    notify "'$SELECTED_SSID' autoconnect off"
+}
+
+OPT_NET_FORGET="󰆴  forget network"
+handle_net_forget() {
+  nmcli connection delete "$SELECTED_SSID" &&
+    notify "'$SELECTED_SSID' was deleted"
+}
+
+handle_new_open_connection() {
+  nmcli device wifi connect "$SELECTED_SSID" &&
+    notify "connected to open network '$SELECTED_SSID'"
+}
+
+handle_new_secure_connection() {
+  PASSWORD=$(rofi -dmenu -p "Enter password for $SELECTED_SSID:" -password)
+
+  if [ -z "$PASSWORD" ]; then
+    notify "Password is required to connect to '$SELECTED_SSID'"
+    exit 1
+  fi
+
+  nmcli device wifi connect "$SELECTED_SSID" password "$PASSWORD" &&
+    notify "connected to '$SELECTED_SSID'"
+}
+
+nmcli radio wifi | grep -q "enabled" && HAS_WIFI_ENABLED=1
+WIFI_IFACE=$(nmcli -t -f DEVICE,TYPE device | grep ":wifi" | cut -d: -f1 | head -n1)
+
+if [ -n "$SELECTED_SSID" ]; then
+  ROFI_TITLE="󰖩  $SELECTED_SSID > "
+  nmcli connection show "$SELECTED_SSID" >/dev/null 2>&1 && SAVED=1
+  nmcli -t -f ACTIVE,SSID dev wifi | awk -F: '$1=="yes"{print $2}' | grep -Fxq "$SELECTED_SSID" && ACTIVE=1
+
+  if [ -n "$SAVED" ]; then
+    [ -n "$ACTIVE" ] &&
+      MENU_OPTIONS+=("$OPT_NET_DISCONNECT") || MENU_OPTIONS+=("$OPT_NET_CONNECT")
+
+    nmcli -f connection.autoconnect connection show "$SELECTED_SSID" | grep -q "yes" &&
+      MENU_OPTIONS+=("$OPT_NET_AUTOCONNECT_OFF") || MENU_OPTIONS+=("$OPT_NET_AUTOCONNECT_ON")
+
+    MENU_OPTIONS+=("$OPT_NET_FORGET")
+  else
+    nmcli -t -f SSID,SECURITY device wifi list ifname "$WIFI_IFACE" | grep -m 1 "$SELECTED_SSID" | cut -d: -f2 | grep -q . && SECURED=1
+    if [ -n "$SECURED" ]; then
+      handle_new_secure_connection
+    else
+      handle_new_open_connection
+    fi
+  fi
+fi
+
 OPT_SHOW_WIFI_INFO="  show wi-fi info"
-OPT_WIFI_ENABLE="󰖩  enable wi-fi"
-OPT_WIFI_DISABLE="󰖪  disable wi-fi"
-OPT_TAILSCALE_ENABLE="󰲝  enable tailscale"
-OPT_TAILSCALE_DISABLE="󰲜  disable tailscale"
-
-# ===== HELPERS =====
-show_wifi_info() {
+handle_show_wifi_info() {
   local IFACE="$WIFI_IFACE"
 
   local IP GW
@@ -37,219 +120,165 @@ read -n 1 -s -p 'press any key to close...'
 "
 }
 
-wifi_enable() {
-  nmcli radio wifi on && notify-send "󰖩  wifi" " enabled"
+OPT_WIFI_ENABLE="󰖩  enable wi-fi"
+handle_wifi_enable() {
+  nmcli radio wifi on && notify "wifi enabled"
 }
 
-wifi_disable() {
-  nmcli radio wifi off && notify-send "󰖩  wifi" "disabled"
+OPT_WIFI_DISABLE="󰖪  disable wi-fi"
+handle_wifi_disable() {
+  nmcli radio wifi off && notify "wifi disabled"
 }
 
-tailscale_enable() {
-  tailscale up && notify-send "󰲝  tailscale" "enabled"
+if [ -z "$SELECTED_SSID" ] && [ -n "$HAS_WIFI" ]; then
+  if [ -n "$HAS_WIFI_ENABLED" ]; then
+    MENU_OPTIONS+=("$OPT_SHOW_WIFI_INFO")
+    MENU_OPTIONS+=("$OPT_WIFI_DISABLE")
+  else
+    MENU_OPTIONS+=("$OPT_WIFI_ENABLE")
+  fi
+fi
+
+command -v tailscale >/dev/null && HAS_TAILSCALE=1
+if [ -n "$HAS_TAILSCALE" ]; then
+  TS_JSON=$(tailscale status --json 2>/dev/null)
+
+  if [ -n "$TS_JSON" ]; then
+    TS_STATE=$(jq -r '.BackendState' <<<"$TS_JSON")
+    [ "$TS_STATE" != "NeedsLogin" ] && IS_TAILSCALE_LOGGED_IN=1
+    [ "$TS_STATE" = "Running" ] && IS_TAILSCALE_UP=1
+  fi
+fi
+
+OPT_TAILSCALE_LOGIN="󰍂  tailscale login"
+handle_tailscale_login() {
+  local login_url
+  login_url=$(tailscale login 2>&1 | grep -o 'https://login.tailscale.com[^ ]*')
+
+  if [ -z "$login_url" ]; then
+    notify "tailscale could not generate login link"
+    return 1
+  fi
+
+  notify "opening tailscale login..."
+  xdg-open "$login_url"
+
+  (
+    for i in {1..20}; do
+      sleep 5
+      if ! tailscale status | grep -q "Logged out"; then
+        notify "tailscale successfully logged in"
+        exit 0
+      fi
+    done
+    notify "tailscale login timed out"
+  ) &
 }
 
-tailscale_disable() {
-  tailscale down && notify-send "󰲝  tailscale" "disabled"
+OPT_TAILSCALE_ENABLE="󰌘  enable tailscale"
+handle_tailscale_enable() {
+  tailscale up && notify "tailscale enabled"
 }
 
-# ===== GENERATE WIFI MENU =====
-declare -A NETWORKS
+OPT_TAILSCALE_DISABLE="󰌙  disable tailscale"
+handle_tailscale_disable() {
+  tailscale down && notify "tailscale disabled"
+}
 
-# ===== GENERATE WIFI MENU =====
-generate_wifi_list() {
-  NETWORKS=()
-  WIFI_DISPLAY_MENU=()
-  local current saved
-  current=$(nmcli -t -f ACTIVE,SSID dev wifi | awk -F: '$1=="yes"{print $2}')
-  saved=$(nmcli -t -f NAME connection show)
+if [ -z "$SELECTED_SSID" ] && [ -n "$HAS_TAILSCALE" ] && [ -n "$HAS_INTERNET" ]; then
+  if [ -z "$IS_TAILSCALE_LOGGED_IN" ]; then
+    MENU_OPTIONS+=("$OPT_TAILSCALE_LOGIN")
+  elif [ -n "$IS_TAILSCALE_UP" ]; then
+    MENU_OPTIONS+=("$OPT_TAILSCALE_DISABLE")
+  else
+    MENU_OPTIONS+=("$OPT_TAILSCALE_ENABLE")
+  fi
+fi
 
-  local menu_connected=()
-  local menu_saved=()
-  local menu_new=()
+declare -A NETWORKS MENU_TO_SSID
+SEPARATOR="------"
+if [ -z "$SELECTED_SSID" ] && [ -n "$HAS_WIFI_ENABLED" ]; then
+  MENU_OPTIONS+=("$SEPARATOR")
+
+  ACTIVE_CONN=$(nmcli -t -f NAME,TYPE,DEVICE connection show --active | awk -F: '$2=="802-11-wireless"{print $1}')
+  SAVED_CONNS=$(nmcli -t -f NAME connection show)
+
+  SAVED_CONNS_ITEMS=()
+  UNSAVED_CONNS_ITEMS=()
+  UNSAVED_OPEN_CONNS_ITEMS=()
+  ACTIVE_CONN_ITEM=""
 
   while IFS=: read -r SIGNAL SSID SECURITY; do
-    [[ -z "$SSID" ]] && continue
-    local icon
+    [ -z "$SSID" ] && continue
+    [ -n "${NETWORKS[$SSID]}" ] && continue
 
     NETWORKS["$SSID"]="$SECURITY"
 
-    if [[ "$SSID" == "$current" ]]; then
-      # Connected icons
+    if [ "$SSID" = "$ACTIVE_CONN" ]; then
       if ((SIGNAL >= 75)); then
-        icon="󰤟"
+        ICON="󰤟"
       elif ((SIGNAL >= 50)); then
-        icon="󰤢"
+        ICON="󰤢"
       elif ((SIGNAL >= 25)); then
-        icon="󰤥"
+        ICON="󰤥"
       else
-        icon="󰤨"
+        ICON="󰤨"
       fi
-      menu_connected+=("$icon  $SSID")
-    elif echo "$saved" | grep -qx "$SSID"; then
-      icon="󰸋"
-      menu_saved+=("$icon  $SSID")
+
+      ACTIVE_CONN_ITEM="$ICON  $SSID"
+      MENU_TO_SSID["$ACTIVE_CONN_ITEM"]="$SSID"
+
+    elif echo "$SAVED_CONNS" | grep -Fxq "$SSID"; then
+      ITEM="󰸋  $SSID"
+      SAVED_CONNS_ITEMS+=("$ITEM")
+      MENU_TO_SSID["$ITEM"]="$SSID"
+
     else
-      [[ "$SECURITY" ]] && icon="󱚿" || icon="󱛃"
-      menu_new+=("$icon  $SSID")
+      if [ -z "$SECURITY" ]; then
+        ITEM="󱛃  $SSID"
+        UNSAVED_OPEN_CONNS_ITEMS+=("$ITEM")
+      else
+        ITEM="󱚿  $SSID"
+        UNSAVED_CONNS_ITEMS+=("$ITEM")
+      fi
+      MENU_TO_SSID["$ITEM"]="$SSID"
     fi
+
   done < <(nmcli -t -f SIGNAL,SSID,SECURITY device wifi list ifname "$WIFI_IFACE")
 
-  WIFI_DISPLAY_MENU=("${menu_connected[@]}" "${menu_saved[@]}" "${menu_new[@]}")
-}
+  IFS=$'\n'
+  readarray -t SAVED_CONNS_ITEMS < <(printf "%s\n" "${SAVED_CONNS_ITEMS[@]}" | sort)
+  readarray -t UNSAVED_OPEN_CONNS_ITEMS < <(printf "%s\n" "${UNSAVED_OPEN_CONNS_ITEMS[@]}" | sort)
+  readarray -t UNSAVED_CONNS_ITEMS < <(printf "%s\n" "${UNSAVED_CONNS_ITEMS[@]}" | sort)
+  unset IFS
 
-# ===== HANDLE CONNECTIONS =====
-handle_saved_connection() {
-  local SSID="$1"
-  local current ac_status choice
+  [ -n "$ACTIVE_CONN_ITEM" ] && MENU_OPTIONS+=("$ACTIVE_CONN_ITEM")
+  MENU_OPTIONS+=("${SAVED_CONNS_ITEMS[@]}")
+  MENU_OPTIONS+=("${UNSAVED_OPEN_CONNS_ITEMS[@]}")
+  MENU_OPTIONS+=("${UNSAVED_CONNS_ITEMS[@]}")
+fi
 
-  while true; do
-    current=$(nmcli -t -f ACTIVE,SSID dev wifi | awk -F: '$1=="yes"{print $2}')
-    [[ "$SSID" == "$current" ]] && opt_connect_disconnect="  disconnect" || opt_connect_disconnect="󱘖  connect"
-    ac_status=$(nmcli -g connection.autoconnect connection show "$SSID")
-    [[ "$ac_status" == "yes" ]] && opt_autoconnect="󰑗  disable autoconnect" || opt_autoconnect="󰑖  enable autoconnect"
-    opt_delete="󰆴  forget"
+CHOSEN=$(printf "%s\n" "${MENU_OPTIONS[@]}" | rofi -dmenu -p "$ROFI_TITLE")
+[ -z "$CHOSEN" ] &&
+  exit 0
 
-    choice=$(printf "%s\n%s\n%s\n" "$opt_connect_disconnect" "$opt_autoconnect" "$opt_delete" |
-      rofi -dmenu -i -p "$SSID") || break
+SELECTED_MENU_OPTION="${MENU_TO_SSID[$CHOSEN]}"
+[ -n "$SELECTED_MENU_OPTION" ] &&
+  exec "$0" "$SELECTED_MENU_OPTION"
 
-    case "$choice" in
-    "  disconnect") nmcli connection down "$SSID" && notify-send " disconnected to wifi" "$SSID" ;;
-    "󱘖  connect") nmcli connection up id "$SSID" && notify-send "󱘖 connected to wifi" "$SSID" ;;
-    "󰑖  enable autoconnect") nmcli connection modify "$SSID" connection.autoconnect yes ;;
-    "󰑗  disable autoconnect") nmcli connection modify "$SSID" connection.autoconnect no ;;
-    "󰆴  forget")
-      nmcli connection delete "$SSID"
-      notify-send "󰆴 wifi network removed" "$SSID"
-      break
-      ;;
-    esac
-  done
-}
+case "$CHOSEN" in
+"$OPT_SHOW_WIFI_INFO") handle_show_wifi_info ;;
+"$OPT_WIFI_ENABLE") handle_wifi_enable ;;
+"$OPT_WIFI_DISABLE") handle_wifi_disable ;;
+"$OPT_TAILSCALE_LOGIN") handle_tailscale_login ;;
+"$OPT_TAILSCALE_ENABLE") handle_tailscale_enable ;;
+"$OPT_TAILSCALE_DISABLE") handle_tailscale_disable ;;
+"$SEPARATOR") $0 ;;
+"$OPT_NET_CONNECT") handle_net_connect "$MANAGED_SSID" ;;
+"$OPT_NET_DISCONNECT") handle_net_disconnect "$MANAGED_SSID" ;;
+"$OPT_NET_AUTOCONNECT_ON") handle_net_autoconnect_on "$MANAGED_SSID" ;;
+"$OPT_NET_AUTOCONNECT_OFF") handle_net_autoconnect_off "$MANAGED_SSID" ;;
+"$OPT_NET_FORGET") handle_net_forget "$MANAGED_SSID" ;;
+*) echo "unknow option selected" && exit 1 ;;
 
-handle_new_connection() {
-  local SSID="$1"
-  local SECURITY="$2"
-
-  if [[ -z "$SECURITY" ]]; then
-    if nmcli device wifi connect "$SSID"; then
-      notify-send "󰤟 Wi-Fi connected" "$SSID"
-      xdg-open http://neverssl.com
-    else
-      notify-send "󰤨 Wi-Fi connection failed" "$SSID"
-    fi
-    return
-  fi
-
-  local pwd
-  local from_secret=0
-  local store_choice
-
-  # Try to get password from secret-tool (KeePassXC Secret Service)
-  if pwd=$(secret-tool lookup ssid "$SSID" 2>/dev/null); then
-    from_secret=1
-  else
-    pwd=""
-  fi
-
-  while true; do
-    # Prompt if no password yet
-    if [[ -z "$pwd" ]]; then
-      pwd=$(rofi -dmenu -password -p "$SSID password:" 2>/dev/null) || return
-      [[ -z "$pwd" ]] && return
-      from_secret=0
-    fi
-
-    # Try to connect with nmcli
-    if nmcli device wifi connect "$SSID" password "$pwd"; then
-      notify-send "󰤟 Wi-Fi connected" "$SSID"
-
-      # Offer to store password if it was entered manually
-      if [[ $from_secret -eq 0 ]]; then
-        store_choice=$(printf "Yes\nNo" | rofi -dmenu -p "Store password for $SSID?" 2>/dev/null)
-        if [[ $store_choice == "Yes" ]]; then
-          echo -n "$pwd" | secret-tool store --label="$SSID" ssid "$SSID" UserName ""
-          notify-send "󰍡 Wi-Fi password stored" "$SSID"
-        fi
-      fi
-      return 0
-    else
-      notify-send "󰤨 Wi-Fi connection failed" "$SSID"
-      pwd="" # clear so we re-prompt
-    fi
-  done
-}
-
-handle_connection() {
-  local SSID="$1"
-  if nmcli -t -f NAME connection show | grep -qx "$SSID"; then
-    handle_saved_connection "$SSID"
-  else
-    handle_new_connection "$SSID" "${NETWORKS[$SSID]}"
-  fi
-}
-
-# ===== MAIN MENU =====
-main() {
-  MENU=()
-  HEADER="networking >"
-
-  HAS_WAN=false
-  [[ $(nmcli networking connectivity check) == "full" ]] && HAS_WAN=true
-
-  # WIFI_STATUS=$(nmcli radio wifi)
-  WIFI_STATUS=$(nmcli radio wifi 2>/dev/null)
-
-  # 1. WIFI INFO
-  if [[ -n "$WIFI_IFACE" && "$WIFI_STATUS" != "disabled" ]]; then
-    CONNECTED_SSID=$(nmcli -t -f ACTIVE,SSID dev wifi | awk -F: '$1=="yes"{print $2}')
-    [[ -n "$CONNECTED_SSID" ]] && MENU+=("$OPT_SHOW_WIFI_INFO")
-  fi
-
-  # 2. TAILSCALE only if internet
-  if [[ "$HAS_WAN" == "true" ]] && command -v tailscale &>/dev/null; then
-    if tailscale status | grep -q "Tailscale is stopped"; then
-      MENU+=("$OPT_TAILSCALE_ENABLE")
-    else
-      MENU+=("$OPT_TAILSCALE_DISABLE")
-    fi
-  fi
-
-  if [[ -n "$WIFI_IFACE" ]]; then
-    if [[ "$WIFI_STATUS" == "disabled" ]]; then
-      [[ "$HAS_WAN" == "false" ]] && HEADER="󰲛  no connection"
-      MENU+=("$OPT_WIFI_ENABLE")
-    else
-      MENU+=("$OPT_WIFI_DISABLE")
-
-      generate_wifi_list
-      if [[ ${#WIFI_DISPLAY_MENU[@]} -gt 0 ]]; then
-        MENU+=("$SEPARATOR")
-        MENU+=("${WIFI_DISPLAY_MENU[@]}")
-      fi
-    fi
-  else
-    [[ "$HAS_WAN" == "false" ]] && HEADER="󰲛  no connection (no wifi device)"
-  fi
-
-  # Fallback
-  if [[ ${#MENU[@]} -eq 0 ]]; then
-    notify-send "networking" "no network features to configure"
-    exit 0
-  fi
-
-  local CHOICE
-  CHOICE=$(printf "%s\n" "${MENU[@]}" | rofi -dmenu -i -p "$HEADER") || exit
-
-  case "$CHOICE" in
-  "$SEPARATOR") ;;
-  "$OPT_SHOW_WIFI_INFO") show_wifi_info ;;
-  "$OPT_WIFI_ENABLE") wifi_enable ;;
-  "$OPT_WIFI_DISABLE") wifi_disable ;;
-  "$OPT_TAILSCALE_ENABLE") tailscale_enable ;;
-  "$OPT_TAILSCALE_DISABLE") tailscale_disable ;;
-  *) [[ -n "$CHOICE" ]] && handle_connection "${CHOICE:3}" ;;
-  esac
-}
-
-main
+esac
