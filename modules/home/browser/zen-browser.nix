@@ -62,6 +62,32 @@ in {
     wayland.windowManager.hyprland.settings = {
       exec-once = mkIf as ["[silent] zen-beta"];
       windowrule = mkIf (!isNull ws) ["match:initial_class ^(zen-beta)$, workspace ${toString ws}"];
+      bind = let
+        script = pkgs.writeShellScriptBin "hypr_zen-sidebar" ''
+          DESIGNATED_WS=${toString ws}
+          BROWSER_WS=$(hyprctl -j clients \
+            | jq -r '.[] | select(.initialClass=="zen-beta") | .workspace.id' \
+            | head -n1)
+
+          WS_JSON=$(hyprctl -j activeworkspace)
+          ACTIVE_WS=$(echo "$WS_JSON" | jq -r '.id')
+          HAS_FULLSCREEN=$(echo "$WS_JSON" | jq -r '.hasfullscreen')
+
+          if [ -z "$BROWSER_WS" ]; then
+            zen-beta &
+            exit 0
+          fi
+
+          if [ "$BROWSER_WS" = "$ACTIVE_WS" ] || [ "$HAS_FULLSCREEN" = "true" ]; then
+            hyprctl dispatch movetoworkspacesilent $DESIGNATED_WS,initialclass:zen-beta
+          else
+            hyprctl dispatch movetoworkspace $ACTIVE_WS,initialclass:zen-beta
+          fi
+        '';
+      in
+        mkIf (!isNull ws) [
+          "SUPER SHIFT, W, exec, ${script}/bin/hypr_zen-sidebar"
+        ];
     };
   };
 }
