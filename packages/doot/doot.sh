@@ -160,7 +160,7 @@ switch() {
     _q '.clients | has(env(TARGET_HOST))' &>/dev/null; then
     _log-success "nixos: configuration '$TARGET_HOST' found"
     _confirm "switch system?"
-    sudo nixos-rebuild switch --flake ".#$TARGET_HOST" --fallback --no-write-lock-file "$offline_flags"
+    sudo nixos-rebuild switch --flake ".#$TARGET_HOST" --fallback --no-write-lock-file $offline_flags
     return
   fi
 
@@ -169,7 +169,7 @@ switch() {
     _q '.homes.[env(TARGET_HOST)].user == env(USER)' &>/dev/null; then
     _log-success "home-manager: configuration '$hm_config' found"
     _confirm "switch home?"
-    home-manager switch --flake ".#$hm_config" -b "bak-hm-$(date +%Y%m%d_%H%M%S)" "$offline_flags"
+    home-manager switch --flake ".#$hm_config" -b "bak-hm-$(date +%Y%m%d_%H%M%S)" $offline_flags
     return
   fi
 
