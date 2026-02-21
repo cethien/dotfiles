@@ -9,10 +9,27 @@
 # @cmd updates inputs
 # @describe to update individuals or all packages do manually
 # @flag --clients only update client related inputs
+# @flag --omit-nixpkgs                doesnt update nixpkgs/nixpkgs-unstable (for when only updating module options)
 flake-update() {
-  INPUTS="nixpkgs flake-utils deploy-rs disko"
-  [ -n "$argc_clients" ] && INPUTS="nixpkgs-unstable nixos-hardware home-manager stylix nvf nur spicetify-nix zen-browser"
-  command nix flake update $INPUTS
+  local INPUTS=()
+  if [ -n "$argc_clients" ]; then
+    INPUTS=(
+      nixos-hardware
+      home-manager
+      stylix
+      nvf
+      nur
+      spicetify-nix
+      zen-browser
+    )
+    [ -z "$argc_omit_nixpkgs" ] && INPUTS+=(nixpkgs-unstable)
+  else
+    INPUTS=(flake-utils deploy-rs disko)
+    [ -z "$argc_omit_nixpkgs" ] && INPUTS+=(nixpkgs)
+  fi
+
+  echo "Updating: ${INPUTS[*]}"
+  nix flake update "${INPUTS[@]}"
 }
 
 # @cmd
