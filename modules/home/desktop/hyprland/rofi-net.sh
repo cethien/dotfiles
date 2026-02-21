@@ -57,7 +57,7 @@ handle_new_open_connection() {
 }
 
 handle_new_secure_connection() {
-  PASSWORD=$(rofi -dmenu -p "Enter password for $SELECTED_SSID:" -password)
+  PASSWORD=$(rofi -dmenu -p "Enter password for $SELECTED_SSID:" -password -theme-str 'listview {enabled: false;}')
 
   if [ -z "$PASSWORD" ]; then
     notify "Password is required to connect to '$SELECTED_SSID'"
