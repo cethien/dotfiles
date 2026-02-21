@@ -150,11 +150,17 @@ switch() {
   TARGET_HOST=$(hostname | tr '[:upper:]' '[:lower:]')
   clear
 
+  local offline_flags=""
+  if ! ping -c 1 -W 1 cache.nixos.org &>/dev/null; then
+    _log-info "Network unreachable: forcing offline mode"
+    offline_flags="--offline --option substitute false"
+  fi
+
   if command -v nixos-rebuild &>/dev/null &&
     _q '.clients | has(env(TARGET_HOST))' &>/dev/null; then
     _log-success "nixos: configuration '$TARGET_HOST' found"
     _confirm "switch system?"
-    sudo nixos-rebuild switch --flake ".#$TARGET_HOST"
+    sudo nixos-rebuild switch --flake ".#$TARGET_HOST" --fallback --no-write-lock-file "$offline_flags"
     return
   fi
 
@@ -163,7 +169,7 @@ switch() {
     _q '.homes.[env(TARGET_HOST)].user == env(USER)' &>/dev/null; then
     _log-success "home-manager: configuration '$hm_config' found"
     _confirm "switch home?"
-    home-manager switch --flake ".#$hm_config" -b "bak-hm-$(date +%Y%m%d_%H%M%S)"
+    home-manager switch --flake ".#$hm_config" -b "bak-hm-$(date +%Y%m%d_%H%M%S)" "$offline_flags"
     return
   fi
 
