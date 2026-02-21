@@ -26,9 +26,14 @@ in {
 
     mounts = builtins.listToAttrs (map (name: {
         name = "${name}$";
-        value = {
+        value = let
+          formatSlug = name: let
+            lower = builtins.toLower name;
+          in
+            builtins.replaceStrings [" "] ["-"] lower;
+        in {
           enable = true;
-          mountPoint = "${config.home.homeDirectory}/Shares/${name}";
+          mountPoint = "${config.home.homeDirectory}/shares/${formatSlug name}";
           options = {
             vfs-cache-mode = "full";
             dir-cache-time = "5000h";
