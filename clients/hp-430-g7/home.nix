@@ -34,6 +34,77 @@
 
   home.packages = with pkgs; [simple-scan ausweisapp libreoffice];
 
+  programs.zen-browser.enable = true;
+  programs.browser.default = config.programs.zen-browser.package;
+  programs.zen-browser.profiles."${config.home.username}" = let
+    containers = {
+      logged-out = {
+        id = 1;
+        color = "blue";
+        icon = "chill";
+      };
+      admin = {
+        id = 2;
+        color = "purple";
+        icon = "circle";
+      };
+      "tmsproshop.de" = {
+        id = 3;
+        color = "yellow";
+        icon = "briefcase";
+      };
+      "tmsproshop.de/admin" = {
+        id = 4;
+        color = "orange";
+        icon = "briefcase";
+      };
+    };
+
+    spaces."on deez road again" = {
+      id = "cd0b7a9b-bb11-42e8-a10a-52ea6813e6b4";
+      position = 1000;
+      icon = "🚄";
+    };
+
+    pins = {
+      "WhatsApp" = {
+        id = "9d8a8f91-7e29-4688-ae2e-da4e49d4a179";
+        url = "https://web.whatsapp.com/";
+        isEssential = true;
+        position = 101;
+      };
+      "Discord" = {
+        id = "96070d37-4b78-490f-87d1-884474bd9434";
+        url = "https://discord.com/channels/@me";
+        isEssential = true;
+        position = 102;
+      };
+      "Google Keep" = {
+        id = "eee232e4-72d9-4d7c-b4e6-02a1f6155f7f";
+        url = "https://keep.google.com/";
+        isEssential = true;
+        position = 103;
+      };
+      "YouTube" = {
+        id = "8af62707-0722-4049-9801-bedced343333";
+        url = "https://www.youtube.com/feed/subscriptions";
+        position = 110;
+      };
+      "GitHub" = {
+        id = "fb316d70-2b5e-4c46-bf42-f4e82d635153";
+        url = "https://github.com/";
+        position = 111;
+      };
+    };
+  in {
+    containersForce = true;
+    inherit containers;
+    pinsForce = true;
+    inherit pins;
+    spacesForce = true;
+    inherit spaces;
+  };
+
   services.syncthing.enable = true;
   services.restic.enable = true;
   programs.rclone.enable = true;
@@ -42,14 +113,11 @@
     ssh.matchBlocksExtra =
       (import ../../homes/bso-lenovo/ssh.nix)
       // import ../../homes/ssh.nix;
-    freerdp.enable = true;
-    browser.firefox-profile.containers = ["tmsproshop.de" "tmsproshop.de/admin"];
 
+    freerdp.enable = true;
     freerdp.connections = import ../../homes/bso-lenovo/rdp.nix;
 
     kitty.enable = true;
-    zen-browser.enable = true;
-    browser.default = config.programs.zen-browser.package;
     keepassxc.enable = true;
     gemini-cli.enable = true;
 

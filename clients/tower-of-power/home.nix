@@ -51,6 +51,7 @@
   home.packages = with pkgs; [simple-scan ausweisapp libreoffice];
 
   programs.zen-browser.enable = true;
+  programs.browser.default = config.programs.zen-browser.package;
   programs.zen-browser.profiles."${config.home.username}" = let
     containers = {
       admin = {
@@ -81,12 +82,12 @@
       "YouTube" = {
         id = "8af62707-0722-4049-9801-bedced343333";
         url = "https://www.youtube.com/feed/subscriptions";
-        position = 102;
+        position = 110;
       };
       "GitHub" = {
         id = "fb316d70-2b5e-4c46-bf42-f4e82d635153";
         url = "https://github.com/";
-        position = 103;
+        position = 111;
       };
     };
   in {
@@ -107,7 +108,6 @@
     };
 
     kitty.enable = true;
-    browser.default = config.programs.zen-browser.package;
     keepassxc.enable = true;
     gemini-cli.enable = true;
 

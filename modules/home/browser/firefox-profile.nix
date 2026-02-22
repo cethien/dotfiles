@@ -6,7 +6,6 @@
   ...
 }: let
   inherit (lib) mkIf mkMerge;
-  cfg = config.programs.browser;
 in {
   profiles."${name}" = {
     id = 0;
