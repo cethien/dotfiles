@@ -50,6 +50,49 @@
 
   home.packages = with pkgs; [simple-scan ausweisapp libreoffice];
 
+  programs.zen-browser.enable = true;
+  programs.zen-browser.profiles."${config.home.username}" = let
+    containers = {
+      admin = {
+        id = 1;
+        color = "purple";
+        icon = "circle";
+      };
+    };
+
+    spaces."deez nuts" = {
+      id = "cd0b7a9b-bb11-42e8-a10a-52ea6813e6b4";
+      position = 1000;
+      icon = "🥙";
+    };
+
+    pins = {
+      "WhatsApp" = {
+        id = "9d8a8f91-7e29-4688-ae2e-da4e49d4a179";
+        url = "https://web.whatsapp.com/";
+        isEssential = true;
+        position = 101;
+      };
+      "YouTube" = {
+        id = "8af62707-0722-4049-9801-bedced343333";
+        url = "https://www.youtube.com/";
+        position = 102;
+      };
+      "GitHub" = {
+        id = "fb316d70-2b5e-4c46-bf42-f4e82d635153";
+        url = "https://github.com/";
+        position = 103;
+      };
+    };
+  in {
+    containersForce = true;
+    inherit containers;
+    pinsForce = true;
+    inherit pins;
+    spacesForce = true;
+    inherit spaces;
+  };
+
   programs = {
     ssh.matchBlocksExtra = import ../../homes/ssh.nix;
 
@@ -59,7 +102,6 @@
     };
 
     kitty.enable = true;
-    zen-browser.enable = true;
     browser.default = config.programs.zen-browser.package;
     keepassxc.enable = true;
     gemini-cli.enable = true;
