@@ -72,14 +72,6 @@ in {
     #   command sudo -A "$@" 2>/dev/null || command sudo "$@"
     # ''}/bin/sudo-wrapper";
 
-    services.syncthing.settings = mkIf config.services.syncthing.enable {
-      folders.keepass = {
-        id = "keepass";
-        path = "${config.home.homeDirectory}/.keepass";
-        devices = ["hp-430-g7" "xiaomi-15" "tower-of-power"];
-      };
-    };
-
     wayland.windowManager.hyprland.settings = {
       exec-once = mkIf hypr [
         "keepassxc"
