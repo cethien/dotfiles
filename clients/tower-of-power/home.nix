@@ -58,6 +58,11 @@
         color = "purple";
         icon = "circle";
       };
+      logged-out = {
+        id = 2;
+        color = "blue";
+        icon = "chill";
+      };
     };
 
     spaces."deez nuts" = {
@@ -75,7 +80,7 @@
       };
       "YouTube" = {
         id = "8af62707-0722-4049-9801-bedced343333";
-        url = "https://www.youtube.com/";
+        url = "https://www.youtube.com/feed/subscriptions";
         position = 102;
       };
       "GitHub" = {
