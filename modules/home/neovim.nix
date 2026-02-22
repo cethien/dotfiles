@@ -246,6 +246,7 @@ in {
           # "ru"
         ];
         spellcheck.programmingWordlist.enable = true;
+        spellcheck.ignoredFiletypes = ["toggleterm" "alpha"];
         diagnostics.enable = true;
         diagnostics.config = {
           signs.text = {
