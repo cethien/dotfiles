@@ -36,6 +36,7 @@ in {
       };
       init.defaultBranch = "main";
       pull.rebase = true;
+      rebase.autostash = true;
       push.autoSetupRemote = true;
       advice.addIgnoredFile = false;
 
