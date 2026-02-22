@@ -1,28 +1,23 @@
 #!/usr/bin/env bash
 
 SEPARATOR="─"
-# Function to get date and time
 get_datetime() {
   TIME=$(date "+%H:%M")
   DATE=$(date "+%a, %d. %B %Y")
-  echo "${DATE} ${SEPARATOR} ${TIME}"
+  echo "󰥔 ${TIME}  ${SEPARATOR}  󰃭 ${DATE}"
 }
 
-# Function to get CPU and RAM usage
 get_system_stats() {
   CPU="󰍛 CPU: $(awk 'NR==1 {usage=($2+$4)*100/($2+$4+$5); printf "%d%%", usage}' /proc/stat)"
   RAM="󰍛 RAM:  $(free -h | awk '/Mem:/ {print $3 "/" $2}')"
-  echo "${CPU} ${SEPARATOR} ${RAM}"
+  echo "${CPU}  ${SEPARATOR}  ${RAM}"
 }
 
-# Function to get battery status
+BAT_PATH="/sys/class/power_supply/BAT0"
+[ -d "$BAT_PATH" ] && HAS_BATTERY=1
 get_battery_status() {
-  if [ ! -d "/sys/class/power_supply/BAT0" ]; then
-    return
-  fi
-
-  BAT_PERCENTAGE=$(cat /sys/class/power_supply/BAT0/capacity)
-  BAT_STATUS=$(cat /sys/class/power_supply/BAT0/status)
+  BAT_PERCENTAGE=$(cat $BAT_PATH/capacity)
+  BAT_STATUS=$(cat $BAT_PATH/status)
 
   BAT_ICONS=("󰂃" "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰁹")
   BAT_CHARGING_ICON="󰂄"
@@ -31,14 +26,13 @@ get_battery_status() {
   [ "$ICON_INDEX" -ge "${#BAT_ICONS[@]}" ] && ICON_INDEX=$((${#BAT_ICONS[@]} - 1))
   BAT_ICON=${BAT_ICONS[ICON_INDEX]}
 
-  if [ "$BAT_STATUS" = "Charging" ]; then
-    echo "${BAT_CHARGING_ICON} ${BAT_PERCENTAGE}% (Charging)"
+  if [ "$BAT_STATUS" = "charging" ]; then
+    echo "${BAT_CHARGING_ICON} ${BAT_PERCENTAGE}% (charging)"
   else
     echo "${BAT_ICON} ${BAT_PERCENTAGE}%"
   fi
 }
 
-# Function to get network status
 get_network_status() {
   IFACE=$(ip route | awk '/^default/ {print $5; exit}')
 
@@ -76,23 +70,17 @@ get_network_status() {
 }
 
 # Main script logic
-main() {
-  SECTIONS=()
-  SECTIONS+=("$(get_datetime)")
-  SECTIONS+=("$(get_system_stats)")
+SECTIONS=()
+SECTIONS+=("$(get_datetime)")
 
-  BATTERY_LABEL="$(get_battery_status)"
-  if [ -n "$BATTERY_LABEL" ]; then
-    SECTIONS+=("$BATTERY_LABEL $SEPARATOR $(get_network_status)")
-  else
-    SECTIONS+=("$(get_network_status)")
-  fi
+if [ -n "$HAS_BATTERY" ]; then
+  SECTIONS+=("$(get_battery_status)")
+fi
+SECTIONS+=("$(get_system_stats)")
+SECTIONS+=("$(get_network_status)")
 
-  SPACE="                      "
-  PANEL=$(printf "%s$SPACE" "${SECTIONS[@]}")
-  PANEL="${PANEL%"$SPACE"}"
+SPACE="\n"
+PANEL=$(printf "%s$SPACE" "${SECTIONS[@]}")
+PANEL="${PANEL%"$SPACE"}"
 
-  notify-send -u low -h string:category:sysinfo -t 5000 "$PANEL"
-}
-
-main
+notify-send -u low -t 5000 "$PANEL"

@@ -9,11 +9,6 @@
 
     services.mako = {
       settings = {
-        "category=sysinfo" = {
-          height = 200;
-          width = 1280;
-        };
-
         actions = true;
         anchor = "top-center";
         border-radius = 4;
