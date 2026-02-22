@@ -7,8 +7,8 @@
 # @flag -f --skip-validation $SKIP_VALIDATION skip inventory validation
 
 # @cmd updates inputs
-# @describe to update individuals or all packages do manually
-# @flag --clients only update client related inputs
+# @describe                           updates host/client inputs [TO UPDATE ALL OR INDIVIDUAL ONES USE nix flake update]
+# @flag --clients                     only update client related inputs
 # @flag --omit-nixpkgs                doesnt update nixpkgs/nixpkgs-unstable (for when only updating module options)
 flake-update() {
   local INPUTS=()
