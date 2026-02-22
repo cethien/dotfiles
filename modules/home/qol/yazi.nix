@@ -17,6 +17,7 @@ in {
     };
 
     programs.yazi = {
+      shellWrapperName = "y";
       extraPackages = with pkgs; [
         glow
         ouch

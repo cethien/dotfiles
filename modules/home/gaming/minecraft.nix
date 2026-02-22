@@ -4,27 +4,23 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf;
   cfg = config.programs.prismlauncher;
   ws = config.wayland.windowManager.hyprland.defaultWorkspaces.gaming;
 in {
-  options.programs.prismlauncher.enable = mkEnableOption "prism launcher";
-
   config = mkIf cfg.enable {
-    home.packages = [
-      (pkgs.prismlauncher.override {
-        jdks = with pkgs; [
-          zulu
-          zulu17
-          zulu8
-        ];
-        additionalLibs = with pkgs; [
-          glfw3-minecraft
-          libGL
-          libpulseaudio
-        ];
-      })
-    ];
+    programs.prismlauncher.package = pkgs.prismlauncher.override {
+      jdks = with pkgs; [
+        zulu
+        zulu17
+        zulu8
+      ];
+      additionalLibs = with pkgs; [
+        glfw3-minecraft
+        libGL
+        libpulseaudio
+      ];
+    };
 
     wayland.windowManager.hyprland.settings.windowrule = pkgs.cethien.mkHyprGameWindowRule "match:class ^(Minecraft.*)$" "${toString ws}";
   };
