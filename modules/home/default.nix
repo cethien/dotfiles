@@ -1,4 +1,9 @@
 {
+  pkgs,
+  lib,
+  config,
+  ...
+}: {
   imports = [
     ./stylix.nix
     ./sops.nix
@@ -8,7 +13,9 @@
     ./desktop
     ./terminals.nix
 
-    ./essentials.nix
+    ./tmux.nix
+    ./ssh.nix
+    ./neovim.nix
     ./utils.nix
     ./utils-net.nix
     ./utils-remote.nix
@@ -31,7 +38,18 @@
     ./slack.nix
   ];
 
-  programs.bash.enable = true;
+  programs = {
+    bash.enable = true;
+    tmux.enable = true;
+    nvf.enable = true;
+    ssh.enable = true;
+  };
+
+  home.packages = with pkgs; [
+    curl
+    wget
+  ];
+
   stylix.enable = true;
 
   xdg.mimeApps.enable = true;
