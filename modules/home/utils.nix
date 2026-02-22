@@ -36,7 +36,6 @@ in {
       ffmpeg
 
       init
-      (writeShellScriptBin "switch" (builtins.readFile ./switch.sh))
       (writeShellScriptBin "update" (builtins.readFile ./update.sh))
       (writeShellScriptBin "cleanup" (builtins.readFile ./cleanup.sh))
       (writeShellScriptBin "clip" (builtins.readFile ./clip.sh))
