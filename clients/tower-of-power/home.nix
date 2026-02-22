@@ -54,15 +54,15 @@
   programs.browser.default = config.programs.zen-browser.package;
   programs.zen-browser.profiles."${config.home.username}" = let
     containers = {
-      admin = {
-        id = 1;
-        color = "purple";
-        icon = "circle";
-      };
       logged-out = {
-        id = 2;
-        color = "blue";
+        id = 1;
+        color = "toolbar";
         icon = "chill";
+      };
+      admin = {
+        id = 2;
+        color = "pink";
+        icon = "circle";
       };
     };
 
@@ -83,11 +83,6 @@
         id = "8af62707-0722-4049-9801-bedced343333";
         url = "https://www.youtube.com/feed/subscriptions";
         position = 110;
-      };
-      "GitHub" = {
-        id = "fb316d70-2b5e-4c46-bf42-f4e82d635153";
-        url = "https://github.com/";
-        position = 111;
       };
     };
   in {
