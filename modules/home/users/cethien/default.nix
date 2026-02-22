@@ -9,10 +9,6 @@
       sopsFile = ./secrets.yaml;
     };
 
-    home.shellAliases = {
-      gh = "GH_TOKEN=$(cat ${config.sops.secrets.gh_token.path}) gh";
-    };
-
     programs.git.settings.user = {
       name = "cethien";
       email = "borislaw.sotnikow@gmx.de";
