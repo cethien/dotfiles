@@ -29,7 +29,7 @@ in {
             "cb5efa80-f1e1-43ce-8c0b-fece8462d225" # Container Halo
             "4ab93b88-151c-451b-a1b7-a1e0e28fa7f8" # No Sidebar Scrollbar
             "87196c08-8ca1-4848-b13b-7ea41ee830e7" # Tab Preview Enhanced
-            # "72f8f48d-86b9-4487-acea-eb4977b18f21" # Better CtrlTab Panel
+            "72f8f48d-86b9-4487-acea-eb4977b18f21" # Better CtrlTab Panel
           ];
 
           search = {
