@@ -371,24 +371,25 @@ in {
             key = "<leader>vs";
             action = "<cmd>vs<CR>";
           }
+
           {
-            mode = "n";
-            key = "<leader><Left>";
+            mode = ["n" "t"];
+            key = "<C-Left>";
             action = "<cmd>wincmd h<CR>";
           }
           {
-            mode = "n";
-            key = "<leader><Right>";
-            action = "<cmd>wincmd l<CR>";
+            mode = ["n" "t"];
+            key = "<C-Down>";
+            action = "<cmd>wincmd j<CR>";
           }
           {
-            mode = "n";
-            key = "<leader><Up>";
+            mode = ["n" "t"];
+            key = "<C-Up>";
             action = "<cmd>wincmd k<CR>";
           }
           {
-            mode = "n";
-            key = "<leader><Down>";
+            mode = ["n" "t"];
+            key = "<C-Right>";
             action = "<cmd>wincmd l<CR>";
           }
 

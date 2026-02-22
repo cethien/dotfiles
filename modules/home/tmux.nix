@@ -116,27 +116,28 @@ in {
           action = "source-file ~/.config/tmux/tmux.conf";
         }
 
-        # switch panes using Ctrl-Alt-arrow without prefix
+        # switch panes using Ctrl-Shift-arrow without prefix
         {
           noprefix = true;
-          key = "M-Left";
+          key = "C-S-Left";
           action = "select-pane -L";
         }
         {
           noprefix = true;
-          key = "M-Right";
+          key = "C-S-Right";
           action = "select-pane -R";
         }
         {
           noprefix = true;
-          key = "M-Up";
+          key = "C-S-Up";
           action = "select-pane -U";
         }
         {
           noprefix = true;
-          key = "M-Down";
+          key = "C-S-Down";
           action = "select-pane -D";
         }
+
         {
           noprefix = true;
           key = "M-f";
