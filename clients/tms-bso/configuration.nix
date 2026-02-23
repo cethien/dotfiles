@@ -42,6 +42,7 @@
   networking.networkmanager.wifi.backend = "iwd";
 
   boot = {
+    loader.grub.splashImage = ./grub.jpg;
     plymouth = {
       enable = true;
       theme = "colorful_sliced";
