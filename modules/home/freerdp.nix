@@ -39,12 +39,7 @@
       default = null;
       description = "The desktop height in pixels.";
     };
-    disableWallpaper = {
-      name = "disable wallpaper";
-      type = types.bool;
-      default = true;
-      description = "Disable the wallpaper for performance.";
-    };
+
     redirectPrinters = {
       name = "redirectprinters";
       type = types.bool;
@@ -86,6 +81,53 @@
       type = types.nullOr types.int;
       default = null;
       description = "Authentication level to use. 0: None, 1: Required, 2: NLA (default on Windows).";
+    };
+
+    # --- Verbindung & Netzwerk ---
+
+    connectionType = {
+      name = "connection type";
+      type = types.nullOr types.int;
+      default = 6;
+      description = "1:Modem, 2:LowSpeed, 3:Satellite, 4:Broadband, 5:WAN, 6:LAN, 7:Auto";
+    };
+    networkAutoDetect = {
+      name = "networkautodetect";
+      type = types.bool;
+      default = true;
+      description = "Automatically detect network speed.";
+    };
+
+    # --- Performance-Killer (Visuals) ---
+    disableWallpaper = {
+      name = "disable wallpaper";
+      type = types.bool;
+      default = true;
+    };
+    disableThemes = {
+      name = "disable themes";
+      type = types.bool;
+      default = true;
+    };
+    disableMenuAnims = {
+      name = "disable menu anims";
+      type = types.bool;
+      default = true;
+    };
+    disableCursorShadow = {
+      name = "disable cursor shadow";
+      type = types.bool;
+      default = true;
+    };
+    allowFontSmoothing = {
+      name = "allow font smoothing";
+      type = types.bool;
+      default = false; # Aus = Schneller!
+    };
+    colorDepth = {
+      name = "session bpp";
+      type = types.int;
+      default = 16; # 16 statt 32 spart massiv Bandbreite
     };
   };
 

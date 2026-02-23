@@ -12,6 +12,7 @@ in {
     ../../homes/bso-lenovo/smb.nix
     ../../homes/bso-lenovo/email.nix
     ../../homes/bso-lenovo/ssh.nix
+    ../../homes/bso-lenovo/rdp.nix
     ../../homes/bso-lenovo/zen-browser.nix
   ];
 
@@ -58,8 +59,6 @@ in {
 
   programs = {
     slack.enable = true;
-    freerdp.enable = true;
-    freerdp.connections = import ../../homes/bso-lenovo/rdp.nix;
 
     kitty.enable = true;
     # thunderbird.enable = true;
