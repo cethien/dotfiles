@@ -177,7 +177,7 @@ handle_tailscale_login() {
 
 OPT_TAILSCALE_ENABLE="󰌘  enable tailscale"
 handle_tailscale_enable() {
-  tailscale up && notify "tailscale enabled"
+  tailscale up --accept-routes && notify "tailscale enabled"
 }
 
 OPT_TAILSCALE_DISABLE="󰌙  disable tailscale"
