@@ -169,7 +169,8 @@
 
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    home-manager.url = "github:nix-community/home-manager";
+    # home-manager.url = "github:nix-community/home-manager";
+    home-manager.url = "github:cethien/home-manager/rclone/smb-sanitizing";
     home-manager.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
     stylix.url = "github:nix-community/stylix";
