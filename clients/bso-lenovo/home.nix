@@ -12,6 +12,7 @@ in {
     ../../homes/bso-lenovo/smb.nix
     ../../homes/bso-lenovo/email.nix
     ../../homes/bso-lenovo/ssh.nix
+    ../../homes/bso-lenovo/zen-browser.nix
   ];
 
   stylix.image = ../../wallpapers/bliss-windows-night-nologo-8k-unofficial.png;
@@ -61,8 +62,6 @@ in {
     freerdp.connections = import ../../homes/bso-lenovo/rdp.nix;
 
     kitty.enable = true;
-    zen-browser.enable = true;
-    browser.default = config.programs.zen-browser.package;
     # thunderbird.enable = true;
     keepassxc.enable = true;
     gemini-cli.enable = true;
