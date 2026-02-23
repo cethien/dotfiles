@@ -44,7 +44,7 @@ in {
 
     defaultWorkspaces = {
       browser = 4;
-      chat = 5;
+      chat = 2;
     };
   };
   programs.hyprlock.monitor = "${monIn}";
