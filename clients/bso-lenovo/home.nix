@@ -8,7 +8,6 @@
 in {
   imports = [
     ../../modules/home
-    ../../modules/home/users/cethien
     ../../homes/bso-lenovo/smb.nix
     ../../homes/bso-lenovo/email.nix
     ../../homes/bso-lenovo/ssh.nix
