@@ -6,6 +6,9 @@
   imports = [
     ../../modules/home
     ../../modules/home/users/cethien
+
+    ../../homes/tms-bso/ssh.nix
+    ../../homes/tms-bso/rdp.nix
   ];
 
   stylix.image = ../../wallpapers/boy_and_cat_sitting_on_stairs.jpeg;
@@ -107,12 +110,7 @@
   programs.rclone.enable = true;
 
   programs = {
-    ssh.matchBlocksExtra =
-      (import ../../homes/bso-lenovo/ssh.nix)
-      // import ../../homes/ssh.nix;
-
-    freerdp.enable = true;
-    freerdp.connections = import ../../homes/bso-lenovo/rdp.nix;
+    ssh.matchBlocksExtra = import ../../homes/ssh.nix;
 
     kitty.enable = true;
     keepassxc.enable = true;

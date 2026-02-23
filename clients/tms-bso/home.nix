@@ -8,11 +8,11 @@
 in {
   imports = [
     ../../modules/home
-    ../../homes/bso-lenovo/smb.nix
-    ../../homes/bso-lenovo/email.nix
-    ../../homes/bso-lenovo/ssh.nix
-    ../../homes/bso-lenovo/rdp.nix
-    ../../homes/bso-lenovo/zen-browser.nix
+    ../../homes/tms-bso/smb.nix
+    ../../homes/tms-bso/email.nix
+    ../../homes/tms-bso/ssh.nix
+    ../../homes/tms-bso/rdp.nix
+    ../../homes/tms-bso/zen-browser.nix
   ];
 
   stylix.image = ../../wallpapers/bliss-windows-night-nologo-8k-unofficial.png;

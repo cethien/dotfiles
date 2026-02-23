@@ -1,7 +1,7 @@
-[homes.bso-lenovo]
+[homes.tms-bso]
 user = "bsotnikow"
 
-[clients.bso-lenovo]
+[clients.tms-bso]
 user = "bsotnikow"
 disk_id = "nvme-SKHynix_HFS256GDE9X081N_CYA4N025511404A1C"
 
