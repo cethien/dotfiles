@@ -44,7 +44,7 @@ in {
 
     defaultWorkspaces = {
       browser = 4;
-      chat = 2;
+      chat = 3;
     };
   };
   programs.hyprlock.monitor = "${monIn}";
@@ -65,6 +65,7 @@ in {
     gemini-cli.enable = true;
 
     devSuite.extras = ["containers"];
+    creativeSuite.enable = true;
 
     spotify.enable = true;
   };
