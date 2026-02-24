@@ -75,12 +75,11 @@
             {
               home-manager = {
                 backupFileExtension = "hm-bak";
+                useGlobalPkgs = false;
                 useUserPackages = true;
 
                 users."${n.user}" = {
-                  imports = [
-                    ./clients/${n.hostName}/home.nix
-                  ];
+                  imports = [./clients/${n.hostName}/home.nix];
                   home.stateVersion = stateVersion;
                   home.username = n.user;
                   home.homeDirectory = "/home/${n.user}";
@@ -89,8 +88,8 @@
                 extraSpecialArgs =
                   inputs
                   // {
+                    inherit system;
                     pkgs = pkgsUnstable;
-                    inherit system stateVersion;
                   };
               };
             }
