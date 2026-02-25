@@ -38,7 +38,12 @@ in {
     programs.rofi.enable = true;
 
     wayland.windowManager.hyprland.settings = {
-      exec-once = ["${pkgs.udiskie}/bin/udiskie"];
+      exec-once = [
+        "${pkgs.udiskie}/bin/udiskie"
+        "${
+          pkgs.writeShellScriptBin "notify-battery" (builtins.readFile ./notify-battery.sh)
+        }/bin/notify-battery"
+      ];
 
       monitor = mkDefault [
         "eDP-1, 1920x1080@60, 0x0, 1"
@@ -221,6 +226,10 @@ in {
           "SUPER CTRL SHIFT, 8, movetoworkspace, 8"
           "SUPER CTRL SHIFT, 9, movetoworkspace, 9"
           "SUPER CTRL SHIFT, 0, movetoworkspace, 10"
+
+          "SUPER, p, exec, ${
+            pkgs.writeShellScriptBin "notify-info" (builtins.readFile ./notify-info.sh)
+          }/bin/notify-info"
         ];
 
       binde = [

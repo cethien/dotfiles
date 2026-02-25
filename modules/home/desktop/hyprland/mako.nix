@@ -23,19 +23,5 @@
         width = 600;
       };
     };
-
-    wayland.windowManager.hyprland.settings = {
-      bind = [
-        "SUPER, p, exec, ${
-          pkgs.writeShellScriptBin "notify-info" (builtins.readFile ./notify-info.sh)
-        }/bin/notify-info"
-      ];
-
-      exec-once = [
-        "${
-          pkgs.writeShellScriptBin "notify-battery" (builtins.readFile ./notify-battery.sh)
-        }/bin/notify-battery"
-      ];
-    };
   };
 }
