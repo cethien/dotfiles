@@ -37,23 +37,28 @@
       };
 
       pins = {
-        "admin" = {
-          id = "9d8a8f91-7e29-4688-ae2e-da4e49d4a179";
-          url = "https://infra.tmspro.shop/";
+        "Slack" = {
+          id = "19b1c5e5-a225-425a-891c-a9d2dfb0db72";
+          position = 100;
+          url = "https://app.slack.com/client";
           isEssential = true;
-          position = 101;
-        };
-        "tmspro.shop" = {
-          id = "96070d37-4b78-490f-87d1-884474bd9434";
-          url = "http://start.tmspro.shop:7575";
-          isEssential = true;
-          position = 102;
         };
         "Outlook" = {
           id = "eee232e4-72d9-4d7c-b4e6-02a1f6155f7f";
           url = "https://outlook.tmsproshop.de/owa";
           isEssential = true;
+          position = 101;
+        };
+
+        "admin" = {
+          id = "9d8a8f91-7e29-4688-ae2e-da4e49d4a179";
+          url = "https://infra.tmspro.shop/";
           position = 110;
+        };
+        "tmspro.shop" = {
+          id = "96070d37-4b78-490f-87d1-884474bd9434";
+          url = "http://start.tmspro.shop:7575";
+          position = 111;
         };
       };
 
