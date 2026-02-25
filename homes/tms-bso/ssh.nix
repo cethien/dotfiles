@@ -38,14 +38,18 @@
       "docker-prod-1".hostname = "10.102.99.95";
 
       "svcs-01".hostname = "10.0.30.10";
+      "svcs-02".hostname = "10.0.30.11";
+      "svcs-03".hostname = "10.0.30.12";
       "mgmt-01".hostname = "10.0.40.10";
+      "mgmt-02".hostname = "10.0.40.11";
+      "mgmt-03".hostname = "10.0.40.12";
 
       # --- INFRA
 
       "deez-nut".hostname = "10.0.10.20";
       "prmx-virt-cl-1-node-a".hostname = "10.180.80.252";
       "prmx-virt-cl-1-node-b".hostname = "10.180.80.250";
-
+      "pve-node-c".hostname = "10.0.10.7";
       # --- EXTERNAL
 
       "maxcluster-prod".hostname = "109.71.72.118";
