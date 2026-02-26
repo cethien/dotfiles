@@ -30,6 +30,8 @@
     autostart = [
       "keepassxc"
     ];
+
+    defaultWorkspaces.browser = 2;
   };
 
   home.packages = with pkgs; [simple-scan ausweisapp libreoffice];
