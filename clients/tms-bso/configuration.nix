@@ -11,8 +11,7 @@
 
   services.tailscale = {
     enable = true;
-    extraSetFlags = ["--operator=cethien"];
-    extraUpFlags = ["--accept-routes"];
+    extraSetFlags = ["--operator=${user.name}"];
   };
   # services.pipewire.active-mic = "alsa_input.usb-3142_Fifine_Microphone-00.mono-fallback";
 
