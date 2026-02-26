@@ -2,6 +2,7 @@
   imports = [
     ../../modules/nixos
   ];
+  services.fprintd.enable = true;
 
   security.pki.certificateFiles = [
     ./root_ca.crt
