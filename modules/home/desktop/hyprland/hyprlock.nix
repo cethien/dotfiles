@@ -38,11 +38,20 @@ in {
           shadow_boost = 1.2;
         };
       in {
+        auth = {
+          fingerprint = {
+            enabled = true;
+            ready_message = "pwd or fprint";
+            present_message = "scanning...";
+          };
+        };
+
         general = {
           disable_loading_bar = true;
           grace = 0;
           hide_cursor = true;
           no_fade_in = true;
+          ignore_empty_input = true;
         };
 
         background = [
@@ -73,7 +82,7 @@ in {
               ring_color_vkey = colors.base0D;
               ring_color_verify = colors.base0B;
 
-              placeholder_text = "pwd";
+              placeholder_text = "you again?";
 
               halign = "center";
               valign = "center";
