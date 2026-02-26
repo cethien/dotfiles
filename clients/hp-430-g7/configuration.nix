@@ -12,8 +12,7 @@
 
   services.tailscale = {
     enable = true;
-    extraSetFlags = ["--operator=cethien"];
-    extraUpFlags = ["--accept-routes"];
+    extraSetFlags = ["--operator=${user.name}"];
   };
 
   users.users.cethien.enable = true;
@@ -53,7 +52,7 @@
 
   deeznuts = {
     desktop = {
-      autologinUser = "cethien";
+      autologinUser = "${user.name}";
       hyprland.enable = true;
     };
     net-tools.enable = true;
