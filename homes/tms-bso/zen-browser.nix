@@ -57,7 +57,7 @@
         };
         "tmspro.shop" = {
           id = "96070d37-4b78-490f-87d1-884474bd9434";
-          url = "http://start.tmspro.shop:7575";
+          url = "https://tmspro.shop";
           position = 111;
         };
       };
