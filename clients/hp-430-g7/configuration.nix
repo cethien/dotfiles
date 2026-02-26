@@ -1,8 +1,11 @@
 {
   pkgs,
+  config,
   nixos-hardware,
   ...
-}: {
+}: let
+  user = config.users.users.cethien;
+in {
   imports = [
     nixos-hardware.nixosModules.common-pc-laptop
     ../../modules/nixos
