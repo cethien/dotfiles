@@ -6,7 +6,7 @@
 }: {
   config = {
     sops.secrets.gh_token = {
-      sopsFile = ./secrets.yaml;
+      sopsFile = ./secrets.yml;
     };
 
     programs.git.settings.user = {
@@ -15,7 +15,7 @@
     };
 
     sops.secrets.rclone_gdrive_token = {
-      sopsFile = ./secrets.yaml;
+      sopsFile = ./secrets.yml;
     };
 
     services.syncthing.settings = {
