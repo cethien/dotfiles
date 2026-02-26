@@ -42,28 +42,28 @@
     containers = {
       logged-out = {
         id = 1;
-        color = "blue";
+        color = "toolbar";
         icon = "chill";
       };
       admin = {
         id = 2;
-        color = "purple";
+        color = "pink";
         icon = "circle";
       };
       "tmsproshop.de" = {
         id = 3;
-        color = "yellow";
+        color = "green";
         icon = "briefcase";
       };
       "tmsproshop.de/admin" = {
         id = 4;
-        color = "orange";
+        color = "purple";
         icon = "briefcase";
       };
     };
 
     spaces."on deez road again" = {
-      id = "cd0b7a9b-bb11-42e8-a10a-52ea6813e6b4";
+      id = "1d6bd4a3-319b-4782-b201-cfb3bd230a90";
       position = 1000;
       icon = "🚄";
     };
@@ -81,12 +81,7 @@
         isEssential = true;
         position = 102;
       };
-      "Google Keep" = {
-        id = "eee232e4-72d9-4d7c-b4e6-02a1f6155f7f";
-        url = "https://keep.google.com/";
-        isEssential = true;
-        position = 103;
-      };
+
       "YouTube" = {
         id = "8af62707-0722-4049-9801-bedced343333";
         url = "https://www.youtube.com/feed/subscriptions";
