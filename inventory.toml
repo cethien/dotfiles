@@ -3,7 +3,7 @@ user = "bsotnikow"
 
 [clients.tms-bso]
 user = "bsotnikow"
-disk_id = "nvme-SKHynix_HFS256GDE9X081N_CYA4N025511404A1C"
+disk_id = "nvme-Samsung_SSD_990_PRO_2TB_S6Z2NJ0W616857X"
 
 [clients.hp-430-g7]
 disk_id = "nvme-WDS100T1X0E-00AFY0_21413H442704"
