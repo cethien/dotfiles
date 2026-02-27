@@ -1,4 +1,10 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: let
+  user = config.users.users.bsotnikow;
+in {
   imports = [
     ../../modules/nixos
   ];

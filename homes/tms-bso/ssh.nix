@@ -33,7 +33,8 @@
       "bnl".user = "root";
 
       "weclapp-prod".hostname = "10.102.99.97";
-      "weclapp-update-test".hostname = "10.0.30.96";
+      "weclapp-test".hostname = "10.0.30.97";
+      "weclapp-test-update".hostname = "10.0.30.96";
 
       "docker-prod-1".hostname = "10.102.99.95";
 
