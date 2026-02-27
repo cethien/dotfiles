@@ -37,17 +37,11 @@
       };
 
       pins = {
-        "Slack" = {
-          id = "19b1c5e5-a225-425a-891c-a9d2dfb0db72";
-          position = 100;
-          url = "https://app.slack.com/client";
-          isEssential = true;
-        };
         "Outlook" = {
           id = "eee232e4-72d9-4d7c-b4e6-02a1f6155f7f";
           url = "https://outlook.tmsproshop.de/owa";
           isEssential = true;
-          position = 101;
+          position = 100;
         };
 
         "admin" = {
