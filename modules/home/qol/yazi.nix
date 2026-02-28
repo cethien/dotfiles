@@ -17,14 +17,120 @@ in {
     };
 
     programs.yazi = {
-      shellWrapperName = "y";
-      extraPackages = with pkgs; [
-        glow
-        ouch
-        ffmpeg
-        rsync
-        ripdrag
-        trash-cli
+      keymap.mgr.prepend_keymap = [
+        {
+          on = ["<C-d>"];
+          run = "shell -- ripdrag -banr %s";
+          desc = "Drag Files";
+        }
+
+        {
+          on = "u";
+          run = "plugin restore";
+          desc = "Restore last deleted files/folders";
+        }
+        {
+          on = "U";
+          run = "plugin restore -- --interactive";
+          desc = "Restore deleted files/folders (Interactive)";
+        }
+
+        {
+          on = ["R" "p" "p"];
+          run = "plugin sudo -- paste";
+          desc = "sudo paste";
+        }
+        {
+          on = ["R" "P"];
+          run = "plugin sudo -- paste --force";
+          desc = "sudo paste";
+        }
+        {
+          on = ["R" "r"];
+          run = "plugin sudo -- rename";
+          desc = "sudo rename";
+        }
+        {
+          on = ["R" "p" "l"];
+          run = "plugin sudo -- link";
+          desc = "sudo link";
+        }
+        {
+          on = ["R" "p" "r"];
+          run = "plugin sudo -- link --relative";
+          desc = "sudo link relative path";
+        }
+        {
+          on = ["R" "p" "L"];
+          run = "plugin sudo -- hardlink";
+          desc = "sudo hardlink";
+        }
+        {
+          on = ["R" "a"];
+          run = "plugin sudo -- create";
+          desc = "sudo create";
+        }
+        {
+          on = ["R" "d"];
+          run = "plugin sudo -- remove";
+          desc = "sudo trash";
+        }
+        {
+          on = ["R" "D"];
+          run = "plugin sudo -- remove --permanently";
+          desc = "sudo delete";
+        }
+        {
+          on = ["R" "m"];
+          run = "plugin sudo -- chmod";
+          desc = "sudo chmod";
+        }
+
+        {
+          on = ["g" "m"];
+          run = "plugin mount";
+          desc = "mounts";
+        }
+
+        {
+          on = ["c" "a" "a"];
+          run = "plugin compress";
+          desc = "archive files";
+        }
+
+        {
+          on = "<C-o>";
+          run = "shell --confirm '$EDITOR .'";
+          desc = "Open the currerent direcory in editor";
+        }
+        {
+          on = "y";
+          run = [
+            "shell -- for path in $@; do echo file://$path; done | wl-copy -t text/uri-list"
+            "yank"
+          ];
+        }
+        {
+          on = "p";
+          run = "plugin smart-paste";
+        }
+
+        {
+          on = ["c" "m"];
+          run = "plugin chmod";
+          desc = "chmod";
+        }
+        {
+          on = ["c" "c"];
+          run = "plugin ffmpeg-convert";
+          desc = "ffmpeg convert";
+        }
+
+        {
+          on = ["c" "r"];
+          run = "plugin rsync";
+          desc = "Copy files using rsync";
+        }
       ];
 
       plugins = {
@@ -34,6 +140,7 @@ in {
           mount
           recycle-bin
           git
+          githead
           sudo
           chmod
           smart-paste
@@ -47,7 +154,17 @@ in {
         #lua
         ''
           require("git"):setup()
+          require("githead"):setup()
         '';
+
+      extraPackages = with pkgs; [
+        glow
+        ouch
+        ffmpeg
+        rsync
+        ripdrag
+        trash-cli
+      ];
 
       settings.plugin = {
         prepend_fetchers = [
@@ -143,123 +260,9 @@ in {
             }
           ];
         };
-
-        plugin = {
-        };
       };
 
-      keymap.mgr.prepend_keymap = [
-        {
-          on = "y";
-          run = [
-            "shell -- for path in $@; do echo file://$path; done | wl-copy -t text/uri-list"
-            "yank"
-          ];
-        }
-        {
-          on = "p";
-          run = "plugin smart-paste";
-        }
-        {
-          on = ["g" "m"];
-          run = "plugin mount";
-          desc = "mounts";
-        }
-
-        {
-          on = ["c" "a" "a"];
-          run = "plugin compress";
-          desc = "archive files";
-        }
-
-        {
-          on = ["c" "m"];
-          run = "plugin chmod";
-          desc = "chmod";
-        }
-        {
-          on = ["c" "c"];
-          run = "plugin ffmpeg-convert";
-          desc = "ffmpeg convert";
-        }
-
-        {
-          on = ["c" "r"];
-          run = "plugin rsync";
-          desc = "Copy files using rsync";
-        }
-
-        {
-          on = ["<C-d>"];
-          run = "shell -- ripdrag -banr %s";
-          desc = "Drag Files";
-        }
-        {
-          on = ["R" "p" "p"];
-          run = "plugin sudo -- paste";
-          desc = "sudo paste";
-        }
-        {
-          on = ["R" "P"];
-          run = "plugin sudo -- paste --force";
-          desc = "sudo paste";
-        }
-        {
-          on = ["R" "r"];
-          run = "plugin sudo -- rename";
-          desc = "sudo rename";
-        }
-        {
-          on = ["R" "p" "l"];
-          run = "plugin sudo -- link";
-          desc = "sudo link";
-        }
-        {
-          on = ["R" "p" "r"];
-          run = "plugin sudo -- link --relative";
-          desc = "sudo link relative path";
-        }
-        {
-          on = ["R" "p" "L"];
-          run = "plugin sudo -- hardlink";
-          desc = "sudo hardlink";
-        }
-        {
-          on = ["R" "a"];
-          run = "plugin sudo -- create";
-          desc = "sudo create";
-        }
-        {
-          on = ["R" "d"];
-          run = "plugin sudo -- remove";
-          desc = "sudo trash";
-        }
-        {
-          on = ["R" "D"];
-          run = "plugin sudo -- remove --permanently";
-          desc = "sudo delete";
-        }
-        {
-          on = ["R" "m"];
-          run = "plugin sudo -- chmod";
-          desc = "sudo chmod";
-        }
-        {
-          on = "u";
-          run = "plugin restore";
-          desc = "Restore last deleted files/folders";
-        }
-        {
-          on = ["d" "U"];
-          run = "plugin restore -- --interactive";
-          desc = "Restore deleted files/folders (Interactive)";
-        }
-        {
-          on = ["d" "U"];
-          run = "plugin restore -- --interactive --interactive-overwrite";
-          desc = "Restore deleted files/folders (Interactive overwrite)";
-        }
-      ];
+      shellWrapperName = "y";
     };
   };
 }
