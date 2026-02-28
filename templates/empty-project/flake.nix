@@ -25,7 +25,7 @@
           if [ ! -d .git ]; then
             git init && git add . && echo "chore: init" >.git/COMMIT_EDITMSG
 
-            if [ -f lefthook.yaml ]; then
+            if [ -f lefthook.yml ]; then
               lefthook install
             fi
           fi
