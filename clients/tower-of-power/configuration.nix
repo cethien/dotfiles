@@ -16,7 +16,7 @@
   hardware.graphics.enable = true;
   hardware.nvidia = {
     open = true;
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
   services.pipewire.active-mic = "alsa_input.usb-3142_Fifine_Microphone-00.mono-fallback";
