@@ -30,7 +30,7 @@
       doot = pkgs.callPackage ./packages/doot {};
     in {
       packages.doot = doot;
-      devShells.default = import ./devShell.nix {inherit pkgs doot;};
+      devShells.default = import ./shell.nix {inherit pkgs doot;};
     })
     // flake-utils.lib.eachDefaultSystemPassThrough (system: let
       pkgsUnstable = pkgsUnstableFor system;
