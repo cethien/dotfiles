@@ -27,6 +27,7 @@ in {
           (mkIf (!isNull ws) [
             (mkGame "match:initial_class ^(steam_app_.*)$, match:initial_title ..*")
             (mkGame "match:initial_class (?i).*\.exe$, match:initial_title ..*")
+            (mkGame "match:initial_class ^(Godot)$, match:initial_title ..*")
           ])
           (mkIf (!isNull ws_chat) ["match:class steam, match:title ^(Friends List)$, workspace ${toString ws_chat}"])
         ];
