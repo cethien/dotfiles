@@ -28,6 +28,7 @@ in {
     };
 
     programs.hyprland.enable = true;
+    programs.gpu-screen-recorder.enable = true;
     services.udisks2.enable = true;
     services.upower.enable = true;
     security.pam.services.hyprlock.fprintAuth = true;

@@ -29,7 +29,7 @@ in {
       playerctl
       brightnessctl
       wl-clipboard
-      wl-screenrec
+      gpu-screen-recorder
     ];
 
     services.hyprpaper.enable = lib.mkForce false; # due to stylix which enables
