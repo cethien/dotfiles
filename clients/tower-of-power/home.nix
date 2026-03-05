@@ -17,7 +17,7 @@
         "HDMI-A-1, 1920x1080@100, 320x1440, 1"
       ];
       general.allow_tearing = true;
-      exec-once = [''xrandr --output "DP-1" --primary''];
+      exec-once = ["xrandr --output DP-1 --primary"];
 
       workspace = [
         "1, monitor:DP-1, persistent:true"
