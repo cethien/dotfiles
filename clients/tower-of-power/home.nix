@@ -79,6 +79,12 @@
         isEssential = true;
         position = 101;
       };
+      "Google Calendar" = {
+        id = "591c45e0-737f-47d1-86e8-bf173ce87df9";
+        url = "https://calendar.google.com";
+        isEssential = true;
+        position = 102;
+      };
     };
   in {
     containersForce = true;
