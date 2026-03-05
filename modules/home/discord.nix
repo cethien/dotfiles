@@ -20,6 +20,44 @@ in {
     stylix.targets.vesktop.enable = false;
     stylix.targets.nixcord.enable = false;
 
+    programs.vesktop = {
+      settings = {
+        disableMinSize = true;
+        staticTitle = true;
+        enableSplashScreen = false;
+        hardwareAcceleration = true;
+        discordBranch = "stable";
+      };
+      vencord.settings.plugins = {
+        AlwaysExpandRoles.enabled = true;
+        BetterGifPicker.enabled = true;
+        BlurNSFW.enabled = true;
+        ClearURLs.enabled = true;
+        CrashHandler.enabled = true;
+        FavoriteEmojiFirst.enabled = true;
+        FavoriteGifSearch.enabled = true;
+        FixSpotifyEmbeds.enabled = true;
+        FixYoutubeEmbeds.enabled = true;
+        NewGuildSettings.enabled = true;
+        NoDevtoolsWarning.enabled = true;
+        OpenInApp.enabled = true;
+        QuickMention.enabled = true;
+        ReverseImageSearch.enabled = true;
+        ServerInfo.enabled = true;
+        Translate.enabled = true;
+        UserMessagesPronouns.enabled = true;
+        UserVoiceShow.enabled = true;
+        VoiceChatDoubleClick.enabled = true;
+        VoiceMessages.enabled = true;
+        WebKeybinds.enabled = true;
+        WebScreenShareFixes.enabled = true;
+
+        FakeNitro.enabled = true;
+        YoutubeAdblock.enabled = true;
+        SpotifyCrack.enabled = true;
+      };
+    };
+
     wayland.windowManager.hyprland.settings = let
       auto = elem "discord" config.wayland.windowManager.hyprland.autostart;
     in {
