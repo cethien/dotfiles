@@ -7,8 +7,6 @@
   inherit (lib) mkEnableOption mkOption types mkIf;
   cfg = config.programs.freerdp;
 
-  # This set defines all available RDP options.
-  # It's the single source of truth for option names, types, and descriptions.
   rdpOptions = {
     fullAddress = {
       name = "full address";
@@ -26,108 +24,6 @@
       type = types.nullOr types.str;
       default = null;
       description = "The RDP username.";
-    };
-    desktopWidth = {
-      name = "desktopwidth";
-      type = types.nullOr types.int;
-      default = null;
-      description = "The desktop width in pixels.";
-    };
-    desktopHeight = {
-      name = "desktopheight";
-      type = types.nullOr types.int;
-      default = null;
-      description = "The desktop height in pixels.";
-    };
-
-    redirectPrinters = {
-      name = "redirectprinters";
-      type = types.bool;
-      default = false;
-      description = "Redirect local printers to the remote machine.";
-    };
-    redirectClipboard = {
-      name = "redirectclipboard";
-      type = types.bool;
-      default = true;
-      description = "Redirect clipboard.";
-    };
-    spanMonitors = {
-      name = "span monitors";
-      type = types.bool;
-      default = false;
-      description = "Span across multiple monitors.";
-    };
-    multiMonitor = {
-      name = "use multimon";
-      type = types.bool;
-      default = false;
-      description = "Use multiple monitors.";
-    };
-    dynamicResolution = {
-      name = "dynamic resolution";
-      type = types.bool;
-      default = false;
-      description = "The remote session will dynamically adjust to the size of the RDP window.";
-    };
-    ignoreCertificate = {
-      name = "ignore certificate";
-      type = types.bool;
-      default = false;
-      description = "Ignore the certificate of the RDP server, useful for self-signed certificates.";
-    };
-    authenticationLevel = {
-      name = "authentication level";
-      type = types.nullOr types.int;
-      default = null;
-      description = "Authentication level to use. 0: None, 1: Required, 2: NLA (default on Windows).";
-    };
-
-    # --- Verbindung & Netzwerk ---
-
-    connectionType = {
-      name = "connection type";
-      type = types.nullOr types.int;
-      default = 6;
-      description = "1:Modem, 2:LowSpeed, 3:Satellite, 4:Broadband, 5:WAN, 6:LAN, 7:Auto";
-    };
-    networkAutoDetect = {
-      name = "networkautodetect";
-      type = types.bool;
-      default = true;
-      description = "Automatically detect network speed.";
-    };
-
-    # --- Performance-Killer (Visuals) ---
-    disableWallpaper = {
-      name = "disable wallpaper";
-      type = types.bool;
-      default = true;
-    };
-    disableThemes = {
-      name = "disable themes";
-      type = types.bool;
-      default = true;
-    };
-    disableMenuAnims = {
-      name = "disable menu anims";
-      type = types.bool;
-      default = true;
-    };
-    disableCursorShadow = {
-      name = "disable cursor shadow";
-      type = types.bool;
-      default = true;
-    };
-    allowFontSmoothing = {
-      name = "allow font smoothing";
-      type = types.bool;
-      default = false; # Aus = Schneller!
-    };
-    colorDepth = {
-      name = "session bpp";
-      type = types.int;
-      default = 16; # 16 statt 32 spart massiv Bandbreite
     };
   };
 
@@ -206,8 +102,7 @@ in {
 
     wayland.windowManager.hyprland.settings = {
       windowrule = [
-        "match:initial_class ^(com\.freerdp\.client\..*)$, tile on"
-        "match:initial_title ^(FreeRDP).*$, tile on"
+        "match:initial_class ^(.*freerdp.*)$, tile on"
       ];
     };
     home.file =

@@ -24,7 +24,21 @@ if [ -n "$RDP_HOST" ] && command -v secret-tool >/dev/null; then
   PASS=$(secret-tool lookup URL "$RDP_HOST" 2>/dev/null || echo "")
 fi
 
-ARGS=("$PROFILE" "/cert:ignore")
+ARGS=("$PROFILE"
+  "-wallpaper"
+  "-themes"
+  "-fonts"
+  "/bpp:16"
+  "/network:lan"
+  "+auto-reconnect"
+
+  "+clipboard"
+  "/printer"
+  "+workarea"
+  "+dynamic-resolution"
+
+  "/cert:ignore"
+)
 [ -n "$PASS" ] && ARGS+=("/p:$PASS")
 
 if [ -n "${WAYLAND_DISPLAY:-}" ]; then
