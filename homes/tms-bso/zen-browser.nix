@@ -28,6 +28,11 @@
           color = "orange";
           icon = "vacation";
         };
+        "private" = {
+          id = 5;
+          color = "green";
+          icon = "fence";
+        };
       };
 
       spaces."lets get this bread" = {
