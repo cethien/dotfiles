@@ -1,14 +1,19 @@
 {
   pkgs,
   config,
+  sops-nix,
   ...
 }: let
   user = config.users.users.bsotnikow;
 in {
   imports = [
     ../../modules/nixos
+    sops-nix.nixosModules.sops
+    ./smb.nix
   ];
   services.fprintd.enable = true;
+
+  sops.age.sshKeyPaths = ["${user.home}/.ssh/id_ed25519"];
 
   security.pki.certificateFiles = [
     ./root_ca.crt

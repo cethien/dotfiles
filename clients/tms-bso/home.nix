@@ -8,7 +8,6 @@
 in {
   imports = [
     ../../modules/home
-    ../../homes/tms-bso/smb.nix
     ../../homes/tms-bso/email.nix
     ../../homes/tms-bso/ssh.nix
     ../../homes/tms-bso/rdp.nix
