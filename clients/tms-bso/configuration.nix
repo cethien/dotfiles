@@ -21,7 +21,6 @@ in {
   };
   # services.pipewire.active-mic = "alsa_input.usb-3142_Fifine_Microphone-00.mono-fallback";
 
-  services.printing.enable = true;
   hardware = {
     enableRedistributableFirmware = true;
     enableAllFirmware = true;
@@ -30,6 +29,20 @@ in {
 
     # scanner
     sane.enable = true;
+  };
+  services.printing.enable = true;
+
+  hardware.printers = {
+    ensurePrinters = [
+      {
+        name = "Epson_ET5880";
+        location = "Office";
+        description = "Epson EcoTank ET-5880";
+        deviceUri = "ipp://10.102.99.208/ipp/print";
+        model = "everywhere";
+      }
+    ];
+    ensureDefaultPrinter = "Epson_ET5880";
   };
 
   virtualisation = {
