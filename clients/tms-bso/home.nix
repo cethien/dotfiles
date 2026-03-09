@@ -21,7 +21,7 @@ in {
     settings = {
       monitor = [
         "${monEx}, 1920x1200@60, 0x0, 1"
-        "${monIn}, 1920x1080@60, 480x1200, 1"
+        "${monIn}, 1920x1080@60, 1920x0, 1"
       ];
       general.allow_tearing = true;
 
@@ -43,8 +43,8 @@ in {
     ];
 
     defaultWorkspaces = {
-      browser = 4;
-      chat = 3;
+      browser = 2;
+      chat = 1;
     };
   };
   programs.hyprlock.monitor = "${monIn}";
