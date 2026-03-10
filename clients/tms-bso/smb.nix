@@ -15,7 +15,7 @@
   ];
 
   formatMountName = name: lib.toLower (builtins.replaceStrings [" "] ["-"] name);
-  mountPath = name: "/home/bsotnikow/${formatMountName name}";
+  mountPath = name: "/home/bsotnikow/shares/${formatMountName name}";
   mountUnitName = name: lib.utils.escapeSystemdPath (mountPath name);
 in {
   sops.secrets."smb_credentials" = {
