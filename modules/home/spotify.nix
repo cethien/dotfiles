@@ -5,9 +5,9 @@
   spicetify-nix,
   ...
 }: let
-  inherit (lib) mkEnableOption mkIf elem;
+  inherit (lib) mkEnableOption mkIf;
   cfg = config.programs.spotify;
-  as = elem "spotify" config.wayland.windowManager.hyprland.autostart;
+  as = builtins.elem "spotify" config.wayland.windowManager.hyprland.autostart;
   ws = config.wayland.windowManager.hyprland.defaultWorkspaces.music;
 in {
   options.programs.spotify.enable = mkEnableOption "spotify";
@@ -62,12 +62,24 @@ in {
 
     wayland.windowManager.hyprland.settings = {
       exec-once = mkIf as ["spotify_player -d"];
-
       windowrule = mkIf (!isNull ws) ["match:initial_class spotify_player, workspace ${toString ws}"];
       bind = [
         "SUPER SHIFT, M, exec, ${
-          (pkgs.cethien.mkHyprLaunchBin' "spotify_player").bin
-        }"
+          (pkgs.writeShellScriptBin "spotify-launch" ''
+            set -e pipefail
+            SESSION="spotify_player"
+            if hyprctl clients | grep -q "class: $SESSION"; then
+              hyprctl dispatch focuswindow "class:$SESSION"
+              exit 0
+            fi
+            if ! tmux has-session -t "$SESSION" 2>/dev/null; then
+              tmux new-session -d -s "$SESSION" "spotify_player"
+              tmux new-session -d -s "$SESSION" "spotify_player && tmux kill-session -t $SESSION"
+              tmux set-option -t "$SESSION" status off
+            fi
+            kitty --class "$SESSION" -e tmux attach-session -t "$SESSION"
+          '')
+        }/bin/spotify-launch"
       ];
 
       bindl = let
@@ -100,7 +112,7 @@ in {
       };
       color = {
         # background = "#000000";
-        foregrund = "#61AFEF";
+        foreground = "#61AFEF";
       };
     };
   };

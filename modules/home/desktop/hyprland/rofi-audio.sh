@@ -1,25 +1,16 @@
 #!/usr/bin/env bash
 
-# --- config ---
 SPOTIFYCTL="playerctl -p spotify_player"
 SEPARATOR="-----"
 
-# --- helfer ---
-is_daemon_running() { pgrep -x "spotify_player" >/dev/null; }
 sink_muted() { wpctl get-volume @DEFAULT_SINK@ | grep -q MUTED; }
 source_muted() { wpctl get-volume @DEFAULT_AUDIO_SOURCE@ | grep -q MUTED; }
 
-# --- aktionen ---
 run_action() {
   case "$1" in
   "play_pause") $SPOTIFYCTL play-pause ;;
   "next") $SPOTIFYCTL next ;;
   "prev") $SPOTIFYCTL previous ;;
-  "daemon")
-    spotify_player -d >/dev/null 2>&1 &
-    disown
-    notify-send "󰓇 spotify" "starting daemon"
-    ;;
   "mixer") kitty --class wiremix -e wiremix ;;
   "afk_on")
     wpctl set-mute @DEFAULT_SINK@ 1
@@ -58,25 +49,15 @@ OPTIONS=()
 ACTIONS=()
 
 # 1-3: spotify (keys: 1, 2, 3)
-if is_daemon_running; then
-  METADATA=$($SPOTIFYCTL metadata -f "{{artist}} - {{title}}" 2>/dev/null | tr '[:upper:]' '[:lower:]')
-  HEADER=" ${METADATA:-spotify playing}"
+METADATA=$($SPOTIFYCTL metadata -f "{{artist}} - {{title}}" 2>/dev/null | tr '[:upper:]' '[:lower:]')
+HEADER=" ${METADATA:-spotify playing}"
 
-  OPTIONS+=("[1] 󰐊/󰏤 play/pause")
-  ACTIONS+=("play_pause")
-  OPTIONS+=("[2] 󰒭 next")
-  ACTIONS+=("next")
-  OPTIONS+=("[3] 󰒮 previous")
-  ACTIONS+=("prev")
-else
-  HEADER="󰓇 daemon offline"
-  OPTIONS+=("[1] 󰓇 start daemon")
-  ACTIONS+=("daemon")
-  OPTIONS+=("---")
-  ACTIONS+=("none")
-  OPTIONS+=("---")
-  ACTIONS+=("none")
-fi
+OPTIONS+=("[1] 󰐊/󰏤 play/pause")
+ACTIONS+=("play_pause")
+OPTIONS+=("[2] 󰒭 next")
+ACTIONS+=("next")
+OPTIONS+=("[3] 󰒮 previous")
+ACTIONS+=("prev")
 
 # trenner (nimmt platz 4 ein, kein keybind)
 OPTIONS+=("$SEPARATOR")
