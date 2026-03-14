@@ -8,8 +8,19 @@
   inherit (lib) mkEnableOption mkIf elem;
   cfg = config.programs.spotify;
   as = elem "spotify" config.wayland.windowManager.hyprland.autostart;
+  ws = config.wayland.windowManager.hyprland.defaultWorkspaces.music;
 in {
   options.programs.spotify.enable = mkEnableOption "spotify";
+
+  options.wayland.windowManager.hyprland = {
+    defaultWorkspaces = {
+      music = lib.mkOption {
+        type = lib.types.nullOr lib.types.int;
+        default = config.wayland.windowManager.hyprland.defaultWorkspaces.browser or null;
+        description = "default music workspace";
+      };
+    };
+  };
 
   imports = [
     spicetify-nix.homeManagerModules.default
@@ -52,6 +63,7 @@ in {
     wayland.windowManager.hyprland.settings = {
       exec-once = mkIf as ["spotify_player -d"];
 
+      windowrule = mkIf (!isNull ws) ["match:initial_class spotify_player, workspace ${toString ws}"];
       bind = [
         "SUPER SHIFT, M, exec, ${
           (pkgs.cethien.mkHyprLaunchBin' "spotify_player").bin

@@ -31,7 +31,6 @@
     defaultWorkspaces = {
       gaming = 2;
       browser = 4;
-      chat = 4;
     };
 
     autostart = [

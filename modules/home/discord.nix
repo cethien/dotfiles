@@ -10,7 +10,7 @@ in {
     defaultWorkspaces = {
       chat = mkOption {
         type = types.nullOr types.int;
-        default = null;
+        default = config.wayland.windowManager.hyprland.defaultWorkspaces.browser or null;
         description = "default chat workspace";
       };
     };
