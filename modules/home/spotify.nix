@@ -60,8 +60,16 @@ in {
     };
     programs.tmux.resurrectPluginProcesses = ["spotify_player"];
 
-    wayland.windowManager.hyprland.settings = {
-      exec-once = mkIf as ["spotify_player -d"];
+    wayland.windowManager.hyprland.settings = let
+      startSession =
+        #bash
+        ''
+          tmux new-session -d -s "$SESSION" "tmux set-option -t "$SESSION" status off; spotify_player && tmux kill-session -t $SESSION"
+        '';
+    in {
+      exec-once = mkIf as [
+        ''sleep 2 && ${startSession}''
+      ];
       windowrule = mkIf (!isNull ws) ["match:initial_class spotify_player, workspace ${toString ws}"];
       bind = [
         "SUPER SHIFT, M, exec, ${
@@ -73,11 +81,9 @@ in {
               exit 0
             fi
             if ! tmux has-session -t "$SESSION" 2>/dev/null; then
-              tmux new-session -d -s "$SESSION" "spotify_player"
-              tmux new-session -d -s "$SESSION" "spotify_player && tmux kill-session -t $SESSION"
-              tmux set-option -t "$SESSION" status off
+              ${startSession}
             fi
-            kitty --class "$SESSION" -e tmux attach-session -t "$SESSION"
+            exec kitty --class "$SESSION" -e tmux attach-session -t "$SESSION"
           '')
         }/bin/spotify-launch"
       ];
