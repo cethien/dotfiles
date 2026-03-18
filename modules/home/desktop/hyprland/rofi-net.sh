@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
-TITLE="󰖟 networking"
-notify() { notify-send "$TITLE" "$1"; }
+ROFI_ICON="󰖟 "
+ROFI_TITLE="networking"
+notify() { notify-send "$ICON $TITLE" "$1"; }
 
 nmcli -t -f TYPE device | grep -q "wifi" && HAS_WIFI=1
 nmcli -t -f TYPE,STATE device | grep -q "ethernet:connected" && HAS_ETH=1
@@ -18,7 +19,6 @@ if [ -n "$HAS_ETH" ] && [ -z "$HAS_INTERNET" ]; then
 fi
 
 SELECTED_SSID="$1"
-ROFI_TITLE="$TITLE > "
 MENU_OPTIONS=()
 
 OPT_NET_CONNECT="󱘖  connect"
@@ -72,7 +72,8 @@ nmcli radio wifi | grep -q "enabled" && HAS_WIFI_ENABLED=1
 WIFI_IFACE=$(nmcli -t -f DEVICE,TYPE device | grep ":wifi" | cut -d: -f1 | head -n1)
 
 if [ -n "$SELECTED_SSID" ]; then
-  ROFI_TITLE="󰖩  $SELECTED_SSID > "
+  ROFI_ICON="󰖩  "
+  ROFI_TITLE="$SELECTED_SSID"
   nmcli connection show "$SELECTED_SSID" >/dev/null 2>&1 && SAVED=1
   nmcli -t -f ACTIVE,SSID dev wifi | awk -F: '$1=="yes"{print $2}' | grep -Fxq "$SELECTED_SSID" && ACTIVE=1
 
@@ -258,7 +259,10 @@ if [ -z "$SELECTED_SSID" ] && [ -n "$HAS_WIFI_ENABLED" ]; then
   MENU_OPTIONS+=("${UNSAVED_CONNS_ITEMS[@]}")
 fi
 
-CHOSEN=$(printf "%s\n" "${MENU_OPTIONS[@]}" | rofi -dmenu -p "$ROFI_TITLE")
+ROFI_THEME="
+entry{placeholder: '$ROFI_TITLE';}
+"
+CHOSEN=$(printf "%s\n" "${MENU_OPTIONS[@]}" | rofi -dmenu -p "$ROFI_ICON" -theme-str "$ROFI_THEME")
 [ -z "$CHOSEN" ] &&
   exit 0
 

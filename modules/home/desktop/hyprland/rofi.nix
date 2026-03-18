@@ -6,17 +6,8 @@
 }: let
   inherit (lib) mkIf;
 in {
+  imports = [./rofi-theme.nix];
   config = mkIf config.programs.rofi.enable {
-    programs.rofi = {
-      terminal = "${pkgs.kitty}/bin/kitty";
-      extraConfig = {
-        show-icons = true;
-      };
-      modes = ["drun"];
-    };
-
-    home.file.".config/rofi/grid.rasi".source = ./grid.rasi;
-
     xdg.desktopEntries.rofi-freerdp = {
       name = "FreeRDP";
       comment = "Launch the FreeRDP menu via Rofi";
@@ -27,6 +18,11 @@ in {
       categories = ["Network" "Utility"];
     };
 
+    xdg.configFile."rofimoji.rc".text = ''
+      action = type
+      skin-tone = neutral
+      prompt = "🍞 "
+    '';
     wayland.windowManager.hyprland.settings = {
       bind = [
         "SUPER, Space, exec, rofi -show drun"
@@ -53,7 +49,7 @@ in {
           pkgs.writeShellScriptBin "rofi-screenrecord" (builtins.readFile ./rofi-screenrecord.sh)
         }/bin/rofi-screenrecord"
 
-        ''SUPER, PERIOD, exec, ${pkgs.rofimoji} --hidden-description --selector-args="-theme ~/.config/rofi/grid.rasi"''
+        ''SUPER, PERIOD, exec, ${pkgs.rofimoji}/bin/rofimoji''
       ];
     };
   };

@@ -62,15 +62,15 @@ in {
           applications = mkDefault 14;
           terminal = mkDefault 14;
           desktop = mkDefault 16;
-          popups = mkDefault 16;
+          popups = mkDefault 14;
         };
       };
 
       opacity = {
         applications = mkDefault 1.0;
-        terminal = mkDefault 0.90;
+        terminal = mkDefault 0.8;
         desktop = mkDefault 0.75;
-        popups = mkDefault 0.5;
+        popups = mkDefault 0.9;
       };
     };
   };

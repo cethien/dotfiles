@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+ICON="󰢹 "
+TITLE="rdp"
+
 RDP_DIR="$HOME/.rdp"
 
 SESSIONS=$(
@@ -8,11 +11,13 @@ SESSIONS=$(
     sed 's/\.rdp$//' | sort -V
 )
 if [ -z "$SESSIONS" ]; then
-  notify-send "󰢹  rdp" "no sessions configured"
+  notify-send "$ICON $TITLE" "no sessions configured"
   exit 1
 fi
-
-CHOICE=$(echo "$SESSIONS" | rofi -dmenu -i -p "󰢹  RDP > ")
+ROFI_THEME="
+entry{placeholder:'$TITLE';}
+"
+CHOICE=$(echo "$SESSIONS" | rofi -dmenu -p "$ICON" -theme-str "$ROFI_THEME")
 [ -z "$CHOICE" ] && exit 0
 
 PROFILE="$RDP_DIR/$CHOICE.rdp"

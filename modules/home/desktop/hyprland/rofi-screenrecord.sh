@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -e
 
+ICON="󰨜 "
+TITLE="screen record"
+
 # Pfade & Config
 DATE_TIME=$(date +%Y-%m-%d_%H%M%S)
 REC_SAVE_DIR="$HOME/Videos/Screencaptures"
@@ -62,7 +65,7 @@ if [[ -f "$REC_PID_FILE" ]]; then
 
   if kill -0 "$PID" 2>/dev/null; then
     kill -SIGINT "$PID"
-    notify-send "🎥 Stopped recording" "$FILE"
+    notify-send "󰨜  stopped recording" "$FILE"
     rm -f "$REC_PID_FILE" "$REC_FILENAME_FILE" "$REC_LOG_FILE"
     sleep 0.8
     xdg-open "$FILE"
@@ -73,14 +76,18 @@ if [[ -f "$REC_PID_FILE" ]]; then
 fi
 
 # --- 2. ROFI MENU ---
-OPT1="🎮  Window"
-OPT2="🎮  Window + Mic"
-OPT3="🖥️  Desktop"
-OPT4="🖥️  Desktop + Mic"
-OPT5="🖥️  Desktop (No Audio)"
+OPT1="󰺷  window"
+OPT2="󰊗  window + mic"
+OPT3="󰍹  desktop"
+OPT4="󱩛  desktop + mic"
+OPT5="󰽠  desktop (no audio)"
 
 OPTIONS="$OPT1\n$OPT2\n$OPT3\n$OPT4\n$OPT5"
-ACTION=$(echo -e "$OPTIONS" | rofi -dmenu -theme-str 'entry { enabled: false; }' -p "screenrecord")
+
+ROFI_THEME="
+entry{placeholder:'$TITLE';}
+"
+ACTION=$(echo -e "$OPTIONS" | rofi -dmenu -p "$ICON" -theme-str "$ROFI_THEME")
 
 case "$ACTION" in
 "$OPT1") start_record "window" "desktop" ;;
