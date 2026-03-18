@@ -116,10 +116,13 @@ in {
 
           blur = {
             enabled = true;
-            size = 6;
-            passes = 1;
-            vibrancy = 0.1696;
+            size = 8;
+            passes = 3;
+            vibrancy = 0.6;
+            brightness = 1.0;
+            contrast = 1.2;
             new_optimizations = true;
+            ignore_opacity = true;
           };
         };
 
