@@ -18,6 +18,7 @@ in {
   ];
 
   config = mkIf cfg.enable {
+    programs.zen-browser.suppressXdgMigrationWarning = true;
     programs.zen-browser = {
       profiles."${name}" = {
         extensions.packages = with addons;
@@ -160,16 +161,15 @@ in {
             exit 0
           fi
 
-          if [ "$BROWSER_WS" = "$ACTIVE_WS" ] || [ "$HAS_FULLSCREEN" = "true" ]; then
+          if [ -n "$DESIGNATED_WS" ] && [ "$BROWSER_WS" = "$ACTIVE_WS" ] || [ "$HAS_FULLSCREEN" = "true" ]; then
             hyprctl dispatch movetoworkspacesilent $DESIGNATED_WS,initialclass:zen-beta
           else
             hyprctl dispatch movetoworkspace $ACTIVE_WS,initialclass:zen-beta
           fi
         '';
-      in
-        mkIf (!isNull ws) [
-          "SUPER SHIFT, W, exec, ${script}/bin/hypr_zen-sidebar"
-        ];
+      in [
+        "SUPER SHIFT, W, exec, ${script}/bin/hypr_zen-sidebar"
+      ];
     };
   };
 }
