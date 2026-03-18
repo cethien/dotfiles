@@ -30,7 +30,7 @@
       "sherlock-prod".user = "sysadmin";
 
       "bnl".hostname = "10.102.99.93";
-      "bnl".user = "root";
+      "bnl".user = "sysadmin";
 
       "weclapp-prod".hostname = "10.102.99.97";
       "weclapp-test".hostname = "10.0.30.97";
@@ -38,12 +38,12 @@
 
       "docker-prod-1".hostname = "10.102.99.95";
 
-      "svcs-01".hostname = "10.0.30.10";
-      "svcs-02".hostname = "10.0.30.11";
-      "svcs-03".hostname = "10.0.30.12";
-      "mgmt-01".hostname = "10.0.40.10";
-      "mgmt-02".hostname = "10.0.40.11";
-      "mgmt-03".hostname = "10.0.40.12";
+      "services-prod-01".hostname = "10.0.30.10";
+      "services-prod-02".hostname = "10.0.30.11";
+      "services-prod-03".hostname = "10.0.30.12";
+      "monitoring-01".hostname = "10.0.40.10";
+      "monitoring-02".hostname = "10.0.40.11";
+      "monitoring-03".hostname = "10.0.40.12";
 
       # --- INFRA
 
