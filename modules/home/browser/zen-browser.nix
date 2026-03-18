@@ -142,9 +142,15 @@ in {
 
     stylix.targets.zen-browser.profileNames = ["${name}"];
 
+    xdg.portal = {
+      enable = true;
+      extraPortals = [pkgs.xdg-desktop-portal-gtk];
+      config.common.default = "*";
+    };
+
     wayland.windowManager.hyprland.settings = {
       exec-once = mkIf as ["[silent] zen-beta"];
-      windowrule = mkIf (!isNull ws) ["match:initial_class ^(zen-beta)$, workspace ${toString ws}"];
+      windowrule = ["match:class ^(zen-beta)$, tile on"];
       bind = let
         script = pkgs.writeShellScriptBin "hypr_zen-sidebar" ''
           DESIGNATED_WS=${toString ws}
