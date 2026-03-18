@@ -42,7 +42,7 @@
       };
 
       pins = {
-        "Outlook" = {
+        "outlook" = {
           id = "eee232e4-72d9-4d7c-b4e6-02a1f6155f7f";
           url = "https://outlook.tmsproshop.de/owa";
           isEssential = true;
@@ -63,9 +63,51 @@
 
       bookmarks = [
         {
-          name = "passbolt";
-          url = "https://pass.tmspro.shop";
-          tags = ["passwords"];
+          name = "o2business";
+          url = "https://admin.digitalphone.o2business.de/";
+          tags = ["telefonie" "phone"];
+        }
+
+        {
+          name = "maxcluster";
+          url = "https://app.maxcluster.de/";
+          tags = ["hosting" "magento" "staging"];
+        }
+        {
+          name = "hetzner-console";
+          url = "https://console.hetzner.com";
+          tags = ["hosting" "magento" "staging"];
+        }
+
+        {
+          name = "grafana";
+          url = "https://grafana.tmspro.shop";
+          tags = ["monitoring"];
+        }
+        {
+          name = "prometheus";
+          url = "https://prometheus.tmspro.shop";
+          tags = ["monitoring"];
+        }
+        {
+          name = "alertmanager";
+          url = "https://alerts.tmspro.shop";
+          tags = ["monitoring"];
+        }
+        {
+          name = "mailpit";
+          url = "https://mailpit.tmspro.shop";
+          tags = ["smtp" "mail relay"];
+        }
+        {
+          name = "github tms";
+          url = "https://github.com/orgs/tmsproshopgmbh/repositories";
+          tags = ["vcs" "git" "projects"];
+        }
+        {
+          name = "github infra";
+          url = "https://github.com/orgs/tmsproshopgmbh/infra";
+          tags = ["vcs" "git" "repo"];
         }
         {
           name = "vaultwarden";
@@ -73,9 +115,49 @@
           tags = ["passwords"];
         }
         {
-          name = "bookstack";
-          url = "https://docs.tmspro.shop";
-          tags = ["docs"];
+          name = "weclapp test";
+          url = "https://weclapp-test.tmspro.shop/";
+          tags = ["daily business" "erp"];
+        }
+        {
+          name = "weclapp test (update)";
+          url = "https://update.weclapp.tmspro.shop/";
+          tags = ["daily business" "erp"];
+        }
+        {
+          name = "weclapp";
+          url = "https://weclapp.tmspro.shop/";
+          tags = ["daily business" "erp"];
+        }
+        {
+          name = "bildnamesliste";
+          url = "https://bnl.tmspro.shop/";
+          tags = ["daily business"];
+        }
+        {
+          name = "sherlock";
+          url = "https://sherlock.tmspro.shop/";
+          tags = ["daily business"];
+        }
+        {
+          name = "toja v2";
+          url = "https://toja.tmspro.shop/";
+          tags = ["daily business"];
+        }
+        {
+          name = "toja";
+          url = "https://toja-prod.tmspro.shop/";
+          tags = ["daily business"];
+        }
+        {
+          name = "anna-auftrag";
+          url = "https://anna-auftrag.tmspro.shop/";
+          tags = ["daily business"];
+        }
+        {
+          name = "timas";
+          url = "https://timas.tmspro.shop/";
+          tags = ["daily business"];
         }
 
         {

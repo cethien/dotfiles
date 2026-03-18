@@ -40,11 +40,6 @@ in {
       "slack"
       "zen"
     ];
-
-    defaultWorkspaces = {
-      browser = 2;
-      chat = 1;
-    };
   };
   programs.hyprlock.monitor = "${monIn}";
 
