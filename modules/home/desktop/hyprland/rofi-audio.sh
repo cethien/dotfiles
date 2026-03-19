@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
+set -e
 
-SPOTIFYCTL="playerctl -p spotify_player"
+ROFI_ICON="󰓇 "
 SEPARATOR="-----"
 
 sink_muted() { wpctl get-volume @DEFAULT_SINK@ | grep -q MUTED; }
 source_muted() { wpctl get-volume @DEFAULT_AUDIO_SOURCE@ | grep -q MUTED; }
 
+SPOTIFYCTL="playerctl -p spotify_player"
 run_action() {
   case "$1" in
   "play_pause") $SPOTIFYCTL play-pause ;;
@@ -49,8 +51,6 @@ OPTIONS=()
 ACTIONS=()
 
 # 1-3: spotify (keys: 1, 2, 3)
-METADATA=$($SPOTIFYCTL metadata -f "{{artist}} - {{title}}" 2>/dev/null | tr '[:upper:]' '[:lower:]')
-HEADER=" ${METADATA:-spotify playing}"
 
 OPTIONS+=("[1] 󰐊/󰏤 play/pause")
 ACTIONS+=("play_pause")
@@ -92,15 +92,21 @@ else
 fi
 
 # --- rofi ui ---
-IDX=$(printf '%s\n' "${OPTIONS[@]}" | rofi -dmenu -p "$HEADER" -format 'i' \
-  -kb-select-1 "1" \
-  -kb-select-2 "2" \
-  -kb-select-3 "3" \
-  -kb-select-5 "m" \
-  -kb-select-6 "a" \
-  -kb-select-7 "s" \
-  -kb-select-8 "S" \
-  -theme-str 'entry { enabled: false; }')
+METADATA=$($SPOTIFYCTL metadata -f "{{artist}} - {{title}}" 2>/dev/null | tr '[:upper:]' '[:lower:]')
+ROFI_TITLE="${METADATA:-spotify is running}"
+ROFI_THEME="
+entry{enabled:false;}
+"
+IDX=$(
+  printf '%s\n' "${OPTIONS[@]}" | rofi -dmenu -p "$ROFI_ICON $ROFI_TITLE" -format 'i' -theme-str "$ROFI_THEME" \
+    -kb-select-1 "1" \
+    -kb-select-2 "2" \
+    -kb-select-3 "3" \
+    -kb-select-5 "m" \
+    -kb-select-6 "a" \
+    -kb-select-7 "s" \
+    -kb-select-8 "S"
+)
 
 if [[ -n "$IDX" ]]; then
   run_action "${ACTIONS[$IDX]}"
