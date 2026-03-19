@@ -14,7 +14,7 @@ in {
     ../../homes/tms-bso/zen-browser.nix
   ];
 
-  stylix.image = ../../wallpapers/bliss-windows-night-nologo-8k-unofficial.png;
+  stylix.image = ../../wallpapers/bliss_4K.jpg;
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
