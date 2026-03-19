@@ -68,7 +68,7 @@ in {
         "listview" = {
           dynamic = false;
           fixed-height = true;
-          lines = 16;
+          lines = 9;
           scrollbar = false;
           spacing = mkLiteral "2px";
           margin = mkLiteral "0px";
