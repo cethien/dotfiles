@@ -25,7 +25,7 @@ in {
     '';
     wayland.windowManager.hyprland.settings = {
       bind = [
-        "SUPER, Space, exec, rofi -show drun"
+        "SUPER, Space, exec, rofi -show drun -theme-str 'configuration{show-icons:true;}'"
 
         "SUPER, Tab, exec, rofi -show window"
 

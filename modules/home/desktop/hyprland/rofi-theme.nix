@@ -7,10 +7,16 @@
   inherit (config.lib.formats.rasi) mkLiteral;
 in {
   config = {
+    wayland.windowManager.hyprland.settings = {
+      layerrule = [
+        "blur on, match:namespace rofi"
+        "dim_around on, match:namespace rofi"
+      ];
+    };
     programs.rofi = {
       extraConfig = {
         modi = "drun";
-        show-icons = true;
+        show-icons = false;
         display-drun = " ";
         drun-display-format = "{name}";
       };
@@ -19,10 +25,10 @@ in {
           width = mkLiteral "calc( 100% min 72% )";
           expand = false;
           transparency = "real";
-          background-color = mkLiteral "@background";
+          background-color = mkForce (mkLiteral "transparent");
           border = mkLiteral "4px solid";
           border-radius = mkLiteral "6px";
-          border-color = mkLiteral "@blue";
+          border-color = mkLiteral "@active-foreground";
         };
 
         "mainbox" = {
@@ -39,9 +45,9 @@ in {
         "inputbar" = {
           spacing = mkLiteral "40px";
           padding = mkLiteral "12px";
-          border = mkLiteral "4px";
+          # border = mkLiteral "4px";
           border-radius = mkLiteral "6px";
-          border-color = mkLiteral "@selected";
+          # border-color = mkLiteral "@selected";
           background-color = mkLiteral "@background-color";
           children = map mkLiteral ["prompt" "entry"];
         };
@@ -76,26 +82,27 @@ in {
         };
 
         "element" = {
-          spacing = mkLiteral "2px";
-          margin = mkLiteral "0px";
-          padding = mkLiteral "2px 2px";
+          spacing = mkLiteral "4px";
+          margin = mkLiteral "6px 2px";
+          padding = mkLiteral "6px 10px";
+          background-color = mkLiteral "transparent";
           border = mkLiteral "0px solid";
           border-radius = mkLiteral "4px";
-          border-color = mkLiteral "@selected";
-          background-color = mkLiteral "transparent";
+          border-color = mkLiteral "@selected-normal-foreground";
           text-color = mkLiteral "@foreground";
           # orientation = mkLiteral "vertical";
           cursor = mkLiteral "pointer";
         };
 
-        "element normal.normal" = {
-          background-color = mkForce (mkLiteral "transparent");
-        };
+        "element normal.normal".background-color = mkForce (mkLiteral "transparent");
+        "element alternate.normal".background-color = mkForce (mkLiteral "transparent");
+        "element alternate.urgent".background-color = mkForce (mkLiteral "transparent");
+        "element alternate.active".background-color = mkForce (mkLiteral "transparent");
 
         "element selected.normal" = {
-          border = mkLiteral "0px 0px 0px 4px";
+          border = mkLiteral "0px";
           border-radius = mkLiteral "6px";
-          border-color = mkLiteral "@selected";
+          border-color = mkLiteral "@selected-normal-foreground";
         };
 
         "element-icon" = {
@@ -111,7 +118,7 @@ in {
           highlight = mkLiteral "inherit";
           cursor = mkLiteral "inherit";
           text-transform = mkLiteral "lowercase";
-          padding = "4px 0px 0px 0px";
+          padding = "0px 0px 0px 4px";
           vertical-align = mkLiteral "0.5";
         };
       };
