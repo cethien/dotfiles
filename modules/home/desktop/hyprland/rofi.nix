@@ -8,21 +8,27 @@
 in {
   imports = [./rofi-theme.nix];
   config = mkIf config.programs.rofi.enable {
-    xdg.desktopEntries.rofi-freerdp = {
-      name = "FreeRDP";
-      comment = "Launch the FreeRDP menu via Rofi";
-      exec = "${pkgs.writeShellScriptBin "rofi-freerdp" (builtins.readFile ./rofi-freerdp.sh)}/bin/rofi-freerdp";
-      icon = "remote-desktop";
-      terminal = false;
-      type = "Application";
-      categories = ["Network" "Utility"];
-    };
-
     xdg.configFile."rofimoji.rc".text = ''
       action = type
       skin-tone = neutral
       prompt = "🍞 "
     '';
+
+    xdg.desktopEntries.rofi-freerdp = let
+      rofiEnabled = config.programs.rofi.enable;
+      c = config.programs.freerdp;
+      hasConnections = !isNull c.connections && c.connections != {};
+    in
+      mkIf (rofiEnabled && hasConnections) {
+        name = "FreeRDP";
+        comment = "Launch the FreeRDP menu via Rofi";
+        exec = "${pkgs.writeShellScriptBin "rofi-freerdp" (builtins.readFile ./rofi-freerdp.sh)}/bin/rofi-freerdp";
+        icon = "remote-desktop";
+        terminal = false;
+        type = "Application";
+        categories = ["Network" "Utility"];
+      };
+
     wayland.windowManager.hyprland.settings = {
       bind = [
         "SUPER, Space, exec, rofi -show drun -theme-str 'configuration{show-icons:true;}'"
