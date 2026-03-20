@@ -10,7 +10,7 @@ in {
     home.packages = [pkgs.gradia];
 
     wayland.windowManager.hyprland.settings.bind = let
-      cmd = mode: "${pkgs.hyprshot}/bin/hyprshot -z -o ~/Pictures/Screenshots -m ${mode}";
+      cmd = mode: "${pkgs.hyprshot}/bin/hyprshot -z -o ~/Pictures -m ${mode}";
     in [
       ", Print, exec, ${cmd "output"} -m active"
       "ALT, Print, exec, ${cmd "window"} -m active"

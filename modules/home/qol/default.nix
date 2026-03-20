@@ -37,11 +37,20 @@ in {
       glow
       mdcat
 
+      (pkgs.writeShellScriptBin "termshot" ''
+        mkdir -p ~/Pictures
+        FILENAME="${config.home.homeDirectory}/Pictures/termshot_$(date +%Y%m%d_%H%M%S).png"
+        command ${pkgs.termshot}/bin/termshot -f "$FILENAME" -c --no-decoration -- "$@"
+        if [ -f "$FILENAME" ]; then
+          command ${pkgs.wl-clipboard}/bin/wl-copy < "$FILENAME"
+          echo "Saved to $FILENAME and Clipboard"
+        fi
+      '')
+
       # ebooks
       epr
       bk
 
-      termshot
       slides
       sysz
     ];
