@@ -34,8 +34,6 @@ in {
           border = "no";
         };
         scripts = with pkgs.mpvScripts; [
-          # mpv-osc-modern
-          # modernx
           uosc
           evafast
           thumbfast
