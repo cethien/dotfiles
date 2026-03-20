@@ -7,6 +7,7 @@
   inherit (lib) mkIf;
   enabled = config.wayland.windowManager.hyprland.enable;
 in {
+  imports = [./mpv.nix];
   config = mkIf enabled {
     home.packages = with pkgs; [
       file-roller
@@ -21,39 +22,7 @@ in {
 
     programs = {
       imv.enable = true;
-      mpv = {
-        enable = true;
-        config = {
-          keep-open = true;
-          ytdl-format = "bestvideo+bestaudio";
-          wayland-content-type = "none";
-          target-colorspace-hint = "no";
-
-          osc = "no";
-          osd-bar = "no";
-          border = "no";
-        };
-        scripts = with pkgs.mpvScripts; [
-          uosc
-          evafast
-          thumbfast
-          dynamic-crop
-
-          youtube-upnext
-          sponsorblock-minimal
-          # sponsorblock
-          quality-menu
-
-          mpris
-          memo
-          cutter
-          easycrop
-          videoclip
-          mpv-webm
-          convert
-          chapterskip
-        ];
-      };
+      mpv.enable = true;
       zathura.enable = true;
     };
 
