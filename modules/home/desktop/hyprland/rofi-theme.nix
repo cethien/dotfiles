@@ -25,7 +25,6 @@ in {
           width = mkLiteral "calc( 100% min 72% )";
           expand = false;
           transparency = "real";
-          background-color = mkForce (mkLiteral "transparent");
           border = mkLiteral "4px solid";
           border-radius = mkLiteral "6px";
           border-color = mkLiteral "@active-foreground";
@@ -45,9 +44,7 @@ in {
         "inputbar" = {
           spacing = mkLiteral "40px";
           padding = mkLiteral "12px";
-          # border = mkLiteral "4px";
           border-radius = mkLiteral "6px";
-          # border-color = mkLiteral "@selected";
           background-color = mkLiteral "@background-color";
           children = map mkLiteral ["prompt" "entry"];
         };
@@ -75,7 +72,6 @@ in {
           padding = mkLiteral "0px";
           border = mkLiteral "0px solid";
           border-radius = mkLiteral "4px";
-          # border-color = mkLiteral "@selected";
           background-color = mkLiteral "transparent";
           text-color = mkLiteral "@foreground";
           cursor = "default";
@@ -90,7 +86,6 @@ in {
           border-radius = mkLiteral "4px";
           border-color = mkLiteral "@selected-normal-foreground";
           text-color = mkLiteral "@foreground";
-          # orientation = mkLiteral "vertical";
           cursor = mkLiteral "pointer";
         };
 
