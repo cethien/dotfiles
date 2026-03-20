@@ -5,8 +5,7 @@ ICON="󰨜 "
 TITLE="screen record"
 
 # Pfade & Config
-DATE_TIME=$(date +%Y-%m-%d_%H%M%S)
-REC_SAVE_DIR="$HOME/Videos/Screencaptures"
+REC_SAVE_DIR="$HOME/Videos/"
 
 TEMP_DIR="${TMDIR:-/tmp/}"
 REC_PID_FILE="${TEMP_DIR}gsr.pid"
@@ -14,6 +13,7 @@ REC_FILENAME_FILE="${TEMP_DIR}gsr.file"
 REC_LOG_FILE="${TEMP_DIR}gsr.log"
 
 # --- HELPER: START FUNCTION ---
+REC_OUTPUT_BASE="$REC_SAVE_DIR/screenrecord_$(date +%Y%m%d_%H%M%S)"
 start_record() {
   local target_type=$1
   local audio_mode=$2
@@ -25,11 +25,11 @@ start_record() {
     local address=$(echo "$win_data" | jq -r '.address')
     local title=$(echo "$win_data" | jq -r '.title' | tr ' ' '_')
     target_args+=("-w" "portal")
-    REC_OUTPUT="$REC_SAVE_DIR/${DATE_TIME}_${title}.mkv"
+    REC_OUTPUT="${REC_OUTPUT_BASE}_${title}.mkv"
   else
     local monitor=$(hyprctl activeworkspace -j | jq -r '.monitor')
     target_args+=("-w" "$monitor")
-    REC_OUTPUT="$REC_SAVE_DIR/${DATE_TIME}_${monitor}.mkv"
+    REC_OUTPUT="${REC_OUTPUT_BASE}_${monitor}.mkv"
   fi
 
   # 2. Audio Logic
