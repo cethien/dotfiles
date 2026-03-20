@@ -40,6 +40,7 @@ in {
       bmon
       arp-scan
       whois
+      fping
 
       tshark
       termshark
