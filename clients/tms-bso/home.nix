@@ -37,8 +37,6 @@ in {
 
     autostart = [
       "keepassxc"
-      "slack"
-      "zen"
     ];
   };
   programs.hyprlock.monitor = "${monIn}";

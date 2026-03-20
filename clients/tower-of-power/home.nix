@@ -37,7 +37,6 @@
       "logitech"
       "keepassxc"
       "spotify"
-      "discord"
       "steam"
     ];
   };
