@@ -13,7 +13,7 @@ REC_FILENAME_FILE="${TEMP_DIR}gsr.file"
 REC_LOG_FILE="${TEMP_DIR}gsr.log"
 
 # --- HELPER: START FUNCTION ---
-REC_OUTPUT_BASE="$REC_SAVE_DIR/screenrecord_$(date +%Y%m%d_%H%M%S)"
+REC_OUTPUT_BASE="$REC_SAVE_DIR/$(date +%Y%m%d_%H%M%S)_screenrecord"
 start_record() {
   local target_type=$1
   local audio_mode=$2
