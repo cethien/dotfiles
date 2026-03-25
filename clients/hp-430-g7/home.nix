@@ -103,7 +103,6 @@
 
     kitty.enable = true;
     keepassxc.enable = true;
-    gemini-cli.enable = true;
 
     devSuite.extras = ["containers"];
 

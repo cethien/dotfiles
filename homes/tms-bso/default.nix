@@ -16,6 +16,5 @@
             source ~/.nix-profile/etc/profile.d/nix.sh
       fi
     '';
-    gemini-cli.enable = true;
   };
 }

@@ -54,7 +54,6 @@ in {
     kitty.enable = true;
     # thunderbird.enable = true;
     keepassxc.enable = true;
-    gemini-cli.enable = true;
 
     devSuite.extras = ["containers"];
     creativeSuite.enable = true;
