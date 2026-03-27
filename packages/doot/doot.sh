@@ -13,7 +13,8 @@
 flake-update() {
   local INPUTS=()
   if [ -n "$argc_clients" ]; then
-    INPUTS=(
+    [ -z "$argc_omit_nixpkgs" ] && INPUTS+=(nixpkgs-unstable)
+    INPUTS+=(
       nixos-hardware
       home-manager
       stylix
@@ -22,10 +23,9 @@ flake-update() {
       spicetify-nix
       zen-browser
     )
-    [ -z "$argc_omit_nixpkgs" ] && INPUTS+=(nixpkgs-unstable)
   else
-    INPUTS=(flake-utils deploy-rs disko)
     [ -z "$argc_omit_nixpkgs" ] && INPUTS+=(nixpkgs)
+    INPUTS+=(flake-utils deploy-rs disko sops-nix)
   fi
 
   echo "Updating: ${INPUTS[*]}"
