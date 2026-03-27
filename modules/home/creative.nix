@@ -22,7 +22,12 @@ in {
   in
     mkIf cfg.enable {
       home.packages = mkMerge [
-        (with pkgs; [pinta gimp inkscape ocenaudio])
+        (with pkgs; [
+          pinta
+          gimp
+          inkscape
+          # ocenaudio
+        ])
         (mkIf mixxx [pkgs.mixxx])
         (mkIf ardour [pkgs.ardour])
       ];

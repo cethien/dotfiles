@@ -18,7 +18,6 @@ in {
   ];
 
   config = mkIf cfg.enable {
-    programs.zen-browser.suppressXdgMigrationWarning = true;
     programs.zen-browser = {
       profiles."${name}" = {
         extensions.packages = with addons;

@@ -21,6 +21,9 @@ in {
       ];
     };
 
+    # new behavior 26.05
+    gtk.gtk4.theme = null;
+
     stylix = {
       polarity = "dark";
       base16Scheme = mkDefault "${pkgs.base16-schemes}/share/themes/tokyo-night-dark.yaml";
