@@ -19,6 +19,12 @@ in {
     programs.yazi = {
       keymap.mgr.prepend_keymap = [
         {
+          on = ["c" "y"];
+          run = ''plugin yank-selected-content'';
+          desc = "Copy text content only";
+        }
+
+        {
           on = ["<C-d>"];
           run = "shell -- ripdrag -banr %s";
           desc = "Drag Files";
@@ -134,6 +140,9 @@ in {
       ];
 
       plugins = {
+        yank-selected-content = ./yazi-plugins/yank-selected-content;
+        yank-dir-content = ./yazi-plugins/yank-dir-content;
+        tree-to-clipboard = ./yazi-plugins/tree-to-clipboard;
         ffmpeg-convert = ./yazi-plugins/ffmpeg-convert;
         inherit
           (pkgs.yaziPlugins)
