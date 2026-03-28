@@ -56,7 +56,6 @@ in {
     keepassxc.enable = true;
 
     devSuite.extras = ["containers"];
-    creativeSuite.enable = true;
 
     spotify.enable = true;
   };

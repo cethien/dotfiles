@@ -106,9 +106,6 @@
 
     devSuite.extras = ["containers"];
 
-    creativeSuite = {
-      enable = true;
-    };
     spotify.enable = true;
     vesktop.enable = true;
 

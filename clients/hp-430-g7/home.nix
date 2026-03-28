@@ -37,7 +37,7 @@
     defaultWorkspaces.browser = 2;
   };
 
-  home.packages = with pkgs; [simple-scan ausweisapp libreoffice];
+  home.packages = with pkgs; [simple-scan ausweisapp libreoffice mixxx];
 
   programs.zen-browser.enable = true;
   programs.browser.default = config.programs.zen-browser.package;
