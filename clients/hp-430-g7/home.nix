@@ -34,6 +34,7 @@
       "keepassxc"
     ];
 
+    rofiPowerMenuOptions = "shutdown/suspend/reboot";
     defaultWorkspaces.browser = 2;
   };
 
@@ -99,17 +100,11 @@
   programs.rclone.enable = true;
 
   programs = {
-    ssh.matchBlocksExtra = import ../../homes/ssh.nix;
-
-    kitty.enable = true;
-    keepassxc.enable = true;
-
-    devSuite.extras = ["containers"];
-
-    creativeSuite = {
-      enable = true;
-      extras = ["mixxx"];
-    };
     spotify.enable = true;
+
+    container-tools.enable = true;
+    keepassxc.enable = true;
+    kitty.enable = true;
+    ssh.matchBlocksExtra = import ../../homes/ssh.nix;
   };
 }

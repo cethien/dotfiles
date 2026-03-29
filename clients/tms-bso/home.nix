@@ -50,13 +50,11 @@ in {
 
   programs = {
     slack.enable = true;
-
-    kitty.enable = true;
     # thunderbird.enable = true;
-    keepassxc.enable = true;
-
-    devSuite.extras = ["containers"];
 
     spotify.enable = true;
+    keepassxc.enable = true;
+    container-tools.enable = true;
+    kitty.enable = true;
   };
 }

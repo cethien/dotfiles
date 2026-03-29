@@ -426,6 +426,8 @@ in {
           linebreak = true;
           breakindent = true;
           # colorcolumn = "80";
+          foldlevel = 99;
+          foldlevelstart = 99;
         };
 
         globals.mapleader = " ";

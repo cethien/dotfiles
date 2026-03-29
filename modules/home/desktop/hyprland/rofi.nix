@@ -7,6 +7,12 @@
   inherit (lib) mkIf;
 in {
   imports = [./rofi-theme.nix];
+
+  options.wayland.windowManager.hyprland.rofiPowerMenuOptions = lib.mkOption {
+    type = lib.types.str;
+    default = "shutdown/reboot";
+  };
+
   config = mkIf config.programs.rofi.enable {
     xdg.configFile."rofimoji.rc".text = ''
       action = type
@@ -30,12 +36,19 @@ in {
       };
 
     wayland.windowManager.hyprland.settings = {
-      bind = [
+      bind = let
+        opt = config.wayland.windowManager.hyprland.rofiPowerMenuOptions;
+        pwr = pkgs.writeShellScriptBin "rofi-power" ''
+          rofi -show power-menu \
+          -modi "power-menu:${pkgs.rofi-power-menu}/bin/rofi-power-menu \
+          --choices=${opt} --confirm=\"\""
+        '';
+      in [
         "SUPER, Space, exec, rofi -show drun -theme-str 'configuration{show-icons:true;}'"
 
         "SUPER, Tab, exec, rofi -show window"
 
-        ''SUPER, escape, exec, rofi -show power-menu -modi "power-menu:${pkgs.rofi-power-menu}/bin/rofi-power-menu --choices=suspend/reboot/shutdown"''
+        "SUPER, escape, exec, ${pwr}/bin/rofi-power"
 
         "SUPER, M, exec, ${
           pkgs.writeShellScriptBin "rofi-audio" (builtins.readFile ./rofi-audio.sh)
