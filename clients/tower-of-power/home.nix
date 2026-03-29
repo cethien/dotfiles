@@ -6,6 +6,7 @@
   imports = [
     ../../modules/home
     ../../modules/home/users/cethien
+    ./zen-browser.nix
   ];
 
   stylix.image = ../../wallpapers/lake-mountains-rocks-sunrise-daylight-scenery-illustration-3840x2160-3773.jpg;
@@ -48,50 +49,7 @@
 
   home.packages = with pkgs; [simple-scan ausweisapp libreoffice];
 
-  programs.zen-browser.enable = true;
-  programs.browser.default = config.programs.zen-browser.package;
-  programs.zen-browser.profiles."${config.home.username}" = let
-    containers = {
-      logged-out = {
-        id = 1;
-        color = "toolbar";
-        icon = "chill";
-      };
-      admin = {
-        id = 2;
-        color = "pink";
-        icon = "circle";
-      };
-    };
 
-    spaces."deez nuts" = {
-      id = "cd0b7a9b-bb11-42e8-a10a-52ea6813e6b4";
-      position = 1000;
-      icon = "🥙";
-    };
-
-    pins = {
-      "WhatsApp" = {
-        id = "9d8a8f91-7e29-4688-ae2e-da4e49d4a179";
-        url = "https://web.whatsapp.com/";
-        isEssential = true;
-        position = 101;
-      };
-      "Google Calendar" = {
-        id = "591c45e0-737f-47d1-86e8-bf173ce87df9";
-        url = "https://calendar.google.com";
-        isEssential = true;
-        position = 102;
-      };
-    };
-  in {
-    containersForce = true;
-    inherit containers;
-    pinsForce = true;
-    inherit pins;
-    spacesForce = true;
-    inherit spaces;
-  };
 
   programs = {
     ssh.matchBlocksExtra = import ../../homes/ssh.nix;
