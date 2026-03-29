@@ -33,6 +33,9 @@
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
     zen-browser.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
+    nix-gaming.url = "github:fufexan/nix-gaming";
+    nix-gaming.inputs.nixpkgs.follows = "nixpkgs-unstable";
+
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     spicetify-nix.inputs.nixpkgs.follows = "nixpkgs-unstable";
   };
@@ -47,6 +50,7 @@
     nixpkgs-unstable,
     home-manager,
     nur,
+    nix-gaming,
     ...
   }: let
     stateVersion = "25.05";
@@ -60,6 +64,7 @@
         overlays = [
           (import ./overlays/cethien.nix)
           nur.overlays.default
+          nix-gaming.overlays.default
         ];
       };
   in
@@ -107,6 +112,14 @@
                 "${n.user}" = {enable = true;};
               };
               boot.kernelPackages = pkgsUnstable.linuxPackages_latest;
+              nix.settings = {
+                substituters = [
+                  "https://nix-gaming.cachix.org"
+                ];
+                trusted-public-keys = [
+                  "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
+                ];
+              };
             }
 
             home-manager.nixosModules.home-manager

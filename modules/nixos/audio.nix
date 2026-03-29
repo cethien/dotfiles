@@ -2,6 +2,7 @@
   lib,
   config,
   pkgs,
+  nix-gaming,
   ...
 }: let
   inherit (lib) mkIf;
@@ -12,6 +13,10 @@ in {
     description = "mic device for anc. null = nothing";
   };
 
+  imports = [
+    nix-gaming.nixosModules.pipewireLowLatency
+  ];
+
   config = mkIf config.deeznuts.desktop.isEnabled {
     services.pulseaudio.enable = false;
     security.rtkit.enable = true;
@@ -21,6 +26,11 @@ in {
       alsa.support32Bit = true;
       pulse.enable = true;
       jack.enable = true;
+      lowLatency = {
+        enable = true;
+        quantum = 64;
+        rate = 48000;
+      };
 
       wireplumber.enable = true;
 

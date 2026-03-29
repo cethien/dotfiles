@@ -2,15 +2,23 @@
   lib,
   config,
   pkgs,
+  nix-gaming,
   ...
 }: let
   cfg = config.programs.steam;
 in {
+  imports = [
+    nix-gaming.nixosModules.platformOptimizations
+  ];
+
   config = lib.mkIf cfg.enable {
     programs.steam = {
+      platformOptimizations.enable = true;
       package = pkgs.steam.override {
         extraEnv = {
-          OBS_VKCAPTURE = true;
+          OBS_VKCAPTURE = "1";
+          STEAM_FRAME_FORCE_CLOSE = "1";
+          GAMEMODERUN_PATH = "${pkgs.gamemode}/bin/gamemoderun";
         };
         extraLibraries = p:
           with p; [
@@ -22,7 +30,7 @@ in {
       extraPackages = with pkgs; [
         gamescope
       ];
-      extraCompatPackages = [pkgs.proton-ge-bin];
+      extraCompatPackages = with pkgs; [proton-ge-bin];
       protontricks.enable = true;
 
       remotePlay.openFirewall = true;
