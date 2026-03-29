@@ -47,31 +47,27 @@
   services.restic.enable = true;
   programs.rclone.enable = true;
 
-  home.packages = with pkgs; [simple-scan ausweisapp libreoffice];
-
-
+  home.packages = with pkgs; [simple-scan ausweisapp libreoffice krita ardour];
 
   programs = {
-    ssh.matchBlocksExtra = import ../../homes/ssh.nix;
+    spotify.enable = true;
+    vesktop.enable = true;
 
+    obs-studio.enable = true;
+    pokemmo.enable = true;
+    retroarch.enable = true;
+    prismlauncher.enable = true;
+    r2modman.enable = true;
+    steam.enable = true;
+
+    container-tools.enable = true;
+    keepassxc.enable = true;
+    kitty.enable = true;
+    ssh.matchBlocksExtra = import ../../homes/ssh.nix;
     git.urlExtra = {
       "ssh://git@git.cethien.home".insteadOf = "https://git.cethien.home";
       "git@git.cethien.home:".insteadOf = "home:";
     };
-
-    kitty.enable = true;
-    keepassxc.enable = true;
-
-    devSuite.extras = ["containers"];
-
-    spotify.enable = true;
-    vesktop.enable = true;
-
-    steam.enable = true;
-    r2modman.enable = true;
-    prismlauncher.enable = true;
-    retroarch.enable = true;
-    pokemmo.enable = true;
   };
   programs.logitech-peripherals.enable = true;
 }
