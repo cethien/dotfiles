@@ -3,38 +3,14 @@
   config,
   pkgs,
   ...
-}: let
-  inherit (lib) mkIf mkMerge elem types mkOption;
-  cfg = config.programs.devSuite;
-in {
+}: {
   imports = [
     ./git.nix
+    ./container-tools.nix
   ];
 
-  options.programs.devSuite = {
-    extras = mkOption {
-      type = types.listOf types.str;
-      default = [];
-    };
-  };
-
-  config = let
-    containers = elem "containers" cfg.extras;
-
-    rider = elem "jetbrains-rider" cfg.extras;
-    idea = elem "jetbrains-idea" cfg.extras;
-  in {
-    home.packages = mkMerge [
-      (mkIf idea [pkgs.jetbrains.idea-community])
-      (mkIf rider [pkgs.jetbrains.rider])
-      (mkIf containers [pkgs.podman-compose pkgs.k3d pkgs.kubectl])
-    ];
-
-    services.podman.enable = containers;
-    home.shellAliases = mkIf containers {lzd = "lazydocker";};
-    programs.lazydocker.enable = containers;
-
-    programs.tmux.resurrectPluginProcesses = ["dblab" "lazydocker" "gh-dash"];
+  config = {
+    programs.tmux.resurrectPluginProcesses = ["gh-dash"];
 
     programs = {
       lazysql.enable = true;
