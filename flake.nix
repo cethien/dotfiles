@@ -38,6 +38,9 @@
 
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     spicetify-nix.inputs.nixpkgs.follows = "nixpkgs-unstable";
+
+    nix-index-database.url = "github:nix-community/nix-index-database";
+    nix-index-database.inputs.nixpkgs.follows = "nixpkgs-unstable";
   };
 
   outputs = inputs @ {
@@ -51,6 +54,7 @@
     home-manager,
     nur,
     nix-gaming,
+    nix-index-database,
     ...
   }: let
     stateVersion = "25.05";

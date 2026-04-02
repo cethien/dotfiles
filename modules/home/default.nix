@@ -2,9 +2,11 @@
   pkgs,
   lib,
   config,
+  nix-index-database,
   ...
 }: {
   imports = [
+    nix-index-database.homeModules.default
     ./stylix.nix
     ./sops.nix
 
@@ -37,6 +39,9 @@
     ./freerdp.nix
     ./slack.nix
   ];
+
+  programs.nix-index.enable = true;
+  programs.nix-index-database.comma.enable = true;
 
   programs = {
     bash.enable = true;
