@@ -15,7 +15,7 @@
     settings = {
       monitor = [
         "DP-1, 2560x1440@240, 0x0, 1"
-        "HDMI-A-1, 1920x1080@100, 320x1440, 1"
+        "HDMI-A-1, 1920x1080@100, 640x1440, 1"
       ];
       general.allow_tearing = true;
       exec-once = ["xrandr --output DP-1 --primary"];
