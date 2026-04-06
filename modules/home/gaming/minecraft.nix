@@ -22,6 +22,8 @@ in {
       ];
     };
 
-    wayland.windowManager.hyprland.settings.windowrule = pkgs.cethien.mkHyprGameWindowRule "match:class ^(Minecraft.*)$" "${toString ws}";
+    wayland.windowManager.hyprland.settings.windowrule =
+      (pkgs.cethien.mkHyprGameWindowRule "match:class ^(Minecraft.*)$" "${toString ws}")
+      ++ ["match:class ^(org\.prismlauncher\.PrismLauncher)$, tile on"];
   };
 }
