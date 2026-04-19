@@ -17,5 +17,10 @@ CHOICE=$(echo "$SESSIONS" | rofi -dmenu -p "$ICON" -theme-str "$ROFI_THEME")
 [ -z "$CHOICE" ] && exit 0
 
 if [ -n "$CHOICE" ]; then
-  exec kitty --class "$CHOICE" -e tmux attach-session -t "$CHOICE"
+  CLASS="tmux_$CHOICE"
+  if hyprctl clients | grep -q "class: $CLASS"; then
+    hyprctl dispatch focuswindow "class:$CLASS"
+  else
+    exec kitty --class "$CLASS" -e tmux attach-session -t "$CHOICE"
+  fi
 fi
