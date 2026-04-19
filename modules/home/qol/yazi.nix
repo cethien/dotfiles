@@ -19,6 +19,11 @@ in {
     programs.yazi = {
       keymap.mgr.prepend_keymap = [
         {
+          on = ["t" "s"];
+          run = ''shell 'tmux new-session -A -s "$(basename "$PWD" | tr -c "a-zA-Z0-9_" "_" | sed "s/_$//")"' --block'';
+          desc = "Tmux: Create/Attach in current DIR";
+        }
+        {
           on = ["c" "y"];
           run = ''plugin yank-selected-content'';
           desc = "Copy text content only";

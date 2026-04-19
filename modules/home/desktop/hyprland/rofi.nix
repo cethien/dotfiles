@@ -62,6 +62,10 @@ in {
           pkgs.writeShellScriptBin "rofi-net" (builtins.readFile ./rofi-net.sh)
         }/bin/rofi-net"
 
+        "SUPER, RETURN, exec, ${
+          pkgs.writeShellScriptBin "rofi-tmux" (builtins.readFile ./rofi-tmux.sh)
+        }/bin/rofi-tmux"
+
         "SUPER, B, exec, ${pkgs.rofi-bluetooth}/bin/rofi-bluetooth"
 
         "SUPER, R, exec, ${

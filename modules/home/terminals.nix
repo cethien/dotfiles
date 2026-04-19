@@ -22,7 +22,7 @@
     "$terminal" = "kitty";
 
     bind = [
-      "SUPER, RETURN, exec, $terminal"
+      "SUPER SHIFT, RETURN, exec, $terminal"
     ];
   };
 }
