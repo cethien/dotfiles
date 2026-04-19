@@ -22,7 +22,9 @@ jobs:
         uses: DeterminateSystems/update-flake-lock@main
         with:
           inputs: nix-index-database zen-browser firefox-addons
-          pr-title: "chore: weekly update of specific flakes"
+          commit-msg: "chore: weekly inputs update"
+          pr-title: "chore: weekly inputs update"
+          pr-body: "Automated weekly update of flake inputs."
           pr-labels: |
             automated
             dependencies
