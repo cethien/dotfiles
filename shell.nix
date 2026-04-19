@@ -14,6 +14,7 @@ pkgs.mkShell {
     argc
 
     doot
+    act
   ];
 
   shellHook =

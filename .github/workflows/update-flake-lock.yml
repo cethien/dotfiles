@@ -1,0 +1,28 @@
+name: update-flake-lock
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * 0' # runs weekly on Sunday at 00:00
+
+jobs:
+  lockfile:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      
+      - name: Install Determinate Nix
+        uses: DeterminateSystems/determinate-nix-action@v3
+      
+      - name: Update flake.lock
+        uses: DeterminateSystems/update-flake-lock@main
+        with:
+          inputs: nix-index-database zen-browser firefox-addons
+          pr-title: "chore: weekly update of specific flakes"
+          pr-labels: |
+            automated
+            dependencies
