@@ -24,14 +24,14 @@
     stylix.url = "github:nix-community/stylix";
     stylix.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
-    nur.url = "github:nix-community/NUR";
-    nur.inputs.nixpkgs.follows = "nixpkgs-unstable";
-
     nvf.url = "github:notashelf/nvf";
     nvf.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
     zen-browser.inputs.nixpkgs.follows = "nixpkgs-unstable";
+
+    firefox-addons.url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+    firefox-addons.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
     nix-gaming.url = "github:fufexan/nix-gaming";
     nix-gaming.inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -52,8 +52,6 @@
     deploy-rs,
     nixpkgs-unstable,
     home-manager,
-    nur,
-    nix-gaming,
     nix-index-database,
     ...
   }: let
@@ -67,8 +65,8 @@
         config.allowUnfree = true;
         overlays = [
           (import ./overlays/cethien.nix)
-          nur.overlays.default
-          nix-gaming.overlays.default
+          inputs.firefox-addons.overlays.default
+          inputs.nix-gaming.overlays.default
         ];
       };
   in

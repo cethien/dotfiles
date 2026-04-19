@@ -8,7 +8,7 @@
   inherit (lib) mkIf elem;
   cfg = config.programs.zen-browser;
   name = "${config.home.username}";
-  addons = pkgs.nur.repos.rycee.firefox-addons;
+  addons = pkgs.firefox-addons;
 
   as = elem "zen-browser" config.wayland.windowManager.hyprland.autostart;
   ws = config.wayland.windowManager.hyprland.defaultWorkspaces.browser;
