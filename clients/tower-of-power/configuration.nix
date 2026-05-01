@@ -42,6 +42,18 @@
     sane.extraBackends = [pkgs.hplip];
   };
 
+  services.udev.packages = with pkgs; [
+    game-devices-udev-rules
+    logitech-udev-rules
+  ];
+
+  services.udev.extraRules = ''
+    KERNEL=="hidraw\*", ATTRS{idProduct}=="6012", ATTRS{idVendor}=="2dc8", MODE="0660", GROUP="input"
+    KERNEL=="hidraw*", ATTRS{idProduct}=="6012", ATTRS{idVendor}=="2dc8", MODE="0660", TAG+="uaccess"
+    KERNEL=="hidraw\*", KERNELS=="\*2DC8:6012\*", MODE="0660", GROUP="input"
+    KERNEL=="hidraw*", KERNELS=="*2DC8:6012*", MODE="0660", TAG+="uaccess"
+  '';
+
   virtualisation = {
     docker.enable = true;
     libvirtd.enable = true;
