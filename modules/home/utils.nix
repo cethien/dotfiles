@@ -43,6 +43,8 @@ in {
 
       taskwarrior-tui
       timewarrior
+
+      caligula
     ];
 
     programs = {
