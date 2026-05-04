@@ -54,6 +54,9 @@ in {
           "4ab93b88-151c-451b-a1b7-a1e0e28fa7f8" # No Sidebar Scrollbar
           "87196c08-8ca1-4848-b13b-7ea41ee830e7" # Tab Preview Enhanced
           "72f8f48d-86b9-4487-acea-eb4977b18f21" # Better CtrlTab Panel
+          "a6335949-4465-4b71-926c-4a52d34bc9c0" # Better Find Bar
+          "253a3a74-0cc4-47b7-8b82-996a64f030d5" # Floating History
+          "906c6915-5677-48ff-9bfc-096a02a72379" # Floating Status Bar
         ];
 
         search = {
@@ -140,12 +143,6 @@ in {
     };
 
     stylix.targets.zen-browser.profileNames = ["${name}"];
-
-    xdg.portal = {
-      enable = true;
-      extraPortals = [pkgs.xdg-desktop-portal-gtk];
-      config.common.default = "*";
-    };
 
     wayland.windowManager.hyprland.settings = {
       exec-once = mkIf as ["[silent] zen-beta"];
