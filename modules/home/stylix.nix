@@ -26,7 +26,7 @@ in {
 
     stylix = {
       polarity = "dark";
-      base16Scheme = mkDefault "${pkgs.base16-schemes}/share/themes/tokyo-night-dark.yaml";
+      base16Scheme = mkDefault "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
 
       cursor = {
         size = mkDefault 26;
