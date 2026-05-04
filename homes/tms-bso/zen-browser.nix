@@ -51,7 +51,7 @@
 
         "admin" = {
           id = "9d8a8f91-7e29-4688-ae2e-da4e49d4a179";
-          url = "https://infra.tmspro.shop/";
+          url = "https://admin.tmspro.shop/";
           position = 110;
         };
         "tmspro.shop" = {
@@ -245,8 +245,7 @@
           ];
         }
       ];
-      extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-        passbolt
+      extensions = with pkgs.firefox-addons; [
         bitwarden
       ];
     in {

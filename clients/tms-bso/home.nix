@@ -44,8 +44,10 @@ in {
   home.packages = with pkgs; [
     simple-scan
     libreoffice
-
+    drawio
     rustdesk-flutter
+    dbeaver-bin
+    omnissa-horizon-client
   ];
 
   programs = {

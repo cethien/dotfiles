@@ -2,14 +2,13 @@
   programs.ssh = {
     matchBlocksExtra = {
       "*".identityFile = "~/.ssh/id_ed25519";
-      "*".user = "bso";
 
+      "weclapp-test".hostname = "10.0.30.60";
+      "magento".hostname = "10.0.30.40";
+      "services-prod".hostname = "10.0.30.20";
+      "services-admin".hostname = "10.0.30.10";
       "dns-01".hostname = "10.0.30.5";
       "dns-02".hostname = "10.0.30.6";
-
-      "rclone".hostname = "10.0.30.21";
-      "bitbucket-runner".hostname = "10.0.30.20";
-      "magento".hostname = "10.0.30.40";
 
       "wp-test".hostname = "10.180.80.92";
       "wp-test".user = "sysadmin";
@@ -30,20 +29,9 @@
       "sherlock-prod".user = "sysadmin";
 
       "bnl".hostname = "10.102.99.93";
-      "bnl".user = "sysadmin";
 
       "weclapp-prod".hostname = "10.102.99.97";
-      "weclapp-test".hostname = "10.0.30.97";
-      "weclapp-test-update".hostname = "10.0.30.96";
-
-      "docker-prod-1".hostname = "10.102.99.95";
-
-      "services-prod-01".hostname = "10.0.30.10";
-      "services-prod-02".hostname = "10.0.30.11";
-      "services-prod-03".hostname = "10.0.30.12";
-      "monitoring-01".hostname = "10.0.40.10";
-      "monitoring-02".hostname = "10.0.40.11";
-      "monitoring-03".hostname = "10.0.40.12";
+      "kanboard".hostname = "10.102.99.95";
 
       # --- INFRA
 
@@ -53,11 +41,13 @@
       "pve-node-c".hostname = "10.0.10.7";
       # --- EXTERNAL
 
-      "maxcluster-prod".hostname = "109.71.72.118";
-      "maxcluster-prod".user = "web-user";
+      "magento-staging-hetzner".hostname = "65.108.1.248";
 
-      "maxcluster-staging".hostname = "109.71.72.244";
-      "maxcluster-staging".user = "web-user";
+      "magento-prod".hostname = "109.71.72.118";
+      "magento-prod".user = "web-user";
+
+      "magento-staging".hostname = "109.71.72.244";
+      "magento-staging".user = "web-user";
 
       "kasserver-cdn".hostname = "w01516e3.kasserver.com";
       "kasserver-cdn".user = "ssh-w01516e3";
