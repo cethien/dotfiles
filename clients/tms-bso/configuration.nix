@@ -4,16 +4,17 @@
   sops-nix,
   ...
 }: let
-  user = config.users.users.bsotnikow;
+  u = config.users.users.cethien;
 in {
   imports = [
     ../../modules/nixos
     sops-nix.nixosModules.sops
     ./smb.nix
   ];
+  users.users.cethien.name = "bsotnikow";
   services.fprintd.enable = true;
 
-  sops.age.sshKeyPaths = ["${user.home}/.ssh/id_ed25519"];
+  sops.age.sshKeyPaths = ["${u.home}/.ssh/id_ed25519"];
 
   security.pki.certificateFiles = [
     ./root_ca.crt
@@ -22,7 +23,7 @@ in {
 
   services.tailscale = {
     enable = true;
-    extraSetFlags = ["--operator=${user.name}"];
+    extraSetFlags = ["--operator=${u.name}"];
   };
   # services.pipewire.active-mic = "alsa_input.usb-3142_Fifine_Microphone-00.mono-fallback";
 
@@ -57,7 +58,7 @@ in {
 
   deeznuts = {
     desktop = {
-      autologinUser = "bsotnikow";
+      autologinUser = "${u.name}";
       hyprland.enable = true;
     };
     net-tools.enable = true;
