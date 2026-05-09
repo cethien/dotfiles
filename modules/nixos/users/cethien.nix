@@ -12,10 +12,12 @@ in {
       extraGroups = mkMerge [
         ["networkmanager" "wheel"]
         (mkIf config.deeznuts.net-tools.enable ["nettools"])
+        (mkIf config.deeznuts.desktop.isEnabled ["audio"])
         (mkIf config.hardware.sane.enable ["scanner"])
         (mkIf config.hardware.uinput.enable ["uinput" "input"])
         (mkIf config.virtualisation.docker.enable ["docker"])
         (mkIf config.virtualisation.libvirtd.enable ["libvirtd" "kvm"])
+        (mkIf config.musnix.enable ["libvirtd" "kvm"])
       ];
       hashedPassword = "$y$j9T$OqozgiTqzcpfQ9zbKkhvr0$i4lBjUVMF1xpGCOm57m/jXVWt0KVDh/evHHFq9mF7Z4";
       openssh.authorizedKeys.keys = mkIf config.services.openssh.enable [
@@ -23,21 +25,7 @@ in {
       ];
     };
 
-    users.users.bsotnikow = {
-      enable = mkDefault false;
-      isNormalUser = true;
-      extraGroups = mkMerge [
-        ["networkmanager" "wheel"]
-        (mkIf config.deeznuts.net-tools.enable ["nettools"])
-        (mkIf config.hardware.sane.enable ["scanner"])
-        (mkIf config.hardware.uinput.enable ["uinput" "input"])
-        (mkIf config.virtualisation.docker.enable ["docker"])
-        (mkIf config.virtualisation.libvirtd.enable ["libvirtd" "kvm"])
-      ];
-      hashedPassword = "$y$j9T$OqozgiTqzcpfQ9zbKkhvr0$i4lBjUVMF1xpGCOm57m/jXVWt0KVDh/evHHFq9mF7Z4";
-    };
-
-    security.sudo.extraConfig = mkIf config.users.users.cethien.enable ''
+    security.sudo.extraConfig = mkIf config.deeznuts.desktop.isEnabled ''
       Defaults timestamp_timeout=30
       Defaults pwfeedback
       Defaults insults

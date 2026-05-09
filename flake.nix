@@ -41,6 +41,9 @@
 
     nix-index-database.url = "github:nix-community/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs-unstable";
+
+    musnix.url = "github:musnix/musnix";
+    musnix.inputs.nixpkgs.follows = "nixpkgs-unstable";
   };
 
   outputs = inputs @ {

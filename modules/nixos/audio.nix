@@ -3,6 +3,7 @@
   config,
   pkgs,
   nix-gaming,
+  musnix,
   ...
 }: let
   inherit (lib) mkIf;
@@ -15,9 +16,12 @@ in {
 
   imports = [
     nix-gaming.nixosModules.pipewireLowLatency
+    musnix.nixosModules.musnix
   ];
 
   config = mkIf config.deeznuts.desktop.isEnabled {
+    musnix.enable = true;
+
     services.pulseaudio.enable = false;
     security.rtkit.enable = true;
     services.pipewire = {
@@ -26,6 +30,7 @@ in {
       alsa.support32Bit = true;
       pulse.enable = true;
       jack.enable = true;
+
       lowLatency = {
         enable = true;
         quantum = 64;
