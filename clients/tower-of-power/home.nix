@@ -2,7 +2,12 @@
   pkgs,
   config,
   ...
-}: {
+}: let
+  monitors = {
+    asus = "desc:ASUSTek COMPUTER INC VG27AQML1A S9LMQS167913";
+    arzopa = "desc:GWD ARZOPA 000000000001";
+  };
+in {
   imports = [
     ../../modules/home
     ../../modules/home/users/cethien
@@ -13,20 +18,20 @@
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
-      monitor = [
-        "DP-1, 2560x1440@240, 0x0, 1"
-        "HDMI-A-1, 1920x1080@100, 640x1440, 1"
+      monitor = with monitors; [
+        "${asus}, 2560x1440@240, 0x0, 1, bitdepth,10"
+        "${arzopa}, 1920x1080@100, 640x1440, 1"
       ];
       general.allow_tearing = true;
       exec-once = ["xrandr --output DP-1 --primary"];
 
-      workspace = [
-        "1, monitor:DP-1, persistent:true"
-        "2, monitor:DP-1, persistent:true"
-        "3, monitor:DP-1, persistent:true"
+      workspace = with monitors; [
+        "1, monitor:${asus}, persistent:true, default:true"
+        "2, monitor:${asus}, persistent:true"
+        "3, monitor:${asus}, persistent:true"
 
-        "4, monitor:HDMI-A-1, persistent:true"
-        "5, monitor:HDMI-A-1, persistent:true"
+        "4, monitor:${arzopa}, persistent:true, default:true"
+        "5, monitor:${arzopa}, persistent:true"
       ];
     };
     defaultWorkspaces = {
@@ -41,7 +46,7 @@
       "steam"
     ];
   };
-  programs.hyprlock.monitor = "DP-1";
+  programs.hyprlock.monitor = "${monitors.asus}";
 
   services.syncthing.enable = true;
   services.restic.enable = true;

@@ -3,8 +3,10 @@
   config,
   ...
 }: let
-  monIn = "eDP-1";
-  monEx = "desc:Eizo Nanao Corporation EV2430 33096078";
+  monitors = {
+    lpt = "eDP-1";
+    eizo = "desc:Eizo Nanao Corporation EV2430 33096078";
+  };
 in {
   imports = [
     ../../modules/home
@@ -17,21 +19,23 @@ in {
   stylix.image = ../../wallpapers/bliss_4K.jpg;
   wayland.windowManager.hyprland = {
     enable = true;
-    settings = {
+    settings = with monitors; {
       monitor = [
-        "${monEx}, 1920x1200@60, 0x0, 1"
-        "${monIn}, 1920x1080@60, 1920x0, 1"
+        "${eizo}, 1920x1200@60, 0x0, 1"
+        "${lpt}, 1920x1080@60, 1920x0, 1"
       ];
       general.allow_tearing = true;
 
       workspace = [
-        "1, monitor:${monEx}, persistent:true"
-        "2, monitor:${monEx}, persistent:true"
-        "3, monitor:${monEx}, persistent:true"
+        "1, monitor:${eizo}, persistent:true, default:true"
+        "2, monitor:${eizo}, persistent:true"
+        "3, monitor:${eizo}, persistent:true"
+        "4, monitor:${eizo}, persistent:true"
+        "5, monitor:${eizo}, persistent:true"
 
-        "4, monitor:${monIn}, persistent:true"
-        "5, monitor:${monIn}, persistent:true"
-        "6, monitor:${monIn}, persistent:true"
+        "6, monitor:${lpt}, persistent:true, default:true"
+        "7, monitor:${lpt}, persistent:true"
+        "8, monitor:${lpt}, persistent:true"
       ];
     };
 
@@ -39,7 +43,7 @@ in {
       "keepassxc"
     ];
   };
-  programs.hyprlock.monitor = "${monIn}";
+  programs.hyprlock.monitor = "${monitors.lpt}";
 
   home.packages = with pkgs; [
     simple-scan
