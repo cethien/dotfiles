@@ -64,13 +64,23 @@ local function get_language(file)
 	if ext then
 		ext = ext:lower()
 		local extensions = {
+			md = "markdown",
+			log = "log",
+			sh = "bash",
+
+			json = "json",
+			yaml = "yaml",
+			toml = "toml",
+
 			py = "python",
 			js = "javascript",
+			ts = "typescript",
 			html = "html",
 			css = "css",
 			lua = "lua",
-			md = "markdown",
-			txt = "text",
+			nix = "nix",
+			go = "go",
+			rs = "rust",
 			-- Add more as needed
 		}
 		return extensions[ext] or "text"
@@ -130,9 +140,9 @@ return {
 				local relative_path = get_relative_path(file_path, common_prefix)
 				local language = get_language(file_path)
 				content = content .. "## " .. relative_path .. "\n"
-				content = content .. "````" .. language .. "\n"
+				content = content .. "```" .. language .. "\n"
 				content = content .. file_content
-				content = content .. "````\n\n"
+				content = content .. "```\n\n"
 				file_count = file_count + 1
 				total_lines = total_lines + select(2, file_content:gsub("\n", "\n"))
 			else
