@@ -24,7 +24,7 @@ flake-update() {
       zen-browser
     )
   else
-    [ -z "$argc_omit_nixpkgs" ] && INPUTS+=(nixpkgs)
+    [ -z "$argc_omit_nixpkgs" ]
     INPUTS+=(flake-utils deploy-rs disko sops-nix)
   fi
 
@@ -162,7 +162,13 @@ _resolve_service() {
 }
 
 # @cmd switch to nixos-configuration / home-manager config
+# @flag -b --boot use boot action to prepare config without switching (eg. kernel updates)
 switch() {
+  local action="switch"
+  if [ -n "$argc_boot" ]; then
+    action="boot"
+  fi
+
   export TARGET_HOST
   TARGET_HOST=$(hostname | tr '[:upper:]' '[:lower:]')
   clear
@@ -177,7 +183,7 @@ switch() {
     _q '.clients | has(env(TARGET_HOST))' &>/dev/null; then
     _log-success "nixos: configuration '$TARGET_HOST' found"
     _confirm "switch system?"
-    sudo nixos-rebuild switch --flake ".#$TARGET_HOST" --fallback --no-write-lock-file $offline_flags
+    sudo nixos-rebuild "$action" --flake ".#$TARGET_HOST" --fallback --no-write-lock-file $offline_flags
     return
   fi
 
