@@ -113,9 +113,7 @@
             {
               system = {inherit stateVersion;};
               networking.hostName = n.hostName;
-              users.users = {
-                "${n.user}" = {enable = true;};
-              };
+              users.users.cethien.enable = true;
               boot.kernelPackages = pkgsUnstable.linuxPackages_latest;
               nix.settings = {
                 substituters = [
@@ -129,16 +127,18 @@
 
             home-manager.nixosModules.home-manager
             {
-              home-manager = {
+              home-manager = let
+                u = "cethien";
+              in {
                 backupFileExtension = "hm-bak";
                 useGlobalPkgs = false;
                 useUserPackages = true;
 
-                users."${n.user}" = {
+                users."${u}" = {
                   imports = [./clients/${n.hostName}/home.nix];
                   home.stateVersion = stateVersion;
-                  home.username = n.user;
-                  home.homeDirectory = "/home/${n.user}";
+                  home.username = u;
+                  home.homeDirectory = "/home/${u}";
                 };
 
                 extraSpecialArgs =

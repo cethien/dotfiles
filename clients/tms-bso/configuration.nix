@@ -1,17 +1,24 @@
 {
-  pkgs,
+  lib,
   config,
+  pkgs,
   sops-nix,
   ...
 }: let
   u = config.users.users.cethien;
+  uname = "bsotnikow";
 in {
   imports = [
     ../../modules/nixos
     sops-nix.nixosModules.sops
     ./smb.nix
   ];
-  users.users.cethien.name = "bsotnikow";
+  users.users.cethien.name = uname;
+  home-manager.users.cethien.home = {
+    username = lib.mkForce uname;
+    homeDirectory = lib.mkForce "/home/${uname}";
+  };
+
   services.fprintd.enable = true;
 
   sops.age.sshKeyPaths = ["${u.home}/.ssh/id_ed25519"];

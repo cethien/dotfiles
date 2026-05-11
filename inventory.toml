@@ -1,8 +1,4 @@
-[homes.tms-bso]
-user = "bsotnikow"
-
 [clients.tms-bso]
-user = "bsotnikow"
 disk_id = "nvme-Samsung_SSD_990_PRO_2TB_S6Z2NJ0W616857X"
 
 [clients.hp-430-g7]
