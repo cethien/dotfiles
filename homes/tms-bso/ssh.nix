@@ -35,10 +35,15 @@
 
       # --- INFRA
 
-      "deez-nut".hostname = "10.0.10.20";
-      "prmx-virt-cl-1-node-a".hostname = "10.180.80.252";
-      "prmx-virt-cl-1-node-b".hostname = "10.180.80.250";
+      "pi".hostname = "10.0.10.20";
+      "pve-node-a".hostname = "10.180.80.252";
+      "pve-node-a".user = "root";
+
+      "pve-node-b".hostname = "10.180.80.250";
+      "pve-node-b".user = "root";
+
       "pve-node-c".hostname = "10.0.10.7";
+      "pve-node-c".user = "root";
       # --- EXTERNAL
 
       "magento-staging-hetzner".hostname = "65.108.1.248";

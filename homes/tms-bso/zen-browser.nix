@@ -233,6 +233,11 @@
               tags = ["kasserver" "mail" "domains" "cdn" "ftp"];
             }
             {
+              name = "domains";
+              url = "https://domain-bestellsystem.de";
+              tags = ["kasserver" "mail" "domains" "cdn" "ftp"];
+            }
+            {
               name = "maxcluster";
               url = "https://app.maxcluster.de/";
               tags = ["hosting" "magento" "staging"];
