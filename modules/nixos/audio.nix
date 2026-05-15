@@ -42,46 +42,26 @@ in {
       extraLadspaPackages = with pkgs; [
         rnnoise-plugin
         deepfilternet
+        tap-plugins
       ];
 
       extraConfig.pipewire = let
         mic = config.services.pipewire.active-mic;
       in
         lib.mkIf (mic != null) {
-          "151-input-denoising-deepfilter"."context.modules" = [
+          "150-mic-filter"."context.modules" = [
             {
               name = "libpipewire-module-filter-chain";
               args = {
-                "node.description" = "ANC (DeepFilter)";
-                "media.name" = "ANC (DeepFilter)";
+                "node.description" = "Microphone (Filtered)";
+                "media.name" = "Microphone (Filtered)";
                 "filter.graph" = {
-                  nodes = [
+                  links = [
                     {
-                      type = "ladspa";
-                      name = "deepfilter";
-                      plugin = "libdeep_filter_ladspa";
-                      label = "deep_filter_mono";
+                      output = "rnnoise:Output";
+                      input = "deesser:Input";
                     }
                   ];
-                };
-                "capture.props" = {
-                  "node.passive" = true;
-                  "node.target" = mic;
-                };
-                "playback.props" = {
-                  "media.class" = "Audio/Source";
-                  "node.name" = "deepfilter_source";
-                };
-              };
-            }
-          ];
-          "150-input-denoising-rnnoise"."context.modules" = [
-            {
-              name = "libpipewire-module-filter-chain";
-              args = {
-                "node.description" = "ANC (RNNoise)";
-                "media.name" = "ANC (RNNoise)";
-                "filter.graph" = {
                   nodes = [
                     {
                       type = "ladspa";
@@ -89,19 +69,30 @@ in {
                       plugin = "librnnoise_ladspa";
                       label = "noise_suppressor_mono";
                       control = {
-                        "VAD Threshold (%)" = 58.0;
-                        "Release time (ms)" = 200;
+                        "VAD Threshold (%)" = 20.0;
+                        # "Release time (ms)" = 200;
+                      };
+                    }
+                    {
+                      type = "ladspa";
+                      name = "deesser";
+                      plugin = "tap_deesser";
+                      label = "tap_deesser";
+                      control = {
+                        "Threshold Level [dB]" = -20.0;
+                        "Frequency [Hz]" = 3400.0;
                       };
                     }
                   ];
                 };
+                "audio.position" = ["MONO"];
                 "capture.props" = {
                   "node.passive" = true;
                   "node.target" = mic;
                 };
                 "playback.props" = {
                   "media.class" = "Audio/Source";
-                  "node.name" = "rnnoise_source";
+                  "node.name" = "mic_source";
                 };
               };
             }
