@@ -7,26 +7,32 @@
 # @flag -f --skip-validation $SKIP_VALIDATION skip inventory validation
 
 # @cmd updates inputs
-# @describe                           updates host/client inputs [TO UPDATE ALL OR INDIVIDUAL ONES USE nix flake update]
-# @flag --clients                     only update client related inputs
-# @flag --omit-nixpkgs                doesnt update nixpkgs/nixpkgs-unstable (for when only updating module options)
+# @describe                           updates inputs [defaults client modules]
+# @flag --hosts                       exclusively update host related inputs
+# @flag --nixpkgs                     also update nixpkgs / nixpkgs-unstable (defaults to nixpkgs-unstable, use with --hosts for nixpkgs)
+# @flag --zen                         also update zen and firefox addons
+# @flag --tools                       update repo tooling
 flake-update() {
   local INPUTS=()
-  if [ -n "$argc_clients" ]; then
-    [ -z "$argc_omit_nixpkgs" ] && INPUTS+=(nixpkgs-unstable)
+
+  if [ -n "$argc_hosts" ]; then
+    [ -n "$argc_nixpkgs" ] && INPUTS+=(nixpkgs)
+  else
+    [ -n "$argc_nixpkgs" ] && INPUTS+=(nixpkgs-unstable)
+    [ -n "$argc_zen" ] && INPUTS+=(zen-browser firefox-addons)
+
     INPUTS+=(
       nixos-hardware
+      nix-gaming
+      musnix
       home-manager
       stylix
       nvf
-      nur
       spicetify-nix
-      zen-browser
     )
-  else
-    [ -z "$argc_omit_nixpkgs" ]
-    INPUTS+=(flake-utils deploy-rs disko sops-nix)
   fi
+  INPUTS+=(sops-nix)
+  [ -n "$argc_tools" ] && INPUTS+=(flake-utils deploy-rs disko)
 
   echo "Updating: ${INPUTS[*]}"
   nix flake update "${INPUTS[@]}"

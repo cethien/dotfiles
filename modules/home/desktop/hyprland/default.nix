@@ -38,6 +38,8 @@ in {
     programs.rofi.enable = true;
 
     wayland.windowManager.hyprland = {
+      configType = "hyprlang";
+
       plugins = with pkgs.hyprlandPlugins; [
         hypr-dynamic-cursors
       ];

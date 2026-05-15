@@ -29,6 +29,9 @@
     bluetooth.enable = true;
     bluetooth.settings = {
       General = {
+        SecureConnections = "off";
+        JustWorksRepairing = "always";
+
         ControllerMode = "bredr";
         FastConnectable = "true";
       };

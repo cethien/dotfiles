@@ -87,10 +87,9 @@ in {
 
           astro.enable = true;
           svelte.enable = true;
-          tailwind.enable = true;
           php.enable = true;
-          ts.enable = true;
-          ts.extensions.ts-error-translator.enable = true;
+          typescript.enable = true;
+          typescript.extensions.ts-error-translator.enable = true;
           css.enable = true;
           html.enable = true;
 
@@ -117,6 +116,10 @@ in {
 
           inlayHints.enable = true;
           formatOnSave = true;
+
+          presets = {
+            tailwindcss-language-server.enable = true;
+          };
         };
 
         autocomplete = {

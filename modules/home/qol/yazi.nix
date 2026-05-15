@@ -208,6 +208,22 @@ in {
 
       settings = {
         opener = {
+          castnow = [
+            {
+              run = ''castnow "$@"'';
+              desc = "Cast to Chromecast";
+              for = "unix";
+              block = true;
+            }
+          ];
+          castnow-transcode = [
+            {
+              run = ''castnow --tomp4 "$@"'';
+              desc = "Cast to Chromecast (Transcode)";
+              for = "unix";
+              block = true;
+            }
+          ];
           imv = [
             {
               run = ''imv-dir "$@"'';
@@ -262,7 +278,7 @@ in {
           prepend_rules = [
             {
               mime = "audio/*";
-              use = ["mpv" "ocenaudio"];
+              use = ["mpv" "ocenaudio" "castnow"];
             }
             {
               mime = "image/svg+xml";
@@ -271,6 +287,18 @@ in {
             {
               mime = "image/*";
               use = ["imv" "pinta" "gimp"];
+            }
+            {
+              mime = "video/mp4";
+              use = ["mpv" "castnow"];
+            }
+            {
+              mime = "video/webm";
+              use = ["mpv" "castnow"];
+            }
+            {
+              mime = "video/*";
+              use = ["mpv" "castnow-transcode"];
             }
           ];
         };

@@ -66,8 +66,6 @@ in {
           pkgs.writeShellScriptBin "rofi-tmux" (builtins.readFile ./rofi-tmux.sh)
         }/bin/rofi-tmux"
 
-        "SUPER, B, exec, ${pkgs.rofi-bluetooth}/bin/rofi-bluetooth"
-
         "SUPER, R, exec, ${
           pkgs.writeShellScriptBin "rofi-screenrecord" (builtins.readFile ./rofi-screenrecord.sh)
         }/bin/rofi-screenrecord"

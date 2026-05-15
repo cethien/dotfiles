@@ -39,64 +39,74 @@ in {
 
       wireplumber.enable = true;
 
-      extraConfig.pipewire."99-input-denoising" = let
+      extraLadspaPackages = with pkgs; [
+        rnnoise-plugin
+        deepfilternet
+      ];
+
+      extraConfig.pipewire = let
         mic = config.services.pipewire.active-mic;
-      in {
-        "context.modules" = [
-          {
-            name = "libpipewire-module-filter-chain";
-            args = {
-              "node.description" = "ANC (RNNoise)";
-              "media.name" = "ANC (RNNoise)";
-              "filter.graph" = {
-                nodes = [
-                  {
-                    type = "ladspa";
-                    name = "rnnoise";
-                    plugin = "${pkgs.rnnoise-plugin}/lib/ladspa/librnnoise_ladspa.so";
-                    label = "noise_suppressor_mono";
-                    control = {"VAD Threshold (%)" = 70.0;};
-                  }
-                ];
+      in
+        lib.mkIf (mic != null) {
+          "151-input-denoising-deepfilter"."context.modules" = [
+            {
+              name = "libpipewire-module-filter-chain";
+              args = {
+                "node.description" = "ANC (DeepFilter)";
+                "media.name" = "ANC (DeepFilter)";
+                "filter.graph" = {
+                  nodes = [
+                    {
+                      type = "ladspa";
+                      name = "deepfilter";
+                      plugin = "libdeep_filter_ladspa";
+                      label = "deep_filter_mono";
+                    }
+                  ];
+                };
+                "capture.props" = {
+                  "node.passive" = true;
+                  "node.target" = mic;
+                };
+                "playback.props" = {
+                  "media.class" = "Audio/Source";
+                  "node.name" = "deepfilter_source";
+                };
               };
-              "capture.props" = {
-                "node.passive" = true;
-                "node.target" = mic;
+            }
+          ];
+          "150-input-denoising-rnnoise"."context.modules" = [
+            {
+              name = "libpipewire-module-filter-chain";
+              args = {
+                "node.description" = "ANC (RNNoise)";
+                "media.name" = "ANC (RNNoise)";
+                "filter.graph" = {
+                  nodes = [
+                    {
+                      type = "ladspa";
+                      name = "rnnoise";
+                      plugin = "librnnoise_ladspa";
+                      label = "noise_suppressor_mono";
+                      control = {
+                        "VAD Threshold (%)" = 58.0;
+                        "Release time (ms)" = 200;
+                      };
+                    }
+                  ];
+                };
+                "capture.props" = {
+                  "node.passive" = true;
+                  "node.target" = mic;
+                };
+                "playback.props" = {
+                  "media.class" = "Audio/Source";
+                  "node.name" = "rnnoise_source";
+                };
               };
-              "playback.props" = {
-                "media.class" = "Audio/Source";
-                "node.name" = "rnnoise_source";
-              };
-            };
-          }
-          # --- DeepFilterNet Source ---
-          {
-            name = "libpipewire-module-filter-chain";
-            args = {
-              "node.description" = "ANC (DeepFilter)";
-              "media.name" = "ANC (DeepFilter)";
-              "filter.graph" = {
-                nodes = [
-                  {
-                    type = "ladspa";
-                    name = "deepfilter";
-                    plugin = "${pkgs.deepfilternet}/lib/ladspa/libdeep_filter_ladspa.so";
-                    label = "deep_filter_mono";
-                  }
-                ];
-              };
-              "capture.props" = {
-                "node.passive" = true;
-                "node.target" = mic;
-              };
-              "playback.props" = {
-                "media.class" = "Audio/Source";
-                "node.name" = "deepfilter_source";
-              };
-            };
-          }
-        ];
-      };
+            }
+          ];
+        };
     };
   };
 }

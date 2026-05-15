@@ -25,6 +25,10 @@ in {
       "SUPER SHIFT, COMMA, exec, ${
         (pkgs.cethien.mkHyprLaunchBin' "qalc").bin
       }"
+
+      "SUPER, B, exec, ${
+        (pkgs.cethien.mkHyprLaunchBin' "bluetui").bin
+      }"
     ];
 
     home.packages = with pkgs; [
@@ -53,6 +57,7 @@ in {
 
       slides
       sysz
+      bluetui
     ];
 
     programs = {
