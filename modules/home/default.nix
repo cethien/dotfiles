@@ -13,7 +13,7 @@
     ./restic.nix
 
     ./desktop
-    ./terminals.nix
+    ./kitty.nix
 
     ./tmux.nix
     ./ssh.nix
