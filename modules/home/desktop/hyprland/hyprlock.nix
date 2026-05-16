@@ -8,16 +8,19 @@
   cfg = config.programs.hyprlock;
 
   fonts = config.stylix.fonts;
-  colors = {
-    base01 = "rgba(31, 29, 46, 0.6)"; # base01 - Darker Plum/Gray, subtle transparency
-    base02 = "rgba(38, 35, 53, 1.0)"; # base02 - Mid-Dark Plum/Gray, default ring (subtle)
-    base04 = "rgba(110, 106, 134, 1.0)"; # base04 - Muted Grey, soft hint
-    base05 = "rgba(224, 222, 244, 1.0)"; # base05 - Pale Lavender White, clear and readable
-    base08 = "rgba(235, 111, 146, 1.0)"; # base08 - Rosewater/Pink Accent for a cozy pop!
-    base09 = "rgba(246, 193, 119, 1.0)"; # base09 - Gold/Orange for Caps Lock (warning)
-    base0B = "rgba(49, 116, 143, 1.0)"; # base0B - Iris/Teal, calming clear input
-    base0D = "rgba(196, 167, 231, 1.0)"; # base0D - Lilac/Lavender for virtual keyboard
-    base0E = "rgba(231, 130, 132, 1.0)"; # base0E - Red Accent for errors
+  colors = let
+    c = config.lib.stylix.colors;
+    o = toString config.stylix.opacity.terminal;
+  in {
+    base01 = "rgba(${c.base01-rgb-r}, ${c.base01-rgb-g}, ${c.base01-rgb-b}, ${o})";
+    base02 = "rgba(${c.base02-rgb-r}, ${c.base02-rgb-g}, ${c.base02-rgb-b}, ${o})";
+    base04 = "rgba(${c.base04-rgb-r}, ${c.base04-rgb-g}, ${c.base04-rgb-b}, ${o})";
+    base05 = "rgba(${c.base05-rgb-r}, ${c.base05-rgb-g}, ${c.base05-rgb-b}, ${o})";
+    base08 = "rgba(${c.base08-rgb-r}, ${c.base08-rgb-g}, ${c.base08-rgb-b}, ${o})";
+    base09 = "rgba(${c.base09-rgb-r}, ${c.base09-rgb-g}, ${c.base09-rgb-b}, ${o})";
+    base0B = "rgba(${c.base0B-rgb-r}, ${c.base0B-rgb-g}, ${c.base0B-rgb-b}, ${o})";
+    base0D = "rgba(${c.base0D-rgb-r}, ${c.base0D-rgb-g}, ${c.base0D-rgb-b}, ${o})";
+    base0E = "rgba(${c.base0E-rgb-r}, ${c.base0E-rgb-g}, ${c.base0E-rgb-b}, ${o})";
   };
 in {
   options.programs.hyprlock.monitor = lib.mkOption {
@@ -82,7 +85,8 @@ in {
               ring_color_vkey = colors.base0D;
               ring_color_verify = colors.base0B;
 
-              placeholder_text = "you again?";
+              placeholder_text = "";
+              fail_text = "whoops! try again";
 
               halign = "center";
               valign = "center";
@@ -124,6 +128,19 @@ in {
                 valign = "center";
                 position = "0, -255";
                 text = ''cmd[update:1000] ${pkgs.writeShellScriptBin "hyprlock-status" (builtins.readFile ./hyprlock-status.sh)}/bin/hyprlock-status'';
+              })
+
+            (shadows
+              // {
+                monitor = cfg.monitor;
+                color = colors.base04;
+                font_family = fonts.sansSerif.name;
+                font_size = "14";
+                text_align = "center";
+                halign = "center";
+                valign = "center";
+                position = "0, -150";
+                text = ''cmd[update:0] ${pkgs.writeShellScriptBin "hyprlock-quotes" (builtins.readFile ./hyprlock-quotes.sh)}/bin/hyprlock-quotes'';
               })
           ]
         ];
