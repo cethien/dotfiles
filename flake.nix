@@ -46,6 +46,18 @@
     musnix.inputs.nixpkgs.follows = "nixpkgs-unstable";
   };
 
+  nixConfig = {
+    extra-substituters = [
+      "https://nix-community.cachix.org"
+      "https://nix-gaming.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
+    ];
+    bash-prompt-prefix = "[devshell] ";
+  };
+
   outputs = inputs @ {
     self,
     flake-utils,
@@ -101,6 +113,7 @@
       homes;
 
       clients = import ./clients;
+
       clientConfigs = builtins.mapAttrs (name: n:
         nixpkgs-unstable.lib.nixosSystem
         {
@@ -114,15 +127,8 @@
               system = {inherit stateVersion;};
               networking.hostName = n.hostName;
               users.users.cethien.enable = true;
+
               boot.kernelPackages = pkgsUnstable.linuxPackages_latest;
-              nix.settings = {
-                substituters = [
-                  "https://nix-gaming.cachix.org"
-                ];
-                trusted-public-keys = [
-                  "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
-                ];
-              };
             }
 
             home-manager.nixosModules.home-manager
@@ -153,6 +159,27 @@
           specialArgs = inputs // {nixpkgs = nixpkgs-unstable;};
         })
       clients;
+
+      boostrapClient = nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          ({pkgs, ...}: {
+            networking.hostName = "desktop-installer";
+            security.sudo.wheelNeedsPassword = false;
+            users.users.root.openssh.authorizedKeys.keys = [
+              "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIXmfkcW8dPvC5A7QxbHXackv5uzOHclJOQtqLRHeiME deployrs@tmspro.shop"
+            ];
+
+            environment.systemPackages = with pkgs; [
+              vim
+              tmux
+              git
+              sops
+              age
+            ];
+          })
+        ];
+      };
 
       pkgs = pkgsFor system;
       hosts = import ./hosts;
