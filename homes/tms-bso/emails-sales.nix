@@ -10,10 +10,12 @@ let
     "bestellungen-magento@tmsproshop.de"
   ];
 
+  host = "w01d0a32.kasserver.com";
+
   accs = builtins.listToAttrs (map
     (name: {
       inherit name;
-      value = rec {
+      value = {
         thunderbird = {
           enable = true;
           profiles = ["sales"];
@@ -24,12 +26,12 @@ let
 
         userName = name;
         imap = {
-          host = "w01d0a32.kasserver.com";
+          inherit host;
           port = 993;
           tls.enable = true;
         };
         smtp = {
-          host = imap.host;
+          inherit host;
           port = 465;
           tls.enable = true;
         };

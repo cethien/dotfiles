@@ -42,21 +42,27 @@
       };
 
       pins = {
-        "outlook" = {
-          id = "eee232e4-72d9-4d7c-b4e6-02a1f6155f7f";
-          url = "https://outlook.tmsproshop.de/owa";
-          isEssential = true;
-          position = 100;
-        };
-
         "admin" = {
           id = "9d8a8f91-7e29-4688-ae2e-da4e49d4a179";
           url = "https://admin.tmspro.shop/";
-          position = 110;
+          position = 1010;
+          isEssential = true;
         };
         "tmspro.shop" = {
           id = "96070d37-4b78-490f-87d1-884474bd9434";
           url = "https://tmspro.shop";
+          position = 1011;
+          isEssential = true;
+        };
+
+        "proxmox" = {
+          id = "81af52ca-b49b-4feb-89b5-20ae325309aa";
+          url = "https://10.180.80.252:8006";
+          position = 110;
+        };
+        "pve-node-c" = {
+          id = "84a572b9-77e0-4d70-a96d-590d95d5148a";
+          url = "https://10.0.10.7:8006";
           position = 111;
         };
       };
