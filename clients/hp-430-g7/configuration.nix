@@ -36,7 +36,7 @@ in {
   virtualisation.docker.enable = true;
   virtualisation.libvirtd.enable = true;
 
-  services.pipewire.active-mic = "alsa_input.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__Mic1__source";
+  # services.pipewire.active-mic = "alsa_input.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__Mic1__source";
 
   hardware = {
     enableRedistributableFirmware = true;

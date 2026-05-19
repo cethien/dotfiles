@@ -8,11 +8,11 @@
 }: let
   inherit (lib) mkIf;
 in {
-  options.services.pipewire.active-mic = lib.mkOption {
-    type = lib.types.nullOr lib.types.str;
-    default = null;
-    description = "mic device for anc. null = nothing";
-  };
+  # options.services.pipewire.active-mic = lib.mkOption {
+  #   type = lib.types.nullOr lib.types.str;
+  #   default = null;
+  #   description = "mic device for anc. null = nothing";
+  # };
 
   imports = [
     nix-gaming.nixosModules.pipewireLowLatency
@@ -33,7 +33,7 @@ in {
 
       lowLatency = {
         enable = true;
-        quantum = 64;
+        quantum = 256;
         rate = 48000;
       };
 
@@ -45,10 +45,12 @@ in {
         tap-plugins
       ];
 
-      extraConfig.pipewire = let
-        mic = config.services.pipewire.active-mic;
-      in
-        lib.mkIf (mic != null) {
+      extraConfig.pipewire =
+        #   let
+        #   mic = config.services.pipewire.active-mic;
+        # in
+        #   lib.mkIf (mic != null)
+        {
           "150-mic-filter"."context.modules" = [
             {
               name = "libpipewire-module-filter-chain";
@@ -88,7 +90,8 @@ in {
                 "audio.position" = ["MONO"];
                 "capture.props" = {
                   "node.passive" = true;
-                  "node.target" = mic;
+                  "node.target" = "@DEFAULT_AUDIO_INPUT@";
+                  # "node.target" = mic;
                 };
                 "playback.props" = {
                   "media.class" = "Audio/Source";

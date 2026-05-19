@@ -19,7 +19,7 @@
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
-  services.pipewire.active-mic = "alsa_input.usb-3142_Fifine_Microphone-00.mono-fallback";
+  # services.pipewire.active-mic = "alsa_input.usb-3142_Fifine_Microphone-00.mono-fallback";
 
   services.printing.enable = true;
   hardware = {

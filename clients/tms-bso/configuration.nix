@@ -13,6 +13,7 @@ in {
     sops-nix.nixosModules.sops
     ./smb.nix
   ];
+
   users.users.cethien.name = uname;
   home-manager.users.cethien.home = {
     username = lib.mkForce uname;
@@ -32,7 +33,10 @@ in {
     enable = true;
     extraSetFlags = ["--operator=${u.name}"];
   };
-  # services.pipewire.active-mic = "alsa_input.usb-3142_Fifine_Microphone-00.mono-fallback";
+
+  # services.pipewire.active-mic = "alsa_input.pci-0000_07_00.6.analog-stereo";
+
+  musnix.kernel.realtime = false;
 
   hardware = {
     enableRedistributableFirmware = true;
