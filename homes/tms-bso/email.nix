@@ -7,7 +7,7 @@
   mail = "b.sotnikow@tmsproshop.de";
   userName = "b.sotnikow@ad.tmsproshop.de";
 in {
-  # imports = [./emails-sales.nix];
+  imports = [./emails-sales.nix];
 
   config = {
     accounts.email.accounts."${mail}" = {
