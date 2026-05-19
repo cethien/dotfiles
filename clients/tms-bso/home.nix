@@ -54,37 +54,11 @@ in {
     omnissa-horizon-client
   ];
 
-  programs.thunderbird = {
-    enable = true;
-    languagePacks = [
-      "en-GB"
-      "de"
-    ];
-    profiles.default.isDefault = true;
-  };
-
   services.davmail.enable = true;
-  services.davmail = {
-    imitateOutlook = true;
-    settings = {
-      "davmail.url" = "https://outlook.tmsproshop.de/EWS/Exchange.asmx";
-      "davmail.allowRemote" = false;
-      "davmail.bindAddress" = "127.0.0.1";
-
-      "davmail.imapPort" = 55555;
-      "davmail.smtpPort" = 1025;
-
-      "davmail.caldavAutoSchedule" = false;
-      "davmail.folderSizeLimit" = 10;
-      "davmail.smtpSaveInSent" = true;
-
-      "log4j.logger.rootLogger" = "INFO";
-    };
-  };
 
   programs = {
     slack.enable = true;
-
+    thunderbird.enable = true;
     spotify.enable = true;
     keepassxc.enable = true;
     container-tools.enable = true;

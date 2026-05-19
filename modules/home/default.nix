@@ -30,6 +30,7 @@
     ./browser
     ./keepassxc.nix
     ./office.nix
+    ./thunderbird.nix
 
     ./spotify.nix
     ./discord.nix
