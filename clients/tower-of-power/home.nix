@@ -58,6 +58,8 @@ in {
     spotify.enable = true;
     vesktop.enable = true;
 
+    thunderbird.enable = true;
+
     obs-studio.enable = true;
     pokemmo.enable = true;
     retroarch.enable = true;

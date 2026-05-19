@@ -3,15 +3,17 @@
   lib,
   config,
   ...
-}: {
+}: let
+  name = "cethien";
+  email = "borislaw.sotnikow@gmx.de";
+in {
   config = {
     sops.secrets.gh_token = {
       sopsFile = ./secrets.yml;
     };
 
     programs.git.settings.user = {
-      name = "cethien";
-      email = "borislaw.sotnikow@gmx.de";
+      inherit name email;
     };
 
     sops.secrets.rclone_gdrive_token = {
@@ -60,19 +62,39 @@
       };
     };
 
-    accounts.email.accounts = let
-      email = "borislaw.sotnikow@gmx.de";
-    in {
-      "${email}" = {
-        enable = lib.mkDefault false;
-        thunderbird = {
-          enable = true;
-          profiles = ["${email}"];
-        };
+    programs.thunderbird.profiles."${name}".isDefault = true;
 
+    accounts = let
+      thunderbird = {
+        enable = true;
+        profiles = ["${name}"];
+      };
+      gmail = "megustastudiofails@gmail.com";
+    in {
+      calendar.accounts."${gmail}" = {
+        primary = true;
+        inherit thunderbird;
+        remote = {
+          type = "caldav";
+          url = "https://apidata.googleusercontent.com/caldav/v2/${gmail}/events/";
+          userName = gmail;
+        };
+      };
+
+      contact.accounts."${gmail}" = {
+        inherit thunderbird;
+        remote = {
+          type = "carddav";
+          url = "https://www.googleapis.com/carddav/v1/principals/${gmail}/lists/default/";
+          userName = gmail;
+        };
+      };
+
+      email.accounts."${email}" = {
+        primary = true;
+        inherit thunderbird;
         realName = "Borislaw Sotnikow";
         address = email;
-
         userName = email;
         smtp = {
           host = "mail.gmx.net";
