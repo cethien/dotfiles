@@ -63,12 +63,15 @@
     accounts.email.accounts = let
       email = "borislaw.sotnikow@gmx.de";
     in {
-      "${email}" = rec {
+      "${email}" = {
         enable = lib.mkDefault false;
-        thunderbird.enable = true;
+        thunderbird = {
+          enable = true;
+          profiles = ["${email}"];
+        };
 
-        address = email;
         realName = "Borislaw Sotnikow";
+        address = email;
 
         userName = email;
         smtp = {
@@ -84,7 +87,6 @@
           port = 993;
           tls.enable = true;
         };
-        passwordCommand = "secret-tool lookup smtp-host ${smtp.host} smtp-user ${address}";
       };
     };
   };

@@ -12,6 +12,7 @@ in {
   config = {
     accounts.email.accounts."${mail}" = {
       primary = true;
+
       thunderbird = {
         enable = true;
         profiles = ["${mail}"];
@@ -62,14 +63,17 @@ in {
         "calendar.itip.notify" = false;
         "calendar.scheduling.show_invite_message" = false;
 
-        "ldap_2.servers.davmail.description" = "DavMail Adressbuch";
-        "ldap_2.servers.davmail.uri" = "ldap://localhost:1389/ou=people";
-        "ldap_2.servers.davmail.baseIDN" = "ou=people";
-        "ldap_2.servers.davmail.auth.dn" = userName;
-        "ldap_2.servers.davmail.maxHits" = 100;
+        "ldap_2.servers.tmsproshop.description" = "TMS Pro Shop GmbH";
+        "ldap_2.servers.tmsproshop.uri" = "ldap://localhost:1389/ou=people??sub?(objectclass=*)";
+        "ldap_2.servers.tmsproshop.auth.dn" = userName;
+        "ldap_2.servers.tmsproshop.baseIDN" = "ou=people";
+        "ldap_2.servers.tmsproshop.maxHits" = 100;
 
         "ldap_2.autoComplete.useDirectory" = true;
-        "ldap_2.autoComplete.directoryServer" = "ldap_2.servers.davmail";
+        "ldap_2.autoComplete.directoryServer" = "ldap_2.servers.tmsproshop";
+      };
+      feedAccounts = {
+        "News" = {};
       };
     };
 
