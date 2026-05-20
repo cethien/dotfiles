@@ -27,25 +27,21 @@ in {
   programs.command-not-found.enable = true;
 
   time.timeZone = "Europe/Berlin";
+  console.keyMap = "de-latin1-nodeadkeys";
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.extraLocaleSettings = let
     formattingLocale = "de_DE.UTF-8";
   in {
-    LC_ADDRESS = formattingLocale;
-    LC_IDENTIFICATION = formattingLocale;
+    # LC_TIME = formattingLocale;
     LC_MEASUREMENT = formattingLocale;
-    LC_MONETARY = formattingLocale;
-    LC_NAME = formattingLocale;
     LC_NUMERIC = formattingLocale;
-    LC_PAPER = formattingLocale;
+    LC_NAME = formattingLocale;
+    LC_IDENTIFICATION = formattingLocale;
     LC_TELEPHONE = formattingLocale;
-    LC_TIME = formattingLocale;
+    LC_ADDRESS = formattingLocale;
+    LC_MONETARY = formattingLocale;
+    LC_PAPER = formattingLocale;
   };
-  services.xserver.xkb = {
-    layout = "de";
-    variant = "nodeadkeys";
-  };
-  console.useXkbConfig = true;
 
   hardware.uinput.enable = mkDefault true;
 

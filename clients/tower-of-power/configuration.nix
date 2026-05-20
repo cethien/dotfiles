@@ -71,7 +71,7 @@
   };
 
   boot = {
-    loader.grub.splashImage = ./grub.jpg;
+    loader.grub.splashImage = ../hp-430-g7/grub.jpg;
     plymouth = {
       enable = true;
       theme = "rings_2";
