@@ -64,7 +64,7 @@ in {
       sensibleOnTop = true;
       plugins = with pkgs.tmuxPlugins; [
         sensible
-        tmux-floax
+        # tmux-floax
         {
           plugin = yank;
           extraConfig = ''
@@ -114,6 +114,18 @@ in {
         {
           key = "r";
           action = "source-file ~/.config/tmux/tmux.conf";
+        }
+
+        # SSH Popup (Prefix + o)
+        {
+          key = "o";
+          action = ''display-popup -w 80% -h 75% -E "sshz"'';
+        }
+
+        # System Monitor Popup (Prefix + p)
+        {
+          key = "p";
+          action = ''display-popup -w 90% -h 90% -E "btm"'';
         }
 
         # switch panes using Ctrl-Shift-arrow without prefix

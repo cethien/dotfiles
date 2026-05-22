@@ -19,7 +19,6 @@ fi
 
 list_ssh_connections() {
   if [ -f "$SSH_CONFIG" ]; then
-    # Filtert Wildcards wie '*' aus der Liste
     awk '/^Host[ 	]/ {
         for (i = 2; i <= NF; i++) {
             if ($i != "*" && $i !~ /\*/) print $i
@@ -28,14 +27,33 @@ list_ssh_connections() {
   fi
 }
 
-# --- main logic ---
-CHOICE=$(
-  list_ssh_connections | fzf \
-    --prompt="󰣀 ssh > " \
-    --preview "$0 --preview {}" \
-    --preview-label="config"
-)
+FZF_OPTS=(--prompt="   ssh > " --preview "$0 --preview {}")
+
+if [ -n "${TMUX:-}" ]; then
+  FZF_OPTS+=(--header="Enter: New Window | Ctrl-s: Split")
+  FZF_OPTS+=(--bind 'ctrl-s:print(ctrl-s)+accept')
+fi
+
+RESULT=$(list_ssh_connections | fzf "${FZF_OPTS[@]}")
+
+KEY=$(head -1 <<<"$RESULT")
+if [[ "$KEY" == "ctrl-s" ]]; then
+  CHOICE=$(sed -n '2p' <<<"$RESULT")
+else
+  CHOICE="$KEY"
+  KEY="window"
+fi
 
 [ -z "$CHOICE" ] && exit 0
 
-exec ssh "$CHOICE"
+CMD="TERM=xterm-256color ssh -t $CHOICE 'if command -v tmux >/dev/null; then tmux a || tmux; else \$SHELL; fi'"
+
+if [ -n "${TMUX:-}" ]; then
+  if [[ "$KEY" == "ctrl-s" ]]; then
+    tmux split-window -h "$CMD"
+  else
+    tmux new-window -n "ssh@$CHOICE" "$CMD"
+  fi
+else
+  exec bash -c "$CMD"
+fi
