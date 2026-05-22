@@ -3,7 +3,8 @@
     matchBlocksExtra = {
       "*".identityFile = "~/.ssh/id_ed25519";
 
-      "weclapp-test".hostname = "10.0.30.60";
+      "weclapp-new-test".hostname = "10.0.30.60";
+      "weclapp-new".hostname = "10.0.30.21";
       "magento".hostname = "10.0.30.40";
       "services-prod".hostname = "10.0.30.20";
       "services-admin".hostname = "10.0.30.10";
@@ -30,6 +31,7 @@
 
       "bnl".hostname = "10.102.99.93";
 
+      "weclapp-test".hostname = "10.0.30.97";
       "weclapp-prod".hostname = "10.102.99.97";
       "kanboard".hostname = "10.102.99.95";
 
