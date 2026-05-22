@@ -26,6 +26,7 @@ in {
       unzip
       rar
       p7zip
+      file
 
       poppler-utils # pdf stuff
       lynx # term browser
