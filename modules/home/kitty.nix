@@ -17,12 +17,4 @@
       "ctrl+shift+right" = "no_op";
     };
   };
-
-  wayland.windowManager.hyprland.settings = {
-    "$terminal" = "kitty";
-
-    bind = [
-      "SUPER SHIFT, RETURN, exec, $terminal"
-    ];
-  };
 }

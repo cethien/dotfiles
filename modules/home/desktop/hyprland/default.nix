@@ -181,6 +181,7 @@ in {
             fi
           '';
         in [
+          "SUPER SHIFT, RETURN, exec, ${pkgs.kitty}/bin/kitty"
           #
           "SUPER SHIFT, C, exec, ${pkgs.hyprpicker}/bin/hyprpicker -a"
 

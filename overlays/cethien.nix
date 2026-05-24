@@ -56,7 +56,7 @@ self: super: {
     };
 
     mkHyprLaunchBin' = exec: (
-      self.cethien.mkHyprLaunchBin exec "kitty --class ${exec} -e ${exec}" exec
+      self.cethien.mkHyprLaunchBin exec "${super.kitty}/bin/kitty --class ${exec} -e ${exec}" exec
     );
   };
 }

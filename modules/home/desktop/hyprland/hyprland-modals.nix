@@ -29,7 +29,7 @@
 
   getExecCommand = m:
     if m.terminal
-    then "kitty --class ${m.class} -e ${m.exec}"
+    then "${pkgs.kitty}/bin/kitty --class ${m.class} -e ${m.exec}"
     else m.exec;
 
   makeWorkspaces =
