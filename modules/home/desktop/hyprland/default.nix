@@ -94,9 +94,7 @@ in {
         };
 
         scrolling = {
-          column_width = 0.85;
-          direction = "right";
-          fullscreen_on_one_column = true;
+          column_width = 0.9;
         };
 
         master = {
@@ -148,6 +146,7 @@ in {
             "border, 1, 3, deez"
             "fade, 1, 3, deez"
             "workspaces, 1, 3, deez"
+            "specialWorkspace, 1, 3, deez, slidevert"
           ];
         };
 
