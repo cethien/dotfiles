@@ -64,7 +64,6 @@ in {
       sensibleOnTop = true;
       plugins = with pkgs.tmuxPlugins; [
         sensible
-        # tmux-floax
         {
           plugin = yank;
           extraConfig = ''
