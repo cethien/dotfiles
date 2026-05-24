@@ -58,10 +58,6 @@ in {
           pkgs.writeShellScriptBin "rofi-websearch" (builtins.readFile ./rofi-websearch.sh)
         }/bin/rofi-websearch"
 
-        "SUPER, N, exec, ${
-          pkgs.writeShellScriptBin "rofi-net" (builtins.readFile ./rofi-net.sh)
-        }/bin/rofi-net"
-
         "SUPER, RETURN, exec, ${
           pkgs.writeShellScriptBin "rofi-tmux" (builtins.readFile ./rofi-tmux.sh)
         }/bin/rofi-tmux"

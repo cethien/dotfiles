@@ -22,13 +22,10 @@ in {
     home.packages = with pkgs; [
       curl
       wget
-
       iproute2
       nettools
-
       nmap
-      havn
-
+      rustscan
       dig
       doggo
       tcpdump
@@ -39,15 +36,16 @@ in {
       nethogs
       bmon
       arp-scan
-      whois
       fping
-
       tshark
       termshark
+      speedtest-go
+      whois
+      (pkgs.writeShellScriptBin "net-lookup" (builtins.readFile ./net-lookup.sh))
+      (pkgs.writeShellScriptBin "net-scan" (builtins.readFile ./net-scan.sh))
+      (pkgs.writeShellScriptBin "fzf-net" (builtins.readFile ./fzf-net.sh))
     ];
 
-    home.shellAliases = {
-      speedtest = "${pkgs.speedtest-go}/bin/speedtest-go";
-    };
+    wayland.windowManager.hyprland.modals."fzf-net".bind = "SUPER, N";
   };
 }
