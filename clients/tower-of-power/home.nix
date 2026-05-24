@@ -26,23 +26,21 @@ in {
       exec-once = ["xrandr --output DP-1 --primary"];
 
       workspace = with monitors; [
-        "1, monitor:${asus}, persistent:true, default:true"
+        "4, monitor:${arzopa}, persistent:true, default:true, layout:master"
+        "5, monitor:${arzopa}, persistent:true"
+
+        "1, monitor:${asus}, persistent:true, default:true, layout:master"
         "2, monitor:${asus}, persistent:true"
         "3, monitor:${asus}, persistent:true"
-
-        "4, monitor:${arzopa}, persistent:true, default:true"
-        "5, monitor:${arzopa}, persistent:true"
       ];
     };
     defaultWorkspaces = {
-      gaming = 2;
+      gaming = 10;
       browser = 4;
     };
 
     autostart = [
       "logitech"
-      "keepassxc"
-      "spotify"
       "steam"
     ];
   };

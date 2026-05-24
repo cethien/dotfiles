@@ -4,7 +4,7 @@
   ...
 }: let
   monitors = {
-    lpt = "eDP-1";
+    self = "eDP-1";
     eizo = "desc:Eizo Nanao Corporation EV2430 33096078";
   };
 in {
@@ -22,7 +22,7 @@ in {
     settings = with monitors; {
       monitor = [
         "${eizo}, 1920x1200@60, 0x0, 1"
-        "${lpt}, 1920x1080@60, 1920x0, 1"
+        "${self}, 1920x1080@60, 1920x0, 1"
       ];
       general.allow_tearing = true;
 
@@ -30,18 +30,10 @@ in {
         "1, monitor:${eizo}, persistent:true, default:true"
         "2, monitor:${eizo}, persistent:true"
         "3, monitor:${eizo}, persistent:true"
-        "4, monitor:${eizo}, persistent:true"
-        "5, monitor:${eizo}, persistent:true"
 
-        "6, monitor:${lpt}, persistent:true, default:true"
-        "7, monitor:${lpt}, persistent:true"
-        "8, monitor:${lpt}, persistent:true"
+        "4, monitor:${lpt}, persistent:true, default:true"
       ];
     };
-
-    autostart = [
-      "keepassxc"
-    ];
   };
   programs.hyprlock.monitor = "${monitors.lpt}";
 

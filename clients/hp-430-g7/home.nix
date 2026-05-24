@@ -2,7 +2,14 @@
   pkgs,
   config,
   ...
-}: {
+}: let
+  monitors = {
+    self = "eDP-1";
+    asus = "desc:ASUSTek COMPUTER INC VG27AQML1A S9LMQS167913";
+    arzopa = "desc:GWD ARZOPA 000000000001";
+    eizo = "desc:Eizo Nanao Corporation EV2430 33096078";
+  };
+in {
   imports = [
     ../../modules/home
     ../../modules/home/users/cethien
@@ -15,27 +22,23 @@
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
-      monitor = [
-        "HDMI-A-1, 2560x1440@60, 0x0, 1"
-        "eDP-1, 1920x1080@60, 320x1440, 1"
+      monitor = with monitors; [
+        "${asus}, 2560x1440@60, 0x0, 1"
+        "${self}, 1920x1080@60, 320x1440, 1"
       ];
 
-      workspace = [
-        "1, monitor:eDP-1, persistent:true"
-        "2, monitor:eDP-1, persistent:true"
+      workspace = with monitors; [
+        "1, monitor:${self}, persistent:true, layout:master"
+        "2, monitor:${self} persistent:true, default:true, layout:master"
 
-        "3, monitor:HDMI-A-1, persistent:true"
-        "4, monitor:HDMI-A-1, persistent:true"
-        "5, monitor:HDMI-A-1, persistent:true"
+        "3, monitor:${asus}, persistent:true"
+        "4, monitor:${asus}, persistent:true"
+        "5, monitor:${asus}, persistent:true"
       ];
     };
 
-    autostart = [
-      "keepassxc"
-    ];
-
     rofiPowerMenuOptions = "shutdown/suspend/reboot";
-    defaultWorkspaces.browser = 2;
+    defaultWorkspaces.browser = 1;
   };
 
   home.packages = with pkgs; [simple-scan ausweisapp libreoffice mixxx];

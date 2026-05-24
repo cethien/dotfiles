@@ -13,7 +13,6 @@ run_action() {
   "play_pause") $SPOTIFYCTL play-pause ;;
   "next") $SPOTIFYCTL next ;;
   "prev") $SPOTIFYCTL previous ;;
-  "mixer") kitty --class wiremix -e wiremix ;;
   "afk_on")
     wpctl set-mute @DEFAULT_SINK@ 1
     wpctl set-mute @DEFAULT_AUDIO_SOURCE@ 1
@@ -64,8 +63,6 @@ OPTIONS+=("$SEPARATOR")
 ACTIONS+=("none")
 
 # m, a, s, d: audio block
-OPTIONS+=("[m] 󰕾 open mixer")
-ACTIONS+=("mixer")
 
 if sink_muted && source_muted; then
   OPTIONS+=("[a] 󰒲 back (unmute all)")
@@ -84,10 +81,10 @@ else
 fi
 
 if source_muted; then
-  OPTIONS+=("[S] 󰍭 unmute mic")
+  OPTIONS+=("[m] 󰍭 unmute mic")
   ACTIONS+=("toggle_src")
 else
-  OPTIONS+=("[S] 󰍬 mute mic")
+  OPTIONS+=("[m] 󰍬 mute mic")
   ACTIONS+=("toggle_src")
 fi
 
@@ -102,10 +99,9 @@ IDX=$(
     -kb-select-1 "1" \
     -kb-select-2 "2" \
     -kb-select-3 "3" \
-    -kb-select-5 "m" \
-    -kb-select-6 "a" \
-    -kb-select-7 "s" \
-    -kb-select-8 "S"
+    -kb-select-5 "a" \
+    -kb-select-6 "s" \
+    -kb-select-7 "m"
 )
 
 if [[ -n "$IDX" ]]; then

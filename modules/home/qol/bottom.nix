@@ -7,13 +7,7 @@
   inherit (lib) mkIf;
 in {
   config = mkIf config.programs.bottom.enable {
-    programs.tmux.resurrectPluginProcesses = ["btm"];
-
-    wayland.windowManager.hyprland.settings.bind = [
-      "SUPER SHIFT, P, exec, ${
-        (pkgs.cethien.mkHyprLaunchBin' "btm").bin
-      }"
-    ];
+    wayland.windowManager.hyprland.modals."btm".bind = "SUPER SHIFT, P";
 
     home.shellAliases = {
       top = "btm --basic";

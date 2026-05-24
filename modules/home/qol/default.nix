@@ -21,15 +21,8 @@ in {
   };
 
   config = mkIf cfg.enable {
-    wayland.windowManager.hyprland.settings.bind = [
-      "SUPER SHIFT, COMMA, exec, ${
-        (pkgs.cethien.mkHyprLaunchBin' "qalc").bin
-      }"
-
-      "SUPER, B, exec, ${
-        (pkgs.cethien.mkHyprLaunchBin' "bluetui").bin
-      }"
-    ];
+    wayland.windowManager.hyprland.modals."qalc".bind = "SUPER SHIFT, COMMA";
+    wayland.windowManager.hyprland.modals."bluetui".bind = "SUPER, B";
 
     home.packages = with pkgs; [
       up

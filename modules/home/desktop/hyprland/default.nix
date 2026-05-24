@@ -7,6 +7,8 @@
   inherit (lib) mkIf mkDefault mkOption types;
 in {
   imports = [
+    ./hyprland-modals.nix
+
     ./rofi.nix
     ./common-gui.nix
     ./hypridle.nix
@@ -88,7 +90,13 @@ in {
           gaps_out = 4;
           border_size = 4;
 
-          layout = "master";
+          layout = "scrolling";
+        };
+
+        scrolling = {
+          column_width = 0.85;
+          direction = "right";
+          fullscreen_on_one_column = true;
         };
 
         master = {
@@ -164,98 +172,74 @@ in {
 
         "$resizeIncrement" = 25;
 
-        bind =
-          # let
-          # vol-app = pkgs.writeShellScriptBin "vol-app" ''
-          #   # 1. Aktive PID von Hyprland holen
-          #   ACTIVE_PID=$(hyprctl activewindow -j | ${pkgs.jq}/bin/jq '.pid')
+        bind = let
+          toggleLayout = pkgs.writeShellScriptBin "hyprland-toggle-layout" ''
+            set -e
+            if hyprctl getoption general:layout | grep -q "master"; then
+                hyprctl keyword general:layout scrolling
+            else
+                hyprctl keyword general:layout master
+            fi
+          '';
+        in [
           #
-          #   if [ "$ACTIVE_PID" = "null" ] || [ -z "$ACTIVE_PID" ]; then exit 0; fi
-          #
-          #   # 2. Die PipeWire Node-ID finden, die zu dieser PID (oder deren Child-Prozessen) gehört
-          #   # Wir dumpen die Nodes und suchen nach dem process.id match
-          #   NODE_ID=$(${pkgs.pipewire}/bin/pw-dump | ${pkgs.jq}/bin/jq -r ".[] | select(.info.props[\"process.id\"] == $ACTIVE_PID or .info.props[\"application.process.id\"] == \"$ACTIVE_PID\") | .id" | head -n1)
-          #
-          #   # 3. Falls nichts gefunden (wegen Proton/Steam), suchen wir nach Child-PIDs
-          #   if [ -z "$NODE_ID" ] || [ "$NODE_ID" = "null" ]; then
-          #       CHILD_PIDS=$(pgrep -P "$ACTIVE_PID")
-          #       for CPID in $CHILD_PIDS; do
-          #           NODE_ID=$(${pkgs.pipewire}/bin/pw-dump | ${pkgs.jq}/bin/jq -r ".[] | select(.info.props[\"process.id\"] == $CPID or .info.props[\"application.process.id\"] == \"$CPID\") | .id" | head -n1)
-          #           [ -n "$NODE_ID" ] && [ "$NODE_ID" != "null" ] && break
-          #       done
-          #   fi
-          #
-          #   # 4. Lautstärke via wpctl anpassen, wenn eine Node gefunden wurde
-          #   if [ -n "$NODE_ID" ] && [ "$NODE_ID" != "null" ]; then
-          #       ${pkgs.wireplumber}/bin/wpctl set-volume "$NODE_ID" "$1"
-          #   else
-          #       # Optional: Falls kein App-Stream gefunden, mach halt Default
-          #       ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ "$1"
-          #   fi
-          # '';
-          # in
-          [
-            # "CTRL ALT, XF86AudioRaiseVolume, exec, ${vol-app}/bin/vol-app 5%+"
-            # "CTRL ALT, XF86AudioLowerVolume, exec, ${vol-app}/bin/vol-app 5%-"
-            #
-            "SUPER SHIFT, C, exec, ${pkgs.hyprpicker}/bin/hyprpicker -a"
+          "SUPER SHIFT, C, exec, ${pkgs.hyprpicker}/bin/hyprpicker -a"
 
-            # "SUPER, M, exit"
+          # "SUPER, M, exit"
 
-            "ALT, F4, killactive"
-            "SUPER, C, killactive"
+          "ALT, F4, killactive"
+          "SUPER, C, killactive"
 
-            "SUPER, V, togglefloating"
-            "SUPER, P, pseudo"
-            "SUPER, J, togglesplit"
-            "SUPER, F, fullscreen"
+          "SUPER, V, togglefloating"
+          "SUPER, J, exec, ${toggleLayout}/bin/hyprland-toggle-layout"
+          "SUPER, F, fullscreen"
 
-            # move focus
-            "SUPER, left, movefocus, l"
-            "SUPER, right, movefocus, r"
-            "SUPER, up, movefocus, u"
-            "SUPER, down, movefocus, d"
+          # move focus
+          "SUPER, left, movefocus, l"
+          "SUPER, right, movefocus, r"
+          "SUPER, up, movefocus, u"
+          "SUPER, down, movefocus, d"
 
-            # move windows around inside a workspace
-            "SUPER SHIFT, left, movewindow, l"
-            "SUPER SHIFT, right, movewindow, r"
-            "SUPER SHIFT, up, movewindow, u"
-            "SUPER SHIFT, down, movewindow, d"
+          # move windows around inside a workspace
+          "SUPER SHIFT, left, movewindow, l"
+          "SUPER SHIFT, right, movewindow, r"
+          "SUPER SHIFT, up, movewindow, u"
+          "SUPER SHIFT, down, movewindow, d"
 
-            # scroll through existing workspaces
-            "SUPER CTRL, right, workspace, e+1"
-            "SUPER CTRL, left, workspace, e-1"
+          # scroll through existing workspaces
+          "SUPER CTRL, right, workspace, e+1"
+          "SUPER CTRL, left, workspace, e-1"
 
-            # navigate workspaces
-            "SUPER, 1, workspace, 1"
-            "SUPER, 2, workspace, 2"
-            "SUPER, 3, workspace, 3"
-            "SUPER, 4, workspace, 4"
-            "SUPER, 5, workspace, 5"
-            "SUPER, 6, workspace, 6"
-            "SUPER, 7, workspace, 7"
-            "SUPER, 8, workspace, 8"
-            "SUPER, 9, workspace, 9"
-            "SUPER, 0, workspace, 10"
+          # navigate workspaces
+          "SUPER, 1, workspace, 1"
+          "SUPER, 2, workspace, 2"
+          "SUPER, 3, workspace, 3"
+          "SUPER, 4, workspace, 4"
+          "SUPER, 5, workspace, 5"
+          "SUPER, 6, workspace, 6"
+          "SUPER, 7, workspace, 7"
+          "SUPER, 8, workspace, 8"
+          "SUPER, 9, workspace, 9"
+          "SUPER, 0, workspace, 10"
 
-            # move window to workspace
-            "SUPER CTRL SHIFT, right, movetoworkspace, e+1"
-            "SUPER CTRL SHIFT, left, movetoworkspace, e-1"
-            "SUPER CTRL SHIFT, 1, movetoworkspace, 1"
-            "SUPER CTRL SHIFT, 2, movetoworkspace, 2"
-            "SUPER CTRL SHIFT, 3, movetoworkspace, 3"
-            "SUPER CTRL SHIFT, 4, movetoworkspace, 4"
-            "SUPER CTRL SHIFT, 5, movetoworkspace, 5"
-            "SUPER CTRL SHIFT, 6, movetoworkspace, 6"
-            "SUPER CTRL SHIFT, 7, movetoworkspace, 7"
-            "SUPER CTRL SHIFT, 8, movetoworkspace, 8"
-            "SUPER CTRL SHIFT, 9, movetoworkspace, 9"
-            "SUPER CTRL SHIFT, 0, movetoworkspace, 10"
+          # move window to workspace
+          "SUPER CTRL SHIFT, right, movetoworkspace, e+1"
+          "SUPER CTRL SHIFT, left, movetoworkspace, e-1"
+          "SUPER CTRL SHIFT, 1, movetoworkspace, 1"
+          "SUPER CTRL SHIFT, 2, movetoworkspace, 2"
+          "SUPER CTRL SHIFT, 3, movetoworkspace, 3"
+          "SUPER CTRL SHIFT, 4, movetoworkspace, 4"
+          "SUPER CTRL SHIFT, 5, movetoworkspace, 5"
+          "SUPER CTRL SHIFT, 6, movetoworkspace, 6"
+          "SUPER CTRL SHIFT, 7, movetoworkspace, 7"
+          "SUPER CTRL SHIFT, 8, movetoworkspace, 8"
+          "SUPER CTRL SHIFT, 9, movetoworkspace, 9"
+          "SUPER CTRL SHIFT, 0, movetoworkspace, 10"
 
-            "SUPER, p, exec, ${
-              pkgs.writeShellScriptBin "notify-info" (builtins.readFile ./notify-info.sh)
-            }/bin/notify-info"
-          ];
+          "SUPER ALT, p, exec, ${
+            pkgs.writeShellScriptBin "notify-info" (builtins.readFile ./notify-info.sh)
+          }/bin/notify-info"
+        ];
 
         binde = [
           # resize windows

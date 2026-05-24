@@ -10,11 +10,8 @@ in {
     programs.tmux.resurrectPluginProcesses = ["yazi"];
 
     xdg.mimeApps.defaultApplications."inode/directory" = ["yazi.desktop"];
-    wayland.windowManager.hyprland.settings = {
-      bind = [
-        "SUPER, e, exec, $terminal --class yazi -e yazi"
-      ];
-    };
+
+    wayland.windowManager.hyprland.modals."yazi".bind = "SUPER, e";
 
     programs.yazi = {
       keymap.mgr.prepend_keymap = [

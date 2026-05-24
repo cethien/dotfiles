@@ -7,8 +7,6 @@
 }: let
   inherit (lib) mkEnableOption mkIf;
   cfg = config.programs.spotify;
-  as = builtins.elem "spotify" config.wayland.windowManager.hyprland.autostart;
-  ws = config.wayland.windowManager.hyprland.defaultWorkspaces.music;
 in {
   options.programs.spotify.enable = mkEnableOption "spotify";
 
@@ -58,36 +56,9 @@ in {
         };
       };
     };
-    programs.tmux.resurrectPluginProcesses = ["spotify_player"];
 
-    wayland.windowManager.hyprland.settings = let
-      startSession =
-        #bash
-        ''
-          tmux new-session -d -s "$SESSION" "tmux set-option -t "$SESSION" status off; spotify_player && tmux kill-session -t $SESSION"
-        '';
-    in {
-      exec-once = mkIf as [
-        ''sleep 2 && ${startSession}''
-      ];
-      windowrule = mkIf (!isNull ws) ["match:initial_class spotify_player, workspace ${toString ws}"];
-      bind = [
-        "SUPER SHIFT, M, exec, ${
-          (pkgs.writeShellScriptBin "spotify-launch" ''
-            set -e pipefail
-            SESSION="spotify_player"
-            if hyprctl clients | grep -q "class: $SESSION"; then
-              hyprctl dispatch focuswindow "class:$SESSION"
-              exit 0
-            fi
-            if ! tmux has-session -t "$SESSION" 2>/dev/null; then
-              ${startSession}
-            fi
-            exec kitty --class "$SESSION" -e tmux attach-session -t "$SESSION"
-          '')
-        }/bin/spotify-launch"
-      ];
-
+    wayland.windowManager.hyprland.modals."spotify_player".bind = "SUPER SHIFT, M";
+    wayland.windowManager.hyprland.settings = {
       bindl = let
         # pl = "playerctl --player=spotify_player";
         pl = "spotify_player playback";

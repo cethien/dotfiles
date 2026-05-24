@@ -39,7 +39,7 @@ in {
       GUI = {
         AdvancedSettings = true;
         MinimizeOnClose = true;
-        MinimizeOnStartup = true;
+        MinimizeOnStartup = false;
         MinimizeOnTray = true;
         ShowTrayIcon = true;
         # FontSizeOffset = 1;
@@ -62,26 +62,10 @@ in {
       libsecret
     ];
 
-    # home.sessionVariables.SUDO_ASKPASS = "${pkgs.writeShellScriptBin "sudo-askpass" ''
-    #   #!/usr/bin/env bash
-    #   secret-tool lookup id "$(whoami)@$(hostname)" sudo yes 2>/dev/null | head -n1
-    # ''}/bin/sudo-askpass";
-    #
-    # home.shellAliases.sudo = "${pkgs.writeShellScriptBin "sudo-wrapper" ''
-    #   #!/usr/bin/env bash
-    #   command sudo -A "$@" 2>/dev/null || command sudo "$@"
-    # ''}/bin/sudo-wrapper";
-
-    wayland.windowManager.hyprland.settings = {
-      exec-once = mkIf hypr [
-        "keepassxc"
-      ];
-
-      bind = [
-        "SUPER SHIFT, K, exec, ${
-          (pkgs.cethien.mkHyprLaunchBin "keepassxc" "keepassxc" "org.keepassxc.KeePassXC").bin
-        }"
-      ];
+    wayland.windowManager.hyprland.modals."keepassxc" = {
+      bind = "SUPER SHIFT, K";
+      terminal = false;
+      exec = "keepassxc";
     };
   };
 }
