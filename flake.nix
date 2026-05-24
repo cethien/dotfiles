@@ -44,6 +44,9 @@
 
     musnix.url = "github:musnix/musnix";
     musnix.inputs.nixpkgs.follows = "nixpkgs-unstable";
+
+    nixcord.url = "github:FlameFlag/nixcord";
+    nixcord.inputs.nixpkgs.follows = "nixpkgs-unstable";
   };
 
   nixConfig = {

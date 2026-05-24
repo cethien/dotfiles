@@ -21,7 +21,7 @@ jobs:
       - name: Update flake.lock
         uses: DeterminateSystems/update-flake-lock@main
         with:
-          inputs: nixpkgs nix-index-database zen-browser firefox-addons
+          inputs: nixpkgs nix-index-database zen-browser firefox-addons nixcord
           commit-msg: "chore: weekly inputs update"
           pr-title: "chore: weekly inputs update"
           pr-body: "Automated weekly update of flake inputs."

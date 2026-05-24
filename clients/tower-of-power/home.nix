@@ -54,7 +54,7 @@ in {
 
   programs = {
     spotify.enable = true;
-    vesktop.enable = true;
+    nixcord.enable = true;
 
     thunderbird.enable = true;
 

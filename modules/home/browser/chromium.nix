@@ -99,7 +99,7 @@ in {
 
     xdg.desktopEntries = let
       cmd = url: "${pkgs.chromium}/bin/chromium --app=${url}";
-      showDiscordWeb = !config.programs.discord.enable && !config.programs.vesktop.enable;
+      showDiscordWeb = !config.programs.nixcord.enable;
     in {
       chatgpt = {
         name = "ChatGPT";
