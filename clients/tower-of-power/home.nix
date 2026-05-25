@@ -9,14 +9,62 @@
   };
 in {
   imports = [
-    ../../modules/home
+    ../_common/home.nix
     ../../modules/home/users/cethien
-    ./zen-browser.nix
   ];
 
+  programs.zen-browser.profiles."${config.home.username}" = let
+    containers = {
+      logged-out = {
+        id = 1;
+        color = "toolbar";
+        icon = "chill";
+      };
+      admin = {
+        id = 2;
+        color = "pink";
+        icon = "circle";
+      };
+    };
+
+    spaces."deez nuts" = {
+      id = "cd0b7a9b-bb11-42e8-a10a-52ea6813e6b4";
+      position = 1000;
+      icon = "🥙";
+    };
+
+    pins = {
+      "whatsapp" = {
+        id = "9d8a8f91-7e29-4688-ae2e-da4e49d4a179";
+        url = "https://web.whatsapp.com/";
+        isEssential = true;
+        position = 101;
+      };
+      "calendar" = {
+        id = "591c45e0-737f-47d1-86e8-bf173ce87df9";
+        url = "https://calendar.google.com";
+        isEssential = true;
+        position = 102;
+      };
+
+      "youtube" = {
+        id = "217cf342-d929-419b-9a41-75ed87239d99";
+        url = "https://www.youtube.com/feed/subscriptions";
+        position = 1001;
+      };
+    };
+  in {
+    containersForce = true;
+    inherit containers;
+    pinsForce = true;
+    inherit pins;
+    spacesForce = true;
+    inherit spaces;
+  };
+
   stylix.image = ../../wallpapers/lake-mountains-rocks-sunrise-daylight-scenery-illustration-3840x2160-3773.jpg;
+
   wayland.windowManager.hyprland = {
-    enable = true;
     settings = {
       monitor = with monitors; [
         "${asus}, 2560x1440@240, 0x0, 1, bitdepth,10"
@@ -38,25 +86,29 @@ in {
       gaming = 10;
       browser = 4;
     };
-
-    autostart = [
-      "logitech"
-      "steam"
-    ];
   };
   programs.hyprlock.monitor = "${monitors.asus}";
 
-  services.syncthing.enable = true;
-  services.restic.enable = true;
-  programs.rclone.enable = true;
+  services.kdeconnect.enable = true;
 
-  home.packages = with pkgs; [simple-scan ausweisapp libreoffice krita ardour];
+  home.packages = with pkgs; [
+    simple-scan
+    ausweisapp
+
+    krita
+    ardour
+    mixxx
+    qlcplus
+  ];
 
   programs = {
-    spotify.enable = true;
+    rclone.enable = true;
+
+    spicetify.enable = true;
     nixcord.enable = true;
 
     thunderbird.enable = true;
+    libreoffice.enable = true;
 
     obs-studio.enable = true;
     pokemmo.enable = true;
@@ -64,15 +116,16 @@ in {
     prismlauncher.enable = true;
     r2modman.enable = true;
     steam.enable = true;
+    steam.autostart = true;
+    logitech-peripherals.enable = true;
+    logitech-peripherals.autostart = true;
+    apps-creative.enable = true;
 
     container-tools.enable = true;
-    keepassxc.enable = true;
-    kitty.enable = true;
     ssh.matchBlocksExtra = import ../../homes/ssh.nix;
     git.urlExtra = {
       "ssh://git@git.cethien.home".insteadOf = "https://git.cethien.home";
       "git@git.cethien.home:".insteadOf = "home:";
     };
   };
-  programs.logitech-peripherals.enable = true;
 }

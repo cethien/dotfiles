@@ -4,21 +4,11 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkOption mkIf types;
-  cfg = config.programs.netUtils;
+  cfg = config.programs.utils-net;
 in {
-  options.programs.netUtils = {
-    enable = mkOption {
-      type = types.bool;
-      default = true;
-    };
-  };
+  options.programs.utils-net.enable = lib.mkEnableOption "network utilities";
 
-  config = mkIf cfg.enable {
-    programs = {
-      trippy.enable = true;
-    };
-
+  config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
       curl
       wget
@@ -43,9 +33,9 @@ in {
       whois
       (pkgs.writeShellScriptBin "net-lookup" (builtins.readFile ./net-lookup.sh))
       (pkgs.writeShellScriptBin "net-scan" (builtins.readFile ./net-scan.sh))
-      (pkgs.writeShellScriptBin "fzf-net" (builtins.readFile ./fzf-net.sh))
+      (pkgs.writeShellScriptBin "netz" (builtins.readFile ./fzf-net.sh))
     ];
 
-    wayland.windowManager.hyprland.modals."fzf-net".bind = "SUPER, N";
+    wayland.windowManager.hyprland.modals."netz".binds = ["SUPER, N"];
   };
 }

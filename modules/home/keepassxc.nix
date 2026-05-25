@@ -5,14 +5,8 @@
   ...
 }: let
   inherit (lib) mkIf;
-  hypr = builtins.elem "keepassxc" config.wayland.windowManager.hyprland.autostart;
 in {
   config = mkIf config.programs.keepassxc.enable {
-    xdg.mimeApps.defaultApplications = {
-      "application/x-keepass2" = ["org.keepassxc.KeePassXC.desktop"];
-      "application/x-keepassxc" = ["org.keepassxc.KeePassXC.desktop"];
-    };
-
     programs.keepassxc.settings = {
       Browser = {
         Enabled = true;
@@ -62,8 +56,19 @@ in {
       libsecret
     ];
 
+    xdg.mimeApps.defaultApplications = config.lib.deeznuts.mkMimeApps {
+      keepass = {
+        desktop = "org.keepassxc.KeePassXC.desktop";
+        types = [
+          "application/x-keepass2"
+          "application/x-keepass"
+          "application/x-kdbx"
+        ];
+      };
+    };
+
     wayland.windowManager.hyprland.modals."keepassxc" = {
-      bind = "SUPER SHIFT, K";
+      binds = ["SUPER SHIFT, K"];
       terminal = false;
       exec = "keepassxc";
     };

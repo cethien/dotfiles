@@ -11,16 +11,15 @@
   };
 in {
   imports = [
-    ../../modules/home
+    ../_common/home.nix
     ../../modules/home/users/cethien
 
-    ../../homes/tms-bso/ssh.nix
-    ../../homes/tms-bso/rdp.nix
+    ../tms-bso/ssh.nix
+    ../tms-bso/rdp.nix
   ];
 
   stylix.image = ../../wallpapers/boy_and_cat_sitting_on_stairs.jpeg;
   wayland.windowManager.hyprland = {
-    enable = true;
     settings = {
       monitor = with monitors; [
         "${asus}, 2560x1440@60, 0x0, 1"
@@ -41,10 +40,8 @@ in {
     defaultWorkspaces.browser = 1;
   };
 
-  home.packages = with pkgs; [simple-scan ausweisapp libreoffice mixxx];
+  home.packages = with pkgs; [simple-scan ausweisapp mixxx qlcplus];
 
-  programs.zen-browser.enable = true;
-  programs.browser.default = config.programs.zen-browser.package;
   programs.zen-browser.profiles."${config.home.username}" = let
     containers = {
       logged-out = {
@@ -98,16 +95,11 @@ in {
     inherit spaces;
   };
 
-  services.syncthing.enable = true;
-  services.restic.enable = true;
-  programs.rclone.enable = true;
-
   programs = {
-    spotify.enable = true;
+    rclone.enable = true;
 
+    zen-browser.enable = true;
     container-tools.enable = true;
-    keepassxc.enable = true;
-    kitty.enable = true;
     ssh.matchBlocksExtra = import ../../homes/ssh.nix;
   };
 }

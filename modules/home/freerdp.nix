@@ -50,7 +50,7 @@
     # or that have a default value.
     # The `attrs` set contains all options, including those not set by the user,
     # which have `null` values.
-    filteredAttrs = lib.filterAttrs (n: v: !isNull v) attrs;
+    filteredAttrs = lib.filterAttrs (n: v: v != null) attrs;
 
     lines =
       lib.mapAttrsToList (

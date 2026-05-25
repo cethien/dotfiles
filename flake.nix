@@ -82,7 +82,6 @@
         inherit system;
         config.allowUnfree = true;
         overlays = [
-          (import ./overlays/cethien.nix)
           inputs.firefox-addons.overlays.default
           inputs.nix-gaming.overlays.default
         ];

@@ -5,6 +5,7 @@
   ...
 }: let
   inherit (lib) mkIf mkMerge;
+  cfg = config.programs.chromium;
 
   keepassxcChromiumHost = pkgs.writeTextFile {
     name = "keepassxc-chromium-host";
@@ -26,13 +27,16 @@
     paths = [pkgs.keepassxc keepassxcChromiumHost];
   };
 
-  as = builtins.elem "chromium" config.wayland.windowManager.hyprland.autostart;
   ws = config.wayland.windowManager.hyprland.defaultWorkspaces.browser;
 in {
+  options.programs.chromium.autostart = lib.mkEnableOption "chromium autostart";
+
   config = mkIf config.programs.chromium.enable {
     wayland.windowManager.hyprland.settings = {
-      exec-once = mkIf as ["[silent] chromium"];
-      windowrule = mkIf (!isNull ws) ["match:initial_class ^(chromium-browser)$, workspace ${toString ws}"];
+      exec-once = mkIf cfg.autostart ["[silent] chromium"];
+      windowrule = mkIf (ws != null) [
+        "match:initial_class ^(chromium-browser)$, workspace ${toString ws}"
+      ];
     };
 
     programs.chromium = {

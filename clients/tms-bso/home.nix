@@ -9,11 +9,12 @@
   };
 in {
   imports = [
-    ../../modules/home
-    ../../homes/tms-bso/email.nix
-    ../../homes/tms-bso/ssh.nix
-    ../../homes/tms-bso/rdp.nix
-    ../../homes/tms-bso/zen-browser.nix
+    ../_common/home.nix
+
+    ./email.nix
+    ./ssh.nix
+    ./rdp.nix
+    ./zen-browser.nix
   ];
 
   stylix.image = ../../wallpapers/bliss_4K.jpg;
@@ -27,19 +28,19 @@ in {
       general.allow_tearing = true;
 
       workspace = [
-        "1, monitor:${eizo}, persistent:true, default:true"
+        "1, monitor:${eizo}, persistent:true, default:true, layout:master"
         "2, monitor:${eizo}, persistent:true"
         "3, monitor:${eizo}, persistent:true"
 
-        "4, monitor:${lpt}, persistent:true, default:true"
+        "4, monitor:${self}, persistent:true, default:true"
       ];
     };
+    defaultWorkspaces.browser = 2;
   };
-  programs.hyprlock.monitor = "${monitors.lpt}";
+  programs.hyprlock.monitor = "${monitors.self}";
 
   home.packages = with pkgs; [
     simple-scan
-    libreoffice
     drawio
     rustdesk-flutter
     dbeaver-bin
@@ -51,9 +52,9 @@ in {
   programs = {
     slack.enable = true;
     thunderbird.enable = true;
-    spotify.enable = true;
+    libreoffice.enable = true;
     keepassxc.enable = true;
     container-tools.enable = true;
-    kitty.enable = true;
+    freerdp.enable = true;
   };
 }

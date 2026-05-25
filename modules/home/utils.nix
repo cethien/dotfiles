@@ -4,59 +4,17 @@
   config,
   ...
 }: let
-  inherit (lib) mkIf mkOption types;
-
-  init = pkgs.cethien.mkArgcBashBin' ./init.sh;
+  cfg = config.programs.utils;
 in {
-  options.programs.utils = {
-    enable = mkOption {
-      type = types.bool;
-      default = true;
-    };
-  };
+  options.programs.utils.enable = lib.mkEnableOption "utils";
 
-  config = mkIf config.programs.utils.enable {
+  config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
-      gnutar
-      gzip
-      bzip2
-      bzip3
-      xz
-      zip
-      unzip
-      rar
-      p7zip
-      file
-
-      poppler-utils # pdf stuff
-      lynx # term browser
-      aria2 # download manager
-      parted
-      openssl
-
-      ffmpeg
-
-      init
+      (config.lib.deeznuts.mkArgcBashBin' ./init.sh)
       (writeShellScriptBin "update" (builtins.readFile ./update.sh))
       (writeShellScriptBin "cleanup" (builtins.readFile ./cleanup.sh))
       (writeShellScriptBin "clip" (builtins.readFile ./clip.sh))
       (writeShellScriptBin "uln" (builtins.readFile ./uln.sh))
-
-      taskwarrior-tui
-      timewarrior
-
-      caligula
     ];
-
-    programs = {
-      nix-index.enable = true;
-      pay-respects.enable = true;
-
-      jq.enable = true;
-      taskwarrior = {
-        enable = true;
-        package = pkgs.taskwarrior3;
-      };
-    };
   };
 }

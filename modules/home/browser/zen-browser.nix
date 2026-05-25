@@ -5,14 +5,15 @@
   zen-browser,
   ...
 }: let
-  inherit (lib) mkIf elem;
+  inherit (lib) mkIf;
   cfg = config.programs.zen-browser;
   name = "${config.home.username}";
   addons = pkgs.firefox-addons;
 
-  as = elem "zen-browser" config.wayland.windowManager.hyprland.autostart;
   ws = config.wayland.windowManager.hyprland.defaultWorkspaces.browser;
 in {
+  options.programs.zen-browser.autostart = lib.mkEnableOption "zen autostart";
+
   imports = [
     zen-browser.homeModules.beta
   ];
@@ -145,7 +146,7 @@ in {
     stylix.targets.zen-browser.profileNames = ["${name}"];
 
     wayland.windowManager.hyprland.settings = {
-      exec-once = mkIf as ["[silent] zen-beta"];
+      exec-once = mkIf cfg.autostart ["[silent] zen-beta"];
       windowrule = ["match:class ^(zen-beta)$, tile on"];
       bind = let
         script = pkgs.writeShellScriptBin "hypr_zen-sidebar" ''

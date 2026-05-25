@@ -22,4 +22,4 @@ let
     else builtins.warn "Skipping ${name}: os != nixos" null)
   (builtins.attrNames toml.hosts);
 in
-  builtins.listToAttrs (builtins.filter (x: !isNull x) hosts)
+  builtins.listToAttrs (builtins.filter (x: x != null) hosts)

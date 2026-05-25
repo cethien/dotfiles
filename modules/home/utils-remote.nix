@@ -4,16 +4,11 @@
   config,
   ...
 }: let
-  inherit (lib) mkOption types mkIf;
+  cfg = config.programs.utils-remote;
 in {
-  options.programs.remoteUtils = {
-    enable = mkOption {
-      type = types.bool;
-      default = true;
-    };
-  };
+  options.programs.utils-remote.enable = lib.mkEnableOption "utils for remote stuff";
 
-  config = mkIf config.programs.remoteUtils.enable {
+  config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
       localsend
       jocalsend

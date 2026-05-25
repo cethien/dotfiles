@@ -1,68 +1,59 @@
 {
-  pkgs,
-  lib,
-  config,
-  nix-index-database,
-  ...
-}: {
   imports = [
-    nix-index-database.homeModules.default
+    ./lib.nix
     ./stylix.nix
     ./sops.nix
 
-    ./restic.nix
-
-    ./desktop
+    ./gnome.nix
+    ./hyprland
+    ./pipewire.nix
     ./kitty.nix
+    ./mpv.nix
+    ./imv.nix
+    ./zathura.nix
+    ./fileroller.nix
 
+    ./fzf.nix
     ./tmux.nix
     ./ssh.nix
     ./neovim.nix
+    ./yazi
+    ./bottom.nix
+    ./fastfetch
+    ./oh-my-posh.nix
+    ./restic.nix
+    ./git.nix
+
     ./utils.nix
     ./utils-net.nix
     ./utils-remote.nix
-    ./qol
-    ./dev
-    ./fun.nix
+    ./utils-container.nix
+    ./utils-qol.nix
+    ./utils-fun.nix
+    ./oh-my-posh.nix
+    ./cava.nix
 
     ./logitech-peripherals.nix
 
     ./browser
     ./keepassxc.nix
-    ./office.nix
     ./thunderbird.nix
+    ./libreoffice.nix
 
     ./spotify.nix
+    ./spotify-player.nix
     ./discord.nix
-    ./creative.nix
-    ./gaming
+    ./apps-creative.nix
+    ./obs-studio.nix
+
+    ./steam.nix
+    ./retroarch.nix
+    ./minecraft.nix
+    ./pokemmo.nix
+    ./r2modman.nix
+    ./mangohud.nix
 
     ./freerdp.nix
     ./slack.nix
   ];
-
-  programs.nix-index.enable = true;
-  programs.nix-index-database.comma.enable = true;
-
-  programs = {
-    bash.enable = true;
-    tmux.enable = true;
-    nvf.enable = true;
-    ssh.enable = true;
-  };
-
-  home.packages = with pkgs; [
-    curl
-    wget
-  ];
-
-  stylix.enable = true;
-
-  xdg.mimeApps.enable = true;
-  programs.home-manager.enable = true;
-  services.home-manager.autoExpire = {
-    enable = true;
-    frequency = "weekly";
-  };
-  news.display = "silent";
 }
