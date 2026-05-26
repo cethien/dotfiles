@@ -268,6 +268,15 @@ in {
               for = "unix";
             }
           ];
+
+          caligula = [
+            {
+              run = ''caligula burn "$@" --root=always -f -z=none -s=skip'';
+              desc = "caligula";
+              block = true;
+              for = "unix";
+            }
+          ];
         };
 
         open = {
@@ -295,6 +304,10 @@ in {
             {
               mime = "video/*";
               use = ["mpv" "castnow-transcode"];
+            }
+            {
+              mime = "application/iso9660-image";
+              use = ["caligula"];
             }
           ];
         };
