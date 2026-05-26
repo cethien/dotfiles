@@ -43,26 +43,26 @@ in {
     wayland.windowManager.hyprland = {
       configType = "hyprlang";
 
-      plugins = with pkgs.hyprlandPlugins; [
-        hypr-dynamic-cursors
-      ];
-
-      extraConfig = ''
-        plugin {
-          dynamic-cursors {
-            enabled = true
-            mode = stretch
-            threshhold = 1
-            stretch {
-                limit = 1500
-                function = linear
-            }
-            shake {
-              enabled = false
-            }
-          }
-        }
-      '';
+      # plugins = with pkgs.hyprlandPlugins; [
+      #   hypr-dynamic-cursors
+      # ];
+      #
+      # extraConfig = ''
+      #   plugin {
+      #     dynamic-cursors {
+      #       enabled = true
+      #       mode = stretch
+      #       threshhold = 1
+      #       stretch {
+      #           limit = 1500
+      #           function = linear
+      #       }
+      #       shake {
+      #         enabled = false
+      #       }
+      #     }
+      #   }
+      # '';
 
       settings = {
         exec-once = [
@@ -92,7 +92,8 @@ in {
         };
 
         scrolling = {
-          column_width = 0.9;
+          column_width = 0.8;
+          focus_fit_method = 0;
         };
 
         master = {
@@ -101,7 +102,6 @@ in {
         };
 
         dwindle = {
-          pseudotile = true;
           preserve_split = true;
           force_split = 1;
         };
