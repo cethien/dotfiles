@@ -53,7 +53,7 @@ in {
             yang
             steam-database
 
-            darkreader
+            # darkreader
           ]
           ++ lib.optionals config.programs.keepassxc.enable [
             addons.keepassxc-browser
