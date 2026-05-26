@@ -21,6 +21,18 @@ in {
   config = mkIf cfg.enable {
     programs.zen-browser = {
       profiles."${name}" = {
+        keyboardShortcutsVersion = 18;
+        keyboardShortcuts = [
+          {
+            id = "zen-compact-mode-toggle";
+            key = "c";
+            modifiers = {
+              control = true;
+              alt = true;
+            };
+          }
+        ];
+
         extensions.packages = with addons;
           [
             multi-account-containers
