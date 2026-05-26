@@ -14,7 +14,9 @@ in {
     wayland.windowManager.hyprland.settings.bind = ["SUPER, e, exec, kitty --class yazi -e yazi"];
 
     programs.yazi = {
-      keymap.mgr.prepend_keymap = [
+      keymap.mgr.prepend_keymap = let
+        ripdrag = "${pkgs.ripdrag}/bin/ripdrag";
+      in [
         {
           on = ["T" "s"];
           run = ''shell 'tmux new-session -A -s "$(basename "$PWD" | tr -c "a-zA-Z0-9_" "_" | sed "s/_$//")"' --block'';
@@ -28,7 +30,7 @@ in {
 
         {
           on = ["<C-d>"];
-          run = "shell -- ripdrag -banr %s";
+          run = "shell -- ${ripdrag} -banr %s";
           desc = "Drag Files";
         }
 
@@ -111,13 +113,7 @@ in {
           run = "shell --confirm '$EDITOR .'";
           desc = "Open the currerent direcory in editor";
         }
-        {
-          on = "y";
-          run = [
-            "shell -- for path in $@; do echo file://$path; done | wl-copy -t text/uri-list"
-            "yank"
-          ];
-        }
+
         {
           on = "p";
           run = "plugin smart-paste";
@@ -138,6 +134,14 @@ in {
           on = ["c" "r"];
           run = "plugin rsync";
           desc = "Copy files using rsync";
+        }
+        {
+          on = ["y"];
+          run = [
+            "yank"
+            "copy path"
+          ];
+          desc = "copy path";
         }
       ];
 
@@ -194,19 +198,31 @@ in {
       };
 
       extraPackages = with pkgs; [
+        jq
+        fd
+        ripgrep
+        fzf
+        zoxide
+        resvg
+        file
+        poppler-utils
+        ffmpeg
+        wl-clipboard
+
         glow
         ouch
-        ffmpeg
         rsync
-        ripdrag
         trash-cli
       ];
 
       settings = {
-        opener = {
+        opener = let
+          castnow = "${pkgs.castnow}/bin/castnow";
+          caligula = "${pkgs.caligula}/bin/caligula";
+        in {
           castnow = [
             {
-              run = ''castnow "$@"'';
+              run = ''${castnow} "$@"'';
               desc = "Cast to Chromecast";
               for = "unix";
               block = true;
@@ -214,7 +230,7 @@ in {
           ];
           castnow-transcode = [
             {
-              run = ''castnow --tomp4 "$@"'';
+              run = ''${castnow} --tomp4 "$@"'';
               desc = "Cast to Chromecast (Transcode)";
               for = "unix";
               block = true;
@@ -271,7 +287,7 @@ in {
 
           caligula = [
             {
-              run = ''caligula burn "$@" --root=always -f -z=none -s=skip'';
+              run = ''${caligula} burn "$@" --root=always -f -z=none -s=skip'';
               desc = "caligula";
               block = true;
               for = "unix";
