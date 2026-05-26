@@ -62,7 +62,13 @@ in {
       };
     };
 
-    programs.thunderbird.profiles."${name}".isDefault = true;
+    programs.thunderbird.profiles."${name}" = {
+      isDefault = true;
+      settings = {
+        "mailnews.start_page.enabled" = true;
+        "mailnews.start_page.url" = "https://thunderbird.net/${pkgs.thunderbird.version}/releasenotes/";
+      };
+    };
 
     accounts = let
       thunderbird = {

@@ -59,6 +59,9 @@ in {
     programs.thunderbird.profiles."${mail}" = {
       isDefault = true;
       settings = {
+        "mailnews.start_page.enabled" = true;
+        "mailnews.start_page.url" = "https://thunderbird.net/${pkgs.thunderbird.version}/releasenotes/";
+
         "calendar.itip.send_notifications" = false;
         "calendar.itip.notify" = false;
         "calendar.scheduling.show_invite_message" = false;
