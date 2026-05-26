@@ -80,7 +80,16 @@ in {
       fileroller.enable = mkDefault hl;
     };
 
+    userfonts.enable = mkDefault (
+      config.programs.libreoffice.enable
+      || config.programs.apps-creative.enable
+    );
+
+    fonts.fontconfig.enable = true;
+
     home.packages = with pkgs; [
+      corefonts
+
       curl
       wget
       gnutar

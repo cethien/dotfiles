@@ -44,6 +44,7 @@
     ./spotify-player.nix
     ./discord.nix
     ./apps-creative.nix
+    ./fonts.nix
     ./obs-studio.nix
 
     ./steam.nix
