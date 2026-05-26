@@ -12,8 +12,6 @@ in {
     ../_common/home.nix
 
     ./email.nix
-    ./ssh.nix
-    ./rdp.nix
     ./zen-browser.nix
   ];
 
@@ -28,8 +26,8 @@ in {
       general.allow_tearing = true;
 
       workspace = [
-        "1, monitor:${eizo}, persistent:true, default:true, layout:master"
-        "2, monitor:${eizo}, persistent:true"
+        "1, monitor:${eizo}, persistent:true, layout:master, default:true"
+        "2, monitor:${eizo}, persistent:true, layout:master "
         "3, monitor:${eizo}, persistent:true"
 
         "4, monitor:${self}, persistent:true, default:true"
@@ -56,5 +54,7 @@ in {
     keepassxc.enable = true;
     container-tools.enable = true;
     freerdp.enable = true;
+    freerdp.connections = import ./rdp.nix;
+    ssh.settings = import ./ssh.nix // {"Host *".IdentityFile = "~/.ssh/id_ed25519";};
   };
 }

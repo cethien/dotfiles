@@ -10,7 +10,7 @@
 # @describe                           updates inputs [defaults client modules]
 # @flag --hosts                       exclusively update host related inputs
 # @flag --nixpkgs                     also update nixpkgs / nixpkgs-unstable (defaults to nixpkgs-unstable, use with --hosts for nixpkgs)
-# @flag --zen                         also update zen and firefox addons
+# @flag --zen                         only zen and firefox addons
 # @flag --tools                       update repo tooling
 flake-update() {
   local INPUTS=()
@@ -19,8 +19,6 @@ flake-update() {
     [ -n "$argc_nixpkgs" ] && INPUTS+=(nixpkgs)
   else
     [ -n "$argc_nixpkgs" ] && INPUTS+=(nixpkgs-unstable)
-    [ -n "$argc_zen" ] && INPUTS+=(zen-browser firefox-addons)
-
     INPUTS+=(
       nixos-hardware
       nix-gaming
@@ -29,10 +27,15 @@ flake-update() {
       stylix
       nvf
       spicetify-nix
+      zen-browser
+      firefox-addons
     )
   fi
+
   INPUTS+=(sops-nix)
   [ -n "$argc_tools" ] && INPUTS+=(flake-utils deploy-rs disko)
+
+  [ -n "$argc_zen" ] && INPUTS=(zen-browser firefox-addons)
 
   echo "Updating: ${INPUTS[*]}"
   nix flake update "${INPUTS[@]}"

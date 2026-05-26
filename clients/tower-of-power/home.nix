@@ -122,7 +122,7 @@ in {
     apps-creative.enable = true;
 
     container-tools.enable = true;
-    ssh.matchBlocksExtra = import ../../homes/ssh.nix;
+    ssh.settings.Match = import ../../homes/ssh.nix;
     git.urlExtra = {
       "ssh://git@git.cethien.home".insteadOf = "https://git.cethien.home";
       "git@git.cethien.home:".insteadOf = "home:";

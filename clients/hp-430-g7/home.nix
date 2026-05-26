@@ -13,9 +13,6 @@ in {
   imports = [
     ../_common/home.nix
     ../../modules/home/users/cethien
-
-    ../tms-bso/ssh.nix
-    ../tms-bso/rdp.nix
   ];
 
   stylix.image = ../../wallpapers/boy_and_cat_sitting_on_stairs.jpeg;
@@ -100,6 +97,18 @@ in {
 
     zen-browser.enable = true;
     container-tools.enable = true;
-    ssh.matchBlocksExtra = import ../../homes/ssh.nix;
+    freerdp.enable = true;
+    freerdp.connections = import ../tms-bso/rdp.nix;
+    ssh.settings =
+      (import ../../homes/ssh.nix)
+      // (import ../tms-bso/ssh.nix)
+      // {
+        "Host *" = {
+          IdentityFile = [
+            "~/.ssh/id_ed25519"
+            "~/.ssh/id_ed25519_tmsproshop"
+          ];
+        };
+      };
   };
 }
