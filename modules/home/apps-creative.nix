@@ -8,12 +8,12 @@
 in {
   options.programs.apps-creative.enable = lib.mkEnableOption "basic creative apps";
 
-  config = {
-    home.packages = lib.mkIf cfg.enable (with pkgs; [
+  config = lib.mkIf cfg.enable {
+    home.packages = with pkgs; [
       pinta
       gimp
       inkscape
       # ocenaudio
-    ]);
+    ];
   };
 }
