@@ -6,7 +6,6 @@
 }: let
   inherit (lib) mkIf mkEnableOption mkOption types;
   cfg = config.deeznuts.deployrs;
-  enabled = cfg.enable;
 in {
   options.deeznuts.deployrs = {
     enable = mkEnableOption "Enable deployrs";
@@ -27,7 +26,7 @@ in {
   config = let
     user = "deployrs";
   in
-    mkIf enabled {
+    mkIf cfg.enable {
       users.users."${user}" = {
         isSystemUser = true;
         group = "${user}";

@@ -9,11 +9,12 @@
   uname = "bsotnikow";
 in {
   imports = [
-    ../../modules/nixos
+    ../_common/configuration.nix
     sops-nix.nixosModules.sops
     ./smb.nix
   ];
 
+  programs.hyprland.enable = true;
   users.users.cethien.name = uname;
   home-manager.users.cethien.home = {
     username = lib.mkForce uname;
@@ -41,13 +42,7 @@ in {
   hardware = {
     enableRedistributableFirmware = true;
     enableAllFirmware = true;
-
-    bluetooth.enable = true;
-
-    # scanner
-    sane.enable = true;
   };
-  services.printing.enable = true;
 
   hardware.printers = {
     ensurePrinters = [
@@ -67,16 +62,6 @@ in {
     libvirtd.enable = true;
   };
 
-  deeznuts = {
-    desktop = {
-      autologinUser = "${u.name}";
-      hyprland.enable = true;
-    };
-    net-tools.enable = true;
-  };
-
-  networking.networkmanager.wifi.backend = "iwd";
-
   boot = {
     loader = {
       grub.enable = false;
@@ -84,7 +69,6 @@ in {
     };
 
     plymouth = {
-      enable = true;
       theme = "colorful_sliced";
       themePackages = with pkgs; [
         (adi1090x-plymouth-themes.override {
@@ -92,21 +76,5 @@ in {
         })
       ];
     };
-
-    # Enable "Silent boot"
-    consoleLogLevel = 3;
-    initrd.verbose = false;
-    kernelParams = [
-      "quiet"
-      "splash"
-      "boot.shell_on_fail"
-      "udev.log_priority=3"
-      "rd.systemd.show_status=auto"
-    ];
-
-    # Hide the OS choice for bootloaders.
-    # It's still possible to open the bootloader list by pressing any key
-    # It will just not appear on screen unless a key is pressed
-    loader.timeout = 0;
   };
 }

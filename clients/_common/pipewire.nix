@@ -7,35 +7,35 @@
   ...
 }: let
   inherit (lib) mkIf;
+  cfg = config.services.pipewire;
 in {
+  imports = [
+    nix-gaming.nixosModules.pipewireLowLatency
+    musnix.nixosModules.musnix
+  ];
+
   # options.services.pipewire.active-mic = lib.mkOption {
   #   type = lib.types.nullOr lib.types.str;
   #   default = null;
   #   description = "mic device for anc. null = nothing";
   # };
 
-  imports = [
-    nix-gaming.nixosModules.pipewireLowLatency
-    musnix.nixosModules.musnix
-  ];
-
-  config = mkIf config.deeznuts.desktop.isEnabled {
+  config = mkIf cfg.enable {
     musnix.enable = true;
 
     services.pulseaudio.enable = false;
     security.rtkit.enable = true;
     services.pipewire = {
-      enable = true;
       alsa.enable = true;
       alsa.support32Bit = true;
       pulse.enable = true;
       jack.enable = true;
 
-      lowLatency = {
-        enable = true;
-        quantum = 256;
-        rate = 48000;
-      };
+      # lowLatency = {
+      #   enable = true;
+      #   quantum = 256;
+      #   rate = 48000;
+      # };
 
       wireplumber.enable = true;
 

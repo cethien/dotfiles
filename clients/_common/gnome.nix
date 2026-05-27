@@ -3,21 +3,17 @@
   config,
   pkgs,
   ...
-}:
-with lib; let
-  cfg = config.deeznuts.desktop;
+}: let
+  cfg = config.services.desktopManager.gnome;
 in {
-  options.deeznuts.desktop.gnome = {
-    enable = mkEnableOption "gnome desktop";
-  };
-
-  config = mkIf cfg.gnome.enable {
+  config = lib.mkIf cfg.enable {
     services.displayManager.gdm.enable = true;
-    services.desktopManager.gnome.enable = true;
+    services.gnome = {
+      core-apps.enable = true;
+      core-developer-tools.enable = false;
+      games.enable = false;
+    };
 
-    services.gnome.core-apps.enable = true;
-    services.gnome.core-developer-tools.enable = false;
-    services.gnome.games.enable = false;
     environment.gnome.excludePackages = with pkgs; [
       gnome-tour
       gnome-user-docs
