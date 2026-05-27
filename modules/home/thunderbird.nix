@@ -8,7 +8,7 @@
 in {
   config = lib.mkIf cfg.enable {
     wayland.windowManager.hyprland.modals."thunderbird" = {
-      binds = [", XF86Mail"];
+      binds = [", XF86Mail" "SUPER SHIFT, F12"];
       terminal = false;
       exec = "thunderbird";
     };
