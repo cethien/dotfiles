@@ -78,7 +78,11 @@ in {
   networking.networkmanager.wifi.backend = "iwd";
 
   boot = {
-    loader.grub.splashImage = ./grub.jpg;
+    loader = {
+      grub.enable = false;
+      systemd-boot.enable = true;
+    };
+
     plymouth = {
       enable = true;
       theme = "colorful_sliced";
@@ -99,6 +103,7 @@ in {
       "udev.log_priority=3"
       "rd.systemd.show_status=auto"
     ];
+
     # Hide the OS choice for bootloaders.
     # It's still possible to open the bootloader list by pressing any key
     # It will just not appear on screen unless a key is pressed
