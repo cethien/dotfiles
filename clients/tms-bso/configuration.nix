@@ -9,8 +9,9 @@
   uname = "bsotnikow";
 in {
   imports = [
-    ../_common/configuration.nix
     sops-nix.nixosModules.sops
+    ../_common/configuration.nix
+    ../_common/disko.nix
     ./smb.nix
   ];
 

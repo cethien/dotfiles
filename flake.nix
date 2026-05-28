@@ -98,8 +98,10 @@
           ];
         }).config.system.build.isoImage;
     in {
-      packages.doot = doot;
-      packages.booty = booty;
+      packages = {
+        inherit doot booty;
+      };
+
       devShells.default = import ./shell.nix {inherit pkgs doot;};
     })
     // flake-utils.lib.eachDefaultSystemPassThrough (system: let
@@ -130,15 +132,11 @@
           pkgs = pkgsUnstable;
           modules = [
             disko.nixosModules.disko
-            (import ./disko/simple.nix {inherit (n) diskId;})
             ./clients/${n.hostName}/hardware-configuration.nix
             ./clients/${n.hostName}/configuration.nix
             {
               system = {inherit stateVersion;};
               networking.hostName = n.hostName;
-              users.users.cethien.enable = true;
-
-              boot.kernelPackages = pkgsUnstable.linuxPackages_latest;
             }
 
             home-manager.nixosModules.home-manager

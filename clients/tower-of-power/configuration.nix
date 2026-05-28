@@ -5,6 +5,7 @@
 }: {
   imports = [
     ../_common/configuration.nix
+    ./disko.nix
   ];
   config = {
     programs.hyprland.enable = true;

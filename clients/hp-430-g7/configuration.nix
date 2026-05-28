@@ -9,6 +9,7 @@ in {
   imports = [
     nixos-hardware.nixosModules.common-pc-laptop
     ../_common/configuration.nix
+    ../_common/disko.nix
   ];
 
   config = {
