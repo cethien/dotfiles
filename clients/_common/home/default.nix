@@ -13,8 +13,6 @@ in {
     inputs.nix-index-database.homeModules.default
   ];
   config = {
-    wayland.windowManager.hyprland.enable = mkDefault true;
-
     services = {
       syncthing.enable = mkDefault true;
       restic.enable = mkDefault true;

@@ -41,6 +41,9 @@ in {
         home.username = username;
         home.homeDirectory = "/home/${username}";
         home = {inherit stateVersion;};
+
+        wayland.windowManager.hyprland.enable = mkDefault hl;
+        programs.steam.enable = config.programs.steam.enable;
       };
     };
 
@@ -158,9 +161,11 @@ in {
         efi.canTouchEfiVariables = mkDefault true;
         timeout = 0;
       };
+      plymouth.enable = true;
 
       consoleLogLevel = 3;
       initrd.verbose = false;
+
       kernelPackages = pkgs.linuxPackages_latest;
       kernelParams = [
         "quiet"
@@ -169,7 +174,6 @@ in {
         "udev.log_priority=3"
         "rd.systemd.show_status=auto"
       ];
-      plymouth.enable = true;
     };
   };
 }

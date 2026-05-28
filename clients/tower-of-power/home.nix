@@ -114,7 +114,6 @@ in {
     retroarch.enable = true;
     prismlauncher.enable = true;
     r2modman.enable = true;
-    steam.enable = true;
     steam.autostart = true;
     logitech-peripherals.enable = true;
     logitech-peripherals.autostart = true;
