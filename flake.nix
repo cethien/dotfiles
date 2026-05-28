@@ -90,8 +90,16 @@
     flake-utils.lib.eachDefaultSystem (system: let
       pkgs = pkgsFor system;
       doot = pkgs.callPackage ./packages/doot {};
+      booty =
+        (nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = [
+            ./booty/configuration.nix
+          ];
+        }).config.system.build.isoImage;
     in {
       packages.doot = doot;
+      packages.booty = booty;
       devShells.default = import ./shell.nix {inherit pkgs doot;};
     })
     // flake-utils.lib.eachDefaultSystemPassThrough (system: let
@@ -161,27 +169,6 @@
           specialArgs = inputs // {nixpkgs = nixpkgs-unstable;};
         })
       clients;
-
-      boostrapClient = nixpkgs.lib.nixosSystem {
-        inherit system;
-        modules = [
-          ({pkgs, ...}: {
-            networking.hostName = "desktop-installer";
-            security.sudo.wheelNeedsPassword = false;
-            users.users.root.openssh.authorizedKeys.keys = [
-              "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIXmfkcW8dPvC5A7QxbHXackv5uzOHclJOQtqLRHeiME deployrs@tmspro.shop"
-            ];
-
-            environment.systemPackages = with pkgs; [
-              vim
-              tmux
-              git
-              sops
-              age
-            ];
-          })
-        ];
-      };
 
       pkgs = pkgsFor system;
       hosts = import ./hosts;

@@ -4,6 +4,10 @@
 }:
 pkgs.mkShell {
   packages = with pkgs; [
+    git
+    neovim
+    tmux
+
     nixpkgs-fmt
     sops
     age

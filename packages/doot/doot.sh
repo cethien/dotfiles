@@ -6,6 +6,11 @@
 # @flag -y --yes $SKIP_CONFIRM skip confirm messages
 # @flag -f --skip-validation $SKIP_VALIDATION skip inventory validation
 
+# @cmd build an iso
+build-booty() {
+  command nix build .#booty
+}
+
 # @cmd updates inputs
 # @describe                           updates inputs [defaults client modules]
 # @flag --hosts                       exclusively update host related inputs
