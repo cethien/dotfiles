@@ -248,7 +248,7 @@ in {
           # "de"
           # "ru"
         ];
-        spellcheck.programmingWordlist.enable = true;
+        # spellcheck.programmingWordlist.enable = true;
         spellcheck.ignoredFiletypes = ["toggleterm" "alpha"];
         diagnostics.enable = true;
         diagnostics.config = {

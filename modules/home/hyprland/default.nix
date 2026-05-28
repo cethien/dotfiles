@@ -17,13 +17,6 @@ in {
     ./mako.nix
   ];
 
-  options.wayland.windowManager.hyprland = {
-    autostart = mkOption {
-      type = types.listOf types.str;
-      default = [];
-    };
-  };
-
   config = mkIf config.wayland.windowManager.hyprland.enable {
     home.packages = with pkgs; [
       xrandr
