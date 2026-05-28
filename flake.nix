@@ -177,7 +177,7 @@
           inherit pkgs;
           modules = [
             disko.nixosModules.disko
-            (import ./disko/simple.nix {inherit (n) diskId;})
+            (import ./disko/simple.nix)
             ./hosts/${n.hostName}/hardware-configuration.nix
             ./hosts/${n.hostName}/configuration.nix
             {

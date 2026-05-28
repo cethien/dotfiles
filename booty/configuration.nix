@@ -10,6 +10,9 @@
   networking.hostName = "booty";
 
   environment.systemPackages = with pkgs; [
+    disko
+    (pkgs.writeShellScriptBin "nixos-here" (builtins.readFile ./nixos-here.sh))
+
     git
     neovim
     tmux
@@ -25,6 +28,10 @@
     pciutils
     usbutils
     smartmontools
+
+    ntfs3g
+    zfs
+    nvme-cli
   ];
 
   services.openssh.enable = true;
