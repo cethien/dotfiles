@@ -263,6 +263,18 @@ in {
           colorizer.enable = true;
           modes-nvim.enable = true;
           noice.enable = true;
+          noice.setupOpts = {
+            routes = [
+              {
+                filter = {
+                  event = "msg_show";
+                  kind = "confirm";
+                  find = "Download regional dictionaries";
+                };
+                opts = {skip = true;};
+              }
+            ];
+          };
           smartcolumn.enable = true;
 
           borders.enable = true;
