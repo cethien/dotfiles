@@ -2,7 +2,6 @@
   imports = [
     ./lib.nix
     ./stylix.nix
-    ./sops.nix
 
     ./gnome.nix
     ./hyprland

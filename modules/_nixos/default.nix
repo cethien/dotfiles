@@ -1,0 +1,5 @@
+{
+  imports = [
+    ./users/cethien.nix
+  ];
+}

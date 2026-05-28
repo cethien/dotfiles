@@ -9,8 +9,7 @@
   };
 in {
   imports = [
-    ../_common/home.nix
-    ../../modules/home/users/cethien
+    ../_common/home/cethien
   ];
 
   programs.zen-browser.profiles."${config.home.username}" = let
@@ -62,12 +61,12 @@ in {
     inherit spaces;
   };
 
-  stylix.image = ../../wallpapers/lake-mountains-rocks-sunrise-daylight-scenery-illustration-3840x2160-3773.jpg;
+  stylix.image = ../_common/home/wallpapers/lake-mountains-rocks-sunrise-daylight-scenery-illustration-3840x2160-3773.jpg;
 
   wayland.windowManager.hyprland = {
     settings = {
       monitor = with monitors; [
-        "${asus}, 2560x1440@240, 0x0, 1, bitdepth,10"
+        "${asus}, 2560x1440@240, 0x0, 1"
         "${arzopa}, 1920x1080@100, 640x1440, 1"
       ];
       general.allow_tearing = true;
@@ -122,7 +121,7 @@ in {
     apps-creative.enable = true;
 
     container-tools.enable = true;
-    ssh.settings = import ../../homes/ssh.nix;
+    ssh.settings = import ../_common/home/ssh.nix;
     git.urlExtra = {
       "ssh://git@git.cethien.home".insteadOf = "https://git.cethien.home";
       "git@git.cethien.home:".insteadOf = "home:";

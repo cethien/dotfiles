@@ -2,29 +2,27 @@
   lib,
   config,
   pkgs,
-  sops-nix,
+  stateVersion,
   ...
 }: let
   u = config.users.users.cethien;
-  uname = "bsotnikow";
 in {
   imports = [
-    sops-nix.nixosModules.sops
     ../_common/configuration.nix
     ../_common/disko.nix
     ./smb.nix
   ];
-
-  programs.hyprland.enable = true;
-  users.users.cethien.name = uname;
-  home-manager.users.cethien.home = {
-    username = lib.mkForce uname;
-    homeDirectory = lib.mkForce "/home/${uname}";
+  users.users.cethien.name = "bsotnikow";
+  home-manager.users.cethien = {
+    home.username = lib.mkForce "bsotnikow";
+    home.homeDirectory = lib.mkForce "/home/bsotnikow";
+    # home = {inherit stateVersion;};
   };
-
+  programs.hyprland.enable = true;
   services.fprintd.enable = true;
 
   sops.age.sshKeyPaths = ["${u.home}/.ssh/id_ed25519"];
+  sops.defaultSopsFile = ./secrets.yml;
 
   security.pki.certificateFiles = [
     ./root_ca.crt
@@ -64,11 +62,6 @@ in {
   };
 
   boot = {
-    loader = {
-      grub.enable = false;
-      systemd-boot.enable = true;
-    };
-
     plymouth = {
       theme = "colorful_sliced";
       themePackages = with pkgs; [

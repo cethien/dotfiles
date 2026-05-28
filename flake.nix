@@ -106,118 +106,36 @@
     })
     // flake-utils.lib.eachDefaultSystemPassThrough (system: let
       pkgsUnstable = pkgsUnstableFor system;
-      homes = import ./homes;
-      homeConfigs = builtins.mapAttrs (name: n:
-        home-manager.lib.homeManagerConfiguration {
-          pkgs = pkgsUnstable;
-          modules = [
-            (import ./homes/${n.hostname})
-            {
-              home = {
-                inherit stateVersion;
-                inherit (n) username;
-                homeDirectory = "/home/${n.username}";
-              };
-            }
-          ];
-          extraSpecialArgs = inputs;
-        })
-      homes;
 
-      clients = import ./clients;
+      clientNames = [
+        "tms-bso"
+        "tower-of-power"
+        "hp-430-g7"
+      ];
 
-      clientConfigs = builtins.mapAttrs (name: n:
-        nixpkgs-unstable.lib.nixosSystem
-        {
-          pkgs = pkgsUnstable;
-          modules = [
-            disko.nixosModules.disko
-            ./clients/${n.hostName}/hardware-configuration.nix
-            ./clients/${n.hostName}/configuration.nix
-            {
-              system = {inherit stateVersion;};
-              networking.hostName = n.hostName;
-            }
-
-            home-manager.nixosModules.home-manager
-            {
-              home-manager = let
-                u = "cethien";
-              in {
-                backupFileExtension = "hm-bak";
-                useGlobalPkgs = false;
-                useUserPackages = true;
-
-                users."${u}" = {
-                  imports = [./clients/${n.hostName}/home.nix];
-                  home.stateVersion = stateVersion;
-                  home.username = u;
-                  home.homeDirectory = "/home/${u}";
+      clients = builtins.listToAttrs (map (name: {
+          inherit name;
+          value = nixpkgs-unstable.lib.nixosSystem {
+            pkgs = pkgsUnstable;
+            specialArgs = {inherit inputs;} // inputs;
+            modules = [
+              ./clients/_common/configuration.nix
+              ./clients/${name}/hardware-configuration.nix
+              ./clients/${name}/configuration.nix
+              {
+                system = {inherit stateVersion;};
+                networking.hostName = name;
+                _module.args = {
+                  hostName = name;
+                  inherit stateVersion;
                 };
-
-                extraSpecialArgs =
-                  inputs
-                  // {
-                    inherit system;
-                    pkgs = pkgsUnstable;
-                  };
-              };
-            }
-          ];
-          specialArgs = inputs // {nixpkgs = nixpkgs-unstable;};
-        })
-      clients;
-
-      pkgs = pkgsFor system;
-      hosts = import ./hosts;
-      hostConfigs = builtins.mapAttrs (name: n:
-        nixpkgs.lib.nixosSystem {
-          inherit pkgs;
-          modules = [
-            disko.nixosModules.disko
-            (import ./disko/simple.nix)
-            ./hosts/${n.hostName}/hardware-configuration.nix
-            ./hosts/${n.hostName}/configuration.nix
-            {
-              system = {inherit stateVersion;};
-              networking = {
-                inherit (n) hostName;
-                interfaces.eth0.ipv4.addresses = [
-                  {
-                    inherit (n) address;
-                    prefixLength = 24;
-                  }
-                ];
-                inherit (n) defaultGateway nameservers;
-              };
-            }
-          ];
-        })
-      hosts;
-    in {
-      homeConfigurations = homeConfigs;
-      nixosConfigurations = hostConfigs // clientConfigs;
-
-      deploy.nodes =
-        builtins.mapAttrs
-        (_: n: {
-          hostname = n.address;
-          profiles.system = {
-            user = "root";
-            sshUser = "deployrs";
-            sshOpts = ["-i" "~/.ssh/id_deployrs_cethien.home"];
-            path =
-              deploy-rs.lib.${system}.activate.nixos
-              self.nixosConfigurations.${n.hostName};
+              }
+            ];
           };
         })
-        hosts;
-
-      checks =
-        builtins.mapAttrs
-        (system: deployLib:
-          deployLib.deployChecks self.deploy)
-        deploy-rs.lib;
+        clientNames);
+    in {
+      nixosConfigurations = clients;
 
       templates = import ./templates;
     });

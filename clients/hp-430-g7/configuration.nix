@@ -1,13 +1,13 @@
 {
   pkgs,
   config,
-  nixos-hardware,
+  inputs,
   ...
 }: let
   user = config.users.users.cethien;
 in {
   imports = [
-    nixos-hardware.nixosModules.common-pc-laptop
+    inputs.nixos-hardware.nixosModules.common-pc-laptop
     ../_common/configuration.nix
     ../_common/disko.nix
   ];
@@ -58,7 +58,6 @@ in {
     };
 
     boot = {
-      loader.grub.splashImage = ./grub.jpg;
       plymouth = {
         theme = "polaroid";
         themePackages = with pkgs; [

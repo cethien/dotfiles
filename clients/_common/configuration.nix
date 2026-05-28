@@ -2,24 +2,48 @@
   lib,
   config,
   pkgs,
+  inputs,
+  hostName,
+  stateVersion,
   ...
 }: let
   inherit (lib) mkDefault;
   hl = config.programs.hyprland.enable;
   gnome = config.services.desktopManager.gnome.enable;
   desktop = hl || gnome;
-  u = config.users.users.cethien;
+  username = "cethien";
 in {
   imports = [
-    ../../shared/users/cethien.nix
-
-    ./gnome.nix
-    ./hyprland.nix
-    ./pipewire.nix
-    ./steam.nix
+    ../../modules/client
+    inputs.disko.nixosModules.disko
+    inputs.sops-nix.nixosModules.sops
+    inputs.home-manager.nixosModules.home-manager
   ];
 
   config = {
+    users.users.cethien.name = mkDefault username;
+    home-manager = {
+      useGlobalPkgs = true;
+      useUserPackages = true;
+      backupFileExtension = "hm-bak";
+      extraSpecialArgs = {inherit inputs;} // inputs;
+
+      sharedModules = [
+        ../../modules/home
+        inputs.sops-nix.homeManagerModules.sops
+      ];
+
+      users."${username}" = {
+        imports = [
+          ./home
+          ../${hostName}/home.nix
+        ];
+        home.username = username;
+        home.homeDirectory = "/home/${username}";
+        home = {inherit stateVersion;};
+      };
+    };
+
     security.sudo.extraConfig = ''
       Defaults timestamp_timeout=30
       Defaults pwfeedback
@@ -107,7 +131,7 @@ in {
 
     users.users.cethien.enable = true;
     services.displayManager = lib.mkIf hl {
-      autoLogin.user = u.name;
+      autoLogin.user = username;
     };
 
     hardware.uinput.enable = mkDefault true;
@@ -130,12 +154,8 @@ in {
 
     boot = {
       loader = {
+        systemd-boot.enable = mkDefault true;
         efi.canTouchEfiVariables = mkDefault true;
-        grub = {
-          enable = mkDefault true;
-          efiSupport = mkDefault true;
-          timeoutStyle = mkDefault "hidden";
-        };
         timeout = 0;
       };
 
@@ -149,9 +169,7 @@ in {
         "udev.log_priority=3"
         "rd.systemd.show_status=auto"
       ];
-      plymouth = {
-        enable = true;
-      };
+      plymouth.enable = true;
     };
   };
 }

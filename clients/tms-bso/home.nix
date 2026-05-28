@@ -9,15 +9,11 @@
   };
 in {
   imports = [
-    ../_common/home.nix
-
-    ./email.nix
-    ./zen-browser.nix
+    ./home
   ];
 
-  stylix.image = ../../wallpapers/bliss_4K.jpg;
+  stylix.image = ../../_common/wallpapers/bliss_4K.jpg;
   wayland.windowManager.hyprland = {
-    enable = true;
     settings = with monitors; {
       monitor = [
         "${eizo}, 1920x1200@60, 0x0, 1"
@@ -54,7 +50,7 @@ in {
     keepassxc.enable = true;
     container-tools.enable = true;
     freerdp.enable = true;
-    freerdp.connections = import ./rdp.nix;
-    ssh.settings = import ./ssh.nix // {"Host *".IdentityFile = "~/.ssh/id_ed25519";};
+    freerdp.connections = import ./home/rdp.nix;
+    ssh.settings = import ./home/ssh.nix // {"Host *".IdentityFile = "~/.ssh/id_ed25519";};
   };
 }

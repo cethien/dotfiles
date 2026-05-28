@@ -7,9 +7,7 @@
   inherit (lib) mkDefault;
 in {
   import = [
-    ../../shared/users/cethien.nix
-    ./deployrs.nix
-    ./ansible.nix
+    ../../modules/host
   ];
 
   config = {

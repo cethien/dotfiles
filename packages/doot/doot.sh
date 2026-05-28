@@ -46,135 +46,6 @@ flake-update() {
   nix flake update "${INPUTS[@]}"
 }
 
-# @cmd
-deploy() { :; }
-
-# @cmd
-list() { :; }
-
-# @cmd
-# @arg host[`_nixos_host_names`]
-# @arg args* Pass-through flags for deploy-rs
-deploy::hosts() {
-  _validate-inventory
-  command nix run ".#deploy-rs" -- --targets ".#${argc_host:-}" "${argc_args[@]}"
-}
-
-# @cmd
-# @arg host+[`_nixos_host_names`]
-# @arg addr!
-# @option --user="nixos"
-install-host() {
-  _install-nixos "hosts" "$argc_host" "$argc_addr" "$argc_user"
-}
-
-_nixos_host_names() {
-  _q '.hosts | with_entries(select(.value.os == null)) | keys | .[]'
-}
-
-# @cmd
-# @arg host+[`_nixos_client_names`]
-# @arg addr!
-# @option --user="nixos"
-install-client() {
-  _install-nixos "clients" "$argc_host" "$argc_addr" "$argc_user"
-}
-
-_nixos_client_names() {
-  _q '.clients | with_entries(select(.value.os == null)) | keys | .[]'
-}
-
-# @cmd
-# @arg query!
-q() { _q $argc_query; }
-
-_install-nixos() {
-  local kind="$1" # "hosts" or "clients"
-  local host="$2"
-  local addr="$3"
-  local user="$4"
-
-  clear
-  _validate-inventory
-
-  _log-info "checking if $addr is reachable..."
-  if ! ssh-keyscan -T 5 "$addr" 2>/dev/null | grep -q .; then
-    _log-error "$addr is not reachable via ssh"
-    return 1
-  fi
-
-  _confirm "install $host to $addr?" || exit 1
-
-  command nix run github:nix-community/nixos-anywhere -- \
-    --flake ".#$host" \
-    --generate-hardware-config nixos-generate-config "./$kind/$host/hardware-configuration.nix" \
-    "$user@$addr"
-}
-
-# @cmd
-# @arg os[`_hosts_os_names`]
-list::hosts() {
-  _validate-inventory
-  os="${argc_os:-}"
-  if [ ! -z "$os" ]; then
-    _hosts_by_os "$os"
-    return
-  fi
-  _q '.hosts'
-}
-
-_hosts_os_names() {
-  os=$1
-  _q '.defaults.hosts.os as $def | .hosts | map(.os // $def) | unique | .[]'
-}
-
-_hosts_by_os() {
-  OS="$1" _q '
-    .defaults.hosts.os as $def
-    | .hosts
-    | with_entries(
-        select((.value.os // $def) == env(OS))
-      )
-  '
-}
-# @cmd
-# @meta require-tools docker
-# @arg service+[`_service_names`]
-# @option --host <hostname>   Override host from inventory
-deploy::service() {
-  _validate-inventory
-  _resolve_service
-  clear
-  _confirm "deploy $SERVICE to $HOST ($ADDR)?" || exit 1
-  command docker stack deploy -c "services/$SERVICE/compose.yml" "$SERVICE" --detach=false
-}
-
-# @cmd
-list::services() {
-  _validate-inventory
-  _q '.services'
-}
-
-_service_names() {
-  _q '.services | keys | .[]'
-}
-
-_resolve_service() {
-  export SERVICE="$argc_service"
-
-  if [[ -n "${argc_host:-}" ]]; then
-    HOST="$argc_host"
-  else
-    HOST=$(_q '.services[env(SERVICE)].host // .clusters[.services[env(SERVICE)].cluster].swarm_managers[0]')
-  fi
-  export HOST
-  ADDR=$(
-    export HOST
-    _q '.hosts["'"$HOST"'"].address'
-  )
-  export DOCKER_HOST="ssh://$ADDR"
-}
-
 # @cmd switch to nixos-configuration / home-manager config
 # @flag -b --boot use boot action to prepare config without switching (eg. kernel updates)
 switch() {
@@ -185,7 +56,6 @@ switch() {
 
   export TARGET_HOST
   TARGET_HOST=$(hostname | tr '[:upper:]' '[:lower:]')
-  clear
 
   local offline_flags=""
   if ! ping -c 1 -W 1 cache.nixos.org &>/dev/null; then
@@ -193,20 +63,9 @@ switch() {
     offline_flags="--offline --option substitute false"
   fi
 
-  if command -v nixos-rebuild &>/dev/null &&
-    _q '.clients | has(env(TARGET_HOST))' &>/dev/null; then
-    _log-success "nixos: configuration '$TARGET_HOST' found"
-    _confirm "switch system?"
+  if command -v nixos-rebuild &>/dev/null; then
+    _confirm "switch system $TARGET_HOST?"
     sudo nixos-rebuild "$action" --flake ".#$TARGET_HOST" --fallback --no-write-lock-file $offline_flags
-    return
-  fi
-
-  local hm_config="$USER@$TARGET_HOST"
-  if command -v home-manager &>/dev/null &&
-    _q '.homes.[env(TARGET_HOST)].user == env(USER)' &>/dev/null; then
-    _log-success "home-manager: configuration '$hm_config' found"
-    _confirm "switch home?"
-    home-manager switch --flake ".#$hm_config" -b "bak-hm-$(date +%Y%m%d_%H%M%S)" $offline_flags
     return
   fi
 
@@ -214,29 +73,8 @@ switch() {
     _log-error "no nixos config for '$TARGET_HOST'"
     return 1
   fi
-  if command -v home-manager &>/dev/null; then
-    _log-error "no home-manager config for '$hm_config'"
-    return 1
-  fi
 
-  _log-error "neither nixos-rebuild nor home-manager found"
   return 1
-}
-
-# @cmd for when i forgor to add bootstrap profile
-# @arg profile Overwrite the default user@hostname profile
-bootstrap-home() {
-  local target="${argc_profile:-$(whoami)@$(hostname | tr '[:upper:]' '[:lower:]')}"
-
-  _log "🚀 bootstrapping home-manager for $target"
-
-  if ! _q '.homes.[env(TARGET_HOST)].user == env(USER)' &>/dev/null; then
-    _log-error "config $target not found in local flake."
-    _log-info "edit inventory.toml and try again."
-    return 1
-  fi
-
-  nix run .#homeConfigurations."$target".activationPackage
 }
 
 # @cmd

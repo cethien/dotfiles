@@ -2,7 +2,7 @@
   pkgs,
   lib,
   config,
-  nix-index-database,
+  inputs,
   ...
 }: let
   inherit (lib) mkDefault;
@@ -10,8 +10,7 @@
   hl = config.wayland.windowManager.hyprland.enable;
 in {
   imports = [
-    nix-index-database.homeModules.default
-    ../../modules/home
+    inputs.nix-index-database.homeModules.default
   ];
   config = {
     wayland.windowManager.hyprland.enable = mkDefault true;
@@ -111,6 +110,8 @@ in {
     ];
 
     home.file."${config.home.homeDirectory}/.hushlogin".text = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+
+    sops.age.sshKeyPaths = ["${config.home.homeDirectory}/.ssh/id_ed25519"];
 
     stylix.enable = true;
 

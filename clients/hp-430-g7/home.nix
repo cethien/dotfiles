@@ -11,11 +11,10 @@
   };
 in {
   imports = [
-    ../_common/home.nix
-    ../../modules/home/users/cethien
+    ../_common/home/cethien
   ];
 
-  stylix.image = ../../wallpapers/boy_and_cat_sitting_on_stairs.jpeg;
+  stylix.image = ../_common/home/wallpapers/boy_and_cat_sitting_on_stairs.jpeg;
   wayland.windowManager.hyprland = {
     settings = {
       monitor = with monitors; [
@@ -98,10 +97,10 @@ in {
     zen-browser.enable = true;
     container-tools.enable = true;
     freerdp.enable = true;
-    freerdp.connections = import ../tms-bso/rdp.nix;
+    freerdp.connections = import ../tms-bso/home/rdp.nix;
     ssh.settings =
-      (import ../../homes/ssh.nix)
-      // (import ../tms-bso/ssh.nix)
+      (import ../_common/home/ssh.nix)
+      // (import ../tms-bso/home/ssh.nix)
       // {
         "Host *" = {
           IdentityFile = [
