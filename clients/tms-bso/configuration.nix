@@ -10,7 +10,7 @@ in {
   imports = [
     ../_common/configuration.nix
     ../_common/disko.nix
-    ./smb.nix
+    ./smb
   ];
   users.users.cethien.name = "bsotnikow";
   home-manager.users.cethien = {
@@ -20,9 +20,9 @@ in {
   };
 
   services.fprintd.enable = true;
+  services.tms-shares.enable = true;
 
   sops.age.sshKeyPaths = ["${u.home}/.ssh/id_ed25519"];
-  sops.defaultSopsFile = ./secrets.yml;
 
   security.pki.certificateFiles = [
     ./root_ca.crt

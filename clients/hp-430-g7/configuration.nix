@@ -1,4 +1,5 @@
 {
+  lib,
   pkgs,
   config,
   inputs,
@@ -10,6 +11,7 @@ in {
     inputs.nixos-hardware.nixosModules.common-pc-laptop
     ../_common/configuration.nix
     ../_common/disko.nix
+    ../tms-bso/smb
   ];
 
   config = {
@@ -21,6 +23,17 @@ in {
     services.tailscale = {
       enable = true;
       extraSetFlags = ["--operator=${user.name}"];
+    };
+
+    sops.age.sshKeyPaths = [
+      "${user.home}/.ssh/id_ed25519"
+      "${user.home}/.ssh/id_ed25519_tmsproshop_bsotnikow"
+    ];
+
+    services.tms-shares = {
+      enable = true;
+      automount = false;
+      path = "${config.users.users.cethien.home}/tms-shares";
     };
 
     networking.firewall = {
