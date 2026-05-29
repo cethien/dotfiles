@@ -12,7 +12,7 @@ in {
     ./home
   ];
 
-  stylix.image = ../../_common/wallpapers/bliss_4K.jpg;
+  stylix.image = ../_common/home/wallpapers/bliss_4K.jpg;
   wayland.windowManager.hyprland = {
     settings = with monitors; {
       monitor = [
