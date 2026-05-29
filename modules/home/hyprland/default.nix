@@ -18,6 +18,9 @@ in {
   ];
 
   config = mkIf config.wayland.windowManager.hyprland.enable {
+    # https://wiki.hypr.land/Useful-Utilities/Systemd-start/#uwsm
+    wayland.windowManager.hyprland.systemd.enable = false;
+
     home.packages = with pkgs; [
       xrandr
       libnotify

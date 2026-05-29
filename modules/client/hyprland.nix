@@ -5,18 +5,20 @@
   ...
 }: let
   cfg = config.programs.hyprland;
+  u = config.users.users.cethien;
 in {
   config = lib.mkIf cfg.enable {
-    # TODO: replace with simpler autologin without sddm.
-    # so far greetd could autostart, getty could login, but could not use both
-    services.displayManager = {
-      sddm = {
-        enable = true;
-        wayland.enable = true;
-        package = pkgs.kdePackages.sddm;
-      };
-      autoLogin.enable = true;
-    };
+    services.getty.autologinUser = u.name;
+    programs.hyprland.withUWSM = true;
+
+    environment.loginShellInit = ''
+      if [ "$(tty)" = "/dev/tty1" ]; then
+        clear
+        if uwsm check may-start >/dev/null 2>&1; then
+          exec uwsm start hyprland-uwsm.desktop >/dev/null 2>&1
+        fi
+      fi
+    '';
 
     services.udisks2.enable = true;
     services.upower.enable = true;
