@@ -8,7 +8,6 @@
     ./disko.nix
   ];
   config = {
-    programs.hyprland.enable = true;
     programs.steam.enable = true;
 
     networking.firewall = {

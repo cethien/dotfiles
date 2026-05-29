@@ -13,8 +13,6 @@ in {
   ];
 
   config = {
-    programs.hyprland.enable = true;
-
     security.pki.certificateFiles = [
       ../tms-bso/root_ca.crt
       ../tms-bso/intermediate_ca.crt

@@ -18,7 +18,7 @@ in {
     home.homeDirectory = lib.mkForce "/home/bsotnikow";
     # home = {inherit stateVersion;};
   };
-  programs.hyprland.enable = true;
+
   services.fprintd.enable = true;
 
   sops.age.sshKeyPaths = ["${u.home}/.ssh/id_ed25519"];

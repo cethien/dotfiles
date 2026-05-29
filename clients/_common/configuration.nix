@@ -47,6 +47,8 @@ in {
       };
     };
 
+    programs.hyprland.enable = mkDefault true;
+
     security.sudo.extraConfig = ''
       Defaults timestamp_timeout=30
       Defaults pwfeedback
