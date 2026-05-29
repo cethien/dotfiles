@@ -100,14 +100,12 @@ in {
     freerdp.connections = import ../tms-bso/home/rdp.nix;
     ssh.settings =
       (import ../_common/home/ssh.nix)
-      // (import ../tms-bso/home/ssh.nix)
       // {
-        "Host *" = {
-          IdentityFile = [
-            "~/.ssh/id_ed25519"
-            "~/.ssh/id_ed25519_tmsproshop"
-          ];
+        "Match host 10.*" = {
+          User = "bsotnikow";
+          IdentityFile = "~/.ssh/id_ed25519_tmsproshop_bsotnikow";
         };
-      };
+      }
+      // (import ../tms-bso/home/ssh.nix);
   };
 }
