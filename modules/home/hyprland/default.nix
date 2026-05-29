@@ -146,13 +146,21 @@ in {
           "no_focus on, match:class ^$, match:title ^$, match:xwayland 1, match:float 1, match:fullscreen 0, match:pin 0"
         ];
 
+        cursor = {
+          inactive_timeout = 5;
+          persistent_warps = true;
+        };
+
         misc = {
           force_default_wallpaper = 0;
           disable_hyprland_logo = true;
+          disable_splash_rendering = true;
           middle_click_paste = false;
           focus_on_activate = true;
           enable_swallow = true;
         };
+
+        ecosystem.no_donation_nag = true;
 
         input = {
           kb_layout = "de";
