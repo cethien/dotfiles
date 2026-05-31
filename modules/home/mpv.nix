@@ -69,5 +69,52 @@ in {
         ];
       };
     };
+
+    programs.yazi = {
+      openRulesMerged = {
+        "video/mp4" = [
+          {
+            name = "mpv";
+            prio = 1;
+          }
+        ];
+        "video/webm" = [
+          {
+            name = "mpv";
+            prio = 1;
+          }
+        ];
+        "video/*" = [
+          {
+            name = "mpv";
+            prio = 1;
+          }
+        ];
+        "audio/*" = [
+          {
+            name = "mpv-audio";
+            prio = 1;
+          }
+        ];
+      };
+      settings.opener = {
+        mpv = [
+          {
+            run = ''mpv "$@"'';
+            desc = "mpv";
+            for = "unix";
+          }
+        ];
+
+        mpv-audio = [
+          {
+            run = ''mpv --audio-display=no --volume=70 "$@"'';
+            desc = "mpv tui for audio";
+            for = "unix";
+            block = true;
+          }
+        ];
+      };
+    };
   };
 }

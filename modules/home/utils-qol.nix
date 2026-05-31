@@ -20,6 +20,22 @@ in {
       ", XF86Bluetooth"
     ];
 
+    programs.yazi = {
+      openRulesMerged = {
+        "application/iso9660-image" = ["caligula"];
+      };
+      settings.opener = {
+        caligula = [
+          {
+            run = ''caligula burn "$@" --root=always -f -z=none -s=skip'';
+            desc = "caligula";
+            block = true;
+            for = "unix";
+          }
+        ];
+      };
+    };
+
     home.packages = with pkgs; [
       up
       libqalculate

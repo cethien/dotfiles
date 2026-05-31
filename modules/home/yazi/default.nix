@@ -4,9 +4,33 @@
   lib,
   ...
 }: let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf mkOption types sort mapAttrsToList;
+  cfg = config.programs.yazi;
+
+  openerType =
+    types.coercedTo types.str
+    (str: {
+      name = str;
+      prio = 50;
+    })
+    (types.submodule {
+      options = {
+        name = mkOption {type = types.str;};
+        prio = mkOption {
+          type = types.int;
+          default = 50;
+        };
+      };
+    });
 in {
-  config = mkIf config.programs.yazi.enable {
+  options = {
+    programs.yazi.openRulesMerged = mkOption {
+      type = types.attrsOf (types.listOf openerType);
+      default = {};
+    };
+  };
+
+  config = mkIf cfg.enable {
     programs.tmux.resurrectPluginProcesses = ["yazi"];
 
     xdg.mimeApps.defaultApplications."inode/directory" = ["yazi.desktop"];
@@ -216,117 +240,15 @@ in {
       ];
 
       settings = {
-        opener = let
-          castnow = "${pkgs.castnow}/bin/castnow";
-          caligula = "${pkgs.caligula}/bin/caligula";
-        in {
-          castnow = [
-            {
-              run = ''${castnow} "$@"'';
-              desc = "Cast to Chromecast";
-              for = "unix";
-              block = true;
-            }
-          ];
-          castnow-transcode = [
-            {
-              run = ''${castnow} --tomp4 "$@"'';
-              desc = "Cast to Chromecast (Transcode)";
-              for = "unix";
-              block = true;
-            }
-          ];
-          imv = [
-            {
-              run = ''imv-dir "$@"'';
-              desc = "imv";
-              for = "unix";
-            }
-          ];
-          gimp = [
-            {
-              run = ''gimp "$@"'';
-              desc = "GIMP";
-              orphan = true;
-              for = "unix";
-            }
-          ];
-          pinta = [
-            {
-              run = ''pinta "$@"'';
-              desc = "Pinta";
-              orphan = true;
-              for = "unix";
-            }
-          ];
-
-          inkscape = [
-            {
-              run = ''inkscape "$@"'';
-              desc = "Inkscape";
-              orphan = true;
-              for = "unix";
-            }
-          ];
-
-          mpv = [
-            {
-              run = ''mpv "$@"'';
-              desc = "mpv";
-              for = "unix";
-            }
-          ];
-
-          ocenaudio = [
-            {
-              run = ''ocenaudio "$@"'';
-              desc = "ocenaudio";
-              for = "unix";
-            }
-          ];
-
-          caligula = [
-            {
-              run = ''${caligula} burn "$@" --root=always -f -z=none -s=skip'';
-              desc = "caligula";
-              block = true;
-              for = "unix";
-            }
-          ];
-        };
-
-        open = {
-          prepend_rules = [
-            {
-              mime = "audio/*";
-              use = ["mpv" "ocenaudio" "castnow"];
-            }
-            {
-              mime = "image/svg+xml";
-              use = ["imv" "inkscape"];
-            }
-            {
-              mime = "image/*";
-              use = ["imv" "pinta" "gimp"];
-            }
-            {
-              mime = "video/mp4";
-              use = ["mpv" "castnow"];
-            }
-            {
-              mime = "video/webm";
-              use = ["mpv" "castnow"];
-            }
-            {
-              mime = "video/*";
-              use = ["mpv" "castnow-transcode"];
-            }
-            {
-              mime = "application/iso9660-image";
-              use = ["caligula"];
-            }
-          ];
-        };
+        open.prepend_rules =
+          mapAttrsToList (mime: openers: let
+            sortedOpeners = sort (a: b: a.prio < b.prio) openers;
+            sortedNames = map (o: o.name) sortedOpeners;
+          in {
+            inherit mime;
+            use = sortedNames;
+          })
+          cfg.openRulesMerged;
       };
 
       shellWrapperName = "y";
