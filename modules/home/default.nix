@@ -47,6 +47,7 @@
     ./obs-studio.nix
 
     ./steam.nix
+    ./heroic.nix
     ./retroarch.nix
     ./minecraft.nix
     ./pokemmo.nix

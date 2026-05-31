@@ -22,11 +22,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [
-      protonplus
-      heroic
-    ];
-
     xdg.desktopEntries.steam-friends-list = {
       name = "Steam Friends List";
       icon = "steam";
@@ -36,13 +31,16 @@ in {
     wayland.windowManager.hyprland.settings = {
       exec-once = mkIf cfg.autostart ["[silent] steam -silent"];
 
-      windowrule =
-        (config.lib.deeznuts.mkHyprGameWindowRules [
+      windowrule = let
+        games = [];
+        gameRules = map (game: "match:initial_class ^(${game})$, match:initial_title ..*") games;
+      in
+        (config.lib.deeznuts.mkHyprGameWindowRules ([
             "match:initial_class ^(steam_app_.*)$, match:initial_title ..*"
-            "match:initial_class (?i).*\.exe$, match:initial_title ..*"
             "match:initial_class ^(Godot)$, match:initial_title ..*"
           ]
-          ws.gaming)
+          ++ gameRules)
+        ws.gaming)
         ++ (
           if ws.chat != null
           then ["match:class steam, match:title ^(Friends List)$, workspace ${toString ws.chat}"]
