@@ -79,6 +79,7 @@ in {
         "1, monitor:${asus}, persistent:true, default:true, layout:master"
         "2, monitor:${asus}, persistent:true"
         "3, monitor:${asus}, persistent:true"
+        "10, monitor:${asus}"
       ];
     };
     defaultWorkspaces = {
