@@ -60,9 +60,7 @@
       then []
       else
         builtins.concatMap (match: [
-          "${match}, fullscreen on"
-          "${match}, content game"
-          "${match}, workspace ${toString gamingWorkspace}"
+          "${match}, fullscreen on, content game, workspace ${toString gamingWorkspace}"
         ])
         matches;
   };
