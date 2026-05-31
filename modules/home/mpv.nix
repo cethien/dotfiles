@@ -8,6 +8,13 @@
 in {
   config = lib.mkIf cfg.enable {
     programs.mpv = {
+      bindings = {
+        "+" = "add volume 5";
+        "-" = "add volume -5";
+        "UP" = "playlist-prev";
+        "DOWN" = "playlist-next";
+      };
+
       config = {
         keep-open = true;
         ytdl-format = "bestvideo+bestaudio";
