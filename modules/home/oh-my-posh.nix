@@ -70,7 +70,7 @@
             };
             foreground_templates = [
               "{{ if or (.Working.Changed) (.Staging.Changed) }}#${c.base08}{{ end }}"
-              "{{ if and (gt .Ahead 0) (gt .Behind 0) }}#FF4500{{ end }}"
+              "{{ if and (gt .Ahead 0) (gt .Behind 0) }}#${c.base08}{{ end }}"
               "{{ if gt .Ahead 0 }}#${c.base0E}{{ end }}"
               "{{ if gt .Behind 0 }}#${c.base0E}{{ end }}"
             ];

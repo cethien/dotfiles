@@ -34,7 +34,7 @@ in {
     };
 
     xdg.mimeApps.defaultApplications = config.lib.deeznuts.mkMimeApps {
-      videos = {
+      images = {
         desktop = "imv-dir.desktop";
         types = [
           "image/png"
