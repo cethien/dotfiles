@@ -9,19 +9,32 @@ in {
   options.userfonts.enable = lib.mkEnableOption "install userfonts and activate options";
 
   config = lib.mkIf cfg.enable {
-    fonts.fontconfig = {
-      antialiasing = true;
-      hinting = "slight";
-      subpixelRendering = "rgb";
-    };
+    # fonts.fontconfig = {
+    #   antialiasing = true;
+    #   hinting = "slight";
+    #   subpixelRendering = "rgb";
+    #   configFile = {
+    #     "99-lcdfilter" = {
+    #       enable = true;
+    #       text = ''
+    #         <?xml version="1.0"?>
+    #         <!DOCTYPE fontconfig SYSTEM "urn:fontconfig:fonts.dtd">
+    #         <fontconfig>
+    #           <match target="font">
+    #             <edit name="lcdfilter" mode="assign">
+    #               <const>lcddefault</const>
+    #             </edit>
+    #           </match>
+    #         </fontconfig>
+    #       '';
+    #     };
+    #   };
+    # };
 
     home.packages = with pkgs; [
       (google-fonts.override {
         fonts = [
-          "Roboto"
-          "Inter"
           "Lato"
-          "Montserrat"
           "Oswald"
           "Nunito"
           "Akt"

@@ -82,11 +82,9 @@ in {
       || config.programs.apps-creative.enable
     );
 
-    fonts.fontconfig.enable = true;
+    # fonts.fontconfig.enable = true;
 
     home.packages = with pkgs; [
-      corefonts
-
       curl
       wget
       gnutar

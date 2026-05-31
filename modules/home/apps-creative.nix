@@ -10,10 +10,22 @@ in {
 
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
-      pinta
       gimp
+      krita
       inkscape
-      # ocenaudio
+
+      # fonts
+      helvetica-neue-lt-std
+      (google-fonts.override {
+        fonts = [
+          "Roboto"
+          "Inter"
+          "Montserrat"
+        ];
+      })
+
+      # audio
+      kdePackages.kwave
     ];
   };
 }

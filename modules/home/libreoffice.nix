@@ -10,7 +10,13 @@ in {
   options.programs.libreoffice.enable = mkEnableOption "libreoffice";
 
   config = mkIf cfg.enable {
-    home.packages = [pkgs.libreoffice-fresh];
+    home.packages = with pkgs; [
+      libreoffice-fresh
+
+      # fonts
+      corefonts
+      vista-fonts
+    ];
 
     xdg.mimeApps.defaultApplications = config.lib.deeznuts.mkMimeApps {
       office = {
