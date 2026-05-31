@@ -8,6 +8,7 @@
   inherit (lib) mkDefault;
 
   hl = config.wayland.windowManager.hyprland.enable;
+  mg = config.programs.steam.enable || config.programs.heroic.enable || config.programs.prismlauncher.enable;
 in {
   imports = [
     inputs.nix-index-database.homeModules.default
@@ -75,6 +76,8 @@ in {
       imv.enable = mkDefault hl;
       zathura.enable = mkDefault hl;
       fileroller.enable = mkDefault hl;
+
+      mangohud.enable = mkDefault mg;
     };
 
     userfonts.enable = mkDefault (
