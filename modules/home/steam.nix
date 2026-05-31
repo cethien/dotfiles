@@ -22,6 +22,11 @@ in {
   };
 
   config = mkIf cfg.enable {
+    home.packages = with pkgs; [
+      protonplus
+      heroic
+    ];
+
     xdg.desktopEntries.steam-friends-list = {
       name = "Steam Friends List";
       icon = "steam";
