@@ -15,6 +15,7 @@ pkgs.stdenv.mkDerivation {
     yq-go
     openssh
 
+    gum
     argc
   ];
 

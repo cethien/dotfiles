@@ -8,12 +8,11 @@ pkgs.mkShell {
     sops
     age
     ssh-to-age
-
-    python3
     yq-go
     argc
-
+    gum
     doot
+
     act
   ];
 
