@@ -136,6 +136,7 @@ in {
       ];
 
       policies = {
+        ImportEnterpriseRoots = true;
         AutofillAddressEnabled = true;
         AutofillCreditCardEnabled = false;
         DisableAppUpdate = true;
