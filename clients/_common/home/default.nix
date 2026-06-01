@@ -71,7 +71,6 @@ in {
       zen-browser.enable = mkDefault hl;
       browser.default = config.programs.zen-browser.package;
 
-      apps-creative.enable = mkDefault hl;
       mpv.enable = mkDefault hl;
       imv.enable = mkDefault hl;
       zathura.enable = mkDefault hl;

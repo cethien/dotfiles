@@ -74,16 +74,6 @@
     };
 
     boot = {
-      # loader = {
-      # systemd-boot.enable = false;
-      # grub.enable = true;
-      # grub = {
-      #   efiSupport = true;
-      #   timeoutStyle = "hidden";
-      #   splashImage = ./grub.jpg;
-      #   devices = ["nodev"];
-      # };
-      # };
       plymouth = {
         theme = "rings_2";
         themePackages = with pkgs; [
