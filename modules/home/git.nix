@@ -4,7 +4,8 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkDefault mkOption types mkMerge;
+  inherit (lib) mkDefault mkOption types mkMerge mkIf;
+  cfg = config.programs.git;
 in {
   options.programs.git.urlExtra = mkOption {
     type = types.attrsOf (types.attrsOf types.str);
@@ -18,7 +19,7 @@ in {
     '';
   };
 
-  config = {
+  config = mkIf cfg.enable {
     programs.git.settings = {
       user = {
         name = mkDefault "cethien";
@@ -51,57 +52,7 @@ in {
       ];
     };
 
-    programs.kitty.enableGitIntegration = config.programs.kitty.enable;
     programs.diff-so-fancy.enable = true;
     programs.diff-so-fancy.enableGitIntegration = true;
-
-    programs.lazygit = {
-      enable = config.programs.git.enable;
-      shellWrapperName = "lzg";
-      settings = {
-        update.method = "never";
-        disableStartupPopups = true;
-        notARepository = "quit";
-        promptToReturnFromSubprocess = false;
-        os.openDirInEditor = "$EDITOR";
-
-        customCommands = [
-          {
-            key = "l";
-            description = "Add LICENSE file";
-            context = "files";
-            command = "${pkgs.license-go}/bin/license -o LICENSE {{.Form.License}}";
-            prompts = [
-              {
-                type = "menuFromCommand";
-                title = "Select License";
-                key = "License";
-                command = "${pkgs.license-go}/bin/license -list";
-                filter = "^(?P<id>\\S+)\\s+(?P<desc>.*)";
-                valueFormat = "{{ .id }}";
-                labelFormat = "{{ .id | yellow }} {{ .desc | cyan }}";
-              }
-            ];
-          }
-          {
-            key = "<f3>";
-            description = "open gh-dash";
-            command = "${pkgs.gh-dash}/bin/gh-dash";
-            context = "global";
-            output = "terminal";
-          }
-
-          {
-            key = "<f1>";
-            description = "Show code statistics";
-            command = "${pkgs.scc}/bin/scc --no-cocomo --no-size";
-            context = "global";
-            output = "popup";
-            outputTitle = "Stats";
-          }
-        ];
-      };
-    };
-    programs.tmux.resurrectPluginProcesses = ["lazygit"];
   };
 }

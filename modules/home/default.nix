@@ -22,6 +22,7 @@
     ./oh-my-posh.nix
     ./restic.nix
     ./git.nix
+    ./lazygit.nix
 
     ./utils.nix
     ./utils-net.nix

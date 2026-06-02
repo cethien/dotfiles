@@ -47,7 +47,8 @@ in {
       utils-qol.enable = mkDefault true;
       cava.enable = mkDefault true;
 
-      git.enable = true;
+      git.enable = mkDefault true;
+      lazygit.enable = config.programs.git.enable;
       direnv.enable = true;
       direnv = {
         silent = true;
