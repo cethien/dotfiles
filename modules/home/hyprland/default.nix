@@ -39,27 +39,6 @@ in {
     wayland.windowManager.hyprland = {
       configType = "hyprlang";
 
-      # plugins = with pkgs.hyprlandPlugins; [
-      #   hypr-dynamic-cursors
-      # ];
-      #
-      # extraConfig = ''
-      #   plugin {
-      #     dynamic-cursors {
-      #       enabled = true
-      #       mode = stretch
-      #       threshhold = 1
-      #       stretch {
-      #           limit = 1500
-      #           function = linear
-      #       }
-      #       shake {
-      #         enabled = false
-      #       }
-      #     }
-      #   }
-      # '';
-
       settings = {
         exec-once = [
           "${pkgs.udiskie}/bin/udiskie"

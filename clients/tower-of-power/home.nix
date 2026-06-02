@@ -66,8 +66,8 @@ in {
   wayland.windowManager.hyprland = {
     settings = {
       monitor = with monitors; [
-        "${asus}, 2560x1440@240, 0x0, 1"
-        "${arzopa}, 1920x1080@100, 640x1440, 1"
+        "${asus}, 2560x1440@240, 0x0, 1, bitdepth,10, vrr,2"
+        "${arzopa}, 1920x1080@100, 320x1440, 1"
       ];
       general.allow_tearing = true;
       exec-once = ["xrandr --output DP-1 --primary"];
