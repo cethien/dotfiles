@@ -125,8 +125,7 @@ in {
 
     container-tools.enable = true;
     ssh.settings = import ../_common/home/ssh.nix;
-    git.urlExtra = {
-      "ssh://git@git.cethien.home".insteadOf = "https://git.cethien.home";
+    git.settings.url = {
       "git@git.cethien.home:".insteadOf = "home:";
     };
   };
