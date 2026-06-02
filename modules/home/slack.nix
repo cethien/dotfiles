@@ -13,15 +13,22 @@ in {
   config = mkIf cfg.enable {
     home.packages = [pkgs.slack];
 
+    services.mako.settings."app-name=Slack" = {
+      default-timeout = 0;
+      border-color = "#4a154b";
+    };
+
     wayland.windowManager.hyprland = {
       modals."slack" = {
-        binds = ["SHIFT, XF86Mail"];
+        binds = [
+          "SUPER, F12"
+        ];
         terminal = false;
         exec = "slack";
       };
 
       settings = {
-        exec-once = mkIf cfg.autostart ["[silent] slack -u"];
+        exec-once = mkIf cfg.autostart ["[silent] [workspace special:slack] slack -u"];
       };
     };
   };

@@ -5,27 +5,23 @@
   ...
 }: let
   inherit (lib) mkIf mkMerge;
-  ws = config.wayland.windowManager.hyprland.defaultWorkspaces.chat;
+  cfg = config.programs.nixcord;
 in {
   imports = [nixcord.homeModules.nixcord];
 
-  options = {
-    wayland.windowManager.hyprland = {
-      defaultWorkspaces.chat = lib.mkOption {
-        type = lib.types.nullOr lib.types.int;
-        default = config.wayland.windowManager.hyprland.defaultWorkspaces.browser or null;
-        description = "default chat workspace";
-      };
-    };
-    programs.nixcord.autostart = lib.mkEnableOption "hyprland autostart";
-  };
+  options.programs.nixcord.autostart = lib.mkEnableOption "hyprland autostart";
 
-  config = {
+  config = mkIf cfg.enable {
     stylix.targets.nixcord.enable = false;
 
+    services.mako.settings."app-name=vesktop" = {
+      default-timeout = 0;
+      border-color = "#5865F2";
+    };
+
     programs.nixcord = {
-      discord.enable = false;
-      vesktop.enable = true;
+      discord.vencord.enable = true;
+      # vesktop.enable = true;
       vesktop.settings = {
         discordBranch = "stable";
         staticTitle = true;
@@ -78,14 +74,19 @@ in {
       };
     };
 
-    wayland.windowManager.hyprland.settings = {
-      exec-once = mkIf config.programs.nixcord.autostart [
-        "[silent] vesktop --start-minimized"
-      ];
-
-      windowrule = lib.optionals (ws != null && config.programs.nixcord.enable) [
-        "match:initial_class vesktop, workspace ${toString ws}"
-      ];
+    wayland.windowManager.hyprland = {
+      modals."discord" = {
+        binds = [
+          "SUPER, F12"
+        ];
+        terminal = false;
+        exec = "discord";
+      };
+      settings = {
+        exec-once = mkIf cfg.autostart [
+          "[silent] [workspace special:discord] discord --start-minimized"
+        ];
+      };
     };
   };
 }

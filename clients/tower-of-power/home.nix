@@ -106,8 +106,10 @@ in {
 
     spicetify.enable = true;
     nixcord.enable = true;
+    nixcord.autostart = true;
 
     thunderbird.enable = true;
+    thunderbird.autostart = true;
     libreoffice.enable = true;
 
     obs-studio.enable = true;

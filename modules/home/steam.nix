@@ -14,10 +14,18 @@ in {
       autostart = mkEnableOption "autostart steam";
     };
 
-    wayland.windowManager.hyprland.defaultWorkspaces.gaming = mkOption {
-      type = types.nullOr types.int;
-      default = null;
-      description = "default gaming workspace";
+    wayland.windowManager.hyprland.defaultWorkspaces = {
+      gaming = mkOption {
+        type = types.nullOr types.int;
+        default = null;
+        description = "default gaming workspace";
+      };
+
+      chat = mkOption {
+        type = types.nullOr types.int;
+        default = ws.browser or null;
+        description = "default chat workspace";
+      };
     };
   };
 
