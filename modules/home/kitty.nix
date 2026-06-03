@@ -1,7 +1,10 @@
 {
   programs.kitty = {
     settings = {
-      clear_all_shortcuts = "yes";
+      clear_all_shortcuts = true;
+      repaint_delay = 4;
+      input_delay = 2;
+      sync_to_monitor = true;
       window_padding_width = 2;
       update_check_interval = 0;
       scrollback_lines = 10000;
