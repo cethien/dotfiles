@@ -45,12 +45,15 @@ in {
 
   programs = {
     slack.enable = true;
+    slack.autostart = true;
     thunderbird.enable = true;
+    thunderbird.autostart = true;
     libreoffice.enable = true;
     keepassxc.enable = true;
+
     git.settings = import ./home/git.nix;
+    ssh.settings = import ./home/ssh.nix // {"Host *".IdentityFile = "~/.ssh/id_ed25519";};
     freerdp.enable = true;
     freerdp.connections = import ./home/rdp.nix;
-    ssh.settings = import ./home/ssh.nix // {"Host *".IdentityFile = "~/.ssh/id_ed25519";};
   };
 }
