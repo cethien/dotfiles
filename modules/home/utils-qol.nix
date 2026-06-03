@@ -54,7 +54,10 @@ in {
       bluetui
 
       caligula
+
+      # slides
       slides
+      marp-cli
 
       # markdown reader
       glow
