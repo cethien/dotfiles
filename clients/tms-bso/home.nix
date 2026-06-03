@@ -48,6 +48,7 @@ in {
     thunderbird.enable = true;
     libreoffice.enable = true;
     keepassxc.enable = true;
+    git.settings = import ./home/git.nix;
     freerdp.enable = true;
     freerdp.connections = import ./home/rdp.nix;
     ssh.settings = import ./home/ssh.nix // {"Host *".IdentityFile = "~/.ssh/id_ed25519";};

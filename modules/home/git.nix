@@ -32,6 +32,7 @@ in {
         "git@github.com:".insteadOf = "gh:";
         "git@gitlab.com:".insteadOf = "gl:";
         "git@codeberg.org:".insteadOf = "cb:";
+        "git@bitbucket.org:".insteadOf = "bb:";
       };
     };
 

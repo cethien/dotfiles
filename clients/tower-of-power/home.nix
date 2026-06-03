@@ -123,9 +123,7 @@ in {
     logitech-peripherals.autostart = true;
     apps-creative.enable = true;
 
+    git.settings = import ../_common/home/git.nix;
     ssh.settings = import ../_common/home/ssh.nix;
-    git.settings.url = {
-      "git@git.cethien.home:".insteadOf = "home:";
-    };
   };
 }
