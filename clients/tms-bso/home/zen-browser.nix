@@ -247,9 +247,14 @@
               tags = ["hosting" "magento" "staging"];
             }
             {
-              name = "hetzner-console";
-              url = "https://console.hetzner.com";
+              name = "hetzner";
+              url = "https://robot.hetzner.com";
               tags = ["hosting" "magento" "staging"];
+            }
+            {
+              name = "cloudflare";
+              url = "https://dash.cloudflare.com/";
+              tags = ["dns" "domains"];
             }
           ];
         }
