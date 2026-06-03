@@ -44,6 +44,7 @@ in {
 
         wayland.windowManager.hyprland.enable = mkDefault hl;
         programs.steam.enable = config.programs.steam.enable;
+        programs.lazydocker.enable = config.virtualisation.docker.enable;
       };
     };
 

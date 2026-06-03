@@ -23,11 +23,11 @@
     ./restic.nix
     ./git.nix
     ./lazygit.nix
+    ./lazydocker.nix
 
     ./utils.nix
     ./utils-net.nix
     ./utils-remote.nix
-    ./utils-container.nix
     ./utils-qol.nix
     ./utils-fun.nix
     ./oh-my-posh.nix

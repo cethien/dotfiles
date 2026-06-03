@@ -95,7 +95,6 @@ in {
     rclone.enable = true;
 
     zen-browser.enable = true;
-    container-tools.enable = true;
     freerdp.enable = true;
     freerdp.connections = import ../tms-bso/home/rdp.nix;
     ssh.settings =
