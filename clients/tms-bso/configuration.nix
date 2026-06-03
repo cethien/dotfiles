@@ -24,11 +24,6 @@ in {
 
   sops.age.sshKeyPaths = ["${u.home}/.ssh/id_ed25519"];
 
-  security.pki.certificateFiles = [
-    ./root_ca.crt
-    ./intermediate_ca.crt
-  ];
-
   services.tailscale = {
     enable = true;
     extraSetFlags = ["--operator=${u.name}"];

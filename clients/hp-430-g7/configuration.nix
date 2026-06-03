@@ -15,11 +15,6 @@ in {
   ];
 
   config = {
-    security.pki.certificateFiles = [
-      ../tms-bso/root_ca.crt
-      ../tms-bso/intermediate_ca.crt
-    ];
-
     services.tailscale = {
       enable = true;
       extraSetFlags = ["--operator=${user.name}"];
