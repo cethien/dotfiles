@@ -37,7 +37,7 @@ in {
     services.battery-checker.enable = true;
 
     wayland.windowManager.hyprland = {
-      configType = "hyprlang";
+      # configType = "lua";
 
       settings = {
         exec-once = [
@@ -111,7 +111,7 @@ in {
           enabled = true;
 
           bezier = [
-            "deez, 0.10, 0.9, 0.1, 1.05"
+            "deez, 0.22, 0.85, 0, 1.03"
           ];
 
           animation = [
