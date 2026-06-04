@@ -150,8 +150,6 @@ in {
           follow_mouse = 2;
         };
 
-        "$resizeIncrement" = 25;
-
         bind = let
           toggleLayout = pkgs.writeShellScriptBin "hyprland-toggle-layout" ''
             set -e
@@ -218,12 +216,13 @@ in {
           "SUPER SHIFT, C, exec, ${pkgs.hyprpicker}/bin/hyprpicker -a"
         ];
 
-        binde = [
-          # resize windows
-          "SUPER ALT, right, resizeactive, $resizeIncrement 0"
-          "SUPER ALT, left, resizeactive, -$resizeIncrement 0"
-          "SUPER ALT, up, resizeactive, 0 -$resizeIncrement"
-          "SUPER ALT, down, resizeactive, 0 $resizeIncrement"
+        binde = let
+          ri = "25";
+        in [
+          "SUPER ALT, right, resizeactive, ${ri} 0"
+          "SUPER ALT, left, resizeactive, -${ri} 0"
+          "SUPER ALT, up, resizeactive, 0 -${ri}"
+          "SUPER ALT, down, resizeactive, 0 ${ri}"
         ];
 
         bindm = [
