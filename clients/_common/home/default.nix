@@ -86,6 +86,9 @@ in {
       || config.programs.apps-creative.enable
     );
 
+    xdg.enable = true;
+    xdg.mimeApps.enable = true;
+
     # fonts.fontconfig.enable = true;
 
     home.packages = with pkgs; [
@@ -115,7 +118,6 @@ in {
 
     stylix.enable = true;
 
-    xdg.mimeApps.enable = true;
     programs.home-manager.enable = true;
     services.home-manager.autoExpire = {
       enable = true;

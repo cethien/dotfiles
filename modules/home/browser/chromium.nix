@@ -31,7 +31,7 @@
 in {
   options.programs.chromium.autostart = lib.mkEnableOption "chromium autostart";
 
-  config = mkIf config.programs.chromium.enable {
+  config = mkIf cfg.enable {
     wayland.windowManager.hyprland.settings = {
       exec-once = mkIf cfg.autostart ["[silent] chromium"];
       windowrule = mkIf (ws != null) [
@@ -40,7 +40,6 @@ in {
     };
 
     programs.chromium = {
-      # package = pkgs.ungoogled-chromium;
       extensions = mkMerge [
         [
           # ublock lite

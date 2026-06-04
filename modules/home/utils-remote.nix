@@ -41,7 +41,6 @@ in {
       localsend
       jocalsend
       castnow
-      croc
     ];
   };
 }

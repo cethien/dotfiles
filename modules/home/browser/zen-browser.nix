@@ -127,7 +127,9 @@ in {
         inherit name;
       };
 
-      nativeMessagingHosts = lib.optionals (config.programs.keepassxc.enable) [pkgs.keepassxc];
+      nativeMessagingHosts = lib.optionals (config.programs.keepassxc.enable) [
+        pkgs.keepassxc
+      ];
 
       languagePacks = [
         "en-US"
