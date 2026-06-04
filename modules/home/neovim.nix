@@ -306,6 +306,11 @@ in {
         keymaps = [
           {
             mode = "n";
+            key = "<leader><Period>";
+            action = "<cmd>IconPickerInsert<CR>";
+          }
+          {
+            mode = "n";
             key = "<leader><Space>";
             action = "<cmd>FzfLua files<CR>";
           }
