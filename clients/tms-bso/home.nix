@@ -38,7 +38,7 @@ in {
     drawio
     rustdesk-flutter
     dbeaver-bin
-    omnissa-horizon-client
+    winboat
   ];
 
   services.davmail.enable = true;
