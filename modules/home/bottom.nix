@@ -8,7 +8,7 @@
   cfg = config.programs.bottom;
 in {
   config = mkIf cfg.enable {
-    wayland.windowManager.hyprland.modals."btm".binds = ["SUPER SHIFT, P"];
+    wayland.windowManager.hyprland.modals."btm".binds = ["SUPER, P"];
 
     home.shellAliases = {
       top = "btm --basic";

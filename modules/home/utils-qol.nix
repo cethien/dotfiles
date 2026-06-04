@@ -11,7 +11,7 @@ in {
 
   config = mkIf cfg.enable {
     wayland.windowManager.hyprland.modals."qalc".binds = [
-      "SUPER SHIFT, COMMA"
+      "SUPER, COMMA"
       ", XF86Calculator"
     ];
 

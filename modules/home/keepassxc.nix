@@ -68,7 +68,7 @@ in {
     };
 
     wayland.windowManager.hyprland.modals."keepassxc" = {
-      binds = ["SUPER SHIFT, K"];
+      binds = ["SUPER, K"];
       terminal = false;
       exec = "keepassxc";
     };

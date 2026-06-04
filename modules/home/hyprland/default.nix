@@ -162,12 +162,6 @@ in {
             fi
           '';
         in [
-          "SUPER SHIFT, RETURN, exec, ${pkgs.kitty}/bin/kitty"
-          #
-          "SUPER SHIFT, C, exec, ${pkgs.hyprpicker}/bin/hyprpicker -a"
-
-          # "SUPER, M, exit"
-
           "ALT, F4, killactive"
           "SUPER, C, killactive"
 
@@ -217,9 +211,11 @@ in {
           "SUPER CTRL SHIFT, 9, movetoworkspace, 9"
           "SUPER CTRL SHIFT, 0, movetoworkspace, 10"
 
-          "SUPER ALT, p, exec, ${
+          "SUPER, i, exec, ${
             pkgs.writeShellScriptBin "notify-info" (builtins.readFile ./notify-info.sh)
           }/bin/notify-info"
+
+          "SUPER SHIFT, C, exec, ${pkgs.hyprpicker}/bin/hyprpicker -a"
         ];
 
         binde = [
