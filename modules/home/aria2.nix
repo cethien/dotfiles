@@ -10,6 +10,7 @@
       settings = {
         dir = "${config.home.homeDirectory}/Downloads";
         enable-rpc = true;
+        seed-time = 0;
       };
     };
   };
