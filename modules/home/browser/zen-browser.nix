@@ -184,7 +184,7 @@ in {
           fi
         '';
       in [
-        "SUPER SHIFT, W, exec, ${script}/bin/hypr_zen-sidebar"
+        "SUPER, W, exec, ${script}/bin/hypr_zen-sidebar"
         ", XF86HomePage, exec, ${script}/bin/hypr_zen-sidebar"
       ];
     };

@@ -21,7 +21,7 @@ in {
     };
 
     wayland.windowManager.hyprland = {
-      modals."spotify_player".binds = ["SUPER SHIFT, M" ", XF86Music"];
+      modals."spotify_player".binds = ["SUPER, M" ", XF86Music"];
 
       settings = {
         bindl = let

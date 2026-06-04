@@ -50,14 +50,6 @@ in {
 
         "SUPER, escape, exec, ${pwr}/bin/rofi-power"
 
-        "SUPER, M, exec, ${
-          pkgs.writeShellScriptBin "rofi-audio" (builtins.readFile ./rofi-audio.sh)
-        }/bin/rofi-audio"
-
-        "SUPER, W, exec, ${
-          pkgs.writeShellScriptBin "rofi-websearch" (builtins.readFile ./rofi-websearch.sh)
-        }/bin/rofi-websearch"
-
         "SUPER, RETURN, exec, ${
           pkgs.writeShellScriptBin "rofi-tmux" (builtins.readFile ./rofi-tmux.sh)
         }/bin/rofi-tmux"

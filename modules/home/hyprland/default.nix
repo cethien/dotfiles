@@ -238,11 +238,6 @@ in {
         bindl = [
           ", XF86MonBrightnessUp, exec, brightnessctl s 5%+"
           ", XF86MonBrightnessDown, exec, brightnessctl s 5%-"
-
-          "SUPER, XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.2 @DEFAULT_AUDIO_SINK@ 5%+"
-          "SUPER, XF86AudioLowerVolume, exec, wpctl set-volume -l 1.2 @DEFAULT_AUDIO_SINK@ 5%-"
-          "SUPER, XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-          "SUPER, XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
         ];
       };
     };
