@@ -21,6 +21,7 @@ in {
     wayland.windowManager.hyprland = {
       modals."slack" = {
         binds = [
+          ", XF86Mail"
           "SUPER, F12"
         ];
         terminal = false;

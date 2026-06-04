@@ -77,6 +77,7 @@ in {
     wayland.windowManager.hyprland = {
       modals."discord" = {
         binds = [
+          ", XF86Mail"
           "SUPER, F12"
         ];
         terminal = false;

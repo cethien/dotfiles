@@ -17,8 +17,8 @@ in {
 
       modals."thunderbird" = {
         binds = [
-          ", XF86Mail"
-          "SUPER ALT, F12"
+          "SUPER CTRL, F12"
+          "CTRL, XF86Mail"
         ];
         exec = "thunderbird";
         terminal = false;

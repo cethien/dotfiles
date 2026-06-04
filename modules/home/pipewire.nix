@@ -18,6 +18,8 @@ in {
       modals."wiremix".binds = [
         "SUPER CTRL, M"
         "CTRL, XF86Music"
+
+        "CTRL, XF86Tools"
       ];
 
       settings.bindl = let
