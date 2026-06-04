@@ -69,7 +69,6 @@ in {
 
       poppler-utils # pdf stuff
       lynx # term browser
-      aria2 # download manager
     ];
 
     programs = {

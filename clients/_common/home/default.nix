@@ -71,6 +71,7 @@ in {
       keepassxc.enable = mkDefault (hl && config.services.syncthing.enable);
       zen-browser.enable = mkDefault hl;
       browser.default = config.programs.zen-browser.package;
+      aria2.enable = mkDefault config.programs.zen-browser.enable;
 
       mpv.enable = mkDefault hl;
       imv.enable = mkDefault hl;

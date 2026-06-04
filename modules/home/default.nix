@@ -36,6 +36,7 @@
     ./logitech-peripherals.nix
 
     ./browser
+    ./aria2.nix
     ./keepassxc.nix
     ./thunderbird.nix
     ./libreoffice.nix

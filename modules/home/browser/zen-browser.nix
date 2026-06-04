@@ -52,8 +52,9 @@ in {
             flagfox
             yang
             steam-database
-
-            # darkreader
+          ]
+          ++ lib.optionals config.programs.aria2.enable [
+            addons.aria2-integration
           ]
           ++ lib.optionals config.programs.keepassxc.enable [
             addons.keepassxc-browser
