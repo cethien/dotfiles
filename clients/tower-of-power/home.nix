@@ -82,10 +82,10 @@ in {
         "10, monitor:${asus}"
       ];
     };
-    defaultWorkspaces = {
-      gaming = 10;
-      browser = 4;
-    };
+  };
+  deeznuts.hyprland.defaultWorkspaces = {
+    gaming = 10;
+    browser = 4;
   };
   programs.hyprlock.monitor = "${monitors.asus}";
 

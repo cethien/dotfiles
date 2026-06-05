@@ -4,9 +4,11 @@
   pkgs,
   ...
 }: let
+  inherit (lib) mkIf;
+  inherit (config.lib.deeznuts) mkMimeApps;
   cfg = config.programs.mpv;
 in {
-  config = lib.mkIf cfg.enable {
+  config = mkIf cfg.enable {
     programs.mpv = {
       bindings = {
         "+" = "add volume 5";
@@ -48,7 +50,7 @@ in {
       ];
     };
 
-    xdg.mimeApps.defaultApplications = config.lib.deeznuts.mkMimeApps {
+    xdg.mimeApps.defaultApplications = mkMimeApps {
       videos = {
         desktop = "umpv.desktop";
         types = [

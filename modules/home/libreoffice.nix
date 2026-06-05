@@ -4,6 +4,7 @@
   pkgs,
   ...
 }: let
+  inherit (config.lib.deeznuts) mkMimeApps;
   inherit (lib) mkIf mkEnableOption;
   cfg = config.programs.libreoffice;
 in {
@@ -18,7 +19,7 @@ in {
       vista-fonts
     ];
 
-    xdg.mimeApps.defaultApplications = config.lib.deeznuts.mkMimeApps {
+    xdg.mimeApps.defaultApplications = mkMimeApps {
       office = {
         desktop = "libreoffice.desktop";
         types = [

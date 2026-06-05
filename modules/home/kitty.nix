@@ -10,7 +10,7 @@ in {
   config = mkIf cfg.enable {
     wayland.windowManager.hyprland.settings = {
       bind = [
-        "SUPER SHIFT, RETURN, exec, ${pkgs.kitty}/bin/kitty"
+        "SUPER SHIFT, RETURN, exec, kitty"
       ];
     };
 

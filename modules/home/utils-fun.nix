@@ -10,7 +10,7 @@
   launchCmatrix = pkgs.writeShellScript "hypr_cmatrix" ''
     hyprctl clients | grep cmatrix && \
     hyprctl dispatch focuswindow class:cmatrix || \
-    nohup ${pkgs.kitty}/bin/kitty --class cmatrix -e cmatrix >/dev/null 2>&1 &
+    nohup kitty --class cmatrix -e cmatrix >/dev/null 2>&1 &
   '';
 in {
   options.programs.utils-fun.enable = lib.mkEnableOption "utils for memez";

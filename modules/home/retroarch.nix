@@ -4,9 +4,10 @@
   config,
   ...
 }: let
-  inherit (lib) mkIf optionals;
+  inherit (lib) mkIf;
   cfg = config.programs.retroarch;
-  ws = config.wayland.windowManager.hyprland.defaultWorkspaces.gaming;
+
+  inherit (config.lib.deeznuts.hyprland) mkGameWindowRules;
   st = config.services.syncthing.enable;
 in {
   config = mkIf cfg.enable {
@@ -57,10 +58,8 @@ in {
       '';
     };
 
-    wayland.windowManager.hyprland.settings.windowrule =
-      config.lib.deeznuts.mkHyprGameWindowRules [
-        "match:class ^(com\.libretro\.RetroArch)$"
-      ]
-      ws;
+    wayland.windowManager.hyprland.settings.windowrule = mkGameWindowRules [
+      "match:class ^(com\.libretro\.RetroArch)$"
+    ];
   };
 }

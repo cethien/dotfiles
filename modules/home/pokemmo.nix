@@ -4,18 +4,15 @@
   pkgs,
   ...
 }: let
-  ws = config.wayland.windowManager.hyprland.defaultWorkspaces.gaming;
+  inherit (lib) mkIf mkEnableOption;
   cfg = config.programs.pokemmo;
+  inherit (config.lib.deeznuts.hyprland) mkGameWindowRules;
 in {
-  options.programs.pokemmo.enable = lib.mkEnableOption "pokemmo";
+  options.programs.pokemmo.enable = mkEnableOption "pokemmo";
 
-  config = lib.mkIf cfg.enable {
+  config = mkIf cfg.enable {
     home.packages = [pkgs.pokemmo-installer];
-
     wayland.windowManager.hyprland.settings.windowrule =
-      config.lib.deeznuts.mkHyprGameWindowRules [
-        "match:title ^(.*PokeMMO.*)$"
-      ]
-      ws;
+      mkGameWindowRules ["match:title ^(.*PokeMMO.*)$"];
   };
 }

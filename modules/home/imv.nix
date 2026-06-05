@@ -4,6 +4,7 @@
   pkgs,
   ...
 }: let
+  inherit (config.lib.deeznuts) mkMimeApps;
   cfg = config.programs.imv;
 in {
   config = lib.mkIf cfg.enable {
@@ -33,7 +34,7 @@ in {
       };
     };
 
-    xdg.mimeApps.defaultApplications = config.lib.deeznuts.mkMimeApps {
+    xdg.mimeApps.defaultApplications = mkMimeApps {
       images = {
         desktop = "imv-dir.desktop";
         types = [

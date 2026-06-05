@@ -4,24 +4,8 @@
   pkgs,
   ...
 }: let
-  deeznuts = {
-    mkMimeApps = categories: let
-      mkHandlers = {
-        types,
-        desktop,
-      }:
-        builtins.listToAttrs (map (t: {
-            name = t;
-            value = [desktop];
-          })
-          types);
-    in
-      builtins.foldl' (
-        acc: cat:
-          acc // mkHandlers cat
-      ) {} (builtins.attrValues categories);
-
-    mkArgcBashBin = {
+  argc = rec {
+    mkBashBin = {
       src,
       extraRuntimeDeps ? [],
     }: let
@@ -53,17 +37,8 @@
         '';
       };
 
-    mkArgcBashBin' = src: deeznuts.mkArgcBashBin {inherit src;};
-
-    mkHyprGameWindowRules = matches: gamingWorkspace:
-      if gamingWorkspace == null
-      then []
-      else
-        builtins.concatMap (match: [
-          "${match}, fullscreen on, content game, workspace ${toString gamingWorkspace}"
-        ])
-        matches;
+    mkBashBin' = src: mkBashBin {inherit src;};
   };
 in {
-  config.lib.deeznuts = deeznuts;
+  config.lib.deeznuts = {inherit argc;};
 }

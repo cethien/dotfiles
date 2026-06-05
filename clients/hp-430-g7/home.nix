@@ -33,8 +33,8 @@ in {
     };
 
     rofiPowerMenuOptions = "shutdown/suspend/reboot";
-    defaultWorkspaces.browser = 1;
   };
+  deeznuts.hyprland.defaultWorkspaces.browser = 2;
 
   home.packages = with pkgs; [simple-scan ausweisapp mixxx qlcplus];
 

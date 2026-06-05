@@ -5,14 +5,17 @@
   inputs,
   ...
 }: let
-  inherit (lib) mkDefault;
-
+  inherit (lib) mkDefault mkIf;
   hl = config.wayland.windowManager.hyprland.enable;
   mg = config.programs.steam.enable || config.programs.heroic.enable || config.programs.prismlauncher.enable;
+
+  inherit (config.lib.deeznuts) mkMimeApps;
+  browser = config.deeznuts.defaultBrowser;
 in {
   imports = [
     inputs.nix-index-database.homeModules.default
   ];
+
   config = {
     services = {
       syncthing.enable = mkDefault true;
@@ -68,9 +71,9 @@ in {
       spotify-player.enable = mkDefault true;
       wiremix.enable = mkDefault hl;
       kitty.enable = mkDefault hl;
-      keepassxc.enable = mkDefault (hl && config.services.syncthing.enable);
+      keepassxc.enable = mkDefault hl;
       zen-browser.enable = mkDefault hl;
-      browser.default = config.programs.zen-browser.package;
+      zen-browser.isDefault = mkDefault config.programs.zen-browser.enable;
       aria2.enable = mkDefault config.programs.zen-browser.enable;
 
       mpv.enable = mkDefault hl;
@@ -88,6 +91,21 @@ in {
 
     xdg.enable = true;
     xdg.mimeApps.enable = true;
+
+    xdg.mimeApps.defaultApplications = mkIf (browser != null) (
+      mkMimeApps {
+        browsers = {
+          desktop = browser;
+          types = [
+            "x-scheme-handler/about"
+            "x-scheme-handler/chrome"
+            "x-scheme-handler/http"
+            "x-scheme-handler/https"
+            "x-scheme-handler/unknown"
+          ];
+        };
+      }
+    );
 
     # fonts.fontconfig.enable = true;
 

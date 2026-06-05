@@ -30,7 +30,7 @@
 
   getExecCommand = m:
     if m.terminal
-    then "${pkgs.kitty}/bin/kitty --class ${m.class} -e ${m.exec}"
+    then "kitty --class ${m.class} -e ${m.exec}"
     else m.exec;
 
   mkWorkspaces =
@@ -54,7 +54,7 @@ in {
   options.wayland.windowManager.hyprland.modals = lib.mkOption {
     type = lib.types.attrsOf modalSubmodule;
     default = {};
-    description = "Deklarative Overlay-Modals für Hyprland";
+    description = "overlay modals (special workspace abuse)";
   };
 
   config = lib.mkIf (cfg != {}) {

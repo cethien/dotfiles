@@ -4,6 +4,7 @@
   pkgs,
   ...
 }: let
+  inherit (config.lib.deeznuts) mkMimeApps;
   cfg = config.programs.fileroller;
 in {
   options.programs.fileroller.enable = lib.mkEnableOption "fileroller";
@@ -11,7 +12,7 @@ in {
   config = lib.mkIf cfg.enable {
     home.packages = [pkgs.file-roller];
 
-    xdg.mimeApps.defaultApplications = config.lib.deeznuts.mkMimeApps {
+    xdg.mimeApps.defaultApplications = mkMimeApps {
       archives = {
         desktop = "org.gnome.FileRoller.desktop";
         types = [

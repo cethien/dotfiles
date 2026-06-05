@@ -5,8 +5,10 @@
   ...
 }: let
   inherit (lib) mkIf mkDefault mkOption types;
+  cfg = config.wayland.windowManager.hyprland;
 in {
   imports = [
+    ./lib.nix
     ./hyprland-modals.nix
 
     ./battery-checker.nix
@@ -17,7 +19,7 @@ in {
     ./mako.nix
   ];
 
-  config = mkIf config.wayland.windowManager.hyprland.enable {
+  config = mkIf cfg.enable {
     # https://wiki.hypr.land/Useful-Utilities/Systemd-start/#uwsm
     wayland.windowManager.hyprland.systemd.enable = false;
 

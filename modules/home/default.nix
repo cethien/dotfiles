@@ -1,6 +1,6 @@
 {
   imports = [
-    ./lib.nix
+    ./lib
     ./stylix.nix
 
     ./gnome.nix
@@ -35,7 +35,8 @@
 
     ./logitech-peripherals.nix
 
-    ./browser
+    ./chromium.nix
+    ./zen-browser
     ./aria2.nix
     ./keepassxc.nix
     ./thunderbird.nix

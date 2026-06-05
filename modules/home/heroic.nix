@@ -5,7 +5,7 @@
   ...
 }: let
   inherit (lib) mkIf mkEnableOption;
-  ws = config.wayland.windowManager.hyprland.defaultWorkspaces;
+  inherit (config.lib.deeznuts.hyprland) mkGameWindowRules;
   cfg = config.programs.heroic;
 in {
   options.programs.heroic.enable = mkEnableOption "heroic launcher";
@@ -18,13 +18,13 @@ in {
 
     wayland.windowManager.hyprland.settings = {
       windowrule = let
-        heroic = [
+        games = [
           "NTE"
         ];
-      in (config.lib.deeznuts.mkHyprGameWindowRules (
-          map (g: "match:initial_class steam_app_default, match:initial_title ${g}") heroic
-        )
-        ws.gaming);
+        gameMatches =
+          map (g: "match:initial_class steam_app_default, match:initial_title ${g}") games;
+      in
+        mkGameWindowRules gameMatches;
     };
   };
 }

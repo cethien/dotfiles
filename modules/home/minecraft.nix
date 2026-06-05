@@ -6,7 +6,8 @@
 }: let
   inherit (lib) mkIf;
   cfg = config.programs.prismlauncher;
-  ws = config.wayland.windowManager.hyprland.defaultWorkspaces.gaming;
+
+  inherit (config.lib.deeznuts.hyprland) mkGameWindowRules;
 in {
   config = mkIf cfg.enable {
     programs.prismlauncher = {
@@ -37,10 +38,7 @@ in {
     };
 
     wayland.windowManager.hyprland.settings.windowrule =
-      (config.lib.deeznuts.mkHyprGameWindowRules [
-          "match:class ^(Minecraft.*)$"
-        ]
-        ws)
+      (mkGameWindowRules ["match:class ^(Minecraft.*)$"])
       ++ ["match:class ^(org\.prismlauncher\.PrismLauncher)$, tile on"];
   };
 }
