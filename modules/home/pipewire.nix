@@ -4,10 +4,10 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf mkEnableOption;
   cfg = config.programs.wiremix;
 in {
-  options.programs.wiremix.enable = lib.mkEnableOption "wiremix";
+  options.programs.wiremix.enable = mkEnableOption "wiremix";
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
@@ -16,10 +16,10 @@ in {
 
     wayland.windowManager.hyprland = {
       modals."wiremix".binds = [
-        "SUPER CTRL, M"
-        "CTRL, XF86Music"
+        "SUPER SHIFT, M"
+        "SHIFT, XF86Music"
 
-        "CTRL, XF86Tools"
+        "SHIFT, XF86Tools"
       ];
 
       settings.bindl = let
@@ -67,17 +67,17 @@ in {
           name = "afk";
           targets = ["@DEFAULT_AUDIO_SOURCE@" "@DEFAULT_AUDIO_SINK@"];
           iconOn = "󰟀";
+          msgOn = "welcome back";
           iconOff = "󰩈";
-          msgOn = "enabled";
-          msgOff = "disabled";
+          msgOff = "goodbye";
         }}/bin/toggle-afk";
       in [
         ", XF86AudioMicMute, exec, ${toggleIn}"
         "SUPER ALT, F9, exec, ${toggleIn}"
         "ALT, XF86AudioMute, exec, ${toggleIn}"
 
-        "SUPER CTRL, F9, exec, ${toggleOut}"
-        "CTRL, XF86AudioMute, exec, ${toggleOut}"
+        "SUPER SHIFT, F9, exec, ${toggleOut}"
+        "SHIFT, XF86AudioMute, exec, ${toggleOut}"
 
         "SUPER, F9, exec, ${toggleInOut}"
         ", XF86AudioMute, exec, ${toggleInOut}"
