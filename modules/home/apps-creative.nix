@@ -64,9 +64,6 @@ in {
           "Montserrat"
         ];
       })
-
-      # audio
-      kdePackages.kwave
     ];
   };
 }
