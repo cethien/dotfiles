@@ -59,7 +59,11 @@ in {
     };
 
     wayland.windowManager.hyprland.settings.windowrule =
-      (mkGameWindowRules [''match:class ^(com\.libretro\.RetroArch)$, match:title ^(RetroArch\s.+)$''])
-      ++ (mkWorkspaceRules "consoleLauncher" [''match:class ^(com\.libretro\.RetroArch)$, match:title ^(RetroArch)$'']);
+      (mkGameWindowRules [
+        ''match:class ^(com\.libretro\.RetroArch)$, match:title ^(RetroArch\s.+)$''
+      ])
+      ++ (mkWorkspaceRules "consoleLauncher" [
+        ''match:class ^(com\.libretro\.RetroArch)$, match:title ^(RetroArch)$''
+      ]);
   };
 }

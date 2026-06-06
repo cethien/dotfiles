@@ -11,10 +11,7 @@ in {
   options.programs.heroic.enable = mkEnableOption "heroic launcher";
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [
-      protonplus
-      heroic
-    ];
+    home.packages = [pkgs.heroic];
 
     wayland.windowManager.hyprland.settings = {
       windowrule = let

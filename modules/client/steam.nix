@@ -30,7 +30,6 @@ in {
       extraPackages = with pkgs; [
         gamescope
       ];
-      extraCompatPackages = with pkgs; [proton-ge-bin];
       protontricks.enable = true;
 
       remotePlay.openFirewall = true;
