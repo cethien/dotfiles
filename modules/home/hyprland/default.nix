@@ -165,7 +165,7 @@ in {
           "ALT, F4, killactive"
           "SUPER, C, killactive"
 
-          "SUPER, V, togglefloating"
+          "SUPER, V, pseudo"
           "SUPER, J, exec, ${toggleLayout}/bin/hyprland-toggle-layout"
           "SUPER, F, fullscreen"
 

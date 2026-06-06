@@ -17,7 +17,7 @@
       then []
       else
         builtins.concatMap (match: [
-          "${match}, workspace ${toString ws}"
+          "workspace ${toString ws}, ${match}"
         ])
         matches;
 
@@ -28,7 +28,7 @@
       then []
       else
         builtins.concatMap (match: [
-          "${match}, fullscreen on, content game, workspace ${toString gamingWorkspace}"
+          "workspace ${toString gamingWorkspace}, content game, ${match}"
         ])
         matches;
   };

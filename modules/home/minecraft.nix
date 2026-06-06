@@ -38,7 +38,7 @@ in {
     };
 
     wayland.windowManager.hyprland.settings.windowrule =
-      (mkGameWindowRules ["match:class ^(Minecraft.*)$"])
-      ++ ["match:class ^(org\.prismlauncher\.PrismLauncher)$, tile on"];
+      (mkGameWindowRules [''match:class ^(Minecraft.*)$''])
+      ++ [''tile on, match:class ^(org\.prismlauncher\.PrismLauncher)$''];
   };
 }

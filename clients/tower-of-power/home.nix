@@ -84,6 +84,7 @@ in {
     };
   };
   deeznuts.hyprland.defaultWorkspaces = {
+    consoleLauncher = 9;
     gaming = 10;
     browser = 4;
   };

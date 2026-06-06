@@ -64,7 +64,7 @@ in {
 
     wayland.windowManager.hyprland.settings = {
       exec-once = mkIf cfg.autostart ["[silent] zen-beta"];
-      windowrule = ["match:class ^(zen-beta)$, tile on"];
+      windowrule = ["tile on, match:class ^(zen-beta)$"];
       bind = let
         script = pkgs.writeShellScriptBin "hypr_zen-sidebar" ''
           DESIGNATED_WS=${toString ws}

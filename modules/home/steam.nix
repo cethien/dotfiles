@@ -37,9 +37,8 @@ in {
         ];
       in
         (mkGameWindowRules (defaultGameMatches ++ customGameMatches))
-        ++ (mkWorkspaceRules "chat" [
-          "match:class steam, match:title ^(Friends List)$"
-        ]);
+        ++ (mkWorkspaceRules "consoleLauncher" ["match:class steam, match:title ^(Steam Big Picture)$"])
+        ++ (mkWorkspaceRules "chat" ["match:class steam, match:title ^(Friends List)$"]);
     };
   };
 }

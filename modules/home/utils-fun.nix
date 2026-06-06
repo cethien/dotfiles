@@ -17,7 +17,7 @@ in {
 
   config = mkIf cfg.enable {
     wayland.windowManager.hyprland.settings = {
-      windowrule = ["match:class ^(cmatrix)$, fullscreen on"];
+      windowrule = ["fullscreen on, match:class ^(cmatrix)$ "];
       bind = ["SUPER SHIFT, Z, exec, ${launchCmatrix}"];
     };
 

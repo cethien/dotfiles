@@ -13,6 +13,6 @@ in {
   config = mkIf cfg.enable {
     home.packages = [pkgs.pokemmo-installer];
     wayland.windowManager.hyprland.settings.windowrule =
-      mkGameWindowRules ["match:title ^(.*PokeMMO.*)$"];
+      mkGameWindowRules [''match:title ^(.*PokeMMO.*)$''];
   };
 }
