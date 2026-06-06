@@ -29,8 +29,8 @@ in {
         "4, monitor:${self}, persistent:true, default:true"
       ];
     };
+    defaultWorkspaces.browser = 2;
   };
-  deeznuts.hyprland.defaultWorkspaces.browser = 2;
   programs.hyprlock.monitor = "${monitors.self}";
 
   home.packages = with pkgs; [

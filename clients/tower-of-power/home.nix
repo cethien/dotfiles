@@ -65,29 +65,35 @@ in {
 
   wayland.windowManager.hyprland = {
     settings = {
-      monitor = with monitors; [
-        "${asus}, 2560x1440@240, 0x0, 1, bitdepth,10, vrr,2"
-        "${arzopa}, 1920x1080@100, 320x1440, 1"
+      "$asus" = monitors.asus;
+      "$arzopa" = monitors.arzopa;
+
+      monitor = [
+        "$asus, 2560x1440@240, 0x0, 1, bitdepth,10, vrr,2"
+        "$arzopa, 1920x1080@100, 320x1440, 1"
       ];
       general.allow_tearing = true;
       exec-once = ["xrandr --output DP-1 --primary"];
 
-      workspace = with monitors; [
-        "4, monitor:${arzopa}, persistent:true, default:true, layout:master"
-        "5, monitor:${arzopa}, persistent:true"
+      workspace = [
+        "4, monitor:$arzopa, persistent:true, default:true, layout:master"
+        "5, monitor:$arzopa, persistent:true"
 
-        "1, monitor:${asus}, persistent:true, default:true, layout:master"
-        "2, monitor:${asus}, persistent:true"
-        "3, monitor:${asus}, persistent:true"
-        "10, monitor:${asus}"
+        "1, monitor:$asus, persistent:true, default:true, layout:master"
+        "2, monitor:$asus, persistent:true"
+        "3, monitor:$asus, persistent:true"
+        "9, monitor:$asus"
+        "10, monitor:$asus"
       ];
     };
+
+    defaultWorkspaces = {
+      consoleLauncher = 9;
+      gaming = 10;
+      browser = 4;
+    };
   };
-  deeznuts.hyprland.defaultWorkspaces = {
-    consoleLauncher = 9;
-    gaming = 10;
-    browser = 4;
-  };
+
   programs.hyprlock.monitor = "${monitors.asus}";
 
   services.kdeconnect.enable = true;

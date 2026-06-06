@@ -5,7 +5,7 @@
   ...
 }: let
   inherit (lib) mkOption types;
-  userWorkspaces = config.deeznuts.hyprland.defaultWorkspaces or {};
+  userWorkspaces = config.wayland.windowManager.hyprland.defaultWorkspaces or {};
 
   hyprland = {
     getWorkspace = name: userWorkspaces.${name} or null;
@@ -33,13 +33,5 @@
         matches;
   };
 in {
-  options.deeznuts.hyprland = {
-    defaultWorkspaces = mkOption {
-      type = types.attrsOf types.int;
-      default = {};
-      description = "named workspaces";
-    };
-  };
-
   config.lib.deeznuts = {inherit hyprland;};
 }

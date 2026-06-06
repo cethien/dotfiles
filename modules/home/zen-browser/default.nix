@@ -10,7 +10,7 @@
   cfg = config.programs.zen-browser;
   uname = "${config.home.username}";
 
-  ws = config.deeznuts.hyprland.defaultWorkspaces.browser;
+  ws = config.wayland.windowManager.hyprland.defaultWorkspaces.browser;
 in {
   options.programs.zen-browser = {
     autostart = mkEnableOption "zen autostart";
