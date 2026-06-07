@@ -11,13 +11,10 @@ in {
     stylix.targets.mako.opacity.enable = false;
 
     wayland.windowManager.hyprland.settings.bind = [
-      "ALT, F12, exec, makoctl mode -t dnd"
+      "SUPER, A, exec, makoctl dismiss -a"
     ];
 
     services.mako.settings = {
-      "mode=dnd" = {
-        invisible = 1;
-      };
       "urgency=critical" = {
         border-color = "#ff0000";
         default-timeout = 0;
