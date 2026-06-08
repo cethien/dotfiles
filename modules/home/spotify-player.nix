@@ -31,8 +31,8 @@ in {
           ", XF86AudioPlay, exec, ${pl} play-pause"
           ", XF86AudioNext, exec, ${pl} next"
           ", XF86AudioPrev, exec, ${pl} previous"
-          # ", XF86AudioRaiseVolume, exec, ${pl} volume 0.05+"
-          # ", XF86AudioLowerVolume, exec, ${pl} volume 0.05-"
+          ", XF86AudioRaiseVolume, exec, ${pl} volume 0.05+"
+          ", XF86AudioLowerVolume, exec, ${pl} volume 0.05-"
           ", XF86AudioRaiseVolume, exec, ${pl} volume --offset 5"
           ", XF86AudioLowerVolume, exec, ${pl} volume --offset -- -5"
         ];
