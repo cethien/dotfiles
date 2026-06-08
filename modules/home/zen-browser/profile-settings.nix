@@ -51,6 +51,14 @@
         alt = true;
       };
     }
+    {
+      id = "key_togglePictureInPicture";
+      key = "p";
+      modifiers = {
+        control = true;
+        alt = true;
+      };
+    }
   ];
 
   settings = {
@@ -79,7 +87,6 @@
     "browser.translations.neverTranslateLanguages" = "de,ru";
 
     "media.videocontrols.picture-in-picture.video-toggle.has-used" = true;
-
     "extensions.autoDisableScopes" = 0;
     "extensions.formautofill.addresses.enabled" = false;
     "extensions.formautofill.creditCards.enabled" = false;

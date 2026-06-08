@@ -6,6 +6,7 @@
   ...
 }: let
   inherit (lib) mkIf mkEnableOption;
+  inherit (config.lib.deeznuts.hyprland) mkWorkspaceRules;
 
   cfg = config.programs.zen-browser;
   uname = "${config.home.username}";
@@ -64,7 +65,11 @@ in {
 
     wayland.windowManager.hyprland.settings = {
       exec-once = mkIf cfg.autostart ["[silent] zen-beta"];
-      windowrule = ["tile on, match:class ^(zen-beta)$"];
+      windowrule =
+        ["tile on, match:initial_class ^(zen-beta)$"]
+        ++ mkWorkspaceRules "pip" [
+          "no_initial_focus on, suppress_event activatefocus, match:initial_class ^(zen-beta)$, match:initial_title ^(Picture-in-Picture)$"
+        ];
       bind = let
         script = pkgs.writeShellScriptBin "hypr_zen-sidebar" ''
           DESIGNATED_WS=${toString ws}

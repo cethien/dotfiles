@@ -52,6 +52,9 @@ in {
         position = 1001;
       };
     };
+    settings = {
+      "media.videocontrols.picture-in-picture.enable-when-switching-tabs.enabled" = true;
+    };
   in {
     containersForce = true;
     inherit containers;
@@ -59,6 +62,7 @@ in {
     inherit pins;
     spacesForce = true;
     inherit spaces;
+    inherit settings;
   };
 
   stylix.image = ../_common/home/wallpapers/lake-mountains-rocks-sunrise-daylight-scenery-illustration-3840x2160-3773.jpg;
@@ -91,6 +95,7 @@ in {
       consoleLauncher = 9;
       gaming = 10;
       browser = 4;
+      pip = 4;
     };
   };
 
