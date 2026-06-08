@@ -29,9 +29,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-    # https://wiki.hypr.land/Useful-Utilities/Systemd-start/#uwsm
-    wayland.windowManager.hyprland.systemd.enable = false;
-
     home.packages = with pkgs; [
       xrandr
       libnotify
@@ -41,22 +38,25 @@ in {
       gpu-screen-recorder
     ];
 
-    services.hyprpaper.enable = lib.mkForce false; # due to stylix which enables
-    services.wpaperd.enable = true;
-    services.mako.enable = true;
-    programs.rofi.enable = true;
-    services.battery-checker.enable = true;
+    programs = {
+      kitty.enable = true;
+      rofi.enable = true;
+      mpv.enable = true;
+      imv.enable = true;
+      zathura.enable = true;
+      fileroller.enable = true;
+    };
+
+    services = {
+      mako.enable = true;
+      battery-checker.enable = true;
+      wpaperd.enable = true;
+      hyprpaper.enable = lib.mkForce config.stylix.enable;
+    };
 
     wayland.windowManager.hyprland = {
       # configType = "lua";
-
-      settings =
-        import ./hyprland-settings.nix {inherit pkgs;}
-        // {
-          exec-once = [
-            "${pkgs.udiskie}/bin/udiskie"
-          ];
-        };
+      settings = import ./hyprland-settings.nix {inherit pkgs;};
     };
   };
 }

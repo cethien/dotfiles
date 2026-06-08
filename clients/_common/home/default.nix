@@ -70,16 +70,10 @@ in {
 
       spotify-player.enable = mkDefault true;
       wiremix.enable = mkDefault hl;
-      kitty.enable = mkDefault hl;
       keepassxc.enable = mkDefault hl;
       zen-browser.enable = mkDefault hl;
       zen-browser.isDefault = mkDefault config.programs.zen-browser.enable;
       aria2.enable = mkDefault config.programs.zen-browser.enable;
-
-      mpv.enable = mkDefault hl;
-      imv.enable = mkDefault hl;
-      zathura.enable = mkDefault hl;
-      fileroller.enable = mkDefault hl;
 
       mangohud.enable = mkDefault mg;
     };
