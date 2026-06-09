@@ -5,13 +5,12 @@
   ...
 }: let
   inherit (lib) mkIf;
+  inherit (config.lib.deeznuts.hyprland) mkExecBind;
   cfg = config.programs.kitty;
 in {
   config = mkIf cfg.enable {
     wayland.windowManager.hyprland.settings = {
-      bind = [
-        "SUPER SHIFT, RETURN, exec, kitty"
-      ];
+      bind = [(mkExecBind "SUPER + SHIFT + RETURN" "kitty" {})];
     };
 
     programs.kitty = {

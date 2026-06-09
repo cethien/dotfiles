@@ -16,13 +16,13 @@ in {
 
     wayland.windowManager.hyprland = {
       modals."wiremix".binds = [
-        "SUPER SHIFT, M"
-        "SHIFT, XF86Music"
-
-        "SHIFT, XF86Tools"
+        "SUPER + SHIFT + M"
+        "SHIFT + XF86Music"
+        "SHIFT + XF86Tools"
       ];
 
-      settings.bindl = let
+      settings.bind = let
+        inherit (config.lib.deeznuts.hyprland) mkExecBind;
         makeToggleScript = {
           name,
           targets,
@@ -72,15 +72,18 @@ in {
           msgOff = "goodbye";
         }}/bin/toggle-afk";
       in [
-        ", XF86AudioMicMute, exec, ${toggleIn}"
-        "SUPER ALT, F9, exec, ${toggleIn}"
-        "ALT, XF86AudioMute, exec, ${toggleIn}"
+        # Mic Mute
+        (mkExecBind "XF86AudioMicMute" "${toggleIn}" {locked = true;})
+        (mkExecBind "SUPER + ALT + F9" "${toggleIn}" {locked = true;})
+        (mkExecBind "ALT + XF86AudioMute" "${toggleIn}" {locked = true;})
 
-        "SUPER SHIFT, F9, exec, ${toggleOut}"
-        "SHIFT, XF86AudioMute, exec, ${toggleOut}"
+        # Speakers Mute
+        (mkExecBind "SUPER + SHIFT + F9" "${toggleOut}" {locked = true;})
+        (mkExecBind "SHIFT + XF86AudioMute" "${toggleOut}" {locked = true;})
 
-        "SUPER, F9, exec, ${toggleInOut}"
-        ", XF86AudioMute, exec, ${toggleInOut}"
+        # Master AFK Mute (Both)
+        (mkExecBind "SUPER + F9" "${toggleInOut}" {locked = true;})
+        (mkExecBind "XF86AudioMute" "${toggleInOut}" {locked = true;})
       ];
     };
   };

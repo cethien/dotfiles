@@ -36,6 +36,6 @@ in {
       (pkgs.writeShellScriptBin "netz" (builtins.readFile ./fzf-net.sh))
     ];
 
-    wayland.windowManager.hyprland.modals."netz".binds = ["SUPER, N"];
+    wayland.windowManager.hyprland.modals."netz".binds = ["SUPER + N"];
   };
 }

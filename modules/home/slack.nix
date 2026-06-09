@@ -18,18 +18,20 @@ in {
       border-color = "#4a154b";
     };
 
-    wayland.windowManager.hyprland = {
+    wayland.windowManager.hyprland = let
+      inherit (config.lib.deeznuts.hyprland) mkAutostart;
+    in {
       modals."slack" = {
         binds = [
-          ", XF86Mail"
-          "SUPER, F12"
+          "XF86Mail"
+          "SUPER + F12"
         ];
         terminal = false;
         exec = "slack";
       };
 
       settings = {
-        exec-once = mkIf cfg.autostart ["[silent] [workspace special:slack] slack -u"];
+        on = mkIf cfg.autostart [(mkAutostart "slack -u" {})];
       };
     };
   };

@@ -4,33 +4,61 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkOption types;
   userWorkspaces = config.wayland.windowManager.hyprland.defaultWorkspaces or {};
+  l = lib.generators.mkLuaInline;
 
   hyprland = {
     getWorkspace = name: userWorkspaces.${name} or null;
 
-    mkWorkspaceRules = wsName: matches: let
+    mkAutostart = cmd: rules: {
+      _args = [
+        "hyprland.start"
+        (l (
+          if rules == {}
+          then "function() hl.exec_cmd(\"${cmd}\") end"
+          else "function() hl.exec_cmd(\"${cmd}\", ${lib.generators.toLua {} rules}) end"
+        ))
+      ];
+    };
+
+    mkDspBind = key: dspCall: flags: {
+      _args =
+        [
+          key
+          (l dspCall)
+        ]
+        ++ lib.optional (flags != {}) flags;
+    };
+
+    mkExecBind = key: cmd: flags:
+      hyprland.mkDspBind key "hl.dsp.exec_cmd(\"${cmd}\")" flags;
+
+    mkWindowRule = match: rules: {
+      _args = [
+        (rules // {inherit match;})
+      ];
+    };
+
+    mkDefaultWorkspaceWindowRule = wsName: matchAttrs: let
       ws = hyprland.getWorkspace wsName;
     in
       if ws == null
-      then []
+      then {}
       else
-        builtins.concatMap (match: [
-          "workspace ${toString ws}, ${match}"
-        ])
-        matches;
+        hyprland.mkWindowRule matchAttrs {
+          workspace = ws;
+        };
 
-    mkGameWindowRules = matches: let
-      gamingWorkspace = hyprland.getWorkspace "gaming";
+    mkGameWindowRules = matchAttrs: let
+      ws = hyprland.getWorkspace "gaming";
     in
-      if gamingWorkspace == null
-      then []
+      if ws == null
+      then {}
       else
-        builtins.concatMap (match: [
-          "workspace ${toString gamingWorkspace}, content game, ${match}"
-        ])
-        matches;
+        hyprland.mkWindowRule matchAttrs {
+          workspace = ws;
+          content = "game";
+        };
   };
 in {
   config.lib.deeznuts = {inherit hyprland;};

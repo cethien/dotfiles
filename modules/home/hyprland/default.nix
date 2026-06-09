@@ -13,10 +13,11 @@ in {
 
     ./battery-checker.nix
     ./notify-info.nix
-    ./rofi.nix
+    ./rofi
     ./hypridle.nix
     ./hyprlock.nix
     ./hyprshot.nix
+    ./text-extract.nix
     ./mako.nix
   ];
 
@@ -35,7 +36,6 @@ in {
       playerctl
       brightnessctl
       wl-clipboard
-      gpu-screen-recorder
     ];
 
     programs = {
@@ -45,6 +45,8 @@ in {
       imv.enable = true;
       zathura.enable = true;
       fileroller.enable = true;
+      hyprshot.enable = true;
+      text-extract.enable = true;
     };
 
     services = {
@@ -55,8 +57,8 @@ in {
     };
 
     wayland.windowManager.hyprland = {
-      # configType = "lua";
-      settings = import ./hyprland-settings.nix {inherit pkgs;};
+      configType = "lua";
+      settings = import ./hyprland-settings.nix {inherit config lib;};
     };
   };
 }

@@ -5,6 +5,7 @@
   ...
 }: let
   inherit (lib) mkIf mkOption types sort mapAttrsToList;
+  inherit (config.lib.deeznuts.hyprland) mkExecBind;
   cfg = config.programs.yazi;
 
   openerType =
@@ -35,7 +36,9 @@ in {
 
     xdg.mimeApps.defaultApplications."inode/directory" = ["yazi.desktop"];
 
-    wayland.windowManager.hyprland.settings.bind = ["SUPER, e, exec, kitty --class yazi -e yazi"];
+    wayland.windowManager.hyprland.settings = {
+      bind = [(mkExecBind "SUPER + E" "kitty --class yazi -e yazi" {})];
+    };
 
     programs.yazi = {
       keymap.mgr.prepend_keymap = let

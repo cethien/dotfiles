@@ -16,7 +16,13 @@ pkgs.mkShell {
     act
   ];
 
-  shellHook =
+  shellHook = let
+    luarcContent = {
+      workspace.library = ["${pkgs.hyprland}/share/hypr/stubs"];
+    };
+
+    luarcFile = pkgs.writeText "luarc.json" (builtins.toJSON luarcContent);
+  in
     #bash
     ''
       STATE_FILE="$PWD/.devshell/.initialized"
@@ -26,6 +32,9 @@ pkgs.mkShell {
         mkdir -p "$PWD/.devshell"
         touch "$STATE_FILE"
       fi
+
+      cp -f ${luarcFile} "$PWD/.luarc.json"
+      chmod +w "$PWD/.luarc.json"
 
       DOOT_CMD="doot"
       if [ ! -d "$PWD/.direnv" ] && [ -z "$DIRENV_DIR" ]; then

@@ -74,18 +74,20 @@ in {
       };
     };
 
-    wayland.windowManager.hyprland = {
+    wayland.windowManager.hyprland = let
+      inherit (config.lib.deeznuts.hyprland) mkAutostart;
+    in {
       modals."discord" = {
         binds = [
-          ", XF86Mail"
-          "SUPER, F12"
+          "XF86Mail"
+          "SUPER + F12"
         ];
         terminal = false;
         exec = "discord";
       };
       settings = {
-        exec-once = mkIf cfg.autostart [
-          "[silent] [workspace special:discord] discord --start-minimized"
+        on = mkIf cfg.autostart [
+          (mkAutostart "discord --start-minimized" {})
         ];
       };
     };

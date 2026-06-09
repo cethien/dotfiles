@@ -5,6 +5,7 @@
   ...
 }: let
   inherit (lib) mkIf;
+  inherit (config.lib.deeznuts.hyprland) mkExecBind;
   cfg = config.programs.hyprlock;
 
   fonts = config.stylix.fonts;
@@ -149,7 +150,7 @@ in {
 
     wayland.windowManager.hyprland.settings = {
       bind = [
-        "SUPER, L, exec, hyprlock"
+        (mkExecBind "SUPER + L" "hyprlock" {})
       ];
     };
   };

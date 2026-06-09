@@ -14,14 +14,12 @@ in {
     home.packages = [pkgs.heroic];
 
     wayland.windowManager.hyprland.settings = {
-      windowrule = let
-        games = [
-          "NTE"
-        ];
-        gameMatches =
-          map (g: "match:initial_class steam_app_default, match:initial_title ${g}") games;
-      in
-        mkGameWindowRules gameMatches;
+      window_rule = [
+        (mkGameWindowRules {
+          initial_class = "steam_app_default";
+          initial_title = "^(NTE)$";
+        })
+      ];
     };
   };
 }

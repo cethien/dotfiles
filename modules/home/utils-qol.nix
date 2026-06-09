@@ -11,13 +11,13 @@ in {
 
   config = mkIf cfg.enable {
     wayland.windowManager.hyprland.modals."qalc".binds = [
-      "SUPER, COMMA"
-      ", XF86Calculator"
+      "SUPER + COMMA"
+      "XF86Calculator"
     ];
 
     wayland.windowManager.hyprland.modals."bluetui".binds = [
-      "SUPER, B"
-      ", XF86Bluetooth"
+      "SUPER + B"
+      "XF86Bluetooth"
     ];
 
     programs.yazi = {

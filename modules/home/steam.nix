@@ -5,7 +5,7 @@
   ...
 }: let
   inherit (lib) mkIf mkEnableOption;
-  inherit (config.lib.deeznuts.hyprland) mkGameWindowRules mkWorkspaceRules;
+  inherit (config.lib.deeznuts.hyprland) mkGameWindowRules mkDefaultWorkspaceWindowRule mkAutostart;
   cfg = config.programs.steam;
 in {
   options.programs.steam = {
@@ -23,24 +23,22 @@ in {
     home.packages = [pkgs.protonplus];
 
     wayland.windowManager.hyprland.settings = {
-      exec-once = mkIf cfg.autostart ["[silent] steam -silent"];
+      on = mkIf cfg.autostart [(mkAutostart "steam -silent" {workspace = "unset silent";})];
 
-      windowrule = let
-        customGames = [];
-        customGameMatches =
-          map (
-            game: "match:initial_class ^(${game})$, match:initial_title ..*"
-          )
-          customGames;
-
-        defaultGameMatches = [
-          "match:initial_class ^(steam_app_.*)$, match:initial_title ..*"
-          "match:initial_class ^(Godot)$, match:initial_title ..*"
-        ];
-      in
-        (mkGameWindowRules (defaultGameMatches ++ customGameMatches))
-        ++ (mkWorkspaceRules "consoleLauncher" ["match:class steam, match:title ^(Steam Big Picture)$"])
-        ++ (mkWorkspaceRules "chat" ["match:class steam, match:title ^(Friends List)$"]);
+      window_rule = [
+        (mkGameWindowRules {
+          initial_class = "^(steam_app_.*|Godot)$";
+          initial_title = "..*";
+        })
+        (mkDefaultWorkspaceWindowRule "console_launcher" {
+          class = "steam";
+          title = "^(Steam Big Picture)$";
+        })
+        (mkDefaultWorkspaceWindowRule "chat" {
+          class = "steam";
+          title = "^(Friends List)$";
+        })
+      ];
     };
   };
 }

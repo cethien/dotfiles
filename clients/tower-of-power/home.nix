@@ -1,6 +1,7 @@
 {
-  pkgs,
   config,
+  lib,
+  pkgs,
   ...
 }: let
   monitors = {
@@ -12,93 +13,12 @@ in {
     ../_common/home/cethien
   ];
 
-  programs.zen-browser.profiles."${config.home.username}" = let
-    containers = {
-      logged-out = {
-        id = 1;
-        color = "toolbar";
-        icon = "chill";
-      };
-      admin = {
-        id = 2;
-        color = "pink";
-        icon = "circle";
-      };
-    };
-
-    spaces."deez nuts" = {
-      id = "cd0b7a9b-bb11-42e8-a10a-52ea6813e6b4";
-      position = 1000;
-      icon = "🥙";
-    };
-
-    pins = {
-      "whatsapp" = {
-        id = "9d8a8f91-7e29-4688-ae2e-da4e49d4a179";
-        url = "https://web.whatsapp.com/";
-        isEssential = true;
-        position = 101;
-      };
-      "calendar" = {
-        id = "591c45e0-737f-47d1-86e8-bf173ce87df9";
-        url = "https://calendar.google.com";
-        isEssential = true;
-        position = 102;
-      };
-
-      "youtube" = {
-        id = "217cf342-d929-419b-9a41-75ed87239d99";
-        url = "https://www.youtube.com/feed/subscriptions";
-        position = 1001;
-      };
-    };
-    settings = {
-      "media.videocontrols.picture-in-picture.enable-when-switching-tabs.enabled" = true;
-    };
-  in {
-    containersForce = true;
-    inherit containers;
-    pinsForce = true;
-    inherit pins;
-    spacesForce = true;
-    inherit spaces;
-    inherit settings;
-  };
-
   stylix.image = ../_common/home/wallpapers/lake-mountains-rocks-sunrise-daylight-scenery-illustration-3840x2160-3773.jpg;
 
-  wayland.windowManager.hyprland = {
-    settings = {
-      "$asus" = monitors.asus;
-      "$arzopa" = monitors.arzopa;
-
-      monitor = [
-        "$asus, 2560x1440@240, 0x0, 1, bitdepth,10, vrr,2"
-        "$arzopa, 1920x1080@100, 320x1440, 1"
-      ];
-      general.allow_tearing = true;
-      exec-once = ["xrandr --output DP-1 --primary"];
-
-      workspace = [
-        "4, monitor:$arzopa, persistent:true, default:true, layout:master"
-        "5, monitor:$arzopa, persistent:true"
-
-        "1, monitor:$asus, persistent:true, default:true, layout:master"
-        "2, monitor:$asus, persistent:true"
-        "3, monitor:$asus, persistent:true"
-        "9, monitor:$asus"
-        "10, monitor:$asus"
-      ];
-    };
-
-    defaultWorkspaces = {
-      consoleLauncher = 9;
-      gaming = 10;
-      browser = 4;
-      pip = 4;
-    };
+  wayland.windowManager.hyprland = import ./hyprland-settings.nix {
+    inherit lib monitors;
+    hLib = config.lib.deeznuts.hyprland;
   };
-
   programs.hyprlock.monitor = "${monitors.asus}";
 
   services.kdeconnect.enable = true;
@@ -116,6 +36,9 @@ in {
   programs = {
     rclone.enable = true;
 
+    rofi.powermenu.options = "shutdown/reboot";
+
+    zen-browser = import ./zen-browser-settings.nix {inherit config;};
     spicetify.enable = true;
     nixcord.enable = true;
     nixcord.autostart = true;

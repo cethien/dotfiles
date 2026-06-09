@@ -1,6 +1,7 @@
 {
-  pkgs,
   config,
+  lib,
+  pkgs,
   ...
 }: let
   monitors = {
@@ -15,26 +16,11 @@ in {
   ];
 
   stylix.image = ../_common/home/wallpapers/boy_and_cat_sitting_on_stairs.jpeg;
-  wayland.windowManager.hyprland = {
-    settings = {
-      monitor = with monitors; [
-        "${asus}, 2560x1440@60, 0x0, 1"
-        "${self}, 1920x1080@60, 320x1440, 1"
-      ];
-
-      workspace = with monitors; [
-        "1, monitor:${self}, persistent:true, layout:master"
-        "2, monitor:${self} persistent:true, default:true, layout:master"
-
-        "3, monitor:${asus}, persistent:true"
-        "4, monitor:${asus}, persistent:true"
-        "5, monitor:${asus}, persistent:true"
-      ];
-    };
-
-    rofiPowerMenuOptions = "shutdown/suspend/reboot";
-    defaultWorkspaces.browser = 2;
+  wayland.windowManager.hyprland = import ./hyprland-settings.nix {
+    inherit lib monitors;
+    hLib = config.lib.deeznuts.hyprland;
   };
+  programs.hyprlock.monitor = "${monitors.self}";
 
   home.packages = with pkgs; [simple-scan ausweisapp mixxx qlcplus];
 

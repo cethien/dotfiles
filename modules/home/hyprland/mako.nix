@@ -5,13 +5,14 @@
   ...
 }: let
   inherit (lib) mkIf;
+  inherit (config.lib.deeznuts.hyprland) mkExecBind;
   cfg = config.services.mako;
 in {
   config = mkIf cfg.enable {
     stylix.targets.mako.opacity.enable = false;
 
     wayland.windowManager.hyprland.settings.bind = [
-      "SUPER, A, exec, makoctl dismiss -a"
+      (mkExecBind "SUPER + A" "makocrl dismiss -a" {})
     ];
 
     services.mako.settings = {

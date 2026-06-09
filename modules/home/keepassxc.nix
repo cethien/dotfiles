@@ -4,11 +4,13 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf mkEnableOption;
   inherit (config.lib.deeznuts) mkMimeApps;
   cfg = config.programs.keepassxc;
   uname = config.home.username;
 in {
+  options.programs.keepassxc.hyprlandAutostart = mkEnableOption "autostart keepassxc";
+
   config = mkIf cfg.enable {
     programs.keepassxc.settings = {
       Browser = {
@@ -55,7 +57,6 @@ in {
     };
 
     services.ssh-agent.enable = true;
-
     home.packages = [pkgs.libsecret];
 
     programs.zen-browser = {
@@ -92,10 +93,16 @@ in {
       ];
     };
 
-    wayland.windowManager.hyprland.modals."keepassxc" = {
-      binds = ["SUPER, K"];
-      terminal = false;
-      exec = "keepassxc";
+    wayland.windowManager.hyprland = let
+      inherit (config.lib.deeznuts.hyprland) mkAutostart;
+    in {
+      settings.on = mkIf cfg.hyprlandAutostart [(mkAutostart "keepassxc" {})];
+
+      modals."keepassxc" = {
+        binds = ["SUPER + K"];
+        exec = "keepassxc";
+        terminal = false;
+      };
     };
 
     xdg.mimeApps.defaultApplications = mkMimeApps {

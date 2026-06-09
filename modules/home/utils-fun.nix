@@ -5,20 +5,31 @@
   ...
 }: let
   inherit (lib) mkIf;
+  inherit (config.lib.deeznuts.hyprland) mkDspBind mkWindowRule;
+  l = lib.generators.mkLuaInline;
   cfg = config.programs.utils-fun;
-
-  launchCmatrix = pkgs.writeShellScript "hypr_cmatrix" ''
-    hyprctl clients | grep cmatrix && \
-    hyprctl dispatch focuswindow class:cmatrix || \
-    nohup kitty --class cmatrix -e cmatrix >/dev/null 2>&1 &
-  '';
 in {
   options.programs.utils-fun.enable = lib.mkEnableOption "utils for memez";
 
   config = mkIf cfg.enable {
     wayland.windowManager.hyprland.settings = {
-      windowrule = ["fullscreen on, match:class ^(cmatrix)$ "];
-      bind = ["SUPER SHIFT, Z, exec, ${launchCmatrix}"];
+      window_rule = [(mkWindowRule {class = "^(cmatrix)$";} {fullscreen = true;})];
+      bind = let
+        cmatrixLua =
+          #lua
+          ''
+            function()
+              local windows = hl.get_windows()
+              for _, win in ipairs(windows) do
+                if win.class == "cmatrix" then
+                  hl.dsp.focus({"class:cmatrix"})
+                  return
+                end
+              end
+              hl.dsp.exec_cmd("kitty --class cmatrix -e cmatrix")
+            end
+          '';
+      in [(mkDspBind "SUPER + SHIFT + Z" cmatrixLua {})];
     };
 
     home.packages = let

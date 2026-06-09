@@ -13,13 +13,12 @@ in {
   ];
 
   config = mkIf cfg.enable {
-    # TODO: remove when https://github.com/nix-community/stylix/issues/478 is resolved
-    wayland.windowManager.hyprland.settings = {
-      env = [
-        "HYPRCURSOR_THEME,${toString config.stylix.cursor.name}"
-        "HYPRCURSOR_SIZE,${toString config.stylix.cursor.size}"
-      ];
-    };
+    home.file.".config/uwsm/env-hyprland".text = let
+      c = config.stylix.cursor;
+    in ''
+      "export HYPRCURSOR_THEME=${c.name}"
+      "export HYPRCURSOR_SIZE=${toString c.size}"
+    '';
 
     # new behavior 26.05
     gtk.gtk4.theme = null;

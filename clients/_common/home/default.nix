@@ -71,6 +71,7 @@ in {
       spotify-player.enable = mkDefault true;
       wiremix.enable = mkDefault hl;
       keepassxc.enable = mkDefault hl;
+      keepassxc.hyprlandAutostart = mkDefault true;
       zen-browser.enable = mkDefault hl;
       zen-browser.isDefault = mkDefault config.programs.zen-browser.enable;
       aria2.enable = mkDefault config.programs.zen-browser.enable;

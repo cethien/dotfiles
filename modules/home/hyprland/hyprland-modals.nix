@@ -19,7 +19,7 @@
       binds = lib.mkOption {
         type = lib.types.listOf lib.types.str;
         default = [];
-        description = "Liste von Keybinds für diese App";
+        description = "keybinds";
       };
       terminal = lib.mkOption {
         type = lib.types.bool;
@@ -35,21 +35,36 @@
 
   mkWorkspaces =
     lib.mapAttrsToList (
-      name: m: "special:${name}, on-created-empty:${getExecCommand m}, gapsin:0, gapsout:100 200 100 200"
+      name: m: {
+        _args = [
+          {
+            workspace = "special:${name}";
+            on_created_empty = getExecCommand m;
+            gaps_in = 0;
+            gaps_out = 200;
+          }
+        ];
+      }
     )
     cfg;
 
-  mkWindowrules =
+  mkWindowrules = let
+    inherit (config.lib.deeznuts.hyprland) mkWindowRule;
+  in
     lib.mapAttrsToList (
-      name: m: "workspace special:${name} silent, match:class ^(${m.class})$"
+      name: m:
+        mkWindowRule {class = "^(${m.class})$";} {workspace = "special:${name} silent";}
     )
     cfg;
 
-  mkBinds = lib.flatten (lib.mapAttrsToList (
-      name: m:
-        map (bind: "${bind}, togglespecialworkspace, ${name}") m.binds
-    )
-    cfg);
+  mkBinds = let
+    inherit (config.lib.deeznuts.hyprland) mkDspBind;
+  in
+    lib.flatten (lib.mapAttrsToList (
+        name: m:
+          map (bind: mkDspBind bind "hl.dsp.workspace.toggle_special('${name}')" {}) m.binds
+      )
+      cfg);
 in {
   options.wayland.windowManager.hyprland.modals = lib.mkOption {
     type = lib.types.attrsOf modalSubmodule;
@@ -59,8 +74,8 @@ in {
 
   config = lib.mkIf (cfg != {}) {
     wayland.windowManager.hyprland.settings = {
-      windowrule = mkWindowrules;
-      workspace = mkWorkspaces;
+      window_rule = mkWindowrules;
+      workspace_rule = mkWorkspaces;
       bind = mkBinds;
     };
   };

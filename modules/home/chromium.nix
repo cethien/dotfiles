@@ -6,7 +6,7 @@
 }: let
   inherit (lib) mkIf mkEnableOption;
   cfg = config.programs.chromium;
-  inherit (config.lib.deeznuts.hyprland) mkWorkspaceRules;
+  inherit (config.lib.deeznuts.hyprland) mkDefaultWorkspaceWindowRule;
 in {
   options.programs.chromium = {
     autostart = mkEnableOption "chromium autostart";
@@ -17,9 +17,10 @@ in {
     deeznuts.defaultBrowser = mkIf cfg.isDefault "chromium";
 
     wayland.windowManager.hyprland.settings = {
-      exec-once = mkIf cfg.autostart ["[silent] chromium"];
-      windowrule = mkWorkspaceRules "browser" [
-        "match:initial_class ^(chromium-browser)$"
+      window_rule = [
+        (mkDefaultWorkspaceWindowRule "browser" {
+          initial_class = "^(chromium-browser)$";
+        })
       ];
     };
 

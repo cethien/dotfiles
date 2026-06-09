@@ -40,7 +40,21 @@ in {
   };
 
   config = mkIf cfg.enable {
-    wayland.windowManager.hyprland.settings.exec-once = ["tmux start-server"];
+    systemd.user.services.tmux-server = {
+      Unit = {
+        Description = "Tmux Server (Independent Background Instance)";
+        Documentation = "man:tmux(1)";
+      };
+      Service = {
+        Type = "forking";
+        ExecStart = "${pkgs.tmux}/bin/tmux start-server";
+        ExecStop = "${pkgs.tmux}/bin/tmux kill-server";
+        Restart = "on-failure";
+      };
+      Install = {
+        WantedBy = ["default.target"];
+      };
+    };
 
     home.shellAliases.tm = "tmux_new";
     programs.fzf.tmux.enableShellIntegration = true;

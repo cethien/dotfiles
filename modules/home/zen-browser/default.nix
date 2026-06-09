@@ -6,12 +6,12 @@
   ...
 }: let
   inherit (lib) mkIf mkEnableOption;
-  inherit (config.lib.deeznuts.hyprland) mkWorkspaceRules;
+  inherit (config.lib.deeznuts.hyprland) mkWindowRule mkExecBind;
 
   cfg = config.programs.zen-browser;
   uname = "${config.home.username}";
 
-  ws = config.wayland.windowManager.hyprland.defaultWorkspaces.browser;
+  ws = config.wayland.windowManager.hyprland.defaultWorkspaces;
 in {
   options.programs.zen-browser = {
     autostart = mkEnableOption "zen autostart";
@@ -64,15 +64,21 @@ in {
     stylix.targets.zen-browser.profileNames = ["${uname}"];
 
     wayland.windowManager.hyprland.settings = {
-      exec-once = mkIf cfg.autostart ["[silent] zen-beta"];
-      windowrule =
-        ["tile on, match:initial_class ^(zen-beta)$"]
-        ++ mkWorkspaceRules "pip" [
-          "no_initial_focus on, suppress_event activatefocus, match:initial_class ^(zen-beta)$, match:initial_title ^(Picture-in-Picture)$"
-        ];
+      window_rule = [
+        (mkWindowRule {initial_class = "^(zen-beta)$";} {tile = true;})
+        (mkWindowRule {
+            initial_class = "^(zen-beta)$";
+            initial_title = "^(Picture-in-Picture)$";
+          } {
+            workspace = ws.pip;
+            no_initial_focus = true;
+            suppress_event = "activatefocus";
+          })
+      ];
+
       bind = let
-        script = pkgs.writeShellScriptBin "hypr_zen-sidebar" ''
-          DESIGNATED_WS=${toString ws}
+        s = pkgs.writeShellScriptBin "hypr_zen-sidebar" ''
+          DESIGNATED_WS=${toString ws.browser}
           BROWSER_WS=$(hyprctl -j clients \
             | jq -r '.[] | select(.initialClass=="zen-beta") | .workspace.id' \
             | head -n1)
@@ -93,8 +99,8 @@ in {
           fi
         '';
       in [
-        "SUPER, W, exec, ${script}/bin/hypr_zen-sidebar"
-        ", XF86HomePage, exec, ${script}/bin/hypr_zen-sidebar"
+        (mkExecBind "SUPER + W" "${s}/bin/hypr_zen-sidebar" {})
+        (mkExecBind "XF86HomePage" "${s}/bin/hypr_zen-sidebar" {})
       ];
     };
   };

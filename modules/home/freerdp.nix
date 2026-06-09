@@ -5,6 +5,7 @@
   ...
 }: let
   inherit (lib) mkEnableOption mkOption types mkIf;
+  inherit (config.lib.deeznuts.hyprland) mkWindowRule;
   cfg = config.programs.freerdp;
 
   rdpOptions = {
@@ -101,8 +102,8 @@ in {
     ];
 
     wayland.windowManager.hyprland.settings = {
-      windowrule = [
-        "match:initial_class ^(.*freerdp.*)$, tile on"
+      window_rule = [
+        (mkWindowRule {initial_class = "^(.*freerdp.*)$";} {tile = true;})
       ];
     };
     home.file =

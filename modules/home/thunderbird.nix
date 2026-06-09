@@ -10,15 +10,15 @@ in {
   options.programs.thunderbird.autostart = lib.mkEnableOption "hyprland autostart";
 
   config = lib.mkIf cfg.enable {
-    wayland.windowManager.hyprland = {
-      settings.exec-once = mkIf cfg.autostart [
-        "[silent] thunderbird"
-      ];
+    wayland.windowManager.hyprland = let
+      inherit (config.lib.deeznuts.hyprland) mkAutostart;
+    in {
+      settings.on = mkIf cfg.autostart [(mkAutostart "thunderbird" {})];
 
       modals."thunderbird" = {
         binds = [
-          "SUPER SHIFT, F12"
-          "SHIFT, XF86Mail"
+          "SUPER + SHIFT + F12"
+          "SHIFT + XF86Mail"
         ];
         exec = "thunderbird";
         terminal = false;

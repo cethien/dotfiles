@@ -42,15 +42,13 @@ in {
         home.homeDirectory = "/home/${username}";
         home = {inherit stateVersion;};
 
+        services.udiskie.enable = config.services.udisks2.enable;
+        services.udiskie.tray = "never";
+
         wayland.windowManager.hyprland = {
           enable = mkDefault hl;
           # https://wiki.hypr.land/Useful-Utilities/Systemd-start/#uwsm
           systemd.enable = !config.programs.hyprland.withUWSM;
-          settings.exec-once =
-            []
-            ++ lib.optionals config.services.udisks2.enable [
-              "udiskie"
-            ];
         };
         programs.steam.enable = config.programs.steam.enable;
         programs.lazydocker.enable = config.virtualisation.docker.enable;
