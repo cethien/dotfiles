@@ -58,7 +58,7 @@ in {
 
     wayland.windowManager.hyprland = {
       configType = "lua";
-      settings = import ./hyprland-settings.nix {inherit config lib;};
+      settings = import ./hyprland-settings.nix {hlLib = config.lib.deeznuts.hyprland;};
     };
   };
 }

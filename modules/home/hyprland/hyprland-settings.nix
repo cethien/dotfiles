@@ -1,9 +1,5 @@
-{
-  config,
-  lib,
-  ...
-}: let
-  l = lib.generators.mkLuaInline;
+{hlLib, ...}: let
+  inherit (hlLib) mkWindowRule mkDspBind mkExecBind;
 in {
   config = {
     decoration = {
@@ -144,35 +140,24 @@ in {
   ];
 
   window_rule = [
-    {
-      _args = [
-        {
-          match = {class = ".*";};
-          suppress_event = "maximize";
-        }
-      ];
-    }
-
-    {
-      _args = [
-        {
-          match = {
-            class = "^$";
-            title = "^$";
-            xwayland = true;
-            float = true;
-            fullscreen = false;
-            pin = false;
-          };
-          no_focus = true;
-        }
-      ];
-    }
+    (mkWindowRule {class = ".*";} {suppress_event = "maximize";})
+    (mkWindowRule {float = true;} {
+      center = true;
+      size = ["(monitor_w*0.7)" "(monitor_h*0.7)"];
+    })
+    (mkWindowRule {
+        class = "^$";
+        title = "^$";
+        xwayland = true;
+        float = true;
+        fullscreen = false;
+        pin = false;
+      } {
+        no_focus = true;
+      })
   ];
 
   bind = let
-    # Hier ziehen wir die Funktionen direkt per inherit in den Scope
-    inherit (config.lib.deeznuts.hyprland) mkDspBind mkExecBind;
     ri = "25";
   in
     [
@@ -196,7 +181,7 @@ in {
       # Core Window Management
       (mkDspBind "ALT + F4" "hl.dsp.window.close()" {})
       (mkDspBind "SUPER + C" "hl.dsp.window.close()" {})
-      (mkDspBind "SUPER + V" "hl.dsp.window.pseudo({ action = 'toggle' })" {})
+      (mkDspBind "SUPER + V" "hl.dsp.window.float({ action = 'toggle' })" {})
       (mkDspBind "SUPER + F" "hl.dsp.window.fullscreen({ action = 'toggle' })" {})
 
       # Move Focus
