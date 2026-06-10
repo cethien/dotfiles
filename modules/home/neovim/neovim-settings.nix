@@ -138,6 +138,7 @@
       surround.enable = true;
       splitjoin.enable = true;
 
+      diff.enable = true;
       git.enable = true;
 
       tabline.enable = true;
@@ -145,6 +146,29 @@
       icons.enable = true;
       misc.enable = true;
       extra.enable = true;
+      pick.enable = true;
+      hipatterns.enable = true;
+      hipatterns.setupOpts = {
+        hightlighter = {
+          fixme = {
+            pattern = "%f[%w]()FIXME()%f[%W]";
+            group = "MiniHipatternsFixme";
+          };
+          hack = {
+            pattern = "%f[%w]()HACK()%f[%W]";
+            group = "MiniHipatternsHack";
+          };
+          todo = {
+            pattern = "%f[%w]()TODO()%f[%W]";
+            group = "MiniHipatternsTodo";
+          };
+          note = {
+            pattern = "%f[%w]()NOTE()%f[%W]";
+            group = "MiniHipatternsNote";
+          };
+          hex_color = "__raw__('require(\"mini.hipatterns\").gen_highlighter.hex_color()')";
+        };
+      };
     };
 
     treesitter = {
@@ -169,7 +193,6 @@
       images.image-nvim.setupOpts.backend = "kitty";
 
       icon-picker.enable = true;
-      ccc.enable = true;
 
       # TODO: https://github.com/NotAShelf/nvf/issues/1312#issuecomment-3741078541
       #
@@ -182,7 +205,6 @@
       # };
 
       diffview-nvim.enable = true;
-      oil-nvim.enable = true;
       direnv.enable = true;
       yazi-nvim.enable = true;
       yazi-nvim.setupOpts.open_for_directories = true;
@@ -281,22 +303,6 @@
       breadcrumbs.navbuddy.enable = true;
     };
 
-    # tabline.nvimBufferline = {
-    #   enable = true;
-    #   setupOpts.options = {
-    #     indicator.style = "none";
-    #     numbers = "none";
-    #   };
-    #   mappings = {
-    #     closeCurrent = "<leader>x";
-    #     cycleNext = "<Tab>";
-    #     cyclePrevious = "<S-Tab>";
-    #     moveNext = "<leader><Tab>";
-    #     movePrevious = "<leader><S-Tab>";
-    #   };
-    # };
-    # statusline.lualine.enable = true;
-
     visuals = {
       nvim-web-devicons.enable = true;
       nvim-scrollbar.enable = true;
@@ -315,6 +321,19 @@
         mode = "n";
         key = "<leader><Tab>";
         action = "<cmd>buffer #<cr>";
+      }
+      {
+        mode = "n";
+        key = "<leader>f";
+        action = "function() MiniExtra.pickers.explorer() end";
+        lua = true;
+        silent = true;
+      }
+      {
+        mode = "n";
+        key = "<leader>g";
+        action = ":Git<cr>";
+        silent = true;
       }
 
       {
@@ -368,12 +387,6 @@
         mode = "n";
         key = "<leader>ef";
         action = "<cmd>SopsEncrypt<CR>";
-      }
-
-      {
-        mode = "n";
-        key = "<leader>e";
-        action = "<cmd>Oil<CR>";
       }
 
       {
