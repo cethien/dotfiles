@@ -15,7 +15,6 @@
     ./fzf.nix
     ./tmux.nix
     ./ssh.nix
-    ./neovim.nix
     ./yazi
     ./bottom.nix
     ./fastfetch
@@ -24,6 +23,8 @@
     ./git.nix
     ./lazygit.nix
     ./lazydocker.nix
+
+    ./neovim
 
     ./utils.nix
     ./utils-net.nix
