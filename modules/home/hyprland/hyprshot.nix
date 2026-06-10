@@ -11,12 +11,14 @@ in {
   config = mkIf cfg.enable {
     home.packages = [pkgs.gradia];
 
+    programs.hyprshot.saveLocation = "${config.home.homeDirectory}/Pictures";
+
     wayland.windowManager.hyprland.settings.bind = let
-      cmd = mode: "${pkgs.hyprshot}/bin/hyprshot -z -m ${mode}";
+      cmd = mode: "hyprshot -z -m ${mode}";
     in [
       (mkExecBind "Print" "${cmd "output"} -m active" {})
       (mkExecBind "ALT + Print" "${cmd "window"} -m active" {})
-      (mkExecBind "SUPER + SHIFT" "${cmd "region"}" {})
+      (mkExecBind "SUPER + SHIFT + S" "${cmd "region"}" {})
     ];
   };
 }
