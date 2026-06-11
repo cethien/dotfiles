@@ -5,33 +5,14 @@
   ...
 }: let
   inherit (lib) mkIf mkOption types;
+  inherit (config.lib.deeznuts.hyprland) mkAutostart;
   cfg = config.programs.tmux;
-
-  tmuxKeybindings = config.programs.tmux.keybindings or [];
-  formatBind = binding: let
-    table =
-      if binding ? table
-      then "-T ${binding.table} "
-      else "";
-    prefix =
-      if binding.noprefix or false
-      then "-n "
-      else "";
-    repeatable =
-      if binding.repeat or false
-      then "-r "
-      else "";
-    desc =
-      if binding ? description
-      then "-N \"${binding.description}\" "
-      else "";
-  in "bind ${table}${repeatable}${prefix}${desc}${binding.key} ${binding.action}";
 in {
+  imports = [
+    ./tmux-keybindings.nix
+  ];
+
   options.programs.tmux = {
-    keybindings = mkOption {
-      type = types.listOf types.attrs;
-      default = [];
-    };
     resurrectPluginProcesses = mkOption {
       type = types.listOf types.str;
       default = [];
@@ -40,26 +21,12 @@ in {
   };
 
   config = mkIf cfg.enable {
-    systemd.user.services.tmux-server = {
-      Unit = {
-        Description = "Tmux Server (Independent Background Instance)";
-        Documentation = "man:tmux(1)";
-      };
-      Service = {
-        Type = "forking";
-        ExecStart = "${pkgs.tmux}/bin/tmux start-server";
-        ExecStop = "${pkgs.tmux}/bin/tmux kill-server";
-        Restart = "on-failure";
-      };
-      Install = {
-        WantedBy = ["default.target"];
-      };
-    };
+    wayland.windowManager.hyprland.settings.on = [(mkAutostart "tmux start-server" {})];
 
-    home.shellAliases.tm = "tmux_new";
     programs.fzf.tmux.enableShellIntegration = true;
-    programs.bash.initExtra = builtins.readFile ./tmux_bashinit.sh;
-    programs.zsh.initContent = builtins.readFile ./tmux_zshinit.sh;
+
+    programs.bash.initExtra = builtins.readFile ./tmux-bashinit.sh;
+    home.shellAliases.tm = "tmux_new";
 
     programs.tmux = {
       baseIndex = 1;
@@ -72,7 +39,6 @@ in {
 
       extraConfig = ''
         ${builtins.readFile ./tmux.conf}
-        ${lib.concatStringsSep "\n" (map formatBind tmuxKeybindings)}
       '';
 
       sensibleOnTop = true;
@@ -127,18 +93,6 @@ in {
         {
           key = "r";
           action = "source-file ~/.config/tmux/tmux.conf";
-        }
-
-        # SSH Popup (Prefix + o)
-        {
-          key = "o";
-          action = ''display-popup -w 80% -h 75% -E "sshz"'';
-        }
-
-        # System Monitor Popup (Prefix + p)
-        {
-          key = "p";
-          action = ''display-popup -w 90% -h 90% -E "btm"'';
         }
 
         # switch panes using Ctrl-Shift-arrow without prefix

@@ -12,8 +12,10 @@
     ./zathura.nix
     ./fileroller.nix
 
+    ./tmux
+    ./neovim
+
     ./fzf.nix
-    ./tmux.nix
     ./ssh.nix
     ./yazi
     ./bottom.nix
@@ -23,8 +25,6 @@
     ./git.nix
     ./lazygit.nix
     ./lazydocker.nix
-
-    ./neovim
 
     ./utils.nix
     ./utils-net.nix

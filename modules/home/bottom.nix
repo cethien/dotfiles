@@ -15,6 +15,13 @@ in {
       htop = "btm --basic";
     };
 
+    programs.tmux.keybindings = [
+      {
+        key = "p";
+        action = ''display-popup -w 90% -h 90% -E "btm"'';
+      }
+    ];
+
     programs.bottom = {
       settings = {
         flags = {

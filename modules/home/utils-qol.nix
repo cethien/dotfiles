@@ -10,14 +10,22 @@ in {
   options.programs.utils-qol.enable = lib.mkEnableOption "qol utils";
 
   config = mkIf cfg.enable {
-    wayland.windowManager.hyprland.modals."qalc".binds = [
-      "SUPER + COMMA"
-      "XF86Calculator"
-    ];
+    wayland.windowManager.hyprland.modals = {
+      "qalc".binds = [
+        "SUPER + COMMA"
+        "XF86Calculator"
+      ];
+      "bluetui".binds = [
+        "SUPER + B"
+        "XF86Bluetooth"
+      ];
+    };
 
-    wayland.windowManager.hyprland.modals."bluetui".binds = [
-      "SUPER + B"
-      "XF86Bluetooth"
+    programs.tmux.keybindings = [
+      {
+        key = ",";
+        action = ''display-popup -w 70% -h 60% -E "qalc"'';
+      }
     ];
 
     programs.yazi = {

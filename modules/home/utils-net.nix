@@ -37,5 +37,12 @@ in {
     ];
 
     wayland.windowManager.hyprland.modals."netz".binds = ["SUPER + N"];
+
+    programs.tmux.keybindings = [
+      {
+        key = ",";
+        action = ''display-popup -w 60% -h 60% -E "netz"'';
+      }
+    ];
   };
 }
