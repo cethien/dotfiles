@@ -31,17 +31,6 @@ in {
       path = "${config.users.users.cethien.home}/tms-shares";
     };
 
-    networking.firewall = {
-      allowedTCPPorts = [
-        53317 # localsend
-        24727 # ausweisapp
-      ];
-      allowedUDPPorts = [
-        53317 # localsend
-        24727 # ausweisapp
-      ];
-    };
-
     virtualisation.docker.enable = true;
     virtualisation.libvirtd.enable = true;
 

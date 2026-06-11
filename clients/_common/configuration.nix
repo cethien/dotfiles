@@ -7,7 +7,7 @@
   stateVersion,
   ...
 }: let
-  inherit (lib) mkDefault;
+  inherit (lib) mkDefault optionals;
   hl = config.programs.hyprland.enable;
   gnome = config.services.desktopManager.gnome.enable;
   desktop = hl || gnome;
@@ -99,9 +99,9 @@ in {
       [
         "nettools"
       ]
-      ++ lib.optionals desktop ["audio"]
-      ++ lib.optionals (config.hardware.uinput.enable) ["uinput" "input"]
-      ++ lib.optionals (config.hardware.sane.enable) ["scanner"];
+      ++ optionals desktop ["audio"]
+      ++ optionals (config.hardware.uinput.enable) ["uinput" "input"]
+      ++ optionals (config.hardware.sane.enable) ["scanner"];
 
     services.pipewire.enable = desktop;
 
@@ -150,6 +150,37 @@ in {
     hardware.uinput.enable = mkDefault true;
     networking.networkmanager.enable = mkDefault true;
     networking.networkmanager.wifi.backend = mkDefault "iwd";
+
+    networking.firewall = let
+      hmConfig = config.home-manager.users.${username};
+
+      kdeConnectEnabled = hmConfig.services.kdeconnect.enable;
+      localSendEnabled = hmConfig.programs.localsend.enable or hmConfig.programs.jocalsend.enable;
+      userPkgs = hmConfig.home.packages or [];
+      hasAusweisApp = builtins.any (pkg: pkg.pname or "" == "ausweisapp") userPkgs;
+    in {
+      allowedTCPPorts =
+        optionals localSendEnabled [53317]
+        ++ optionals hasAusweisApp [24727];
+
+      allowedUDPPorts =
+        optionals localSendEnabled [53317]
+        ++ optionals hasAusweisApp [24727];
+
+      allowedTCPPortRanges = optionals kdeConnectEnabled [
+        {
+          from = 1714;
+          to = 1764;
+        }
+      ];
+
+      allowedUDPPortRanges = optionals kdeConnectEnabled [
+        {
+          from = 1714;
+          to = 1764;
+        }
+      ];
+    };
 
     nix = {
       gc = {

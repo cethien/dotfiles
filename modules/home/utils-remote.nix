@@ -4,9 +4,17 @@
   config,
   ...
 }: let
+  inherit (lib) mkEnableOption mkOption types optionals;
   cfg = config.programs.utils-remote;
 in {
-  options.programs.utils-remote.enable = lib.mkEnableOption "utils for remote stuff";
+  options.programs = {
+    utils-remote.enable = mkEnableOption "utils for remote stuff";
+    localsend.enable = mkEnableOption "localsend";
+    jocalsend.enable = mkOption {
+      type = types.bool;
+      default = config.programs.localsend.enable;
+    };
+  };
 
   config = lib.mkIf cfg.enable {
     programs.yazi = {
@@ -37,10 +45,9 @@ in {
       };
     };
 
-    home.packages = with pkgs; [
-      localsend
-      jocalsend
-      castnow
-    ];
+    home.packages = with pkgs;
+      [castnow]
+      ++ optionals config.programs.localsend.enable [localsend]
+      ++ optionals config.programs.jocalsend.enable [jocalsend];
   };
 }

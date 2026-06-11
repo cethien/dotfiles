@@ -75,6 +75,7 @@ in {
       zen-browser.enable = mkDefault hl;
       zen-browser.isDefault = mkDefault config.programs.zen-browser.enable;
       aria2.enable = mkDefault config.programs.zen-browser.enable;
+      localsend.enable = mkDefault hl;
 
       mangohud.enable = mkDefault mg;
     };
