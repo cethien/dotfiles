@@ -37,6 +37,7 @@ in {
       utils-net.enable = mkDefault true;
       utils-fun.enable = mkDefault true;
 
+      pandoc.enable = true;
       jq.enable = true;
       zoxide.enable = true;
       ripgrep.enable = true;
