@@ -5,6 +5,7 @@
   ...
 }: let
   inherit (lib) mkIf;
+  inherit (config.lib.deeznuts.hyprland) mkExecBind;
   cfg = config.programs.slack;
 in {
   options.programs.slack.enable = lib.mkEnableOption "slack";
@@ -16,23 +17,6 @@ in {
     services.mako.settings."app-name=Slack" = {
       default-timeout = 0;
       border-color = "#4a154b";
-    };
-
-    wayland.windowManager.hyprland = let
-      inherit (config.lib.deeznuts.hyprland) mkAutostart;
-    in {
-      modals."slack" = {
-        binds = [
-          "XF86Mail"
-          "SUPER + F12"
-        ];
-        terminal = false;
-        exec = "slack";
-      };
-
-      settings = {
-        on = mkIf cfg.autostart [(mkAutostart "slack -u" {})];
-      };
     };
   };
 }

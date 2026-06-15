@@ -15,6 +15,11 @@
     lpt_main._var = monitors.self;
     eizo._var = monitors.eizo;
 
+    on = [(hLib.mkAutostart "slack -u" {})];
+    settings = {
+      bind = [(hLib.mkExecBind "SUPER + F12" "slack" {})];
+    };
+
     config.general.allow_tearing = true;
     monitor = [
       {

@@ -1,16 +1,23 @@
 {
   config,
+  lib,
   pkgs,
   ...
-}: {
+}: let
+  user = config.users.users.cethien;
+in {
   imports = [
     ../_common/configuration.nix
     ./disko.nix
   ];
   config = {
-    programs.steam.enable = true;
-
+    # work
+    services.tailscale = {
+      enable = true;
+      extraSetFlags = ["--operator=${user.name}"];
     };
+
+    programs.steam.enable = true;
 
     # nvidia gpu
     services.xserver.videoDrivers = ["nvidia"];

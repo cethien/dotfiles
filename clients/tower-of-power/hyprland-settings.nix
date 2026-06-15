@@ -41,20 +41,10 @@
       {
         _args = [
           {
-            workspace = "4";
+            workspace = "3";
             monitor = l "arzopa";
             persistent = true;
             default = true;
-            layout = "master";
-          }
-        ];
-      }
-      {
-        _args = [
-          {
-            workspace = "5";
-            monitor = l "arzopa";
-            persistent = true;
           }
         ];
       }
@@ -67,7 +57,6 @@
             monitor = l "asus";
             persistent = true;
             default = true;
-            layout = "master";
           }
         ];
       }
@@ -83,24 +72,7 @@
       {
         _args = [
           {
-            workspace = "3";
-            monitor = l "asus";
-            persistent = true;
-          }
-        ];
-      }
-      {
-        _args = [
-          {
-            workspace = "9";
-            monitor = l "asus";
-          }
-        ];
-      }
-      {
-        _args = [
-          {
-            workspace = "10";
+            workspace = "4";
             monitor = l "asus";
           }
         ];
@@ -110,10 +82,10 @@
     on = [(hLib.mkAutostart "xrandr --output DP-1 --primary" {})];
   };
 
-  defaultWorkspaces = {
-    console_launcher = 9;
-    gaming = 10;
-    browser = 4;
-    pip = 4;
+  defaultWorkspaces = rec {
+    gaming = 4;
+    console_launcher = gaming;
+    chat = 3;
+    pip = chat;
   };
 }

@@ -11,6 +11,16 @@
         color = "pink";
         icon = "circle";
       };
+      "tmsproshop.de" = {
+        id = 3;
+        color = "green";
+        icon = "briefcase";
+      };
+      "tmsproshop.de/admin" = {
+        id = 4;
+        color = "purple";
+        icon = "briefcase";
+      };
     };
 
     spaces."deez nuts" = {
@@ -26,6 +36,7 @@
         isEssential = true;
         position = 101;
       };
+
       "calendar" = {
         id = "591c45e0-737f-47d1-86e8-bf173ce87df9";
         url = "https://calendar.google.com";
@@ -45,7 +56,6 @@
   in {
     containersForce = true;
     inherit containers;
-    pinsForce = true;
     inherit pins;
     spacesForce = true;
     inherit spaces;

@@ -4,7 +4,7 @@
   nixcord,
   ...
 }: let
-  inherit (lib) mkIf mkMerge;
+  inherit (lib) mkIf;
   cfg = config.programs.nixcord;
 in {
   imports = [nixcord.homeModules.nixcord];
@@ -75,17 +75,11 @@ in {
     };
 
     wayland.windowManager.hyprland = let
-      inherit (config.lib.deeznuts.hyprland) mkAutostart;
+      inherit (config.lib.deeznuts.hyprland) mkAutostart mkDefaultWorkspaceWindowRule mkExecBind;
     in {
-      modals."discord" = {
-        binds = [
-          "XF86Mail"
-          "SUPER + F12"
-        ];
-        terminal = false;
-        exec = "discord";
-      };
       settings = {
+        bind = [(mkExecBind "SUPER + F12" "discord" {})];
+        window_rule = [(mkDefaultWorkspaceWindowRule "chat" {class = "^(discord)$";})];
         on = mkIf cfg.autostart [
           (mkAutostart "discord --start-minimized" {})
         ];

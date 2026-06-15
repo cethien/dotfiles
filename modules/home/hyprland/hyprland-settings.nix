@@ -143,7 +143,7 @@ in {
     (mkWindowRule {class = ".*";} {suppress_event = "maximize";})
     (mkWindowRule {float = true;} {
       center = true;
-      size = ["(monitor_w*0.7)" "(monitor_h*0.7)"];
+      # size = ["(monitor_w*0.7)" "(monitor_h*0.7)"];
     })
     (mkWindowRule {
         class = "^$";
@@ -180,7 +180,7 @@ in {
 
       # Core Window Management
       (mkDspBind "ALT + F4" "hl.dsp.window.close()" {})
-      (mkDspBind "SUPER + C" "hl.dsp.window.close()" {})
+      (mkDspBind "SUPER + Q" "hl.dsp.window.close()" {})
       (mkDspBind "SUPER + V" "hl.dsp.window.float({ action = 'toggle' })" {})
       (mkDspBind "SUPER + F" "hl.dsp.window.fullscreen({ action = 'toggle' })" {})
 

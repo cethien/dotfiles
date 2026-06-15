@@ -6,7 +6,7 @@
   ...
 }: let
   inherit (lib) mkIf mkEnableOption;
-  inherit (config.lib.deeznuts.hyprland) mkWindowRule mkExecBind;
+  inherit (config.lib.deeznuts.hyprland) mkWindowRule mkDspBind;
 
   cfg = config.programs.zen-browser;
   uname = "${config.home.username}";
@@ -65,7 +65,10 @@ in {
 
     wayland.windowManager.hyprland.settings = {
       window_rule = [
-        (mkWindowRule {initial_class = "^(zen-beta)$";} {tile = true;})
+        (mkWindowRule {
+          initial_class = "^(zen-beta)$";
+          title = "^(Developer Tools - .*)$";
+        } {tile = true;})
         (mkWindowRule {
             initial_class = "^(zen-beta)$";
             initial_title = "^(Picture-in-Picture)$";
@@ -77,30 +80,13 @@ in {
       ];
 
       bind = let
-        s = pkgs.writeShellScriptBin "hypr_zen-sidebar" ''
-          DESIGNATED_WS=${toString ws.browser}
-          BROWSER_WS=$(hyprctl -j clients \
-            | jq -r '.[] | select(.initialClass=="zen-beta") | .workspace.id' \
-            | head -n1)
-
-          WS_JSON=$(hyprctl -j activeworkspace)
-          ACTIVE_WS=$(echo "$WS_JSON" | jq -r '.id')
-          HAS_FULLSCREEN=$(echo "$WS_JSON" | jq -r '.hasfullscreen')
-
-          if [ -z "$BROWSER_WS" ]; then
-            zen-beta &
-            exit 0
-          fi
-
-          if [ -n "$DESIGNATED_WS" ] && [ "$BROWSER_WS" = "$ACTIVE_WS" ] || [ "$HAS_FULLSCREEN" = "true" ]; then
-            hyprctl dispatch movetoworkspacesilent $DESIGNATED_WS,initialclass:zen-beta
-          else
-            hyprctl dispatch movetoworkspace $ACTIVE_WS,initialclass:zen-beta
-          fi
-        '';
+        s =
+          #lua
+          ''
+            hl.dsp.exec_cmd("zen-beta")
+          '';
       in [
-        (mkExecBind "SUPER + W" "${s}/bin/hypr_zen-sidebar" {})
-        (mkExecBind "XF86HomePage" "${s}/bin/hypr_zen-sidebar" {})
+        (mkDspBind "SUPER + W" s {})
       ];
     };
   };

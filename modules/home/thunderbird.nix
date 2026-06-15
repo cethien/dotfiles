@@ -5,15 +5,16 @@
   ...
 }: let
   inherit (lib) mkIf;
+  inherit (config.lib.deeznuts.hyprland) mkAutostart;
   cfg = config.programs.thunderbird;
 in {
   options.programs.thunderbird.autostart = lib.mkEnableOption "hyprland autostart";
 
   config = lib.mkIf cfg.enable {
-    wayland.windowManager.hyprland = let
-      inherit (config.lib.deeznuts.hyprland) mkAutostart;
-    in {
-      settings.on = mkIf cfg.autostart [(mkAutostart "thunderbird" {})];
+    wayland.windowManager.hyprland = {
+      settings = {
+        on = mkIf cfg.autostart [(mkAutostart "thunderbird" {})];
+      };
 
       modals."thunderbird" = {
         binds = [

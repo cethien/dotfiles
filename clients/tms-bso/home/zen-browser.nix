@@ -55,7 +55,12 @@
 
         "proxmox" = {
           id = "81af52ca-b49b-4feb-89b5-20ae325309aa";
-          url = "https://10.180.80.252:8006";
+          url = "https://10.0.10.5:8006";
+          position = 110;
+        };
+        "pve-node-b" = {
+          id = "81af52ca-b49b-4feb-89b5-20ae325309aa";
+          url = "https://10.180.80.250:8006";
           position = 110;
         };
         "pve-node-c" = {

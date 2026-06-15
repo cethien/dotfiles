@@ -16,14 +16,6 @@ in {
   config = mkIf cfg.enable {
     deeznuts.defaultBrowser = mkIf cfg.isDefault "chromium";
 
-    wayland.windowManager.hyprland.settings = {
-      window_rule = [
-        (mkDefaultWorkspaceWindowRule "browser" {
-          initial_class = "^(chromium-browser)$";
-        })
-      ];
-    };
-
     programs.chromium = {
       extensions = [
         # ublock lite

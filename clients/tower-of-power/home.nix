@@ -9,6 +9,9 @@
     arzopa = "desc:GWD ARZOPA 000000000001";
   };
 in {
+  # work
+  programs.slack.enable = true;
+
   imports = [
     ../_common/home/cethien
   ];

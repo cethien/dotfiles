@@ -53,26 +53,9 @@ in {
       position = 1000;
       icon = "🚄";
     };
-
-    pins = {
-      "WhatsApp" = {
-        id = "9d8a8f91-7e29-4688-ae2e-da4e49d4a179";
-        url = "https://web.whatsapp.com/";
-        isEssential = true;
-        position = 101;
-      };
-      "Discord" = {
-        id = "96070d37-4b78-490f-87d1-884474bd9434";
-        url = "https://discord.com/channels/@me";
-        isEssential = true;
-        position = 102;
-      };
-    };
   in {
     containersForce = true;
     inherit containers;
-    pinsForce = true;
-    inherit pins;
     spacesForce = true;
     inherit spaces;
   };

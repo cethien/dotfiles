@@ -1,6 +1,6 @@
 {firefox-addons, ...}: {
   extensions.packages = with firefox-addons; [
-    # multi-account-containers
+    multi-account-containers
 
     ublock-origin
     decentraleyes

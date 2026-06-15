@@ -20,7 +20,7 @@ in {
       exec = "xdg-open steam://open/friends";
     };
 
-    home.packages = [pkgs.protonplus];
+    home.packages = with pkgs; [protonplus];
 
     wayland.windowManager.hyprland.settings = {
       on = mkIf cfg.autostart [(mkAutostart "steam -silent" {workspace = "unset silent";})];

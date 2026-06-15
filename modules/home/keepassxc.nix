@@ -94,15 +94,9 @@ in {
     };
 
     wayland.windowManager.hyprland = let
-      inherit (config.lib.deeznuts.hyprland) mkAutostart;
+      inherit (config.lib.deeznuts.hyprland) mkExecBind;
     in {
-      settings.on = mkIf cfg.hyprlandAutostart [(mkAutostart "keepassxc" {})];
-
-      modals."keepassxc" = {
-        binds = ["SUPER + K"];
-        exec = "keepassxc";
-        terminal = false;
-      };
+      settings.bind = [(mkExecBind "SUPER + K" "keepassxc" {})];
     };
 
     xdg.mimeApps.defaultApplications = mkMimeApps {
