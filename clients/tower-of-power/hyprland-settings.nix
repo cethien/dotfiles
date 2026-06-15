@@ -41,7 +41,7 @@
       {
         _args = [
           {
-            workspace = "3";
+            workspace = "4";
             monitor = l "arzopa";
             persistent = true;
             default = true;
@@ -72,7 +72,7 @@
       {
         _args = [
           {
-            workspace = "4";
+            workspace = "3";
             monitor = l "asus";
           }
         ];
@@ -83,9 +83,9 @@
   };
 
   defaultWorkspaces = rec {
-    gaming = 4;
+    gaming = 3;
     console_launcher = gaming;
-    chat = 3;
+    chat = 4;
     pip = chat;
   };
 }

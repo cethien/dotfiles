@@ -12,7 +12,7 @@ in {
     stylix.targets.mako.opacity.enable = false;
 
     wayland.windowManager.hyprland.settings.bind = [
-      (mkExecBind "SUPER + A" "makocrl dismiss -a" {})
+      (mkExecBind "SUPER + A" "makoctl dismiss -a" {})
     ];
 
     services.mako.settings = {
