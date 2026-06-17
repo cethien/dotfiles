@@ -2,19 +2,51 @@
   lib,
   config,
   pkgs,
-  nvf,
   ...
 }: let
   inherit (lib) mkIf;
   inherit (config.lib.deeznuts) mkMimeApps;
-in {
-  imports = [
-    nvf.homeManagerModules.default
-  ];
 
-  config = mkIf config.programs.nvf.enable {
-    programs.nvf.settings = import ./neovim-settings.nix {inherit pkgs;};
-    stylix.targets.nvf.enable = false;
+  utils = import ./utils.nix {inherit pkgs;};
+  ui = import ./ui.nix {inherit pkgs;};
+  languages = import ./languages {inherit pkgs;};
+
+  extraPackages = with pkgs;
+    [
+      ripgrep
+      fd
+      fzf
+      bat
+    ]
+    ++ ui.extraPackages ++ utils.extraPackages ++ languages.extraPackages;
+
+  plugins = with pkgs.vimPlugins;
+    [
+      mini-nvim
+      fzf-lua
+      auto-session
+    ]
+    ++ ui.plugins ++ utils.plugins ++ languages.plugins;
+
+  initLua = ''
+    ${builtins.readFile ./init.lua}
+    ${ui.initLua}
+    ${utils.initLua}
+    ${languages.initLua}
+  '';
+in {
+  config = mkIf config.programs.neovim.enable {
+    programs.neovim = {
+      viAlias = true;
+      vimAlias = true;
+      inherit extraPackages plugins initLua;
+
+      #legacy
+      withRuby = false;
+      withPython3 = false;
+    };
+    stylix.targets.neovim.enable = false;
+
     home.sessionVariables.EDITOR = "nvim";
     home.shellAliases.v = "nvim";
     programs.tmux.resurrectPluginProcesses = ["nvim .nvim-wrapped"];

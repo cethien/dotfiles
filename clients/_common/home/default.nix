@@ -62,7 +62,7 @@ in {
           warn_timeout = 0;
         };
       };
-      nvf.enable = true;
+      neovim.enable = true;
       lazysql.enable = true;
       gh.enable = mkDefault true;
       gh.settings.git_protocol = "ssh";

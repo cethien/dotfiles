@@ -24,8 +24,8 @@
     stylix.url = "github:nix-community/stylix";
     stylix.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
-    nvf.url = "github:notashelf/nvf";
-    nvf.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    lorem-nvim.url = "github:derektata/lorem.nvim";
+    lorem-nvim.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
     zen-browser.inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -84,6 +84,14 @@
         overlays = [
           inputs.firefox-addons.overlays.default
           inputs.nix-gaming.overlays.default
+
+          (final: prev: {
+            vimPlugins =
+              prev.vimPlugins
+              // {
+                lorem-nvim = inputs.lorem-nvim.packages.${system}.default;
+              };
+          })
         ];
       };
   in

@@ -4,6 +4,7 @@
     gopls
     golangci-lint
     go-tools
+    gofumpt
     impl
     wgo
     delve
@@ -17,6 +18,7 @@ in
 
       goEnv
       just
+      just-lsp
     ];
 
     shellHook = ''

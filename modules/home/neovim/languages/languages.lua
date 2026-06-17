@@ -1,0 +1,76 @@
+require("crates").setup()
+
+require("conform").setup({
+	format_on_save = {
+		timeout_ms = 500,
+		lsp_format = "fallback",
+	},
+
+	formatters_by_ft = {
+		typst = { "typstfmt" },
+
+		go = { "gofumpt", "goimports" },
+		templ = { "templ" },
+		python = { "ruff_format" },
+		rust = { "rustfmt", lsp_format = "fallback" },
+		c = { "clang-format" },
+		cpp = { "clang-format" },
+		just = { "just" },
+
+		nix = { "alejandra" },
+		lua = { "stylua" },
+
+		html = { "prettierd" },
+		css = { "prettierd" },
+		javascript = { "prettierd" },
+		typescript = { "prettierd" },
+		astro = { "prettierd" },
+		svelte = { "prettierd" },
+		vue = { "prettierd" },
+
+		sh = { "shfmt" },
+		bash = { "shfmt" },
+		json = { "prettierd" },
+		yaml = { "prettierd" },
+		toml = { "taplo" },
+	},
+})
+
+vim.lsp.enable("tinymist") -- typst
+vim.lsp.enable("texlab") -- latex
+
+vim.lsp.enable("gopls") -- Go
+vim.lsp.enable("templ") -- Templ (Go Web)
+vim.lsp.enable("pyright") -- Python
+vim.lsp.enable("rust_analyzer") -- Rust
+vim.lsp.enable("omnisharp") -- C#
+vim.lsp.enable("clangd") -- C/C++
+vim.lsp.enable("jdtls") -- Java
+vim.lsp.enable("qmlls")
+
+vim.lsp.enable("html")
+vim.lsp.enable("cssls")
+vim.lsp.enable("ts_ls")
+vim.lsp.enable("eslint")
+vim.lsp.enable("emmet_language_server")
+vim.lsp.enable("tailwindcss")
+vim.lsp.enable("astro")
+vim.lsp.enable("svelteserver")
+vim.lsp.enable("vue_ls") -- Vue
+vim.lsp.enable("tailwindcss")
+
+vim.lsp.enable("sqlls")
+
+vim.lsp.enable("just")
+vim.lsp.enable("ansiblels")
+vim.lsp.enable("docker_language_server")
+vim.lsp.enable("helm_ls")
+vim.lsp.enable("terraformls")
+vim.lsp.enable("nixd")
+vim.lsp.enable("lua_ls")
+
+vim.lsp.enable("bashls")
+vim.lsp.enable("yamlls")
+vim.lsp.enable("jsonls")
+vim.lsp.enable("lemminx") -- XML
+vim.lsp.enable("taplo") -- TOML
