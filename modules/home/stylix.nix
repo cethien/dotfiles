@@ -21,7 +21,7 @@ in {
     '';
 
     # new behavior 26.05
-    gtk.gtk4.theme = null;
+    # gtk.gtk4.theme = null;
 
     stylix = {
       polarity = "dark";

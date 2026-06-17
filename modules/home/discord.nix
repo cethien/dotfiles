@@ -20,8 +20,10 @@ in {
     };
 
     programs.nixcord = {
-      discord.vencord.enable = true;
-      # vesktop.enable = true;
+      vesktop.enable = true;
+      discord.enable = !cfg.vesktop.enable;
+
+      discord.vencord.enable = false;
       vesktop.settings = {
         discordBranch = "stable";
         staticTitle = true;
@@ -79,9 +81,9 @@ in {
     in {
       settings = {
         bind = [(mkExecBind "SUPER + F12" "discord" {})];
-        window_rule = [(mkDefaultWorkspaceWindowRule "chat" {class = "^(discord)$";})];
+        window_rule = [(mkDefaultWorkspaceWindowRule "chat" {class = "^(discord|vesktop)$";})];
         on = mkIf cfg.autostart [
-          (mkAutostart "discord --start-minimized" {})
+          (mkAutostart "vesktop --start-minimized" {})
         ];
       };
     };
