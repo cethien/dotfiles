@@ -32,19 +32,36 @@ in {
   config = mkIf cfg.enable {
     xdg.portal = {
       enable = true;
-      extraPortals = [
-        pkgs.xdg-desktop-portal-hyprland
-        pkgs.xdg-desktop-portal-gtk
+      extraPortals = with pkgs; [
+        xdg-desktop-portal-hyprland
+        # xdg-desktop-portal-termfilechooser
+        xdg-desktop-portal-gtk
       ];
       config = {
         common = {
           default = ["gtk"];
         };
         hyprland = {
-          default = ["hyprland" "gtk"];
-          "org.freedesktop.impl.portal.OpenURI" = ["gtk"];
+          default = [
+            "hyprland"
+            # "termfilechooser"
+            "gtk"
+          ];
         };
       };
+    };
+
+    xdg.configFile = {
+      "hypr/xdph.conf".text = ''
+        screencopy {
+          allow_token_by_default = true
+        }
+      '';
+
+      # "xdg-desktop-portal-termfilechooser/config".text = ''
+      #   [filechooser]
+      #   cmd=kitty --class "yazi-portal" -e yazi --chooser-file="$out"
+      # '';
     };
 
     home.packages = with pkgs; [
