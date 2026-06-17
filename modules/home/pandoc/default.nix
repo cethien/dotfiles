@@ -8,9 +8,17 @@
   cfg = config.programs.pandoc;
 in {
   config = mkIf cfg.enable {
+    programs.pandoc = {
+      templates = {
+        "office.yaml" = pkgs.writeText "office.yaml" (import ./templates/office.nix);
+
+        "academic.yaml" = pkgs.writeText "academic.yaml" (import ./templates/academic.nix);
+      };
+    };
+
     programs.yazi = {
       openRulesMerged = {
-        "text/plain" = ["pandoc"];
+        "text/plain" = ["$EDITOR" "pandoc"];
       };
       settings.opener = {
         pandoc = [
@@ -21,12 +29,6 @@ in {
           }
         ];
       };
-    };
-
-    programs.pandoc.defaults = {
-      citeproc = true;
-
-      pdf-engine = "${pkgs.python313Packages.weasyprint}/bin/weasyprint";
     };
   };
 }

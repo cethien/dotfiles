@@ -15,11 +15,6 @@
     lpt_main._var = monitors.self;
     eizo._var = monitors.eizo;
 
-    on = [(hLib.mkAutostart "slack -u" {})];
-    settings = {
-      bind = [(hLib.mkExecBind "SUPER + F12" "slack" {})];
-    };
-
     config.general.allow_tearing = true;
     monitor = [
       {
@@ -44,23 +39,26 @@
       }
     ];
 
-    workspace_rule = [
-      {
-        _args = [
-          {
-            workspace = 10;
-            monitor = l "lpt_main";
-            persistent = true;
-            default = true;
-          }
-        ];
-      }
+    on = [(hLib.mkAutostart "slack -u" {})];
+    bind = [(hLib.mkExecBind "SUPER + F12" "slack" {})];
+    window_rule = [(hLib.mkWindowRule {initial_class = "^(DBeaver)$";} {tile = true;})];
 
+    workspace_rule = [
       {
         _args = [
           {
             workspace = 1;
             monitor = l "eizo";
+            persistent = true;
+            default = true;
+          }
+        ];
+      }
+      {
+        _args = [
+          {
+            workspace = 5;
+            monitor = l "lpt_main";
             persistent = true;
             default = true;
           }

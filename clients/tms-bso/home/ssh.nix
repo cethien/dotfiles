@@ -1,6 +1,6 @@
 {
-  "Host weclapp-new-test".HostName = "10.0.30.60";
-  "Host weclapp-new".HostName = "10.0.30.21";
+  "Host weclapp-test".HostName = "10.0.30.60";
+  "Host weclapp".HostName = "10.0.30.21";
   "Host magento".HostName = "10.0.30.40";
   "Host services-prod".HostName = "10.0.30.20";
   "Host services-admin".HostName = "10.0.30.10";
@@ -11,36 +11,15 @@
     HostName = "10.180.80.92";
     User = "sysadmin";
   };
-  "Host toja-v2" = {
+  "Host toja" = {
     HostName = "10.102.99.210";
     User = "root";
   };
-  "Host anna-auftrag" = {
-    HostName = "10.102.99.85";
-    User = "sysadmin";
-  };
-  "Host sdg" = {
-    HostName = "10.102.99.92";
-    User = "sysadmin";
-  };
-  "Host toja-prod" = {
-    HostName = "10.102.99.205";
-    User = "sysadmin";
-  };
-  "Host sherlock-prod" = {
-    HostName = "10.102.99.90";
-    User = "sysadmin";
-  };
-
-  "Host bnl".HostName = "10.102.99.93";
-  "Host weclapp-test".HostName = "10.0.30.97";
-  "Host weclapp-prod".HostName = "10.102.99.97";
-  "Host kanboard".HostName = "10.102.99.95";
 
   # --- INFRA
   "Host pi".HostName = "10.0.10.20";
   "Host pve-node-a" = {
-    HostName = "10.180.80.252";
+    HostName = "10.0.10.5";
     User = "root";
   };
   "Host pve-node-b" = {

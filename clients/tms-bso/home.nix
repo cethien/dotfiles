@@ -4,6 +4,7 @@
   pkgs,
   ...
 }: let
+  hLib = config.lib.deeznuts.hyprland;
   monitors = {
     self = "eDP-1";
     eizo = "desc:Eizo Nanao Corporation EV2430 33096078";
@@ -15,8 +16,7 @@ in {
 
   stylix.image = ../_common/home/wallpapers/bliss_4K.jpg;
   wayland.windowManager.hyprland = import ./hyprland-settings.nix {
-    inherit lib monitors;
-    hLib = config.lib.deeznuts.hyprland;
+    inherit lib monitors hLib;
   };
   programs.hyprlock.monitor = "${monitors.self}";
 
