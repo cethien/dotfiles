@@ -9,10 +9,12 @@
 in {
   config = mkIf cfg.enable {
     programs.pandoc = {
-      templates = {
-        "office.yaml" = pkgs.writeText "office.yaml" (import ./templates/office.nix);
-
-        "academic.yaml" = pkgs.writeText "academic.yaml" (import ./templates/academic.nix);
+      templates = let
+        office = pkgs.writeText "office" (import ./templates/office.nix {inherit pkgs;});
+        academic = pkgs.writeText "academic" (import ./templates/office.nix {inherit pkgs;});
+      in {
+        "office.pptx" = office;
+        "academic.pdf" = academic;
       };
     };
 

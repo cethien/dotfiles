@@ -1,7 +1,7 @@
 {pkgs, ...}: let
   template = {
     citeproc = true;
-    pdf-engine = "${pkgs.python313Packages.weasyprint}/bin/weasyprint";
+    # pdf-engine = "${pkgs.python313Packages.weasyprint}/bin/weasyprint";
     filters = [
       {
         type = "json";
