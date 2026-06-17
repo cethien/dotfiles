@@ -6,6 +6,7 @@ TITLE="screen record"
 
 # Pfade & Config
 REC_SAVE_DIR="$HOME/Videos/"
+REC_FORMAT="mp4"
 
 TEMP_DIR="${TMDIR:-/tmp/}"
 REC_PID_FILE="${TEMP_DIR}gsr.pid"
@@ -25,11 +26,11 @@ start_record() {
     local address=$(echo "$win_data" | jq -r '.address')
     local title=$(echo "$win_data" | jq -r '.title' | tr ' ' '_')
     target_args+=("-w" "portal")
-    REC_OUTPUT="${REC_OUTPUT_BASE}_${title}.mkv"
+    REC_OUTPUT="${REC_OUTPUT_BASE}_${title}.${REC_FORMAT}"
   else
     local monitor=$(hyprctl activeworkspace -j | jq -r '.monitor')
     target_args+=("-w" "$monitor")
-    REC_OUTPUT="${REC_OUTPUT_BASE}_${monitor}.mkv"
+    REC_OUTPUT="${REC_OUTPUT_BASE}_${monitor}.${REC_FORMAT}"
   fi
 
   # 2. Audio Logic
@@ -68,7 +69,7 @@ if [[ -f "$REC_PID_FILE" ]]; then
     notify-send "󰨜  stopped recording" "$FILE"
     rm -f "$REC_PID_FILE" "$REC_FILENAME_FILE" "$REC_LOG_FILE"
     sleep 0.8
-    xdg-open "$FILE"
+    kitty --class yazi -e yazi "$FILE"
     exit 0
   else
     rm -f "$REC_PID_FILE" "$REC_FILENAME_FILE" "$REC_LOG_FILE"
