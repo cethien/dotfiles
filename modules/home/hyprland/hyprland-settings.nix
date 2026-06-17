@@ -141,6 +141,7 @@ in {
 
   window_rule = [
     (mkWindowRule {class = ".*";} {suppress_event = "maximize";})
+    (mkWindowRule {initial_class = "xdg-desktop-portal-gtk";} {tile = true;})
     (mkWindowRule {float = true;} {
       center = true;
       # size = ["(monitor_w*0.7)" "(monitor_h*0.7)"];
