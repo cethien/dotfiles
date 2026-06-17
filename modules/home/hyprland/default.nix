@@ -56,6 +56,8 @@ in {
     ];
 
     programs = {
+      hyprlock.enable = true;
+
       kitty.enable = true;
       rofi.enable = true;
       mpv.enable = true;

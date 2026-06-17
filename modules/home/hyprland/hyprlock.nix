@@ -29,123 +29,119 @@ in {
     default = "eDP-1";
   };
 
-  config = mkIf config.wayland.windowManager.hyprland.enable {
+  config = mkIf cfg.enable {
     stylix.targets.hyprlock.enable = false;
-    programs.hyprlock = {
-      enable = true;
-
-      settings = let
-        shadows = {
-          shadow_passes = 4;
-          shadow_size = 6;
-          shadow_color = "rgb(0,0,0)";
-          shadow_boost = 1.2;
+    programs.hyprlock.settings = let
+      shadows = {
+        shadow_passes = 4;
+        shadow_size = 6;
+        shadow_color = "rgb(0,0,0)";
+        shadow_boost = 1.2;
+      };
+    in {
+      auth = {
+        fingerprint = {
+          enabled = true;
+          ready_message = "pwd or fprint";
+          present_message = "scanning...";
         };
-      in {
-        auth = {
-          fingerprint = {
-            enabled = true;
-            ready_message = "pwd or fprint";
-            present_message = "scanning...";
-          };
-        };
+      };
 
-        general = {
-          disable_loading_bar = true;
-          grace = 0;
-          hide_cursor = true;
-          no_fade_in = true;
-          ignore_empty_input = true;
-        };
+      general = {
+        disable_loading_bar = true;
+        grace = 0;
+        hide_cursor = true;
+        no_fade_in = true;
+        ignore_empty_input = true;
+      };
 
-        background = [
-          {
-            path = "screenshot";
-            blur_passes = 4;
-            blur_size = 12;
-          }
-        ];
+      background = [
+        {
+          path = "screenshot";
+          blur_passes = 4;
+          blur_size = 12;
+        }
+      ];
 
-        input-field = lib.mkForce [
+      input-field = lib.mkForce [
+        (shadows
+          // {
+            monitor = cfg.monitor;
+            fade_on_empty = false;
+            font_family = fonts.monospace.name;
+
+            placeholder_color = colors.base04;
+            bar_text_color = colors.base01;
+            bar_color = colors.base01;
+            fail_color = colors.base0E;
+
+            ring_color = colors.base02;
+
+            ring_color_error = colors.base0E;
+            ring_color_clear = colors.base0B;
+            ring_color_caps = colors.base09;
+            ring_color_vkey = colors.base0D;
+            ring_color_verify = colors.base0B;
+
+            placeholder_text = "";
+            fail_text = "whoops! try again";
+
+            halign = "center";
+            valign = "center";
+            position = "0, 0";
+          })
+      ];
+
+      label = lib.mkMerge [
+        [
           (shadows
             // {
               monitor = cfg.monitor;
-              fade_on_empty = false;
-              font_family = fonts.monospace.name;
-
-              placeholder_color = colors.base04;
-              bar_text_color = colors.base01;
-              bar_color = colors.base01;
-              fail_color = colors.base0E;
-
-              ring_color = colors.base02;
-
-              ring_color_error = colors.base0E;
-              ring_color_clear = colors.base0B;
-              ring_color_caps = colors.base09;
-              ring_color_vkey = colors.base0D;
-              ring_color_verify = colors.base0B;
-
-              placeholder_text = "";
-              fail_text = "whoops! try again";
-
+              color = colors.base05;
+              font_family = fonts.sansSerif.name;
+              font_size = "95";
               halign = "center";
               valign = "center";
-              position = "0, 0";
+              position = "0, 325";
+              text = "$TIME";
             })
-        ];
+          (shadows
+            // {
+              monitor = cfg.monitor;
+              color = colors.base05;
+              font_family = fonts.sansSerif.name;
+              font_size = "22";
+              halign = "center";
+              valign = "center";
+              position = "0, 200";
+              text = ''cmd[update:1000] echo $(date +"%A, %B %d")'';
+            })
+          (shadows
+            // {
+              monitor = cfg.monitor;
+              color = colors.base05;
+              font_family = fonts.sansSerif.name;
+              font_size = "22";
+              halign = "center";
+              valign = "center";
+              position = "0, -255";
+              text = ''cmd[update:1000] ${pkgs.writeShellScriptBin "hyprlock-status" (builtins.readFile ./hyprlock-status.sh)}/bin/hyprlock-status'';
+            })
 
-        label = lib.mkMerge [
-          [
-            (shadows
-              // {
-                monitor = cfg.monitor;
-                color = colors.base05;
-                font_family = fonts.sansSerif.name;
-                font_size = "95";
-                halign = "center";
-                valign = "center";
-                position = "0, 325";
-                text = "$TIME";
-              })
-            (shadows
-              // {
-                monitor = cfg.monitor;
-                color = colors.base05;
-                font_family = fonts.sansSerif.name;
-                font_size = "22";
-                halign = "center";
-                valign = "center";
-                position = "0, 200";
-                text = ''cmd[update:1000] echo $(date +"%A, %B %d")'';
-              })
-            (shadows
-              // {
-                monitor = cfg.monitor;
-                color = colors.base05;
-                font_family = fonts.sansSerif.name;
-                font_size = "22";
-                halign = "center";
-                valign = "center";
-                position = "0, -255";
-                text = ''cmd[update:1000] ${pkgs.writeShellScriptBin "hyprlock-status" (builtins.readFile ./hyprlock-status.sh)}/bin/hyprlock-status'';
-              })
-
-            (shadows
-              // {
-                monitor = cfg.monitor;
-                color = colors.base04;
-                font_family = fonts.sansSerif.name;
-                font_size = "14";
-                text_align = "center";
-                halign = "center";
-                valign = "center";
-                position = "0, -150";
-                text = ''cmd[update:0] ${pkgs.writeShellScriptBin "hyprlock-quotes" (builtins.readFile ./hyprlock-quotes.sh)}/bin/hyprlock-quotes'';
-              })
-          ]
-        ];
-      };
+          (shadows
+            // {
+              monitor = cfg.monitor;
+              color = colors.base04;
+              font_family = fonts.sansSerif.name;
+              font_size = "14";
+              text_align = "center";
+              halign = "center";
+              valign = "center";
+              position = "0, -150";
+              text = ''cmd[update:0] ${pkgs.writeShellScriptBin "hyprlock-quotes" (builtins.readFile ./hyprlock-quotes.sh)}/bin/hyprlock-quotes'';
+            })
+        ]
+      ];
     };
 
     wayland.windowManager.hyprland.settings = {
