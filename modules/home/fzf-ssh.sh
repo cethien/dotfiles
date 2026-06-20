@@ -10,7 +10,7 @@ if [[ "${1:-}" == "--preview" ]]; then
   if ssh -T -G "$name" &>/dev/null; then
     ssh -T -G "$name" | grep -iE '^(user|hostname|port|identityfile) ' | bat --color=always --plain --language=ssh_config
   else
-    echo "Ad-hoc Verbindung: Keine Konfiguration hinterlegt."
+    echo "Ad-hoc connection: No configuration stored."
   fi
   exit 0
 fi
@@ -19,13 +19,14 @@ connect_ssh() {
   local target="$1"
   local tmux_mode="${2:-window}"
 
-  local cmd="TERM=xterm-256color ssh -t $target 'if command -v tmux >/dev/null; then tmux a || tmux; else \$SHELL; fi'"
+  local cmd="TERM=xterm-256color ssh -t $@ 'if command -v tmux >/dev/null; then tmux a || tmux; else \$SHELL; fi'"
 
   if [ -n "${TMUX:-}" ]; then
     if [[ "$tmux_mode" == "split" ]]; then
       tmux split-window -h "$cmd"
     else
-      tmux new-window -n "ssh@$target" "$cmd"
+      local win_name="${*:$#}"
+      tmux new-window -n "ssh@${win_name}" "$cmd"
     fi
   else
     exec bash -c "$cmd"
@@ -33,13 +34,14 @@ connect_ssh() {
 }
 
 if [ $# -gt 0 ]; then
-  TARGET="$1"
+  # Use the last argument as the history entry (usually the host)
+  TARGET="${*:$#}"
 
   if ! grep -qxF "$TARGET" "$HISTORY_FILE"; then
     echo "$TARGET" >>"$HISTORY_FILE"
   fi
 
-  connect_ssh "$TARGET" "window"
+  connect_ssh "window" "$@"
   exit 0
 fi
 
