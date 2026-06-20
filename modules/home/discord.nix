@@ -79,11 +79,17 @@ in {
     wayland.windowManager.hyprland = let
       inherit (config.lib.deeznuts.hyprland) mkAutostart mkDefaultWorkspaceWindowRule mkExecBind;
     in {
-      settings = {
-        bind = [(mkExecBind "SUPER + F12" "discord" {})];
-        window_rule = [(mkDefaultWorkspaceWindowRule "chat" {class = "^(discord|vesktop)$";})];
+      settings = let 
+				bin = if config.programs.nixcord.vesktop.enable 
+					then "vesktop" 
+					else "discord"; 
+			in{
+        bind = [(mkExecBind "SUPER + F12" bin {})];
+        window_rule = [
+				(mkDefaultWorkspaceWindowRule "chat" {class = "^(discord|vesktop)$";})
+				];
         on = mkIf cfg.autostart [
-          (mkAutostart "vesktop --start-minimized" {})
+          (mkAutostart "${bin} --start-minimized" {})
         ];
       };
     };
