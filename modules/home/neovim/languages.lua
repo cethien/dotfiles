@@ -1,41 +1,3 @@
-require("crates").setup()
-
-require("conform").setup({
-	format_on_save = {
-		timeout_ms = 500,
-		lsp_format = "fallback",
-	},
-
-	formatters_by_ft = {
-		typst = { "typstfmt" },
-
-		go = { "gofumpt", "goimports" },
-		templ = { "templ" },
-		python = { "ruff_format" },
-		rust = { "rustfmt", lsp_format = "fallback" },
-		c = { "clang-format" },
-		cpp = { "clang-format" },
-		just = { "just" },
-
-		nix = { "alejandra" },
-		lua = { "stylua" },
-
-		html = { "prettierd" },
-		css = { "prettierd" },
-		javascript = { "prettierd" },
-		typescript = { "prettierd" },
-		astro = { "prettierd" },
-		svelte = { "prettierd" },
-		vue = { "prettierd" },
-
-		sh = { "shfmt" },
-		bash = { "shfmt" },
-		json = { "prettierd" },
-		yaml = { "prettierd" },
-		toml = { "taplo" },
-	},
-})
-
 vim.lsp.enable("tinymist") -- typst
 vim.lsp.enable("texlab") -- latex
 
@@ -59,7 +21,7 @@ vim.lsp.enable("svelteserver")
 vim.lsp.enable("vue_ls") -- Vue
 vim.lsp.enable("tailwindcss")
 
-vim.lsp.enable("sqlls")
+vim.lsp.enable("sqls")
 
 vim.lsp.enable("just")
 vim.lsp.enable("ansiblels")
@@ -74,3 +36,42 @@ vim.lsp.enable("yamlls")
 vim.lsp.enable("jsonls")
 vim.lsp.enable("lemminx") -- XML
 vim.lsp.enable("taplo") -- TOML
+
+require("conform").setup({
+	format_on_save = {
+		timeout_ms = 500,
+		lsp_format = "fallback",
+	},
+
+	formatters_by_ft = {
+		typst = { "typstfmt" },
+
+		go = { "gofumpt", "goimports" },
+		templ = { "templ" },
+		python = { "ruff_format" },
+		rust = { "rustfmt" },
+		c = { "clang-format" },
+		cpp = { "clang-format" },
+		just = { "just" },
+
+		nix = { "alejandra" },
+		lua = { "stylua" },
+
+		html = { "prettierd" },
+		css = { "prettierd" },
+		javascript = { "prettierd" },
+		typescript = { "prettierd" },
+		astro = { "prettierd" },
+		svelte = { "prettierd" },
+		vue = { "prettierd" },
+
+		sh = { "shfmt" },
+		bash = { "shfmt" },
+		json = { "prettierd" },
+		yaml = { "prettierd" },
+		toml = { "taplo" },
+	},
+})
+
+require("go").setup()
+require("crates").setup()

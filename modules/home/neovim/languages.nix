@@ -2,6 +2,8 @@
   plugins = with pkgs.vimPlugins; [
     nvim-lspconfig
     conform-nvim
+
+    go-nvim
     crates-nvim
     typst-preview-nvim
   ];
@@ -10,6 +12,8 @@
     emmet-language-server
     vscode-langservers-extracted
     prettierd
+
+    sqls
 
     bash-language-server
     shfmt

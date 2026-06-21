@@ -9,7 +9,7 @@
 
   utils = import ./utils.nix {inherit pkgs;};
   ui = import ./ui.nix {inherit pkgs;};
-  languages = import ./languages {inherit pkgs;};
+  languages = import ./languages.nix {inherit pkgs;};
   autocomplete = import ./autocomplete.nix {inherit pkgs;};
 
   extraPackages = with pkgs;
