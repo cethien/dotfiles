@@ -106,3 +106,7 @@ vim.keymap.set("n", "<leader>fg", fzf.live_grep, { desc = "Live Grep" })
 vim.keymap.set("n", "<leader>hh", fzf.help_tags, { desc = "Help Tags" })
 
 require("auto-session").setup({})
+
+require("toggleterm").setup({
+	open_mapping = [[<c-t>]],
+})

@@ -26,6 +26,7 @@
       mini-nvim
       fzf-lua
       auto-session
+      toggleterm-nvim
     ]
     ++ ui.plugins ++ utils.plugins ++ languages.plugins ++ autocomplete.plugins;
 
