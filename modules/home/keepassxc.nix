@@ -38,7 +38,7 @@ in {
       GUI = {
         AdvancedSettings = true;
         MinimizeOnClose = true;
-        MinimizeOnStartup = false;
+        MinimizeOnStartup = true;
         MinimizeOnTray = true;
         ShowTrayIcon = true;
         # FontSizeOffset = 1;
@@ -94,9 +94,10 @@ in {
     };
 
     wayland.windowManager.hyprland = let
-      inherit (config.lib.deeznuts.hyprland) mkExecBind;
+      inherit (config.lib.deeznuts.hyprland) mkExecBind mkAutostart;
     in {
       settings.bind = [(mkExecBind "SUPER + K" "keepassxc" {})];
+      settings.on = [(mkAutostart "keepassxc" {workspace = "unset silent";})];
     };
 
     xdg.mimeApps.defaultApplications = mkMimeApps {
