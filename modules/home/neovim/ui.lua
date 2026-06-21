@@ -90,7 +90,7 @@ vim.cmd([[colorscheme tokyonight]])
 require("mini.icons").setup({})
 
 require("mini.notify").setup({
-	lsp_progress = { level = "WARN" },
+	lsp_progress = { level = "ERROR" },
 	window = {
 		config = {
 			border = "single",
@@ -125,22 +125,4 @@ tiny_cmdline.setup({
 		border = "rounded",
 	},
 	on_reposition = tiny_cmdline.adapters.blink,
-})
-
-require("blink.cmp").setup({
-	keymap = { preset = "default" },
-
-	appearance = {
-		use_nvim_cmp_as_default = true,
-		nerd_font_variant = "mono",
-	},
-
-	sources = {
-		default = { "lsp", "path", "snippets", "buffer" },
-	},
-
-	completion = {
-		documentation = { auto_show = true, auto_show_delay_ms = 500 },
-		ghost_text = { enable = true },
-	},
 })

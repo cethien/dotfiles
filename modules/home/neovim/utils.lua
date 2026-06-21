@@ -4,6 +4,8 @@ require("lorem").setup({})
 require("nvim_sops").setup({
 	defaults = { ageKeyFile = "$HOME/.sops/age/keys.txt" },
 })
+vim.keymap.set("n", "<leader>ef", vim.cmd.SopsEncrypt, { desc = "[E]ncrypt [F]ile" })
+vim.keymap.set("n", "<leader>df", vim.cmd.SopsDecrype, { desc = "[D]ecrypt [F]ile" })
 
 -- git/vcs
 require("octo").setup({

@@ -3,7 +3,6 @@
 
   plugins = with pkgs.vimPlugins; [
     tokyonight-nvim
-    blink-cmp
     tiny-cmdline-nvim
   ];
 

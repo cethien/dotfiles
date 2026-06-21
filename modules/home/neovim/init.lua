@@ -1,6 +1,25 @@
 vim.g.mapleader = " "
 
-require("auto-session").setup({})
+vim.o.tabstop = 2
+vim.o.shiftwidth = 0
+
+vim.keymap.set("n", "<leader>w", "<cmd>w<CR>", { desc = "Save File" })
+vim.keymap.set("n", "<leader>/", "<cmd>noh<CR>", { desc = "Clear Search Highlight" })
+
+vim.keymap.set("v", "<leader>y", '"+y', { desc = "Copy to System Clipboard" })
+vim.keymap.set("v", "<leader>p", '"+p', { desc = "Paste from System Clipboard" })
+
+vim.keymap.set("t", "<C-n>", [[<C-\><C-n>]], { noremap = true })
+
+local win_modes = { "n", "t" }
+vim.keymap.set(win_modes, "<C-Left>", "<cmd>wincmd h<CR>")
+vim.keymap.set(win_modes, "<C-Down>", "<cmd>wincmd j<CR>")
+vim.keymap.set(win_modes, "<C-Up>", "<cmd>wincmd k<CR>")
+vim.keymap.set(win_modes, "<C-Right>", "<cmd>wincmd l<CR>")
+
+local mouse_modes = { "n", "i", "v", "c" }
+vim.keymap.set(mouse_modes, "<MiddleMouse>", "<Nop>")
+vim.keymap.set(mouse_modes, "<2-MiddleMouse>", "<Nop>")
 
 require("mini.misc").setup({})
 require("mini.move").setup({
@@ -24,6 +43,12 @@ require("mini.pairs").setup({})
 require("mini.surround").setup({})
 require("mini.ai").setup({})
 require("mini.splitjoin").setup({})
+
+local mini_buf = require("mini.bufremove")
+mini_buf.setup({})
+vim.keymap.set("n", "<Leader>q", function()
+	mini_buf.delete(0, false)
+end, { desc = "Delete buffer keeping layout" })
 
 local mini_files = require("mini.files")
 mini_files.setup({
@@ -80,25 +105,4 @@ vim.keymap.set("n", "<leader>fb", fzf.buffers, { desc = "Buffers" })
 vim.keymap.set("n", "<leader>fg", fzf.live_grep, { desc = "Live Grep" })
 vim.keymap.set("n", "<leader>hh", fzf.help_tags, { desc = "Help Tags" })
 
-vim.keymap.set("n", "<leader>w", "<cmd>w<CR>", { desc = "Save File" })
-vim.keymap.set("n", "<leader>q", "<cmd>bdelete<CR>", { desc = "Delete Buffer" })
-vim.keymap.set("n", "<leader><Tab>", "<cmd>buffer #<CR>", { desc = "Alternate Buffer" })
-vim.keymap.set("n", "<leader>/", "<cmd>noh<CR>", { desc = "Clear Search Highlight" })
-
-vim.keymap.set("v", "<leader>y", '"+y', { desc = "Copy to System Clipboard" })
-vim.keymap.set("v", "<leader>p", '"+p', { desc = "Paste from System Clipboard" })
-
-vim.keymap.set("t", "<C-n>", [[<C-\><C-n>]], { noremap = true })
-
-local win_modes = { "n", "t" }
-vim.keymap.set(win_modes, "<C-Left>", "<cmd>wincmd h<CR>")
-vim.keymap.set(win_modes, "<C-Down>", "<cmd>wincmd j<CR>")
-vim.keymap.set(win_modes, "<C-Up>", "<cmd>wincmd k<CR>")
-vim.keymap.set(win_modes, "<C-Right>", "<cmd>wincmd l<CR>")
-
-local mouse_modes = { "n", "i", "v", "c" }
-vim.keymap.set(mouse_modes, "<MiddleMouse>", "<Nop>")
-vim.keymap.set(mouse_modes, "<2-MiddleMouse>", "<Nop>")
-
-vim.o.tabstop = 2
-vim.o.shiftwidth = 0
+require("auto-session").setup({})

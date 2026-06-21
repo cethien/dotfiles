@@ -10,15 +10,16 @@
   utils = import ./utils.nix {inherit pkgs;};
   ui = import ./ui.nix {inherit pkgs;};
   languages = import ./languages {inherit pkgs;};
+  autocomplete = import ./autocomplete.nix {inherit pkgs;};
 
   extraPackages = with pkgs;
     [
       ripgrep
       fd
-      fzf
       bat
+      fzf
     ]
-    ++ ui.extraPackages ++ utils.extraPackages ++ languages.extraPackages;
+    ++ ui.extraPackages ++ utils.extraPackages ++ languages.extraPackages ++ autocomplete.extraPackages;
 
   plugins = with pkgs.vimPlugins;
     [
@@ -26,13 +27,14 @@
       fzf-lua
       auto-session
     ]
-    ++ ui.plugins ++ utils.plugins ++ languages.plugins;
+    ++ ui.plugins ++ utils.plugins ++ languages.plugins ++ autocomplete.plugins;
 
   initLua = ''
     ${builtins.readFile ./init.lua}
     ${ui.initLua}
     ${utils.initLua}
     ${languages.initLua}
+    ${autocomplete.initLua}
   '';
 in {
   config = mkIf config.programs.neovim.enable {
