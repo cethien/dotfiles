@@ -66,8 +66,6 @@ in {
       lazysql.enable = true;
       gh.enable = mkDefault true;
       gh.settings.git_protocol = "ssh";
-      gh-dash.enable = true;
-      tmux.resurrectPluginProcesses = ["gh-dash"];
 
       spotify-player.enable = mkDefault true;
       wiremix.enable = mkDefault hl;
