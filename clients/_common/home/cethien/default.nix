@@ -12,10 +12,6 @@ in {
       inherit name email;
     };
 
-    programs.bash.initExtra = ''
-      export GH_TOKEN=$(secret-tool lookup Title "gh_token")
-    '';
-
     sops.secrets.rclone_gdrive_token = {
       sopsFile = ./secrets.yml;
     };
