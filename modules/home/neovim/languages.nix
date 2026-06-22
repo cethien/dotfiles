@@ -1,5 +1,6 @@
 {pkgs}: {
   plugins = with pkgs.vimPlugins; [
+    nvim-treesitter.withAllGrammars
     nvim-lspconfig
     conform-nvim
 
