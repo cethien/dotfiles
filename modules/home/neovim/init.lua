@@ -3,7 +3,6 @@ vim.g.mapleader = " "
 vim.o.tabstop = 2
 vim.o.shiftwidth = 0
 
-vim.keymap.set("n", "<leader>w", "<cmd>w<CR>", { desc = "Save File" })
 vim.keymap.set("n", "<leader>/", "<cmd>noh<CR>", { desc = "Clear Search Highlight" })
 
 vim.keymap.set("v", "<leader>y", '"+y', { desc = "Copy to System Clipboard" })
@@ -21,7 +20,8 @@ local mouse_modes = { "n", "i", "v", "c" }
 vim.keymap.set(mouse_modes, "<MiddleMouse>", "<Nop>")
 vim.keymap.set(mouse_modes, "<2-MiddleMouse>", "<Nop>")
 
-require("mini.misc").setup({})
+require("mini.basics").setup()
+require("mini.misc").setup()
 require("mini.move").setup({
 	mappings = {
 		left = "<A-Left>",
@@ -36,13 +36,13 @@ require("mini.move").setup({
 	},
 })
 
-require("mini.comment").setup({})
-require("mini.operators").setup({})
-require("mini.align").setup({})
-require("mini.pairs").setup({})
-require("mini.surround").setup({})
-require("mini.ai").setup({})
-require("mini.splitjoin").setup({})
+require("mini.comment").setup()
+require("mini.operators").setup()
+require("mini.align").setup()
+require("mini.pairs").setup()
+require("mini.surround").setup()
+require("mini.ai").setup()
+require("mini.splitjoin").setup()
 
 local mini_buf = require("mini.bufremove")
 mini_buf.setup({})
@@ -54,7 +54,7 @@ local mini_files = require("mini.files")
 mini_files.setup({
 	mappings = {
 		go_in = "<Right>",
-		go_in_plus = "",
+		go_in_plus = "<Return>",
 		go_out = "<Left>",
 		go_out_plus = "",
 	},
@@ -69,44 +69,43 @@ vim.keymap.set("n", "<leader>e", function()
 	end
 end, { desc = "Open File Tree (Current File)" })
 
-local fzf = require("fzf-lua")
-fzf.setup({
-	winopts = {
-		height = 0.8,
-		width = 0.9,
-		-- preview = { layout = "vertical" },
-	},
-	file_ignore_patterns = {
-		"node_modules",
-		"%.git/",
-		"%.direnv/",
-		"dist/",
-		"build/",
-		"target/",
-		"result/",
-	},
-	git = {
-		worktrees = {
-			actions = {
-				["ctrl-a"] = false,
-				["ctrl-w"] = {
-					fn = function(...)
-						require("fzf-lua").actions.git_worktree_add(...)
-					end,
-					header = "add worktree",
-					reload = true,
-				},
-			},
-		},
-	},
-})
-vim.keymap.set("n", "<leader><Space>", fzf.files, { desc = "Find Files" })
-vim.keymap.set("n", "<leader>fb", fzf.buffers, { desc = "Buffers" })
-vim.keymap.set("n", "<leader>fg", fzf.live_grep, { desc = "Live Grep" })
-vim.keymap.set("n", "<leader>hh", fzf.help_tags, { desc = "Help Tags" })
+local pick = require("mini.pick")
+pick.setup()
+require("mini.extra").setup()
+vim.keymap.set("n", "<leader><Space>", pick.builtin.files, { desc = "Find Files" })
+vim.keymap.set("n", "<leader>fg", pick.builtin.grep_live, { desc = "Live Grep" })
+vim.keymap.set("n", "<leader>fb", pick.builtin.buffers, { desc = "Buffers" })
+vim.keymap.set("n", "<leader>hh", pick.builtin.help, { desc = "Help Tags" })
 
-require("auto-session").setup({})
+require("auto-session").setup()
 
 require("toggleterm").setup({
 	open_mapping = [[<c-t>]],
 })
+
+require("csvview").setup({})
+require("lorem").setup({})
+
+require("nvim_sops").setup({
+	defaults = { ageKeyFile = "$HOME/.sops/age/keys.txt" },
+})
+vim.keymap.set("n", "<leader>ef", vim.cmd.SopsEncrypt, { desc = "[E]ncrypt [F]ile" })
+vim.keymap.set("n", "<leader>df", vim.cmd.SopsDecrype, { desc = "[D]ecrypt [F]ile" })
+
+-- git/vcs
+require("octo").setup({
+	picker = "default",
+	picker_config = {
+		use_emojis = true,
+	},
+})
+vim.keymap.set("n", "<leader>oi", "<cmd>Octo issue list<CR>", { desc = "Show issues" })
+vim.keymap.set("n", "<leader>op", "<cmd>Octo pr list<CR>", { desc = "Show PRs" })
+vim.keymap.set("n", "<leader>od", "<cmd>Octo discussion list<CR>", { desc = "Show discussions" })
+
+local git = require("mini.git")
+git.setup()
+require("mini.diff").setup()
+
+-- vim.keymap.set("n", "<leader>gg", fzf.git_status, { desc = "Git Status" })
+-- vim.keymap.set("n", "<leader>gw", fzf.git_worktrees, { desc = "Git Worktrees" })

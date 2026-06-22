@@ -19,7 +19,6 @@ vim.lsp.enable("tailwindcss")
 vim.lsp.enable("astro")
 vim.lsp.enable("svelteserver")
 vim.lsp.enable("vue_ls") -- Vue
-vim.lsp.enable("tailwindcss")
 
 vim.lsp.enable("sqls")
 

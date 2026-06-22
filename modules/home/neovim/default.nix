@@ -7,7 +7,6 @@
   inherit (lib) mkIf;
   inherit (config.lib.deeznuts) mkMimeApps;
 
-  utils = import ./utils.nix {inherit pkgs;};
   ui = import ./ui.nix {inherit pkgs;};
   languages = import ./languages.nix {inherit pkgs;};
   autocomplete = import ./autocomplete.nix {inherit pkgs;};
@@ -16,24 +15,25 @@
     [
       ripgrep
       fd
-      bat
-      fzf
     ]
-    ++ ui.extraPackages ++ utils.extraPackages ++ languages.extraPackages ++ autocomplete.extraPackages;
+    ++ ui.extraPackages ++ languages.extraPackages ++ autocomplete.extraPackages;
 
   plugins = with pkgs.vimPlugins;
     [
       mini-nvim
-      fzf-lua
       auto-session
       toggleterm-nvim
+
+      octo-nvim
+      nvim-sops
+      csvview-nvim
+      lorem-nvim
     ]
-    ++ ui.plugins ++ utils.plugins ++ languages.plugins ++ autocomplete.plugins;
+    ++ ui.plugins ++ languages.plugins ++ autocomplete.plugins;
 
   initLua = ''
     ${builtins.readFile ./init.lua}
     ${ui.initLua}
-    ${utils.initLua}
     ${languages.initLua}
     ${autocomplete.initLua}
   '';
