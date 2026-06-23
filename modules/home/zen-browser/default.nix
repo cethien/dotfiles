@@ -25,6 +25,12 @@ in {
   config = mkIf cfg.enable {
     deeznuts.defaultBrowser = mkIf cfg.isDefault "zen-beta";
 
+    home.packages = [
+      (pkgs.google-fonts.override {
+        fonts = ["Roboto"];
+      })
+    ];
+
     programs.zen-browser = {
       profiles."${uname}" =
         {

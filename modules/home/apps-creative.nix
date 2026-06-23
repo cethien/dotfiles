@@ -59,7 +59,6 @@ in {
       helvetica-neue-lt-std
       (google-fonts.override {
         fonts = [
-          "Roboto"
           "Inter"
           "Montserrat"
         ];
