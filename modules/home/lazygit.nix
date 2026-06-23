@@ -6,6 +6,22 @@
 }: let
   inherit (lib) mkIf;
   cfg = config.programs.lazygit;
+
+  tmux-editor =
+    pkgs.writeShellScriptBin "tmux-editor"
+    # bash
+    ''
+      if [ -n "$TMUX" ]; then
+        branch_name=$(${pkgs.git}/bin/git branch --show-current 2>/dev/null)
+        window_title="nvim"
+        if [ -n "$branch_name" ]; then
+          window_title="nvim:''${branch_name}"
+        fi
+        ${pkgs.tmux}/bin/tmux new-window -n "$window_title" "${pkgs.neovim}/bin/nvim $*"
+      else
+        exec ${pkgs.neovim}/bin/nvim "$@"
+      fi
+    '';
 in {
   config = mkIf cfg.enable {
     programs.lazygit = {
@@ -15,7 +31,8 @@ in {
         disableStartupPopups = true;
         notARepository = "quit";
         promptToReturnFromSubprocess = false;
-        os.openDirInEditor = "$EDITOR";
+
+        os.openDirInEditor = "${tmux-editor}/bin/tmux-editor";
 
         customCommands = [
           {
