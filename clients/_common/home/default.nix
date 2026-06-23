@@ -65,7 +65,6 @@ in {
       neovim.enable = true;
       lazysql.enable = true;
       gh.enable = mkDefault true;
-      gh.settings.git_protocol = "ssh";
 
       spotify-player.enable = mkDefault true;
       wiremix.enable = mkDefault hl;

@@ -55,6 +55,7 @@ in {
           plugin = resurrect;
           extraConfig = ''
             set -g @resurrect-capture-panel-contents 'on'
+            set -g @resurrect-strategy-nvim 'session'
             set -g @resurrect-processes '${lib.strings.concatStringsSep " " cfg.resurrectPluginProcesses}'
           '';
         }

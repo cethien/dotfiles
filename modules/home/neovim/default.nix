@@ -52,7 +52,7 @@ in {
 
     home.sessionVariables.EDITOR = "nvim";
     home.shellAliases.v = "nvim";
-    programs.tmux.resurrectPluginProcesses = ["nvim .nvim-wrapped"];
+    programs.tmux.resurrectPluginProcesses = [''"~nvim->nvim *"''];
 
     home.packages = [pkgs.nvimpager];
     home.sessionVariables.PAGER = "nvimpager";
