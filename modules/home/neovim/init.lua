@@ -49,6 +49,8 @@ mini_buf.setup({})
 vim.keymap.set("n", "<Leader>q", function()
 	mini_buf.delete(0, false)
 end, { desc = "Delete buffer keeping layout" })
+vim.keymap.set("n", "<tab>", "<cmd>bnext<cr>", { desc = "next buffer" })
+vim.keymap.set("n", "<s-tab>", "<cmd>bprevious<cr>", { desc = "prev buffer" })
 
 local mini_files = require("mini.files")
 mini_files.setup({
@@ -78,6 +80,7 @@ vim.keymap.set("n", "<leader>fb", pick.builtin.buffers, { desc = "Buffers" })
 vim.keymap.set("n", "<leader>hh", pick.builtin.help, { desc = "Help Tags" })
 
 require("auto-session").setup()
+require("scope").setup()
 
 require("toggleterm").setup({
 	open_mapping = [[<c-t>]],

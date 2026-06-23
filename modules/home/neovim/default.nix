@@ -22,6 +22,7 @@
     [
       mini-nvim
       auto-session
+      scope-nvim
       toggleterm-nvim
 
       octo-nvim
