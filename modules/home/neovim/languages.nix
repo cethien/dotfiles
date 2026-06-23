@@ -3,6 +3,7 @@
     nvim-treesitter.withAllGrammars
     nvim-lspconfig
     conform-nvim
+    otter-nvim
 
     go-nvim
     crates-nvim

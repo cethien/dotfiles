@@ -1,3 +1,20 @@
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "*",
+	callback = function()
+		local buf = vim.api.nvim_get_current_buf()
+		local lang = vim.bo[buf].filetype
+
+		if lang == "" or vim.bo[buf].buftype ~= "" then
+			return
+		end
+
+		local has_parser = pcall(vim.treesitter.get_parser, buf, lang)
+		if has_parser then
+			pcall(vim.treesitter.start, buf, lang)
+		end
+	end,
+})
+
 vim.lsp.enable("tinymist") -- typst
 vim.lsp.enable("texlab") -- latex
 
@@ -71,6 +88,8 @@ require("conform").setup({
 		toml = { "taplo" },
 	},
 })
+
+-- require("otter").setup()
 
 require("go").setup()
 require("crates").setup()
