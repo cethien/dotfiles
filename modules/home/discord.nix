@@ -39,7 +39,7 @@ in {
         disableMinSize = true;
 
         plugins = {
-          ClearURLs.enable = true;
+          clearUrls.enable = true;
           crashHandler.enable = true;
           favoriteGifSearch.enable = true;
           fixCodeblockGap.enable = true;
@@ -66,7 +66,7 @@ in {
           # vencord-only
           alwaysExpandRoles.enable = true;
           betterGifPicker.enable = true;
-          BlurNSFW.enable = true;
+          blurNsfw.enable = true;
           favoriteEmojiFirst.enable = true;
           newGuildSettings.enable = true;
           serverInfo.enable = true;
@@ -79,15 +79,16 @@ in {
     wayland.windowManager.hyprland = let
       inherit (config.lib.deeznuts.hyprland) mkAutostart mkDefaultWorkspaceWindowRule mkExecBind;
     in {
-      settings = let 
-				bin = if config.programs.nixcord.vesktop.enable 
-					then "vesktop" 
-					else "discord"; 
-			in{
+      settings = let
+        bin =
+          if config.programs.nixcord.vesktop.enable
+          then "vesktop"
+          else "discord";
+      in {
         bind = [(mkExecBind "SUPER + F12" bin {})];
         window_rule = [
-				(mkDefaultWorkspaceWindowRule "chat" {class = "^(discord|vesktop)$";})
-				];
+          (mkDefaultWorkspaceWindowRule "chat" {class = "^(discord|vesktop)$";})
+        ];
         on = mkIf cfg.autostart [
           (mkAutostart "${bin} --start-minimized" {})
         ];
