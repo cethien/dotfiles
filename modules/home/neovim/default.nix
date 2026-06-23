@@ -36,6 +36,7 @@
     ${ui.initLua}
     ${languages.initLua}
     ${autocomplete.initLua}
+    require("scratchpad")
   '';
 in {
   config = mkIf config.programs.neovim.enable {
