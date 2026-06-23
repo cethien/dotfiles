@@ -52,13 +52,6 @@ in {
               }
             ];
           }
-          {
-            key = "<f3>";
-            description = "open gh-dash";
-            command = "${pkgs.gh-dash}/bin/gh-dash";
-            context = "global";
-            output = "terminal";
-          }
 
           {
             key = "<f1>";
