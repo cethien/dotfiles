@@ -15,6 +15,7 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
+vim.lsp.enable("marksman") -- typst
 vim.lsp.enable("tinymist") -- typst
 vim.lsp.enable("texlab") -- latex
 
@@ -73,6 +74,7 @@ require("conform").setup({
 		nix = { "alejandra" },
 		lua = { "stylua" },
 
+		markdown = { "prettierd" },
 		html = { "prettierd" },
 		css = { "prettierd" },
 		javascript = { "prettierd" },

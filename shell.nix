@@ -6,10 +6,12 @@ pkgs.mkShell {
   packages = with pkgs; [
     nixd
     alejandra
-    lua-language-server
-    stylua
     bash-language-server
     shfmt
+    lua-language-server
+    stylua
+    marksman
+    prettierd
 
     sops
     age
@@ -33,11 +35,7 @@ pkgs.mkShell {
         library = [
           # 1. Hyprland Typen/Stubs aus dem Nix-Store
           "${pkgs.hyprland}/share/hypr/stubs"
-
-          # 2. Yazi Typen/Stubs aus dem Nix-Store
           yaziStubs
-
-          # 3. Native Neovim-Laufzeit-Typen (wird im Editor dynamisch aufgelöst)
           "$VIMRUNTIME/lua"
         ];
         checkThirdParty = false;
@@ -46,9 +44,10 @@ pkgs.mkShell {
 
     luarcFile = pkgs.writeText "luarc.json" (builtins.toJSON luarcContent);
   in
-    #bash
+    # bash
     ''
       STATE_FILE="$PWD/.devshell/.initialized"
+
       FIRST_RUN=false
       if [ ! -f "$STATE_FILE" ]; then
         FIRST_RUN=true
@@ -68,6 +67,8 @@ pkgs.mkShell {
       GREEN="\033[1;32m"
       YELLOW="\033[1;33m"
       RESET="\033[0m"
+
+
 
       if [ "$FIRST_RUN" = true ]; then
         echo -e "$GREEN🚀 '$DOOT_CMD' command is ready. Run '$DOOT_CMD' for usage.$RESET"

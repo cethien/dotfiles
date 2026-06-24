@@ -13,7 +13,10 @@
   extraPackages = with pkgs; [
     emmet-language-server
     vscode-langservers-extracted
+    marksman
     prettierd
+    lua-language-server
+    stylua
 
     sqls
 
