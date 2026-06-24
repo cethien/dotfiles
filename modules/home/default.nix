@@ -25,6 +25,7 @@
     ./git.nix
     ./lazygit.nix
     ./lazydocker.nix
+    ./pvetui.nix
     ./pandoc
 
     ./utils.nix
