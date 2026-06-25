@@ -20,6 +20,9 @@ in {
   };
 
   services.fprintd.enable = true;
+  security.pam.services.sudo.fprintAuth = false;
+  security.pam.services.login.fprintAuth = false;
+
   services.tms-shares.enable = true;
 
   sops.age.sshKeyPaths = ["${u.home}/.ssh/id_ed25519"];
