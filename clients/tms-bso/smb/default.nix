@@ -41,10 +41,7 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    sops.secrets."smb_credentials" = {
-      sopsFile = ./secrets.yml;
-      format = "yaml";
-    };
+    sops.secrets."smb_credentials" = {};
 
     environment.systemPackages =
       [pkgs.cifs-utils]
@@ -65,7 +62,7 @@ in {
         where = mountPath name;
         what = "//10.102.99.213/${name}$";
         type = "cifs";
-        options = "credentials=${config.sops.secrets.smb_credentials.path},uid=1000,gid=100,vers=3.0,rw,user";
+        options = "credentials=${config.sops.secrets."smb_credentials".path},uid=1000,gid=100,vers=3.0,rw,user";
         unitConfig = {
           Description = "Mount ${name}";
         };

@@ -23,6 +23,7 @@ in {
   services.tms-shares.enable = true;
 
   sops.age.sshKeyPaths = ["${u.home}/.ssh/id_ed25519"];
+  sops.defaultSopsFile = ./secrets.yml;
 
   services.tailscale = {
     enable = true;
