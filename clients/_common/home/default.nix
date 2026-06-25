@@ -37,11 +37,9 @@ in {
       utils-net.enable = mkDefault true;
       utils-fun.enable = mkDefault true;
 
-      pandoc.enable = true;
       jq.enable = true;
       zoxide.enable = true;
       ripgrep.enable = true;
-      tealdeer.enable = true;
       fzf.enable = true;
       fd.enable = true;
       eza.enable = true;
@@ -49,6 +47,7 @@ in {
       fastfetch.enable = true;
       bottom.enable = mkDefault true;
       utils-qol.enable = mkDefault true;
+      tealdeer.enable = true;
       cava.enable = mkDefault true;
 
       git.enable = mkDefault true;
@@ -63,6 +62,7 @@ in {
         };
       };
       neovim.enable = true;
+      pandoc.enable = true;
       lazysql.enable = true;
       gh.enable = mkDefault true;
       pvetui.enable = mkDefault true;
