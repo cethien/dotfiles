@@ -58,7 +58,6 @@ in {
         fi
       '')
 
-      sysz
       bluetui
 
       caligula
@@ -102,6 +101,8 @@ in {
     };
 
     home.shellAliases = {
+      sysz = "${pkgs.systemctl-tui}/bin/systemctl-tui";
+
       cdd = "cd ~/Downloads";
       cdc = "cd ~/.config";
       mkdir = "mkdir -p";
