@@ -54,12 +54,12 @@ list_ssh_connections() {
 FZF_OPTS=(
 	--prompt="󰣀  ssh > "
 	--preview "$0 --preview {}"
-	--header="Ctrl-x: Delete History"
+	--footer="ctrl-x: delete history"
 	--bind 'ctrl-x:print(ctrl-x)+accept'
 )
 
 if [ -n "${TMUX:-}" ]; then
-	FZF_OPTS+=(--header="Ctrl-s: Split | Ctrl-x: Delete History")
+	FZF_OPTS+=(--footer="ctrl-s: split | ctrl-x: delete history")
 	FZF_OPTS+=(--bind 'ctrl-s:print(ctrl-s)+accept')
 fi
 

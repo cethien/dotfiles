@@ -7,16 +7,14 @@
 in {
   config.programs.fzf = {
     defaultCommand = "fd --type f";
-    defaultOptions = ["--layout=reverse"];
+    defaultOptions = ["--preview-window=bottom:70%"];
 
     fileWidgetCommand = "fd --type f";
     fileWidgetOptions = [
       "--preview 'bat {} --color=always --plain'"
+      "--preview-window=right:50%"
     ];
 
     changeDirWidgetCommand = "fd --type d";
-    changeDirWidgetOptions = [
-      "--preview 'eza {} -1a --icons=always --color=always'"
-    ];
   };
 }
