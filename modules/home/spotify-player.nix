@@ -20,22 +20,21 @@ in {
       };
     };
 
-    wayland.windowManager.hyprland = {
-      modals."spotify_player".binds = ["SUPER + M" "XF86Music"];
+    wayland.windowManager.hyprland.extraLuaFiles."99-spotify-player" =
+      #lua
+      ''
+        Modal("spotify_player", {
+            binds = { "SUPER + M", "XF86Music" }
+        })
 
-      settings.bind = let
-        inherit (config.lib.deeznuts.hyprland) mkExecBind;
-        pl = "spotify_player playback";
-      in [
-        (mkExecBind "XF86AudioPlay" "${pl} play-pause" {locked = true;})
-        (mkExecBind "XF86AudioNext" "${pl} next" {locked = true;})
-        (mkExecBind "XF86AudioPrev" "${pl} previous" {locked = true;})
+        local pl = "spotify_player playback "
 
-        (mkExecBind "XF86AudioRaiseVolume" "${pl} volume 0.05+" {locked = true;})
-        (mkExecBind "XF86AudioLowerVolume" "${pl} volume 0.05-" {locked = true;})
-        (mkExecBind "XF86AudioRaiseVolume" "${pl} volume --offset 5" {locked = true;})
-        (mkExecBind "XF86AudioLowerVolume" "${pl} volume --offset -- -5" {locked = true;})
-      ];
-    };
+        hl.bind("XF86AudioPlay", hl.dsp.exec_cmd(pl .. "play-pause"), { locked = true })
+        hl.bind("XF86AudioNext", hl.dsp.exec_cmd(pl .. "next"),       { locked = true })
+        hl.bind("XF86AudioPrev", hl.dsp.exec_cmd(pl .. "previous"),   { locked = true })
+
+        hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd(pl .. "volume 0.05+"), { locked = true })
+        hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd(pl .. "volume 0.05-"), { locked = true })
+      '';
   };
 }

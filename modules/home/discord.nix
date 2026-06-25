@@ -6,6 +6,11 @@
 }: let
   inherit (lib) mkIf;
   cfg = config.programs.nixcord;
+
+  bin =
+    if cfg.vesktop.enable
+    then "vesktop"
+    else "discord";
 in {
   imports = [nixcord.homeModules.nixcord];
 
@@ -17,6 +22,23 @@ in {
     services.mako.settings."app-name=vesktop" = {
       default-timeout = 0;
       border-color = "#5865F2";
+    };
+
+    xdg.configFile."autostart/discord.desktop" = mkIf cfg.autostart {
+      text = ''
+        [Desktop Entry]
+        Name=${
+          if bin == "vesktop"
+          then "Vesktop"
+          else "Discord"
+        }
+        Comment=All-in-one voice and text chat
+        Exec=${bin} --start-minimized
+        Icon=${bin}
+        Terminal=false
+        Type=Application
+        Categories=Network;InstantMessaging;
+      '';
     };
 
     programs.nixcord = {
@@ -76,23 +98,17 @@ in {
       };
     };
 
-    wayland.windowManager.hyprland = let
-      inherit (config.lib.deeznuts.hyprland) mkAutostart mkDefaultWorkspaceWindowRule mkExecBind;
-    in {
-      settings = let
-        bin =
-          if config.programs.nixcord.vesktop.enable
-          then "vesktop"
-          else "discord";
-      in {
-        bind = [(mkExecBind "SUPER + F12" bin {})];
-        window_rule = [
-          (mkDefaultWorkspaceWindowRule "chat" {class = "^(discord|vesktop)$";})
-        ];
-        on = mkIf cfg.autostart [
-          (mkAutostart "${bin} --start-minimized" {})
-        ];
-      };
-    };
+    wayland.windowManager.hyprland.extraLuaFiles."99-discord" =
+      # lua
+      ''
+        hl.bind("SUPER + F12", hl.dsp.exec_cmd("${bin}"))
+
+        hl.window_rule({
+            match = {
+                class = "^(discord|vesktop)$",
+            },
+            workspace = hl.defaultWorkspace.chat,
+        })
+      '';
   };
 }

@@ -5,15 +5,18 @@
   ...
 }: let
   inherit (lib) mkIf;
-  inherit (config.lib.deeznuts.hyprland) mkExecBind;
   cfg = config.services.mako;
 in {
   config = mkIf cfg.enable {
     stylix.targets.mako.opacity.enable = false;
 
-    wayland.windowManager.hyprland.settings.bind = [
-      (mkExecBind "SUPER + A" "makoctl dismiss -a" {})
-    ];
+    wayland.windowManager.hyprland.extraLuaFiles = {
+      "99-mako" =
+        #lua
+        ''
+          hl.bind("SUPER + A", hl.dsp.exec_cmd("makoctl dismiss -a"))
+        '';
+    };
 
     services.mako.settings = {
       "urgency=critical" = {

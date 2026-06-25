@@ -15,10 +15,17 @@ in {
   config = mkIf cfg.enable {
     home.packages = [pkgs.solaar];
 
-    wayland.windowManager.hyprland.settings = let
-      inherit (config.lib.deeznuts.hyprland) mkAutostart;
-    in {
-      on = mkIf cfg.autostart [(mkAutostart "solaar -w hide" {workspace = "unset silent";})];
+    xdg.configFile."autostart/solaar.desktop" = mkIf cfg.autostart {
+      text = ''
+        [Desktop Entry]
+        Name=Solaar
+        Comment=Logitech Device Manager
+        Exec=solaar -w hide
+        Icon=solaar
+        Terminal=false
+        Type=Application
+        Categories=Utility;
+      '';
     };
   };
 }

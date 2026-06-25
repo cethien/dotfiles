@@ -43,7 +43,7 @@ in {
             prompts = [
               {
                 type = "menuFromCommand";
-                title = "Select License";
+                title = "select license";
                 key = "License";
                 command = "${pkgs.license-go}/bin/license -list";
                 filter = "^(?P<id>\\S+)\\s+(?P<desc>.*)";

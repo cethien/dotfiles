@@ -6,85 +6,88 @@
 }: let
   inherit (lib) mkIf mkEnableOption;
   cfg = config.programs.wiremix;
+
+  wpctl = "${pkgs.wireplumber}/bin/wpctl";
+  notify-send = "${pkgs.libnotify}/bin/notify-send";
+
+  makeToggleScript = {
+    name,
+    target,
+    iconOn,
+    iconOff,
+  }:
+    pkgs.writeShellScript "toggle-${name}" ''
+      ${wpctl} set-mute ${target} toggle
+      if ${wpctl} get-volume ${target} | grep -q MUTED; then
+        ${notify-send} "${iconOff} ${name}" "muted"
+      else
+        ${notify-send} "${iconOn} ${name}" "unmuted"
+      fi
+    '';
+
+  tMic = makeToggleScript {
+    name = "mic";
+    target = "@DEFAULT_AUDIO_SOURCE@";
+    iconOn = "󰍬";
+    iconOff = "󰍭";
+  };
+  tSpk = makeToggleScript {
+    name = "speakers";
+    target = "@DEFAULT_AUDIO_SINK@";
+    iconOn = "󰓃";
+    iconOff = "󰓄";
+  };
+
+  makeAfkScript = {
+    iconOn,
+    iconOff,
+  }:
+    pkgs.writeShellScript "toggle-afk" ''
+      if ${wpctl} get-volume @DEFAULT_AUDIO_SOURCE@ | grep -qv MUTED || ${wpctl} get-volume @DEFAULT_AUDIO_SINK@ | grep -qv MUTED; then
+        ${wpctl} set-mute @DEFAULT_AUDIO_SOURCE@ 1
+        ${wpctl} set-mute @DEFAULT_AUDIO_SINK@ 1
+        ${notify-send} "${iconOff} afk" "goodbye"
+      else
+        ${wpctl} set-mute @DEFAULT_AUDIO_SOURCE@ 0
+        ${wpctl} set-mute @DEFAULT_AUDIO_SINK@ 0
+        ${notify-send} "${iconOn} afk" "welcome back"
+      fi
+    '';
+
+  tAfk = makeAfkScript {
+    iconOn = "󰟀";
+    iconOff = "󰩈";
+  };
 in {
   options.programs.wiremix.enable = mkEnableOption "wiremix";
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [
-      wiremix
-    ];
+    home.packages = [pkgs.wiremix];
 
-    wayland.windowManager.hyprland = {
-      modals."wiremix".binds = [
-        "SUPER + SHIFT + M"
-        "SHIFT + XF86Music"
-        "SHIFT + XF86Tools"
-      ];
+    wayland.windowManager.hyprland.extraLuaFiles."99-wiremix" =
+      # lua
+      ''
+        Modal("wiremix", {
+            binds = {
+                "SUPER + SHIFT + M",
+                "SHIFT + XF86Music",
+                "SHIFT + XF86Tools"
+            }
+        })
 
-      settings.bind = let
-        inherit (config.lib.deeznuts.hyprland) mkExecBind;
-        makeToggleScript = {
-          name,
-          targets,
-          iconOn,
-          iconOff,
-          msgOn ? "unmuted",
-          msgOff ? "muted",
-        }: let
-          wpctl = "${pkgs.wireplumber}/bin/wpctl";
-          grep = "${pkgs.gnugrep}/bin/grep";
-          notify-send = "${pkgs.libnotify}/bin/notify-send";
-          wpctlCmds = lib.strings.concatMapStringsSep "\n" (t: "${wpctl} set-mute ${t} toggle") targets;
-          firstTarget = builtins.head targets;
-        in
-          pkgs.writeShellScriptBin "toggle-${name}"
-          #bash
-          ''
-            ${wpctlCmds}
+        local toggle_mic = hl.dsp.exec_cmd("${tMic}")
+        local toggle_spk = hl.dsp.exec_cmd("${tSpk}")
+        local toggle_afk = hl.dsp.exec_cmd("${tAfk}")
 
-            if ${wpctl} get-volume "${firstTarget}" | ${grep} -q MUTED; then
-              ${notify-send} "${iconOff} ${name}" "${msgOff}"
-            else
-              ${notify-send} "${iconOn} ${name}" "${msgOn}"
-            fi
-          '';
+        hl.bind("XF86AudioMicMute", toggle_mic, { locked = true })
+        hl.bind("SUPER + ALT + F9", toggle_mic, { locked = true })
+        hl.bind("ALT + XF86AudioMute", toggle_mic, { locked = true })
 
-        toggleIn = "${makeToggleScript {
-          name = "mic";
-          targets = ["@DEFAULT_AUDIO_SOURCE@"];
-          iconOn = "󰍬";
-          iconOff = "󰍭";
-        }}/bin/toggle-mic";
+        hl.bind("SUPER + SHIFT + F9", toggle_spk, { locked = true })
+        hl.bind("SHIFT + XF86AudioMute", toggle_spk, { locked = true })
 
-        toggleOut = "${makeToggleScript {
-          name = "speakers";
-          targets = ["@DEFAULT_AUDIO_SINK@"];
-          iconOn = "󰓃";
-          iconOff = "󰓄";
-        }}/bin/toggle-speakers";
-
-        toggleInOut = "${makeToggleScript {
-          name = "afk";
-          targets = ["@DEFAULT_AUDIO_SOURCE@" "@DEFAULT_AUDIO_SINK@"];
-          iconOn = "󰟀";
-          msgOn = "welcome back";
-          iconOff = "󰩈";
-          msgOff = "goodbye";
-        }}/bin/toggle-afk";
-      in [
-        # Mic Mute
-        (mkExecBind "XF86AudioMicMute" "${toggleIn}" {locked = true;})
-        (mkExecBind "SUPER + ALT + F9" "${toggleIn}" {locked = true;})
-        (mkExecBind "ALT + XF86AudioMute" "${toggleIn}" {locked = true;})
-
-        # Speakers Mute
-        (mkExecBind "SUPER + SHIFT + F9" "${toggleOut}" {locked = true;})
-        (mkExecBind "SHIFT + XF86AudioMute" "${toggleOut}" {locked = true;})
-
-        # Master AFK Mute (Both)
-        (mkExecBind "SUPER + F9" "${toggleInOut}" {locked = true;})
-        (mkExecBind "XF86AudioMute" "${toggleInOut}" {locked = true;})
-      ];
-    };
+        hl.bind("SUPER + F9", toggle_afk, { locked = true })
+        hl.bind("XF86AudioMute", toggle_afk, { locked = true })
+      '';
   };
 }

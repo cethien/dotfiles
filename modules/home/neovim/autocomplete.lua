@@ -1,5 +1,5 @@
 require("blink.cmp").setup({
-	keymap = { preset = "default" },
+	keymap = { preset = "enter" },
 
 	appearance = {
 		use_nvim_cmp_as_default = true,
@@ -104,5 +104,5 @@ require("blink.cmp").setup({
 		},
 	},
 
-	completion = { ghost_text = { enabled = true } },
+	-- completion = { ghost_text = { enabled = true } },
 })

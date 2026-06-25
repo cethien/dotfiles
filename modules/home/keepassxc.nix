@@ -4,13 +4,11 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf;
   inherit (config.lib.deeznuts) mkMimeApps;
   cfg = config.programs.keepassxc;
   uname = config.home.username;
 in {
-  options.programs.keepassxc.hyprlandAutostart = mkEnableOption "autostart keepassxc";
-
   config = mkIf cfg.enable {
     programs.keepassxc.settings = {
       Browser = {
@@ -41,7 +39,6 @@ in {
         MinimizeOnStartup = true;
         MinimizeOnTray = true;
         ShowTrayIcon = true;
-        # FontSizeOffset = 1;
 
         ApplicationTheme = "dark";
         HidePasswords = true;
@@ -93,12 +90,11 @@ in {
       ];
     };
 
-    wayland.windowManager.hyprland = let
-      inherit (config.lib.deeznuts.hyprland) mkExecBind mkAutostart;
-    in {
-      settings.bind = [(mkExecBind "SUPER + K" "keepassxc" {})];
-      settings.on = [(mkAutostart "keepassxc" {workspace = "unset silent";})];
-    };
+    wayland.windowManager.hyprland.extraLuaFiles."99-keepassxc" =
+      # lua
+      ''
+        hl.bind("SUPER + K", hl.dsp.exec_cmd("keepassxc"))
+      '';
 
     xdg.mimeApps.defaultApplications = mkMimeApps {
       keepass = {

@@ -8,7 +8,15 @@
   cfg = config.programs.bottom;
 in {
   config = mkIf cfg.enable {
-    wayland.windowManager.hyprland.modals."btm".binds = ["SUPER + P"];
+    wayland.windowManager.hyprland.extraLuaFiles = {
+      "99-bottom" =
+        # lua
+        ''
+          Modal("btm", { binds = {
+          	"SUPER + P",
+          } })
+        '';
+    };
 
     home.shellAliases = {
       top = "btm --basic";

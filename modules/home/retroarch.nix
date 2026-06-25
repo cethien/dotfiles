@@ -6,17 +6,15 @@
 }: let
   inherit (lib) mkIf;
   cfg = config.programs.retroarch;
-
-  inherit (config.lib.deeznuts.hyprland) mkGameWindowRules mkDefaultWorkspaceWindowRule;
   st = config.services.syncthing.enable;
 in {
   config = mkIf cfg.enable {
     programs.retroarch = {
       cores = {
-        mgba.enable = true; #GB / GBC / GBA
-        dolphin.enable = true; #GC / Wii
-        melonds.enable = true; #NDS
-        citra.enable = true; #N3DS
+        mgba.enable = true; # GB / GBC / GBA
+        dolphin.enable = true; # GC / Wii
+        melonds.enable = true; # NDS
+        citra.enable = true; # N3DS
       };
     };
 
@@ -58,15 +56,20 @@ in {
       '';
     };
 
-    wayland.windowManager.hyprland.settings.window_rule = [
-      (mkGameWindowRules {
-        class = "^(com\.libretro\.RetroArch)$";
-        title = "^(RetroArch\s.+)$";
-      })
-      (mkDefaultWorkspaceWindowRule "console_launcher" {
-        class = "^(com\.libretro\.RetroArch)$";
-        title = "^(RetroArch)$";
-      })
-    ];
+    wayland.windowManager.hyprland.extraLuaFiles = {
+      "99-retroarch" =
+        # lua
+        ''
+          game_windowrule({ class = "^(com%.libretro%.RetroArch)$" })
+
+          hl.window_rule({
+              match = {
+                  class = "^(com%.libretro%.RetroArch)$",
+                  title = "^(RetroArch)$",
+              },
+              workspace = hl.defaultWorkspace.game,
+          })
+        '';
+    };
   };
 }

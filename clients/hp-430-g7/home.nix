@@ -3,26 +3,30 @@
   lib,
   pkgs,
   ...
-}: let
-  monitors = {
-    self = "eDP-1";
-    asus = "desc:ASUSTek COMPUTER INC VG27AQML1A S9LMQS167913";
-    arzopa = "desc:GWD ARZOPA 000000000001";
-    eizo = "desc:Eizo Nanao Corporation EV2430 33096078";
-  };
-in {
+}: {
   imports = [
     ../_common/home/cethien
   ];
 
   stylix.image = ../_common/home/wallpapers/boy_and_cat_sitting_on_stairs.jpeg;
-  wayland.windowManager.hyprland = import ./hyprland-settings.nix {
-    inherit lib monitors;
-    hLib = config.lib.deeznuts.hyprland;
-  };
-  programs.hyprlock.monitor = "${monitors.self}";
+  wayland.windowManager.hyprland.extraLuaFiles."50-hp-430-g7" =
+    # lua
+    ''
+      hl.monitor({
+          output = "eDP-1",
+          mode = "1920x1080@60",
+          position = "0x0",
+          scale = 1,
+      })
+    '';
+  programs.hyprlock.monitor = "eDP-1";
 
-  home.packages = with pkgs; [simple-scan ausweisapp mixxx qlcplus];
+  home.packages = with pkgs; [
+    simple-scan
+    ausweisapp
+    mixxx
+    qlcplus
+  ];
 
   programs.zen-browser.profiles."${config.home.username}" = let
     containers = {
@@ -63,7 +67,6 @@ in {
   programs = {
     rclone.enable = true;
 
-    zen-browser.enable = true;
     freerdp.enable = true;
     freerdp.connections = import ../tms-bso/home/rdp.nix;
     ssh.settings =

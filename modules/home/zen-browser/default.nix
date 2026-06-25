@@ -6,12 +6,9 @@
   ...
 }: let
   inherit (lib) mkIf mkEnableOption;
-  inherit (config.lib.deeznuts.hyprland) mkWindowRule mkDspBind;
 
   cfg = config.programs.zen-browser;
   uname = "${config.home.username}";
-
-  ws = config.wayland.windowManager.hyprland.defaultWorkspaces;
 in {
   options.programs.zen-browser = {
     autostart = mkEnableOption "zen autostart";
@@ -69,31 +66,8 @@ in {
 
     stylix.targets.zen-browser.profileNames = ["${uname}"];
 
-    wayland.windowManager.hyprland.settings = {
-      window_rule = [
-        (mkWindowRule {
-          initial_class = "^(zen-beta)$";
-          title = "^(Developer Tools - .*)$";
-        } {tile = true;})
-        (mkWindowRule {
-            initial_class = "^(zen-beta)$";
-            initial_title = "^(Picture-in-Picture)$";
-          } {
-            workspace = ws.pip;
-            no_initial_focus = true;
-            suppress_event = "activatefocus";
-          })
-      ];
-
-      bind = let
-        s =
-          #lua
-          ''
-            hl.dsp.exec_cmd("zen-beta")
-          '';
-      in [
-        (mkDspBind "SUPER + W" s {})
-      ];
+    wayland.windowManager.hyprland.extraLuaFiles = {
+      "99-zen-browser".content = ./hyprland-zen-browser.lua;
     };
   };
 }

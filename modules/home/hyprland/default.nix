@@ -4,13 +4,10 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkIf mkDefault mkOption types;
+  inherit (lib) mkIf;
   cfg = config.wayland.windowManager.hyprland;
 in {
   imports = [
-    ./lib.nix
-    ./hyprland-modals.nix
-
     ./battery-checker.nix
     ./notify-info.nix
     ./rofi
@@ -20,14 +17,6 @@ in {
     ./text-extract.nix
     ./mako.nix
   ];
-
-  options.wayland.windowManager.hyprland = {
-    defaultWorkspaces = mkOption {
-      type = types.attrsOf types.int;
-      default = {};
-      description = "named workspaces";
-    };
-  };
 
   config = mkIf cfg.enable {
     xdg.portal = {
@@ -88,13 +77,21 @@ in {
     services = {
       mako.enable = true;
       battery-checker.enable = true;
-      wpaperd.enable = true;
-      hyprpaper.enable = lib.mkForce config.stylix.enable;
+      hyprpaper.enable = true;
     };
 
     wayland.windowManager.hyprland = {
       configType = "lua";
-      settings = import ./hyprland-settings.nix {hlLib = config.lib.deeznuts.hyprland;};
+      extraLuaFiles = {
+        "00-lib".content = ./lua/lib.lua;
+        "01-settings".content = ./lua/hyprland.lua;
+        "02-animations".content = ./lua/animations.lua;
+        "03-windowrules".content = ./lua/windowrules.lua;
+        "04-binds".content = ./lua/binds.lua;
+      };
+      extraConfig =
+        # lua
+        ''require("scratchpad")'';
     };
   };
 }

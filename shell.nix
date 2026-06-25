@@ -13,6 +13,8 @@ pkgs.mkShell {
     marksman
     prettierd
 
+    nurl
+
     sops
     age
     ssh-to-age
@@ -29,7 +31,7 @@ pkgs.mkShell {
 
     luarcContent = {
       diagnostics = {
-        globals = ["vim" "yazi" "cx" "ya" "hyprland"];
+        globals = ["vim" "yazi" "cx" "ya" "hl"];
       };
       workspace = {
         library = [

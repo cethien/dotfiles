@@ -103,12 +103,13 @@ require("octo").setup({
 	},
 })
 vim.keymap.set("n", "<leader>oi", "<cmd>Octo issue list<CR>", { desc = "Show issues" })
+vim.keymap.set("n", "<leader>or", "<cmd>Octo review<CR>", { desc = "Show issues" })
 vim.keymap.set("n", "<leader>op", "<cmd>Octo pr list<CR>", { desc = "Show PRs" })
 vim.keymap.set("n", "<leader>od", "<cmd>Octo discussion list<CR>", { desc = "Show discussions" })
 
 local git = require("mini.git")
+local diff = require("mini.diff")
 git.setup()
-require("mini.diff").setup()
+diff.setup()
 
--- vim.keymap.set("n", "<leader>gg", fzf.git_status, { desc = "Git Status" })
--- vim.keymap.set("n", "<leader>gw", fzf.git_worktrees, { desc = "Git Worktrees" })
+vim.keymap.set("n", "<leader>ga", diff.toggle_overlay, { desc = "Git " })

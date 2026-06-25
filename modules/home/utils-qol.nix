@@ -10,15 +10,20 @@ in {
   options.programs.utils-qol.enable = lib.mkEnableOption "qol utils";
 
   config = mkIf cfg.enable {
-    wayland.windowManager.hyprland.modals = {
-      "qalc".binds = [
-        "SUPER + COMMA"
-        "XF86Calculator"
-      ];
-      "bluetui".binds = [
-        "SUPER + B"
-        "XF86Bluetooth"
-      ];
+    wayland.windowManager.hyprland.extraLuaFiles = {
+      "99-utils-qol" =
+        # lua
+        ''
+          Modal("qalc", { binds = {
+          	"SUPER + COMMA",
+          	"XF86Calculator",
+          } })
+
+          Modal("bluetui", { binds = {
+          	"SUPER + B",
+          	"XF86Bluetooth",
+          } })
+        '';
     };
 
     programs.tmux.keybindings = [

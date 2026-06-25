@@ -5,7 +5,6 @@
   ...
 }: let
   inherit (lib) mkEnableOption mkOption types mkIf;
-  inherit (config.lib.deeznuts.hyprland) mkWindowRule;
   cfg = config.programs.freerdp;
 
   rdpOptions = {
@@ -28,7 +27,6 @@
     };
   };
 
-  # Dynamically generate the connection submodule options from rdpOptions.
   connectionType = types.submodule {
     options =
       lib.mapAttrs'
@@ -47,10 +45,6 @@
   };
 
   generateRdpFileContent = attrs: let
-    # We only want to write attributes that the user has explicitly set
-    # or that have a default value.
-    # The `attrs` set contains all options, including those not set by the user,
-    # which have `null` values.
     filteredAttrs = lib.filterAttrs (n: v: v != null) attrs;
 
     lines =
@@ -69,7 +63,7 @@
             then "i:${toString value}"
             else if builtins.isString value
             then "s:${value}"
-            else null; # Should not happen due to type checking
+            else null;
         in
           assert rdpValue != null; "${rdpName}:${rdpValue}"
       )
@@ -87,25 +81,21 @@ in {
         A set of FreeRDP connection profiles.
         For each connection, a file will be created in `~/.rdp/`
       '';
-      example = {
-        "my-server" = {
-          fullAddress = "server.example.com";
-          username = "myuser";
-        };
-      };
     };
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [
-      freerdp
-    ];
+    home.packages = with pkgs; [freerdp];
 
-    wayland.windowManager.hyprland.settings = {
-      window_rule = [
-        (mkWindowRule {initial_class = "^(.*freerdp.*)$";} {tile = true;})
-      ];
-    };
+    wayland.windowManager.hyprland.extraLuaFiles."99-freerdp" =
+      #lua
+      ''
+        hl.window_rule({
+            match = { initial_class = "^(.*freerdp.*)$" },
+            tile  = true,
+        })
+      '';
+
     home.file =
       lib.attrsets.mapAttrs'
       (

@@ -5,7 +5,6 @@
   ...
 }: let
   inherit (lib) mkOption types mkIf;
-  inherit (config.lib.deeznuts.hyprland) mkExecBind;
   cfg = config.programs.rofi;
 in {
   options.programs.rofi.powermenu = {
@@ -36,37 +35,33 @@ in {
       categories = ["Network" "Utility"];
     };
 
-    wayland.windowManager.hyprland.settings = {
-      layer_rule = [
-        {
-          _args = [
-            {
-              match = {namespace = "rofi";};
-              blur = true;
-              dim_around = true;
-            }
-          ];
-        }
-      ];
-
-      bind = let
-        pm = ''
-          rofi -show power-menu \
+    wayland.windowManager.hyprland.extraLuaFiles."99-rofi" = let
+      pmStr = ''
+        rofi -show power-menu \
           -modi "power-menu:${pkgs.rofi-power-menu}/bin/rofi-power-menu \
           --choices=${cfg.powermenu.options} --confirm=\"\""
-        '';
-        powermenu = pkgs.writeShellScriptBin "rofi-powermenu" pm;
-        tmux = pkgs.writeShellScriptBin "rofi-tmux" (builtins.readFile ./rofi-tmux.sh);
-        screenrecord = pkgs.writeShellScriptBin "rofi-screenrecord" (builtins.readFile ./rofi-screenrecord.sh);
-      in [
-        (mkExecBind "SUPER + Space" "rofi -show drun -theme-str 'configuration{show-icons:true;}'" {})
-        (mkExecBind "SUPER + Tab" "rofi -show window" {})
+      '';
 
-        (mkExecBind "SUPER + Escape" "${powermenu}/bin/rofi-powermenu" {})
-        (mkExecBind "SUPER + Return" "${tmux}/bin/rofi-tmux" {})
-        (mkExecBind "SUPER + Period" "${pkgs.rofimoji}/bin/rofimoji" {})
-        (mkExecBind "SUPER + R" "${screenrecord}/bin/rofi-screenrecord" {})
-      ];
-    };
+      powermenu = pkgs.writeShellScript "rofi-powermenu" pmStr;
+      tmux = pkgs.writeShellScript "rofi-tmux" (builtins.readFile ./rofi-tmux.sh);
+      rofimoji = "${pkgs.rofimoji}/bin/rofimoji";
+      screenrecord = pkgs.writeShellScript "rofi-screenrecord" (builtins.readFile ./rofi-screenrecord.sh);
+    in
+      #lua
+      ''
+        hl.layer_rule({
+        	match = { namespace = "rofi" },
+        	blur = true,
+        	dim_around = true,
+        })
+
+        hl.bind("SUPER + Space", hl.dsp.exec_cmd("rofi -show drun -theme-str 'configuration{show-icons:true;}'"))
+        hl.bind("SUPER + Tab", hl.dsp.exec_cmd("rofi -show window"))
+
+        hl.bind("SUPER + Escape", hl.dsp.exec_cmd("${powermenu}"))
+        hl.bind("SUPER + Return", hl.dsp.exec_cmd("${tmux}"))
+        hl.bind("SUPER + Period", hl.dsp.exec_cmd("${rofimoji}"))
+        hl.bind("SUPER + R", hl.dsp.exec_cmd("${screenrecord}"))
+      '';
   };
 }

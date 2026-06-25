@@ -3,16 +3,19 @@
   config,
   pkgs,
   ...
-}: let
-  inherit (config.lib.deeznuts.hyprland) mkExecBind;
-in {
+}: {
   config = {
-    wayland.windowManager.hyprland.settings = {
-      bind = let
-        p = pkgs.writeShellScriptBin "notify-info" (builtins.readFile ./notify-info.sh);
-      in [
-        (mkExecBind "SUPER + i" "${p}/bin/notify-info" {})
-      ];
+    wayland.windowManager.hyprland.extraLuaFiles = {
+      "99-notify-info" = let
+        pkg = pkgs.writeShellScriptBin "notify-info" (
+          builtins.readFile ./notify-info.sh
+        );
+        notify-info = "${pkg}/bin/notify-info";
+      in
+        # lua
+        ''
+          hl.bind("SUPER + I", hl.dsp.exec_cmd("${notify-info}"))
+        '';
     };
   };
 }

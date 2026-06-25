@@ -5,7 +5,6 @@
   ...
 }: let
   inherit (lib) mkIf mkOption types sort mapAttrsToList;
-  inherit (config.lib.deeznuts.hyprland) mkExecBind;
   cfg = config.programs.yazi;
 
   openerType =
@@ -36,8 +35,12 @@ in {
 
     xdg.mimeApps.defaultApplications."inode/directory" = ["yazi.desktop"];
 
-    wayland.windowManager.hyprland.settings = {
-      bind = [(mkExecBind "SUPER + E" "kitty --class yazi -e yazi" {})];
+    wayland.windowManager.hyprland.extraLuaFiles = {
+      "99-yazi" =
+        #lua
+        ''
+          hl.bind("SUPER + E", hl.dsp.exec_cmd("kitty --class yazi -e yazi"))
+        '';
     };
 
     programs.yazi = {

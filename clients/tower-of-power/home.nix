@@ -3,12 +3,7 @@
   lib,
   pkgs,
   ...
-}: let
-  monitors = {
-    asus = "desc:ASUSTek COMPUTER INC VG27AQML1A S9LMQS167913";
-    arzopa = "desc:GWD ARZOPA 000000000001";
-  };
-in {
+}: {
   # work
   programs.slack.enable = true;
 
@@ -18,11 +13,10 @@ in {
 
   stylix.image = ../_common/home/wallpapers/lake-mountains-rocks-sunrise-daylight-scenery-illustration-3840x2160-3773.jpg;
 
-  wayland.windowManager.hyprland = import ./hyprland-settings.nix {
-    inherit lib monitors;
-    hLib = config.lib.deeznuts.hyprland;
+  wayland.windowManager.hyprland.extraLuaFiles = {
+    "50-tower-of-power".content = ./hyprland-tower-of-power.lua;
   };
-  programs.hyprlock.monitor = "${monitors.asus}";
+  programs.hyprlock.monitor = "desc:GWD ARZOPA 000000000001";
 
   services.kdeconnect.enable = true;
 

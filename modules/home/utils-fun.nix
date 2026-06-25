@@ -5,31 +5,29 @@
   ...
 }: let
   inherit (lib) mkIf;
-  inherit (config.lib.deeznuts.hyprland) mkDspBind mkWindowRule;
-  l = lib.generators.mkLuaInline;
   cfg = config.programs.utils-fun;
 in {
   options.programs.utils-fun.enable = lib.mkEnableOption "utils for memez";
 
   config = mkIf cfg.enable {
-    wayland.windowManager.hyprland.settings = {
-      window_rule = [(mkWindowRule {class = "^(cmatrix)$";} {fullscreen = true;})];
-      bind = let
-        cmatrixLua =
-          #lua
-          ''
-            function()
-              local windows = hl.get_windows()
-              for _, win in ipairs(windows) do
-                if win.class == "cmatrix" then
-                  hl.dsp.focus({"class:cmatrix"})
-                  return
-                end
-              end
-              hl.dsp.exec_cmd("kitty --class cmatrix -e cmatrix")
-            end
-          '';
-      in [(mkDspBind "SUPER + SHIFT + Z" cmatrixLua {})];
+    wayland.windowManager.hyprland.extraLuaFiles = {
+      "99-utils-fun" =
+        #lua
+        ''
+          hl.bind("SUPER + SHIFT + Z", function()
+          	local w = hl.get_window("class:asciiquarium")
+          	if w then
+          		hl.dispatch(hl.dsp.focus({ window = "address:" .. w.address }))
+          	else
+          		hl.dispatch(hl.dsp.exec_cmd("kitty --class asciiquarium -e asciiquarium"))
+          	end
+          end)
+
+          hl.window_rule({
+          	match = { class = "^(asciiquarium)$" },
+          	fullscreen = true,
+          })
+        '';
     };
 
     home.packages = let
@@ -52,7 +50,7 @@ in {
           ${pkgs.jq}/bin/jq -r '.[]' ${reasonsJson} | shuf -n 1
         '')
         (pkgs.writeShellScriptBin "suff" ''
-          cat << 'EOF' | ${pkgs.coreutils}/bin/shuf -n 1
+          cat << 'EOF' | shuf -n 1
           ${suffContent}
           EOF
         '')

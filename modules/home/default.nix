@@ -44,6 +44,7 @@
     ./keepassxc.nix
     ./thunderbird.nix
     ./libreoffice.nix
+    ./dbeaver.nix
 
     ./spotify.nix
     ./spotify-player.nix

@@ -5,7 +5,6 @@
   ...
 }: let
   inherit (lib) mkIf;
-  inherit (config.lib.deeznuts.hyprland) mkExecBind;
   cfg = config.programs.hyprshot;
 in {
   config = mkIf cfg.enable {
@@ -13,12 +12,13 @@ in {
 
     programs.hyprshot.saveLocation = "${config.home.homeDirectory}/Pictures";
 
-    wayland.windowManager.hyprland.settings.bind = let
-      cmd = mode: "hyprshot -z -m ${mode}";
-    in [
-      (mkExecBind "Print" "${cmd "output"} -m active" {})
-      (mkExecBind "ALT + Print" "${cmd "window"} -m active" {})
-      (mkExecBind "SUPER + SHIFT + S" "${cmd "region"}" {})
-    ];
+    wayland.windowManager.hyprland.extraLuaFiles."99-hyprshot" =
+      #lua
+      ''
+        local cmd = "hyprshot -z -m "
+        hl.bind("Print", hl.dsp.exec_cmd(cmd .. "output -m active"))
+        hl.bind("ALT + Print", hl.dsp.exec_cmd(cmd .. "window -m active"))
+        hl.bind("SUPER + SHIFT + S", hl.dsp.exec_cmd(cmd .. "region"))
+      '';
   };
 }
