@@ -19,7 +19,6 @@ in {
       border-color = "#0a84ae";
     };
 
-    # 1. Sauberer XDG Autostart via Systemd
     xdg.configFile."autostart/thunderbird.desktop" = mkIf cfg.autostart {
       text = ''
         [Desktop Entry]

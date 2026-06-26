@@ -7,7 +7,7 @@
 in {
   config.programs.fzf = {
     defaultCommand = "fd --type f";
-    defaultOptions = ["--preview-window=bottom:70%"];
+    defaultOptions = ["--preview-window=bottom:70%" "--layout=reverse"];
 
     fileWidgetCommand = "fd --type f";
     fileWidgetOptions = [

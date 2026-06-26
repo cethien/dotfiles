@@ -20,13 +20,12 @@ in {
   };
 
   config = mkIf cfg.enable {
-    # Ersetzt den alten Hyprland-Autostart. Startet tmux detached im Kontext der GUI-Session.
     xdg.configFile."autostart/tmux-server.desktop" = {
       text = ''
         [Desktop Entry]
         Name=Tmux Server
         Comment=Start tmux server inside graphical session to inherit environment and fonts
-        Exec=${pkgs.tmux}/bin/tmux new-session -s main -d
+        Exec=${pkgs.tmux}/bin/tmux start-server
         Terminal=false
         Type=Application
         Categories=System;
