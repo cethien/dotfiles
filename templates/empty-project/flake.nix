@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     flake-utils.url = "github:numtide/flake-utils";
   };
 
@@ -14,22 +14,6 @@
         inherit system;
       };
     in {
-      devShells.default = pkgs.mkShell {
-        packages = with pkgs; [
-          git
-          lefthook
-          commitlint-rs
-        ];
-
-        shellHook = ''
-          if [ ! -d .git ]; then
-            git init && git add . && echo "chore: init" >.git/COMMIT_EDITMSG
-
-            if [ -f lefthook.yml ]; then
-              lefthook install
-            fi
-          fi
-        '';
-      };
+      devShells.default = import ./shell.nix {inherit pkgs;};
     });
 }
