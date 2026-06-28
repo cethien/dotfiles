@@ -42,7 +42,7 @@ in {
     };
 
     programs.nixcord = {
-      vesktop.enable = true;
+      # vesktop.enable = true;
       discord.enable = !cfg.vesktop.enable;
 
       discord.vencord.enable = false;
