@@ -54,6 +54,7 @@ list_ssh_connections() {
 FZF_OPTS=(
 	--prompt="󰣀  ssh > "
 	--preview "$0 --preview {}"
+	--preview-window "right:50%"
 	--footer="ctrl-x: delete history"
 	--bind 'ctrl-x:print(ctrl-x)+accept'
 )
