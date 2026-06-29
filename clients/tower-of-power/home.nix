@@ -5,7 +5,6 @@
   ...
 }: {
   # work
-  programs.slack.enable = true;
 
   imports = [
     ../_common/home/cethien
@@ -31,11 +30,18 @@
   ];
 
   programs = {
+    # work
+    slack.enable = true;
+    freerdp.enable = true;
+    freerdp.connections = import ../_tms/home/rdp.nix;
+
+    # ---
+
     rclone.enable = true;
 
     rofi.powermenu.options = "shutdown/reboot";
 
-    zen-browser = import ./zen-browser-settings.nix {inherit config;};
+    zen-browser = import ./zen-browser.nix {inherit config pkgs;};
     spicetify.enable = true;
     nixcord.enable = true;
     nixcord.autostart = true;
@@ -55,7 +61,7 @@
     logitech-peripherals.autostart = true;
     apps-creative.enable = true;
 
-    git.settings = import ../_common/home/git.nix;
-    ssh.settings = import ../_common/home/ssh.nix;
+    git.settings = (import ../_common/home/git.nix) // (import ../_tms/home/git.nix);
+    ssh.settings = (import ../_common/home/ssh.nix) // (import ../_tms/home/ssh.nix);
   };
 }

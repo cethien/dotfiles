@@ -1,4 +1,7 @@
-{config, ...}: {
+{
+  config,
+  pkgs,
+}: {
   profiles."${config.home.username}" = let
     containers = {
       logged-out = {
@@ -53,7 +56,15 @@
     settings = {
       "media.videocontrols.picture-in-picture.enable-when-switching-tabs.enabled" = true;
     };
+
+    tms = import ../_tms/home/zen-browser.nix {inherit pkgs;};
   in {
+    bookmarks = {
+      force = true;
+      settings = tms.bookmarks;
+    };
+    extensions.packages = tms.extensions;
+
     containersForce = true;
     inherit containers;
     inherit pins;
