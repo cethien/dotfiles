@@ -17,6 +17,10 @@
   };
 
   # --- INFRA
+  "Host truenas" = {
+    HostName = "10.180.80.87";
+    User = "truenas_admin";
+  };
   "Host pi".HostName = "10.0.10.20";
   "Host pve-node-a" = {
     HostName = "10.0.10.5";
