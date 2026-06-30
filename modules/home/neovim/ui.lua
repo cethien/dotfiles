@@ -1,5 +1,6 @@
 vim.opt.number = true
 vim.opt.relativenumber = true
+vim.opt.laststatus = 3
 
 -- vim.opt.conceallevel = 2
 vim.opt.linebreak = true
