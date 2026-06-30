@@ -17,6 +17,8 @@
     vscode-langservers-extracted
     marksman
     prettierd
+    tailwindcss-language-server
+
     lua-language-server
     stylua
 
@@ -28,6 +30,9 @@
     vscode-json-languageserver
     taplo
     lemminx
+
+    caddyfile-language-server
+    caddy
   ];
 
   initLua = builtins.readFile ./languages.lua;

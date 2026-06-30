@@ -55,6 +55,28 @@ vim.lsp.enable("jsonls")
 vim.lsp.enable("lemminx") -- XML
 vim.lsp.enable("taplo") -- TOML
 
+vim.filetype.add({
+	filename = {
+		["Caddyfile"] = "caddyfile",
+		["Corefile"] = "corefile",
+	},
+	extension = {
+		["caddyfile"] = "caddyfile",
+		["corefile"] = "corefile",
+	},
+})
+
+vim.lsp.config("caddy_ls", {
+	cmd = { "caddy-language-server" },
+	filetypes = { "caddyfile", "corefile" },
+	root_markers = { "Caddyfile", "Corefile", ".git" },
+	settings = {},
+})
+
+vim.lsp.enable("caddy_ls")
+
+-- require("otter").setup()
+
 require("conform").setup({
 	format_on_save = {
 		timeout_ms = 500,
@@ -89,10 +111,18 @@ require("conform").setup({
 		json = { "prettierd" },
 		yaml = { "prettierd" },
 		toml = { "taplo" },
+
+		caddyfile = { "caddy_fmt" },
+		corefile = { "caddy_fmt" },
+	},
+
+	formatters = {
+		caddy_fmt = {
+			command = "caddy",
+			args = { "fmt", "-" },
+		},
 	},
 })
-
--- require("otter").setup()
 
 require("go").setup()
 require("crates").setup()
