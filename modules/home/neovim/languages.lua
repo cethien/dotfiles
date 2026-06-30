@@ -14,6 +14,7 @@ vim.api.nvim_create_autocmd("FileType", {
 		end
 	end,
 })
+require("treesitter-context")
 
 vim.lsp.enable("marksman") -- typst
 vim.lsp.enable("tinymist") -- typst
