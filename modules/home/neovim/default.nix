@@ -16,7 +16,9 @@
       ripgrep
       fd
     ]
-    ++ ui.extraPackages ++ languages.extraPackages ++ autocomplete.extraPackages;
+    ++ ui.extraPackages
+    ++ languages.extraPackages
+    ++ autocomplete.extraPackages;
 
   plugins = with pkgs.vimPlugins;
     [
@@ -25,20 +27,25 @@
       scope-nvim
       toggleterm-nvim
 
-      octo-nvim
       nvim-sops
       csvview-nvim
       lorem-nvim
     ]
-    ++ ui.plugins ++ languages.plugins ++ autocomplete.plugins;
+    ++ ui.plugins
+    ++ languages.plugins
+    ++ autocomplete.plugins;
 
-  initLua = ''
-    ${builtins.readFile ./init.lua}
-    ${ui.initLua}
-    ${languages.initLua}
-    ${autocomplete.initLua}
-    require("scratchpad")
-  '';
+  initLua = lib.mkMerge [
+    (lib.mkBefore ''
+      ${builtins.readFile ./init.lua}
+      ${ui.initLua}
+      ${languages.initLua}
+      ${autocomplete.initLua}
+    '')
+    (lib.mkAfter ''
+      require("scratchpad")
+    '')
+  ];
 in {
   config = mkIf config.programs.neovim.enable {
     programs.neovim = {
@@ -46,7 +53,7 @@ in {
       vimAlias = true;
       inherit extraPackages plugins initLua;
 
-      #legacy
+      # legacy
       withRuby = false;
       withPython3 = false;
     };

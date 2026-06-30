@@ -23,6 +23,7 @@
     ./oh-my-posh.nix
     ./restic.nix
     ./git.nix
+    ./gh-cli.nix
     ./lazygit.nix
     ./lazydocker.nix
     ./pvetui.nix
