@@ -13,13 +13,13 @@
     ''
       if [ -n "$TMUX" ]; then
         branch_name=$(${pkgs.git}/bin/git branch --show-current 2>/dev/null)
-        window_title="nvim"
+        window_title="$EDITOR"
         if [ -n "$branch_name" ]; then
-          window_title="nvim:''${branch_name}"
+          window_title="$EDITOR:''${branch_name}"
         fi
-        ${pkgs.tmux}/bin/tmux new-window -n "$window_title" "${pkgs.neovim}/bin/nvim $*"
+        tmux new-window -n "$window_title" "$EDITOR $*"
       else
-        exec ${pkgs.neovim}/bin/nvim "$@"
+        exec $EDITOR "$@"
       fi
     '';
 in {
