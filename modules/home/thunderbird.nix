@@ -24,7 +24,7 @@ in {
         [Desktop Entry]
         Name=Thunderbird
         Comment=Mail & Calendar
-        Exec=thunderbird
+        Exec=hyprctl eval 'hl.dispatch(hl.dsp.exec_cmd("thunderbird", {workspace = "special:shadow_realm silent"}))'
         Icon=thunderbird
         Terminal=false
         Type=Application
@@ -35,34 +35,25 @@ in {
     wayland.windowManager.hyprland.extraLuaFiles."99-thunderbird" =
       # lua
       ''
-        local shadow_realm = "special:shadow_realm"
+        register_persistent_app("^(thunderbird)$")
 
-        hl.window_rule({
-        	match = {
-        		class = "^(thunderbird)$",
-        	},
-        	workspace = shadow_realm .. " silent",
-        })
-
-        hl.bind("SUPER + C", function()
-        	local w = hl.get_window("class:^(thunderbird|spotify)$")
-        	hl.dispatch(hl.dsp.window.move({ workspace = shadow_realm, window = w, follow = false }))
-        end)
-
-        local toggle_thunderbird = function()
+        local show_thunderbird = function()
         	local w = hl.get_window("class:^(thunderbird)$")
-
         	if not w then
-        		hl.dsp.exec_cmd("thunderbird")
-        	elseif w.workspace then
-        		hl.dispatch(hl.dsp.window.move({ workspace = "e+0", window = "address:" .. w.address, follow = true }))
-        	else
-        		hl.dispatch(hl.dsp.focus({ window = "address:" .. w.address }))
+        		hl.dispatch(hl.dsp.exec_cmd("thunderbird"))
+        		return
         	end
+
+        	hl.dispatch(hl.dsp.window.move({
+        		workspace = "e+0",
+        		window = "address:" .. w.address,
+        		follow = true,
+        	}))
+        	hl.dispatch(hl.dsp.focus({ window = "address:" .. w.address }))
         end
 
-        hl.bind("SUPER + SHIFT + F12", toggle_thunderbird)
-        hl.bind("SHIFT + XF86Mail", toggle_thunderbird)
+        hl.bind("SUPER + SHIFT + F12", show_thunderbird)
+        hl.bind("SHIFT + XF86Mail", show_thunderbird)
       '';
   };
 }

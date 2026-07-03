@@ -1,3 +1,9 @@
+hl_persistent_apps = {}
+
+function register_persistent_app(class_pattern)
+	hl_persistent_apps[class_pattern] = true
+end
+
 hl.defaultWorkspace = {}
 
 function game_windowrule(match_config)

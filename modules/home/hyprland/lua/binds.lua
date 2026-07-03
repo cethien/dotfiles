@@ -3,7 +3,7 @@ hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl s 5%+"), { locked 
 hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl s 5%-"), { locked = true })
 hl.bind("SUPER + SHIFT + C", hl.dsp.exec_cmd("hyprpicker -a"))
 
-hl.bind("SUPER + J", function()
+local toggleLayout = function()
 	local workspace = hl.get_active_special_workspace() or hl.get_active_workspace()
 	if not workspace then
 		return
@@ -16,11 +16,32 @@ hl.bind("SUPER + J", function()
 
 	local ws_target = workspace.special and tostring(workspace.name) or tostring(workspace.id)
 	hl.workspace_rule({ workspace = ws_target, layout = next_layout })
-end)
+end
+
+hl.bind("SUPER + J", toggleLayout)
 
 -- Core Window Management
-hl.bind("ALT + F4", hl.dsp.window.close())
-hl.bind("SUPER + Q", hl.dsp.window.close())
+local close_or_hide = function()
+	local active_w = hl.get_active_window()
+	if not active_w then
+		return
+	end
+
+	for pattern in pairs(hl_persistent_apps) do
+		if string.find(active_w.class, pattern) then
+			hl.dispatch(hl.dsp.window.move({
+				workspace = "special:shadow_realm",
+				window = "address:" .. active_w.address,
+				follow = false,
+			}))
+			return
+		end
+	end
+
+	hl.dispatch(hl.dsp.window.close())
+end
+hl.bind("SUPER + Q", close_or_hide)
+
 hl.bind("SUPER + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind("SUPER + F", hl.dsp.window.fullscreen({ action = "toggle" }))
 
