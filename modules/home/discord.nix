@@ -19,7 +19,7 @@ in {
   config = mkIf cfg.enable {
     stylix.targets.nixcord.enable = false;
 
-    services.mako.settings."app-name=vesktop" = {
+    services.mako.settings."app-name=${bin}" = {
       default-timeout = 0;
       border-color = "#5865F2";
     };

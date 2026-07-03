@@ -21,17 +21,10 @@ in
       just-lsp
     ];
 
-    shellHook = ''
-      if [ ! -d .git ]; then
-        git init && git add . && echo "chore: init" >.git/COMMIT_EDITMSG
-
-        if [ -f lefthook.yml ]; then
-          lefthook install
-        fi
-      fi
-
-      if [ -f go.mod ]; then
-        go mod tidy
-      fi
-    '';
+    shellHook =
+      #sh
+      ''
+        [ -d .git ] && [ -f .lefthook.yml ] && lefthook install
+        [ -f go.mod  ] && go mod tidy
+      '';
   }

@@ -58,7 +58,6 @@ hl.on("window.fullscreen", function()
 		else
 			local zen = hl.get_window("class:^zen-beta$")
 			if zen then
-				-- Schiebt Zen auf den im Client definierten Browser-Workspace
 				local fallback_workspace = hl.defaultWorkspace.browser or 2
 				hl.dispatch(hl.dsp.window.move({
 					window = "address:" .. zen.address,
