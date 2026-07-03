@@ -67,7 +67,7 @@ in {
       gh.enable = mkDefault true;
       pvetui.enable = mkDefault true;
 
-      spotify-player.enable = mkDefault true;
+      # spotify-player.enable = mkDefault true;
       wiremix.enable = mkDefault hl;
       keepassxc.enable = mkDefault hl;
       keepassxc.autostart = mkDefault true;
