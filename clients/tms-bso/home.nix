@@ -32,6 +32,8 @@
     thunderbird.autostart = true;
     libreoffice.enable = true;
 
+    spicetify.enable = true;
+    spotify-player.enable = lib.mkForce false;
     zen-browser = import ./zen-browser.nix {inherit config pkgs;};
 
     git.settings = import ../_tms/home/git.nix;

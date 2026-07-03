@@ -1,6 +1,15 @@
 local asus = "desc:ASUSTek COMPUTER INC VG27AQML1A S9LMQS167913"
 local arzopa = "desc:GWD ARZOPA 000000000001"
 
+hl.defaultWorkspace = {
+	game = 3,
+	game_launcher = 3,
+	browser = 4,
+	chat = 4,
+	pip = 4,
+	spotify = 4,
+}
+
 hl.monitor({
 	output = asus,
 	mode = "2560x1440@240",
@@ -41,14 +50,6 @@ hl.workspace_rule({
 	persistent = true,
 	default = true,
 })
-
-hl.defaultWorkspace = {
-	game = 3,
-	game_launcher = 3,
-	browser = 4,
-	chat = 4,
-	pip = 4,
-}
 
 hl.config({
 	general = {

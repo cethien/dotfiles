@@ -35,6 +35,7 @@ in {
 
       users."${username}" = {
         imports = [
+          inputs.spicetify-nix.homeManagerModules.default
           ./home
           ../${hostName}/home.nix
         ];

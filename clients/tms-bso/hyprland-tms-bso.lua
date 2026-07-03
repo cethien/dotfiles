@@ -3,6 +3,7 @@ local lpt_main = "eDP-1"
 
 hl.defaultWorkspace.browser = "1"
 hl.defaultWorkspace.pip = "1"
+hl.defaultWorkspace.spotify = "5"
 
 hl.monitor({
 	output = eizo,

@@ -86,6 +86,7 @@
           inputs.nix-gaming.overlays.default
 
           (final: prev: {
+            spicePkgs = inputs.spicetify-nix.legacyPackages.${system};
             vimPlugins =
               prev.vimPlugins
               // {
