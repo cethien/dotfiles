@@ -17,7 +17,7 @@
         if [ -n "$branch_name" ]; then
           window_title="$EDITOR:''${branch_name}"
         fi
-        tmux new-window -n "$window_title" "$EDITOR $*"
+        tmux new-window -a -n "$window_title" "$EDITOR $*"
       else
         exec $EDITOR "$@"
       fi
