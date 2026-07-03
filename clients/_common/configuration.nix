@@ -12,6 +12,7 @@
   gnome = config.services.desktopManager.gnome.enable;
   desktop = hl || gnome;
   username = "cethien";
+  u = config.users.users.cethien;
 in {
   imports = [
     ../../modules/client
@@ -58,11 +59,6 @@ in {
 
     programs.hyprland.enable = mkDefault true;
 
-    security.sudo.extraConfig = ''
-      Defaults timestamp_timeout=30
-      Defaults pwfeedback
-      Defaults insults
-    '';
     users.groups.nettools = {};
     security.wrappers = {
       ping = {
@@ -96,6 +92,7 @@ in {
         source = "${pkgs.termshark}/bin/termshark";
       };
     };
+
     users.users.cethien.extraGroups =
       [
         "nettools"
@@ -103,6 +100,24 @@ in {
       ++ optionals desktop ["audio"]
       ++ optionals (config.hardware.uinput.enable) ["uinput" "input"]
       ++ optionals (config.hardware.sane.enable) ["scanner"];
+
+    security.sudo.extraConfig = ''
+      Defaults:${u.name} pwfeedback
+      Defaults:${u.name} insults
+      Defaults:${u.name} timestamp_timeout=30
+    '';
+
+    security.sudo.extraRules = [
+      {
+        users = [u.name];
+        commands = [
+          {
+            command = "/run/current-system/sw/bin/nixos-rebuild switch *";
+            options = ["NOPASSWD"];
+          }
+        ];
+      }
+    ];
 
     services.pipewire.enable = desktop;
 
