@@ -31,8 +31,8 @@
     taplo
     lemminx
 
-    caddyfile-language-server
-    caddy
+    nixd
+    alejandra
   ];
 
   initLua = builtins.readFile ./languages.lua;

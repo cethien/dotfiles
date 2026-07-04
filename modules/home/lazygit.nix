@@ -12,10 +12,10 @@
     # bash
     ''
       if [ -n "$TMUX" ]; then
-        branch_name=$(${pkgs.git}/bin/git branch --show-current 2>/dev/null)
+        branch_name=$(git branch --show-current 2>/dev/null)
         window_title="$EDITOR"
         if [ -n "$branch_name" ]; then
-          window_title="$EDITOR:''${branch_name}"
+          window_title="$EDITOR/''${branch_name}"
         fi
         tmux new-window -a -n "$window_title" "$EDITOR $*"
       else

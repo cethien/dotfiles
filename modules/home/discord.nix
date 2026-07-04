@@ -42,10 +42,10 @@ in {
     };
 
     programs.nixcord = {
-      # vesktop.enable = true;
       discord.enable = !cfg.vesktop.enable;
+      discord.vencord.enable = true;
 
-      discord.vencord.enable = false;
+      # vesktop.enable = true;
       vesktop.settings = {
         discordBranch = "stable";
         staticTitle = true;
