@@ -7,11 +7,7 @@
   cfg = config.programs.spicetify;
 in {
   options = {
-    programs.spicetify.autostart = lib.mkOption {
-      type = lib.types.bool;
-      default = true;
-      description = "Ob Spotify beim Systemstart automatisch via XDG Autostart geladen werden soll.";
-    };
+    programs.spicetify.autostart = lib.mkEnableOption "xgd autostart";
   };
 
   config = {
