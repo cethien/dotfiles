@@ -62,6 +62,19 @@
     apps-creative.enable = true;
 
     git.settings = (import ../_common/home/git.nix) // (import ../_tms/home/git.nix);
-    ssh.settings = (import ../_common/home/ssh.nix) // (import ../_tms/home/ssh.nix);
+    ssh.settings =
+      (import ../_common/home/ssh.nix)
+      // (
+        lib.mapAttrs (name: value:
+          value
+          // {
+            User =
+              if value ? User
+              then value.User
+              else "bsotnikow";
+            IdentityFile = "~/.ssh/id_ed25519_tmsproshop_bsotnikow";
+            IdentitiesOnly = "yes";
+          }) (import ../_tms/home/ssh.nix)
+      );
   };
 }
