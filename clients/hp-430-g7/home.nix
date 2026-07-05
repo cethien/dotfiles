@@ -57,7 +57,15 @@
       position = 1000;
       icon = "🚄";
     };
+
+    tms = import ../_tms/home/zen-browser.nix {inherit pkgs;};
   in {
+    bookmarks = {
+      force = true;
+      settings = tms.bookmarks;
+    };
+    extensions.packages = tms.extensions;
+
     containersForce = true;
     inherit containers;
     spacesForce = true;
@@ -68,7 +76,7 @@
     rclone.enable = true;
 
     freerdp.enable = true;
-    freerdp.connections = import ../tms-bso/home/rdp.nix;
+    freerdp.connections = import ../_tms/home/rdp.nix;
     ssh.settings =
       (import ../_common/home/ssh.nix)
       // (

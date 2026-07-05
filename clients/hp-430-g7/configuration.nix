@@ -11,7 +11,7 @@ in {
     inputs.nixos-hardware.nixosModules.common-pc-laptop
     ../_common/configuration.nix
     ../_common/disko.nix
-    ../tms-bso/smb
+    # ../tms-bso/smb
   ];
 
   config = {
@@ -24,12 +24,12 @@ in {
       "${user.home}/.ssh/id_ed25519"
       "${user.home}/.ssh/id_ed25519_tmsproshop_bsotnikow"
     ];
-
-    services.tms-shares = {
-      enable = true;
-      automount = false;
-      path = "${config.users.users.cethien.home}/tms-shares";
-    };
+    #
+    # services.tms-shares = {
+    #   enable = true;
+    #   automount = false;
+    #   path = "${config.users.users.cethien.home}/tms-shares";
+    # };
 
     virtualisation.docker.enable = true;
     virtualisation.libvirtd.enable = true;
