@@ -43,7 +43,7 @@ hl.config({
 	},
 
 	cursor = {
-		inactive_timeout = 5,
+		-- inactive_timeout = 5,
 		persistent_warps = true,
 	},
 
@@ -65,6 +65,6 @@ hl.config({
 	input = {
 		kb_layout = "de",
 		kb_variant = "nodeadkeys",
-		follow_mouse = 2,
+		follow_mouse = 1,
 	},
 })
