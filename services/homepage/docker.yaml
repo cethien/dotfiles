@@ -1,4 +1,0 @@
----
-local:
-  socket: /var/run/docker.sock
-  swarm: true
