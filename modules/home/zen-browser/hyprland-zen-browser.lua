@@ -24,7 +24,7 @@ hl.bind("SUPER + W", function()
 		return
 	end
 
-	local w = hl.get_window("class:^zen-beta$")
+	local w = hl.get_window("class:^(zen-beta)$")
 	if not w then
 		hl.dispatch(hl.dsp.exec_cmd("zen-beta"))
 		return
