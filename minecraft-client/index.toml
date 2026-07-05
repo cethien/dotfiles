@@ -1,6 +1,161 @@
 hash-format = "sha256"
 
 [[files]]
+file = "datapacks/banner-flags.pw.toml"
+hash = "7ca1787be0a960d61fd1bd0c11ea9ca3c1194b4a81195fc7dd3ee494e64b03a6"
+metafile = true
+
+[[files]]
+file = "datapacks/betterpets.pw.toml"
+hash = "dee81a336aae24b0ef63819f022cd6410b0abe35956bff1884784b82c4a43149"
+metafile = true
+
+[[files]]
+file = "datapacks/dungeons+.pw.toml"
+hash = "1d0313d18bcab3ceb0a61a3599b9edbeab73e5c00a965a50f47c2d4342ee70ef"
+metafile = true
+
+[[files]]
+file = "datapacks/dungeons-and-taverns-ancient-city-overhaul.pw.toml"
+hash = "c26e8d461e2ad3845e25391bbe83c83b1be7cd3d425c0c6d00ea1f6615b329cf"
+metafile = true
+
+[[files]]
+file = "datapacks/dungeons-and-taverns-desert-temple-overhaul.pw.toml"
+hash = "635e80631d5ef55e7e19c4bedc55cce7e31af86fa75847cc915a9ff86a60cd17"
+metafile = true
+
+[[files]]
+file = "datapacks/dungeons-and-taverns-jungle-temple-overhaul.pw.toml"
+hash = "a44749e70f403caf5cce20e86ff3cc79b827bd838578a941afb725535c90adb3"
+metafile = true
+
+[[files]]
+file = "datapacks/dungeons-and-taverns-mineshaft-overhaul.pw.toml"
+hash = "23cb97bca31106e523a36a2f0bcd8a47f068fe1fc2629412c46ff2b9ac1c834c"
+metafile = true
+
+[[files]]
+file = "datapacks/dungeons-and-taverns-nether-fortress-overhaul.pw.toml"
+hash = "cc711d7d86a14011c479d88f801d53843a95fd9ed50c8954b682a218aaa02830"
+metafile = true
+
+[[files]]
+file = "datapacks/dungeons-and-taverns-ocean-monument-overhaul.pw.toml"
+hash = "9837bdaf79f11df0dc1ca5a40affd10ddf8303d5bb24ca56e98e19df020e461e"
+metafile = true
+
+[[files]]
+file = "datapacks/dungeons-and-taverns-pillager-outpost-overhaul.pw.toml"
+hash = "6305cfd0cc6b7cfb9f13d85dbb163349dd89fd79800885733a31ed9c60bd845a"
+metafile = true
+
+[[files]]
+file = "datapacks/dungeons-and-taverns-swamp-hut-overhaul.pw.toml"
+hash = "2a41604b12b5a9f070e70b1f446ca85fb804dcebaa61881644ca0fd59fb50e19"
+metafile = true
+
+[[files]]
+file = "datapacks/dungeons-and-taverns-woodland-mansion-overhaul.pw.toml"
+hash = "8445532cb7d73b4a062fda87754d3a2fd5748b38d7a874b9dae82f4237033dc0"
+metafile = true
+
+[[files]]
+file = "datapacks/dungeons-and-taverns.pw.toml"
+hash = "495671f911d30055676edcad18fe56eb2d29bf2bd621d7179957861b3b3cd383"
+metafile = true
+
+[[files]]
+file = "datapacks/dynamic-torches.pw.toml"
+hash = "4d651b23a5064d87abafdd98bfe512c395b0aef38bccfec6470e03123cdc91ed"
+metafile = true
+
+[[files]]
+file = "datapacks/explorify.pw.toml"
+hash = "a48ebd804b0e473aaf885a0aa10da75616e52e7460268f085bd64810429876b7"
+metafile = true
+
+[[files]]
+file = "datapacks/hero-proof.pw.toml"
+hash = "deb6f491aafe2f51f3edef36b887ae4eafa767ff4a3c1df6938c86184fa9a02d"
+metafile = true
+
+[[files]]
+file = "datapacks/hopo-better-ruined-portals.pw.toml"
+hash = "f13a543d2f2ce8e8b6d587dc0a83f28d4002008c96eab6a25c1b9688455a6f2b"
+metafile = true
+
+[[files]]
+file = "datapacks/katters-structures.pw.toml"
+hash = "b4694e298b941e2ad09102ff0e80ee62444655a39a1d38f47189efa91bcdef2a"
+metafile = true
+
+[[files]]
+file = "datapacks/keep-some-more-inventory.pw.toml"
+hash = "f296d6949e8f2e26911f748642d3f43fb6a024b23352da9fd7cd00767d35a4fd"
+metafile = true
+
+[[files]]
+file = "datapacks/ly-chat-coords.pw.toml"
+hash = "b99288906e651ffad34a9b9320fc2a91e70e059cb9fd2020694276d30bf1a64a"
+metafile = true
+
+[[files]]
+file = "datapacks/ly-clumps.pw.toml"
+hash = "26e5670c0c035ef5615d78cb0849f9001bfa309a01e23f87bfebf0ec1be30f35"
+metafile = true
+
+[[files]]
+file = "datapacks/more-mobs.pw.toml"
+hash = "4ea5be5b381c5b353d769478289ef18d47c6a18c455ae133e7c43e6d3e346a59"
+metafile = true
+
+[[files]]
+file = "datapacks/quick-shulker-boxes.pw.toml"
+hash = "ad39715beeff7e5637e84efb66702baa6bd8772211dd92c380e65c920727193b"
+metafile = true
+
+[[files]]
+file = "datapacks/stellarity.pw.toml"
+hash = "05a6f6a23e3f87e573b6fcf93f5eb9ff8572667eabf87850855da37107c65218"
+metafile = true
+
+[[files]]
+file = "datapacks/towns-and-towers.pw.toml"
+hash = "ee897a6fcf610957bc1be6a04b5b2227660def9bbf3cb566bb799001246f3d72"
+metafile = true
+
+[[files]]
+file = "datapacks/trek.pw.toml"
+hash = "7c1f031565f6a950fe965f973005480e8fe9baef6f91fd9eeacaa64b4c52a7e2"
+metafile = true
+
+[[files]]
+file = "datapacks/vanilla-backpacks.pw.toml"
+hash = "977dd268e2f7992e375ef643861ab21d40fc0d410728d0538b96695166e214d4"
+metafile = true
+
+[[files]]
+file = "datapacks/vanilla-structure-update.pw.toml"
+hash = "fe9e8067837aa2b6284ccc3a07e7f7d1034b49295204853177f902c02384401d"
+metafile = true
+
+[[files]]
+file = "datapacks/veinminer-enchantment.pw.toml"
+hash = "d08537d8134f6338b196857b540566c6d5d3a88bb49022d2510e4c2f0c9c8ecb"
+metafile = true
+
+[[files]]
+file = "datapacks/veinminer.pw.toml"
+hash = "1086a4171736a92ae08f191dcea1c4f50dfcba7b17d0039b80bb045e9ea61bd6"
+metafile = true
+
+[[files]]
+file = "datapacks/waystones-data-pack.pw.toml"
+hash = "65099a3a9592f12948eb970da0bac71643818f8bcdf304a6f1c91de5c66bbcfe"
+metafile = true
+
+[[files]]
 file = "mods/advancement-plaques.pw.toml"
 hash = "250f6f7cda563380af599db2609966c401296d2a01a15b132bf74a5966b70c5d"
 metafile = true
@@ -21,8 +176,23 @@ hash = "8002b3f733343d7c38b8538a5323cc6e0514c03b5ad4f2951f5e1370124c0071"
 metafile = true
 
 [[files]]
+file = "mods/autototem.pw.toml"
+hash = "22b08e1ed96b077c8a01283996ac19e893404052139ebb4b89c738cfd2f1d1b0"
+metafile = true
+
+[[files]]
 file = "mods/better-stats.pw.toml"
 hash = "3d7e9a888b7f7c6454739a55de647c40d7631243663489a4ec4e126170c01abb"
+metafile = true
+
+[[files]]
+file = "mods/bettertabinfo.pw.toml"
+hash = "1e3f199e29fd059ebca76b4e277be00de9b3232c127b5eaba726b02950bf4048"
+metafile = true
+
+[[files]]
+file = "mods/boat-item-view.pw.toml"
+hash = "1b2500f3cc0ae2cfd119051ad945063ec72484575e3395fb81ab588af3b4d8e1"
 metafile = true
 
 [[files]]
@@ -43,6 +213,11 @@ metafile = true
 [[files]]
 file = "mods/controlify.pw.toml"
 hash = "30aa65d101c7aff959e4c21b603d7bebce2e8b0dd95db3ef21cb5f70eec23c29"
+metafile = true
+
+[[files]]
+file = "mods/craft-config.pw.toml"
+hash = "a5c5e57aa4d20f26820f9aa1d77ac6f0368e484ec75f865cb3d18f2842a8ff86"
 metafile = true
 
 [[files]]
@@ -116,6 +291,11 @@ hash = "8c91080e610d7c8c40ae6445d36af1cf591fe1ebf70718b3e6d4714232b23592"
 metafile = true
 
 [[files]]
+file = "mods/held-item-info.pw.toml"
+hash = "e0718ec44f9abe7e4fa8b4122478158db98b8dc2376a98c7382e0298e3b5bfa6"
+metafile = true
+
+[[files]]
 file = "mods/held-item-tooltips.pw.toml"
 hash = "b79b53ce8e5c66b90c7a58d3f7e6311c4749cbf44ef04bc1e574ea047f1061e1"
 metafile = true
@@ -168,6 +348,11 @@ metafile = true
 [[files]]
 file = "mods/lithium.pw.toml"
 hash = "d655305d7933a11ed9c0c8edb57868c053b9c995c121c00b47061cf0e098c92a"
+metafile = true
+
+[[files]]
+file = "mods/modlistmemory.pw.toml"
+hash = "03270920ff58c4dd369c2ca24aaf8f877ff841791599556f1c6c085a8483b7a4"
 metafile = true
 
 [[files]]

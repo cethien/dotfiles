@@ -1,0 +1,13 @@
+name = "Better Tab Info"
+filename = "better_tab-2.1.4+26.2-fabric.jar"
+side = "client"
+
+[download]
+url = "https://cdn.modrinth.com/data/LS20Llnw/versions/D2hKDqzp/better_tab-2.1.4%2B26.2-fabric.jar"
+hash-format = "sha512"
+hash = "ffe94be61bdb7228017f7e0823dd7e7777d0b6bb0fc28269cf3f64c198628bae210e4edd532053ccbe10867ecb894d870461f5f1bca092c4c145b2af7c3eee14"
+
+[update]
+[update.modrinth]
+mod-id = "LS20Llnw"
+version = "D2hKDqzp"

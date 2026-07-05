@@ -1,0 +1,13 @@
+name = "Autototem"
+filename = "autototem-1.1.0.jar"
+side = "client"
+
+[download]
+url = "https://cdn.modrinth.com/data/23u6FAt6/versions/1l2tWaAb/autototem-1.1.0.jar"
+hash-format = "sha512"
+hash = "46fd2c37f6c51b85e30e2ee566b1c99c989485c6a34d131e2af34210f3b45972709e7e34809062e3c441cc2d13f4effca161ede1f59990cfce61a059664bc56f"
+
+[update]
+[update.modrinth]
+mod-id = "23u6FAt6"
+version = "1l2tWaAb"

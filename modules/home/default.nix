@@ -57,7 +57,7 @@
     ./steam.nix
     ./heroic.nix
     ./retroarch.nix
-    ./minecraft.nix
+    ./minecraft
     ./pokemmo.nix
     ./r2modman.nix
     ./mangohud.nix
