@@ -1,0 +1,13 @@
+name = "Small Shield & Totem"
+filename = "Small_Shield_&_Totem_2.11.zip"
+side = "client"
+
+[download]
+url = "https://cdn.modrinth.com/data/LSBNL0rO/versions/wS2JKhZl/Small_Shield_%26_Totem_2.11.zip"
+hash-format = "sha512"
+hash = "8850b24b877b01641d04a94bfa8d74ef9445f01c2d91155cc8a5f9572f3fc6b2262e64d23cf2a7872f17722f70e8e25efdbd80fa9baa5e76d904b87e3220998c"
+
+[update]
+[update.modrinth]
+mod-id = "LSBNL0rO"
+version = "wS2JKhZl"

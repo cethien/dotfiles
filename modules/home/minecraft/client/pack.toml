@@ -1,0 +1,12 @@
+name = "client"
+version = "26.2"
+pack-format = "packwiz:1.1.0"
+
+[index]
+file = "index.toml"
+hash-format = "sha256"
+hash = "46181c9410e5b0d31d9a563c91c83303353d09b37a83b896ee5c245d7a223708"
+
+[versions]
+fabric = "0.19.3"
+minecraft = "26.2"

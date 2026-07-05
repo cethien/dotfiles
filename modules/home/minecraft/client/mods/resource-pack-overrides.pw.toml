@@ -1,0 +1,13 @@
+name = "Resource Pack Overrides"
+filename = "ResourcePackOverrides-v26.2.0-mc26.2.x-Fabric.jar"
+side = "client"
+
+[download]
+url = "https://cdn.modrinth.com/data/YsFycamt/versions/rzgCX4qP/ResourcePackOverrides-v26.2.0-mc26.2.x-Fabric.jar"
+hash-format = "sha512"
+hash = "3a000ff19ea637bed56c2356b0e1d80876fe17aaaf6b2fe449b08f46e49ac9aa93a3ebd6ec54133f18cbc3f70cb6371fa1671c1d4a544194b2fde7013196b5bc"
+
+[update]
+[update.modrinth]
+mod-id = "YsFycamt"
+version = "rzgCX4qP"

@@ -1,0 +1,13 @@
+name = "Overflowing Bars"
+filename = "OverflowingBars-v26.2.0-mc26.2.x-Fabric.jar"
+side = "client"
+
+[download]
+url = "https://cdn.modrinth.com/data/XD7XOrAF/versions/deo5l2dq/OverflowingBars-v26.2.0-mc26.2.x-Fabric.jar"
+hash-format = "sha512"
+hash = "b7c068be774aa86b705b4d89365e82dbe97206b660d86d007c75246e7386ff16c50ad8811458c0dfa0f951e63a383bed96034459fa75104f52d2f5e5e3df9ec5"
+
+[update]
+[update.modrinth]
+mod-id = "XD7XOrAF"
+version = "deo5l2dq"

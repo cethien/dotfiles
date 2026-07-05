@@ -1,0 +1,13 @@
+name = "EMF Compat: Not Enough Animations"
+filename = "notenoughanimations-emf-compat-26.2-1.0.6.jar"
+side = "client"
+
+[download]
+url = "https://cdn.modrinth.com/data/IGCrWfL7/versions/BWudEl3i/notenoughanimations-emf-compat-26.2-1.0.6.jar"
+hash-format = "sha512"
+hash = "6a691c8566b4cff67343c2d9743cf64558eb00256d91e0f1efff3f8907601a6a8137a3cf423e32aca012c755022c7f4d7763edc74f273dd16e901b5d1557929f"
+
+[update]
+[update.modrinth]
+mod-id = "IGCrWfL7"
+version = "BWudEl3i"

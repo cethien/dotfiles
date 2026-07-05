@@ -1,0 +1,13 @@
+name = "Even Better Enchants"
+filename = "EvenBetterEnchants_v3_1.21.5+.zip"
+side = "client"
+
+[download]
+url = "https://cdn.modrinth.com/data/6udpuGCH/versions/scd0ojNG/EvenBetterEnchants_v3_1.21.5%2B.zip"
+hash-format = "sha512"
+hash = "b54395af7f4194bf4517e97b5d6e7e8bece1683ea4d0405dd810432da6b0046978d32e3e4dafe502c8c59d9a88a5a63792bfdbaea4a6068173d58fdc9325dd7e"
+
+[update]
+[update.modrinth]
+mod-id = "6udpuGCH"
+version = "scd0ojNG"

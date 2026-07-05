@@ -1,0 +1,13 @@
+name = "Tool Switcher"
+filename = "tool-switcher-3.1.5.jar"
+side = "client"
+
+[download]
+url = "https://cdn.modrinth.com/data/3CTNwVgW/versions/qGatzLmS/tool-switcher-3.1.5.jar"
+hash-format = "sha512"
+hash = "efc5eacbe9ab509e93963d2d5aab6e3bb66d7fc66a77f316e2eebd073527e7a0bfb4df43a9d5d5772c279fb6bfab01321bda4d053541e19b1f04de0b5e574fd1"
+
+[update]
+[update.modrinth]
+mod-id = "3CTNwVgW"
+version = "qGatzLmS"

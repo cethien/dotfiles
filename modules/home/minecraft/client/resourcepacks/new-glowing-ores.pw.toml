@@ -1,0 +1,13 @@
+name = "New Glowing Ores"
+filename = "NewGlowingOres-§6[Border]§r.zip"
+side = "client"
+
+[download]
+url = "https://cdn.modrinth.com/data/oL18adaQ/versions/BG46xXmQ/NewGlowingOres-%C2%A76%5BBorder%5D%C2%A7r.zip"
+hash-format = "sha512"
+hash = "29b9e71e9bc6473070ce2e73a3a9960170a6f1ef089459ffc93254067bc55d2ef4a65357848b433dca3a9a622909f9fd734c1f9dab3da68ae3448cddbf982a3c"
+
+[update]
+[update.modrinth]
+mod-id = "oL18adaQ"
+version = "BG46xXmQ"

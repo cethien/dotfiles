@@ -1,0 +1,13 @@
+name = "Health Bars"
+filename = "HealthBars-v26.2.0-mc26.2.x-Fabric.jar"
+side = "client"
+
+[download]
+url = "https://cdn.modrinth.com/data/A3VSiTms/versions/p5lEQmGO/HealthBars-v26.2.0-mc26.2.x-Fabric.jar"
+hash-format = "sha512"
+hash = "5fa88cf30f569b61c0d5e15a6d4b0bb86b73f0118d334fff94d9311273451420307b765b618360e6a9fd37634165e6447b951f03126c9e9e16cc31ca44ea2f2e"
+
+[update]
+[update.modrinth]
+mod-id = "A3VSiTms"
+version = "p5lEQmGO"

@@ -1,0 +1,13 @@
+name = "Effect Insights"
+filename = "EffectInsights-v26.2.2-mc26.2.x-Fabric.jar"
+side = "client"
+
+[download]
+url = "https://cdn.modrinth.com/data/Kw73iLDq/versions/NTeX5sLz/EffectInsights-v26.2.2-mc26.2.x-Fabric.jar"
+hash-format = "sha512"
+hash = "6ff03aca32026a14b1582837a96d5acceb6d1048e724e8efc27022b7e28b90261e0cc7d3e84247c28f0a053f2664ab4727c7b8a946933f3bc53a116f37694aa0"
+
+[update]
+[update.modrinth]
+mod-id = "Kw73iLDq"
+version = "NTeX5sLz"

@@ -1,0 +1,13 @@
+name = "Distinct Potions"
+filename = "DistinctPotions-v26.2.0-mc26.2.x-Fabric.jar"
+side = "client"
+
+[download]
+url = "https://cdn.modrinth.com/data/lX1xTFBZ/versions/1saUhOqJ/DistinctPotions-v26.2.0-mc26.2.x-Fabric.jar"
+hash-format = "sha512"
+hash = "2fd657f6eeedc9c0ea6427e540aed664e193f230d260dfdce6ce98941e0d3a794097bfb5df9069061a57aef25f20373775b72827c1feb69155c511102acbc7c0"
+
+[update]
+[update.modrinth]
+mod-id = "lX1xTFBZ"
+version = "1saUhOqJ"
