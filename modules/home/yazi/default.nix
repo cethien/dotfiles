@@ -48,6 +48,11 @@ in {
         ripdrag = "${pkgs.ripdrag}/bin/ripdrag";
       in [
         {
+          on = ["g" "l"];
+          run = "cd ~/.local";
+          desc = "goto ~/.local";
+        }
+        {
           on = ["T" "s"];
           run = ''shell 'tmux new-session -A -s "$(basename "$PWD" | tr -c "a-zA-Z0-9_" "_" | sed "s/_$//")"' --block'';
           desc = "Tmux: Create/Attach in current DIR";
