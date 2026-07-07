@@ -38,6 +38,7 @@ in {
     home.shellAliases.tm = "tmux_new";
 
     programs.tmux = {
+      clock24 = true;
       baseIndex = 1;
       disableConfirmationPrompt = true;
       historyLimit = 5000;

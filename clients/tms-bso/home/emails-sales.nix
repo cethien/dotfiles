@@ -19,6 +19,10 @@ let
         thunderbird = {
           enable = true;
           profiles = ["sales"];
+          settings = id: {
+            "mail.server.server${id}.check_new_mail" = false;
+            "mail.server.server${id}.download_on_biff" = false;
+          };
         };
 
         realName = name;
