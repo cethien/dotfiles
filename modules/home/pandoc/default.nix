@@ -19,9 +19,6 @@ in {
     };
 
     programs.yazi = {
-      openRulesMerged = {
-        "text/plain" = ["$EDITOR" "pandoc"];
-      };
       settings.opener = {
         pandoc = [
           {
