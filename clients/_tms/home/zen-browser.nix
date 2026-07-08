@@ -128,7 +128,7 @@
     }
     {
       name = "prometheus";
-      url = "https://metrics.tmspro.shop";
+      url = "https://prometheus.tmspro.shop";
       tags = ["prometheus" "monitoring"];
     }
     {
