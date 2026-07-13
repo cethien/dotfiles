@@ -6,6 +6,7 @@
 }: let
   inherit (lib) mkIf mkEnableOption;
   cfg = config.programs.steam;
+  uname = config.home.username;
 in {
   options.programs.steam = {
     enable = mkEnableOption "steam stuff";
@@ -33,6 +34,14 @@ in {
     };
 
     home.packages = with pkgs; [protonplus];
+
+    programs.zen-browser = {
+      profiles."${uname}".extensions.packages = with pkgs.firefox-addons; [
+        steam-database
+        augmented-steam
+        protondb-for-steam
+      ];
+    };
 
     wayland.windowManager.hyprland.extraLuaFiles."99-steam" =
       # lua

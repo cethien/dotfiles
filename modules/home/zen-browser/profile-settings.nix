@@ -6,19 +6,21 @@
     decentraleyes
     consent-o-matic
     istilldontcareaboutcookies
+    auto-reject-cookies
     cookie-autodelete
     don-t-fuck-with-paste
     unpaywall
     sponsorblock
-    return-youtube-dislikes
-    twitch-auto-points
     link-cleaner
 
+    return-youtube-dislikes
+    twitch-auto-points
+    rsspreview
     flagfox
     yang
-    steam-database
-
     fx_cast
+    copy-as-markdown
+    copy-selection-as-markdown
   ];
 
   mods = [
@@ -78,10 +80,10 @@
     "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
     "browser.shell.checkDefaultBrowser" = false;
     "browser.ssb.enabled" = true;
-    "browser.tabs.warnOnClose" = false;
+    "browser.tabs.warnOnClose" = true;
     "browser.urlbar.quicksuggest.scenario" = "bookmarks";
     "browser.urlbar.suggest.quicksuggest.sponsored" = false;
-    "browser.warnOnQuitShortcut" = false;
+    "browser.warnOnQuitShortcut" = true;
     "browser.search.suggest.enabled" = true;
     "browser.tabs.inTitlebar" = 0;
     "browser.translations.neverTranslateLanguages" = "de,ru";
