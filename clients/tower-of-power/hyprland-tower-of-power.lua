@@ -12,10 +12,11 @@ hl.defaultWorkspace = {
 
 hl.monitor({
 	output = asus,
-	mode = "2560x1440@240",
-	position = "0x0",
+	mode = "highrr",
+	position = "auto-center-up",
 	scale = 1,
 	bitdepth = 10,
+	supports_hdr = 1,
 	vrr = 2,
 })
 
@@ -39,8 +40,8 @@ hl.workspace_rule({
 
 hl.monitor({
 	output = arzopa,
-	mode = "1920x1080@100",
-	position = "320x1440",
+	mode = "preferred",
+	position = "auto-center-down",
 	scale = 1,
 })
 
@@ -54,6 +55,13 @@ hl.workspace_rule({
 hl.config({
 	general = {
 		allow_tearing = true,
+	},
+
+	render = {
+		cm_enabled = true,
+		cm_auto_hdr = 1,
+		use_fp16 = 2,
+		direct_scanout = 0,
 	},
 })
 
