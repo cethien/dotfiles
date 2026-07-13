@@ -51,6 +51,7 @@
     ./spotify-player.nix
     ./discord.nix
     ./apps-creative.nix
+    ./gimp.nix
     ./fonts.nix
     ./obs-studio.nix
 

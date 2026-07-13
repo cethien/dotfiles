@@ -12,7 +12,7 @@ in {
     programs.yazi = {
       openRulesMerged = {
         "image/svg+xml" = ["inkscape"];
-        "image/*" = ["krita" "gimp"];
+        "image/*" = ["krita"];
         "audio/*" = ["kwave"];
       };
 
@@ -21,13 +21,6 @@ in {
           {
             run = ''inkscape "$@"'';
             desc = "Inkscape";
-            for = "unix";
-          }
-        ];
-        gimp = [
-          {
-            run = ''gimp "$@"'';
-            desc = "GIMP";
             for = "unix";
           }
         ];
@@ -51,7 +44,6 @@ in {
     };
 
     home.packages = with pkgs; [
-      gimp
       krita
       inkscape
 

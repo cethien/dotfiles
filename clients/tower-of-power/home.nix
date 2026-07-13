@@ -36,31 +36,32 @@
     freerdp.connections = import ../_tms/home/rdp.nix;
 
     # ---
+    logitech-peripherals.enable = true;
+    logitech-peripherals.autostart = true;
 
-    rclone.enable = true;
-
-    rofi.powermenu.options = "shutdown/reboot";
-
-    zen-browser = import ./zen-browser.nix {inherit config pkgs;};
-    spicetify.enable = true;
-    nixcord.enable = true;
-    nixcord.autostart = true;
-
-    thunderbird.enable = true;
-    thunderbird.autostart = true;
-    libreoffice.enable = true;
-
-    obs-studio.enable = true;
     pokemmo.enable = true;
     retroarch.enable = true;
     prismlauncher.enable = true;
     r2modman.enable = true;
     heroic.enable = true;
     steam.autostart = true;
-    logitech-peripherals.enable = true;
-    logitech-peripherals.autostart = true;
-    apps-creative.enable = true;
 
+    apps-creative.enable = true;
+    gimp.enable = true;
+    obs-studio.enable = true;
+
+    thunderbird.enable = true;
+    thunderbird.autostart = true;
+    libreoffice.enable = true;
+
+    zen-browser = import ./zen-browser.nix {inherit config pkgs;};
+    spicetify.enable = true;
+    nixcord.enable = true;
+    nixcord.autostart = true;
+
+    rofi.powermenu.options = "shutdown/reboot";
+
+    rclone.enable = true;
     git.settings = (import ../_common/home/git.nix) // (import ../_tms/home/git.nix);
     ssh.settings =
       (import ../_common/home/ssh.nix)
