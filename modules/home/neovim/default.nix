@@ -17,8 +17,8 @@
       fd
     ]
     ++ ui.extraPackages
-    ++ languages.extraPackages
-    ++ autocomplete.extraPackages;
+    ++ autocomplete.extraPackages
+    ++ languages.extraPackages;
 
   plugins = with pkgs.vimPlugins;
     [
@@ -32,8 +32,8 @@
       lorem-nvim
     ]
     ++ ui.plugins
-    ++ languages.plugins
-    ++ autocomplete.plugins;
+    ++ autocomplete.plugins
+    ++ languages.plugins;
 
   initLua = lib.mkMerge [
     (lib.mkBefore ''
@@ -42,9 +42,7 @@
       ${languages.initLua}
       ${autocomplete.initLua}
     '')
-    (lib.mkAfter ''
-      require("scratchpad")
-    '')
+    (lib.mkAfter ''require("scratchpad")'')
   ];
 in {
   config = mkIf config.programs.neovim.enable {

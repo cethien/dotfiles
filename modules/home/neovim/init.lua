@@ -51,6 +51,8 @@ vim.keymap.set("n", "<Leader>q", function()
 end, { desc = "Delete buffer keeping layout" })
 vim.keymap.set("n", "<tab>", "<cmd>bnext<cr>", { desc = "next buffer" })
 vim.keymap.set("n", "<s-tab>", "<cmd>bprevious<cr>", { desc = "prev buffer" })
+vim.keymap.set("n", "<leader><Tab>", "<cmd>tabnext<cr>", { desc = "Next Tab (Scope)" })
+vim.keymap.set("n", "<leader><S-Tab>", "<cmd>tabprevious<cr>", { desc = "Prev Tab (Scope)" })
 
 -- ============================================================================
 -- MINI.FILES SETUP & FRAMEWORK
@@ -62,6 +64,7 @@ mini_files.setup({
 		go_in_plus = "<Return>",
 		go_out = "<Left>",
 		go_out_plus = "",
+		synchronize = "<C-s>",
 	},
 	windows = { max_number = 3, preview = true, width_preview = 80 },
 })

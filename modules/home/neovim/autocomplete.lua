@@ -19,14 +19,53 @@ require("blink.cmp").setup({
 		},
 		per_filetype = {
 			markdown = {
-				"nixpkgs_maintainers",
+				inherit_defaults = true,
 				"git",
 				"conventional_commits",
+				"nixpkgs_maintainers",
 			},
-			tex = { "latex" },
+			tex = {
+				inherit_defaults = true,
+				"latex",
+			},
 		},
 
 		providers = {
+			latex = {
+				name = "Latex",
+				module = "blink-cmp-latex",
+				opts = {
+					insert_command = false,
+				},
+			},
+
+			nixpkgs_maintainers = {
+				module = "blink_cmp_nixpkgs_maintainers",
+				name = "nixpkgs maintainers",
+				opts = {
+					cache_lifetime = 14,
+					silent = false,
+					nixpkgs_flake_uri = "nixpkgs",
+				},
+			},
+
+			conventional_commits = {
+				name = "Conventional Commits",
+				module = "blink-cmp-conventional-commits",
+				enabled = function()
+					return vim.bo.filetype == "gitcommit"
+				end,
+				---@module 'blink-cmp-conventional-commits'
+				---@type blink-cmp-conventional-commits.Options
+				opts = {},
+			},
+
+			git = {
+				module = "blink-cmp-git",
+				name = "Git",
+				opts = {},
+			},
+
 			env = {
 				name = "Env",
 				module = "blink-cmp-env",
@@ -66,43 +105,6 @@ require("blink.cmp").setup({
 					trigger = "?",
 				},
 			},
-
-			nixpkgs_maintainers = {
-				module = "blink_cmp_nixpkgs_maintainers",
-				name = "nixpkgs maintainers",
-				opts = {
-					cache_lifetime = 14,
-					silent = false,
-					nixpkgs_flake_uri = "nixpkgs",
-				},
-			},
-
-			git = {
-				module = "blink-cmp-git",
-				name = "Git",
-				opts = {},
-			},
-
-			conventional_commits = {
-				name = "Conventional Commits",
-				module = "blink-cmp-conventional-commits",
-				enabled = function()
-					return vim.bo.filetype == "gitcommit"
-				end,
-				---@module 'blink-cmp-conventional-commits'
-				---@type blink-cmp-conventional-commits.Options
-				opts = {},
-			},
-
-			latex = {
-				name = "Latex",
-				module = "blink-cmp-latex",
-				opts = {
-					insert_command = false,
-				},
-			},
 		},
 	},
-
-	-- completion = { ghost_text = { enabled = true } },
 })

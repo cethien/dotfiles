@@ -39,7 +39,7 @@ vim.lsp.enable("astro")
 vim.lsp.enable("svelteserver")
 vim.lsp.enable("vue_ls") -- Vue
 
-vim.lsp.enable("sqls")
+-- vim.lsp.enable("sqls")
 
 vim.lsp.enable("just")
 vim.lsp.enable("ansiblels")
@@ -63,6 +63,7 @@ vim.filetype.add({
 	extension = {
 		["caddyfile"] = "caddyfile",
 		["corefile"] = "corefile",
+		["alloy"] = "alloy",
 	},
 })
 
@@ -114,9 +115,14 @@ require("conform").setup({
 
 		caddyfile = { "caddy_fmt" },
 		corefile = { "caddy_fmt" },
+		alloy = { "alloy_fmt" },
 	},
 
 	formatters = {
+		alloy_fmt = {
+			command = "alloy",
+			args = { "fmt", "-" },
+		},
 		caddy_fmt = {
 			command = "caddy",
 			args = { "fmt", "-" },
