@@ -7,6 +7,8 @@
   inherit (lib) mkEnableOption mkOption types mkIf;
   cfg = config.programs.freerdp;
 
+  freerdp-launch = pkgs.writeShellScriptBin "freerdp-launch" (builtins.readFile ./freerdp-launch.sh);
+
   rdpOptions = {
     fullAddress = {
       name = "full address";
@@ -70,6 +72,9 @@
       filteredAttrs;
   in
     lib.concatStringsSep "\n" lines + "\n";
+
+  mkRdpFile = name: connAttrs:
+    pkgs.writeText "${name}.rdp" (generateRdpFileContent connAttrs);
 in {
   options.programs.freerdp = {
     enable = mkEnableOption "Enable FreeRDP configuration and RDP file generation.";
@@ -85,7 +90,10 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [freerdp];
+    home.packages = [
+      pkgs.freerdp
+      freerdp-launch
+    ];
 
     wayland.windowManager.hyprland.extraLuaFiles."99-freerdp" =
       #lua
@@ -96,13 +104,20 @@ in {
         })
       '';
 
-    home.file =
-      lib.attrsets.mapAttrs'
-      (
-        name: conn: {
-          name = ".rdp/${name}.rdp";
-          value.text = generateRdpFileContent conn;
-        }
+    xdg.desktopEntries =
+      lib.mapAttrs' (
+        name: conn: let
+          rdpFile = mkRdpFile name conn;
+        in
+          lib.nameValuePair "freerdp-${name}" {
+            name = "RDP ${name}";
+            comment = "Connect to ${name} via FreeRDP";
+            exec = "${freerdp-launch}/bin/freerdp-launch ${rdpFile}";
+            icon = "remote-desktop";
+            terminal = false;
+            type = "Application";
+            categories = ["Network" "Utility"];
+          }
       )
       cfg.connections;
   };

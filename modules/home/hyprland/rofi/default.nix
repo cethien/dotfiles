@@ -25,16 +25,6 @@ in {
       prompt = "🍞 "
     '';
 
-    xdg.desktopEntries.rofi-freerdp = mkIf config.programs.freerdp.enable {
-      name = "FreeRDP";
-      comment = "Launch the FreeRDP menu via Rofi";
-      exec = "${pkgs.writeShellScriptBin "rofi-freerdp" (builtins.readFile ./rofi-freerdp.sh)}/bin/rofi-freerdp";
-      icon = "remote-desktop";
-      terminal = false;
-      type = "Application";
-      categories = ["Network" "Utility"];
-    };
-
     wayland.windowManager.hyprland.extraLuaFiles."99-rofi" = let
       pmStr = ''
         rofi -show power-menu \
