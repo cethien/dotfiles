@@ -73,7 +73,7 @@ in {
 
       # markdown reader
       glow
-      mdcat
+      vivify
 
       # ebooks
       epr
