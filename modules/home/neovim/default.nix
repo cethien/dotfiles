@@ -20,6 +20,12 @@
     ++ autocomplete.extraPackages
     ++ languages.extraPackages;
 
+  genpass-nvim = pkgs.vimUtils.buildVimPlugin {
+    name = "genpass-nvim";
+    src = ./plugins/genpass;
+    dependencies = [pkgs.genpass];
+  };
+
   plugins = with pkgs.vimPlugins;
     [
       mini-nvim
@@ -29,7 +35,13 @@
 
       nvim-sops
       csvview-nvim
+
       lorem-nvim
+      genpass-nvim
+
+      rest-nvim
+      vim-dadbod
+      vim-dadbod-ui
     ]
     ++ ui.plugins
     ++ autocomplete.plugins

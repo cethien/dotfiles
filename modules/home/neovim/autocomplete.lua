@@ -16,8 +16,8 @@ require("blink.cmp").setup({
 			"emoji",
 			"nerdfont",
 			"qalc",
-			"pwd",
 		},
+
 		per_filetype = {
 			markdown = {
 				inherit_defaults = true,
@@ -97,14 +97,7 @@ require("blink.cmp").setup({
 					trigger = ":-",
 				},
 			},
-			pwd = {
-				module = "blink-cmp-pwd",
-				name = "Password Generator",
-				score_offset = 100,
-				opts = {
-					trigger = "§",
-				},
-			},
+
 			qalc = {
 				module = "blink-cmp-qalc",
 				name = "Qalc",

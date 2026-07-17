@@ -200,6 +200,7 @@ require("toggleterm").setup({
 
 require("csvview").setup({})
 require("lorem").setup({})
+require("genpass")
 
 require("nvim_sops").setup({
 	defaults = { ageKeyFile = "$HOME/.sops/age/keys.txt" },
