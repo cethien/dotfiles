@@ -55,6 +55,25 @@ in {
       plugins = with pkgs.tmuxPlugins; [
         sensible
         {
+          plugin = sysstat;
+          extraConfig = ''
+            set -g status-right-length 160
+            set -g status-right '#{sysstat_cpu} // #{sysstat_mem} |#{online_status}%H:%M '
+
+            set -g @sysstat_cpu_view_tmpl '#{cpu.pused}'
+            set -g @sysstat_mem_view_tmpl '#{mem.used}'
+          '';
+        }
+
+        {
+          plugin = online-status;
+          extraConfig = ''
+            set -g @online_icon ' '
+            set -g @offline_icon ' #[fg=orange]OFFLINE#[default] '
+          '';
+        }
+
+        {
           plugin = yank;
           extraConfig = ''
             set -g @yank_action 'paste'
