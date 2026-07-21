@@ -105,6 +105,9 @@ in {
     # fonts.fontconfig.enable = true;
 
     home.packages = with pkgs; [
+      devenv
+      secretspec
+
       curl
       wget
       gnutar
