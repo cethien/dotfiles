@@ -1,26 +1,26 @@
 #!/usr/bin/env bash
 
-# @describe A smart note creator that prompts for a filename using gum and handles duplicates.
-# @option -m --mode [term|tmux]      The execution mode (default: term).
-# @env NOTE_MODE                     Alternative way to set the mode via environment variable.
+# @describe A smart note creator that prompts for a filename or accepts it via argument.
+# @arg filename                        Optional filename. If omitted, gum will prompt you.
 
 eval "$(argc --argc-eval "$0" "$@")"
 
 TARGET_DIR="$HOME/docs"
 mkdir -p "$TARGET_DIR" && cd "$TARGET_DIR" || exit 1
-if [ "${argc_mode:-${NOTE_MODE:-term}}" = "tmux" ]; then
-	tmux new-window -c "$TARGET_DIR" -n "newnote" "$0 -m term"
-	exit 0
-fi
 
 DEFAULT="$(date +%Y%m%d)_untitled"
-if ! INPUT=$(gum input \
-	--prompt "󱓧 filename > " \
-	--prompt.foreground "5" \
-	--placeholder "$DEFAULT" \
-	--placeholder.foreground "8" \
-	--width 0); then
-	exit 1
+
+if [ -z "$argc_filename" ]; then
+	if ! INPUT=$(gum input \
+		--prompt "󱓧 filename > " \
+		--prompt.foreground "5" \
+		--placeholder "$DEFAULT" \
+		--placeholder.foreground "8" \
+		--width 0); then
+		exit 1
+	fi
+else
+	INPUT="$argc_filename"
 fi
 
 FILE=$(echo "${INPUT:-$DEFAULT}" | tr '[:upper:]' '[:lower:]')

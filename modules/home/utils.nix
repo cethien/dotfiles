@@ -35,7 +35,7 @@ in {
     programs.tmux.keybindings = [
       {
         key = "n";
-        action = "run-shell '${newnote}/bin/newnote -m tmux\'";
+        action = "new-window -n 'newnote' '${newnote}/bin/newnote'";
       }
     ];
   };
