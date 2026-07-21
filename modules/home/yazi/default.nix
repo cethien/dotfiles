@@ -31,7 +31,15 @@ in {
   };
 
   config = mkIf cfg.enable {
-    programs.tmux.resurrectPluginProcesses = ["yazi"];
+    programs.tmux = {
+      resurrectPluginProcesses = ["yazi"];
+      keybindings = [
+        {
+          key = "e";
+          action = "new-window -n 'yazi' 'yazi'";
+        }
+      ];
+    };
 
     xdg.mimeApps.defaultApplications."inode/directory" = ["yazi.desktop"];
 
@@ -177,6 +185,11 @@ in {
             "copy path"
           ];
           desc = "copy path";
+        }
+        {
+          on = "!";
+          run = [''shell "$SHELL" --block''];
+          desc = "Open $SHELL here";
         }
       ];
 
