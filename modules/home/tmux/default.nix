@@ -97,29 +97,18 @@ in {
         }
 
         {
-          plugin = tmux-fzf;
+          plugin = tmux-sm;
           extraConfig = ''
-            TMUX_FZF_LAUNCH_KEY="C-f"
-            TMUX_FZF_OPTIONS="-p -w 90% -h 90% -m"
-            TMUX_FZF_ORDER="command|keybinding|session|window|pane"
-            TMUX_FZF_SESSION_FORMAT="#{session_windows} windows"
+            set -g @session_manager_key 's'
+            set -g @session_manager_height '70%'
+            set -g @session_manager_width '80%'
+            set -g @sessionizer_height '70%'
+            set -g @sessionizer_width '80%'
           '';
         }
       ];
 
-      keybindings = let
-        tmuxFzfAction = action: ''
-          run-shell -b "${pkgs.tmuxPlugins.tmux-fzf}/share/tmux-plugins/tmux-fzf/scripts/session.sh ${action}"
-        '';
-      in [
-        {
-          key = "s";
-          action = tmuxFzfAction "switch";
-        }
-        {
-          key = "k";
-          action = tmuxFzfAction "kill";
-        }
+      keybindings = [
         {
           key = "r";
           action = "source-file ~/.config/tmux/tmux.conf";
