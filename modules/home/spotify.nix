@@ -6,10 +6,6 @@
 }: let
   cfg = config.programs.spicetify;
 in {
-  options = {
-    programs.spicetify.autostart = lib.mkEnableOption "xgd autostart";
-  };
-
   config = {
     programs.spicetify = {
       spotifyLaunchFlags = "--password-store=basic";
@@ -32,18 +28,6 @@ in {
     };
 
     stylix.targets.spicetify.enable = false;
-
-    xdg.configFile."autostart/spotify.desktop" = lib.mkIf (cfg.enable && cfg.autostart) {
-      text = ''
-        [Desktop Entry]
-        Type=Application
-        Name=Spotify
-        Exec=hyprctl eval 'hl.dispatch(hl.dsp.exec_cmd("spotify --password-store=basic", {workspace = "special:shadow_realm silent"}))'
-        Icon=spotify
-        Terminal=false
-        Categories=AudioVideo;Player;
-      '';
-    };
 
     wayland.windowManager.hyprland.extraLuaFiles."99-spotify" = let
       playerctl = "${pkgs.playerctl}/bin/playerctl";

@@ -7,6 +7,12 @@
   inherit (lib) mkIf mkEnableOption;
   cfg = config.programs.steam;
   uname = config.home.username;
+
+  autostartFile = pkgs.makeDesktopItem {
+    exec = "steam -silent";
+    name = "steam-autostart";
+    desktopName = "Steam (Autostart)";
+  };
 in {
   options.programs.steam = {
     enable = mkEnableOption "steam stuff";
@@ -20,18 +26,9 @@ in {
       exec = "xdg-open steam://open/friends";
     };
 
-    xdg.configFile."autostart/steam.desktop" = mkIf cfg.autostart {
-      text = ''
-        [Desktop Entry]
-        Name=Steam
-        Comment=Link on Valve Steam
-        Exec=steam -silent
-        Icon=steam
-        Terminal=false
-        Type=Application
-        Categories=Network;FileTransfer;Game;
-      '';
-    };
+    xdg.autostart.entries = lib.optionals cfg.autostart [
+      "${autostartFile}/share/applications/steam-autostart.desktop"
+    ];
 
     home.packages = with pkgs; [protonplus];
 

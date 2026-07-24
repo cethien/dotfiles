@@ -6,6 +6,12 @@
 }: let
   inherit (lib) mkIf mkOption types;
   cfg = config.programs.tmux;
+
+  autostartFile = pkgs.makeDesktopItem {
+    name = "tmux-autostart";
+    exec = "tmux start-server";
+    desktopName = "tmux server (autostart)";
+  };
 in {
   imports = [
     ./tmux-keybindings.nix
@@ -20,19 +26,11 @@ in {
   };
 
   config = mkIf cfg.enable {
-    xdg.configFile."autostart/tmux-server.desktop" = {
-      text = ''
-        [Desktop Entry]
-        Name=Tmux Server
-        Comment=Start tmux server inside graphical session to inherit environment and fonts
-        Exec=${pkgs.tmux}/bin/tmux start-server
-        Terminal=false
-        Type=Application
-        Categories=System;
-      '';
-    };
-
     programs.fzf.tmux.enableShellIntegration = true;
+
+    xdg.autostart.entries = [
+      "${autostartFile}/share/applications/tmux-autostart.desktop"
+    ];
 
     programs.bash.initExtra = builtins.readFile ./tmux-bashinit.sh;
     home.shellAliases.tm = "tmux_new";

@@ -9,6 +9,14 @@
 
   cfg = config.programs.zen-browser;
   uname = "${config.home.username}";
+
+  binName = "zen-beta";
+
+  autostartFile = pkgs.makeDesktopItem {
+    name = "zen-browser-autostart";
+    desktopName = "Zen Browser (Autostart)";
+    exec = binName;
+  };
 in {
   options.programs.zen-browser = {
     autostart = mkEnableOption "zen autostart";
@@ -63,6 +71,10 @@ in {
         "ru"
       ];
     };
+
+    xdg.autostart.entries = lib.optionals cfg.autostart [
+      "${autostartFile}/share/applications/zen-browser-autostart.desktop"
+    ];
 
     stylix.targets.zen-browser.profileNames = ["${uname}"];
 

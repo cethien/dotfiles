@@ -1,6 +1,7 @@
 {
-  lib,
   config,
+  lib,
+  pkgs,
   nixcord,
   ...
 }: let
@@ -11,6 +12,12 @@
     if cfg.vesktop.enable
     then "vesktop"
     else "discord";
+
+  autostartFile = pkgs.makeDesktopItem {
+    exec = "${bin} --start-minimized";
+    name = "discord-autostart";
+    desktopName = "Discord (Autostart)";
+  };
 in {
   imports = [nixcord.homeModules.nixcord];
 
@@ -24,22 +31,9 @@ in {
       border-color = "#5865F2";
     };
 
-    xdg.configFile."autostart/discord.desktop" = mkIf cfg.autostart {
-      text = ''
-        [Desktop Entry]
-        Name=${
-          if bin == "vesktop"
-          then "Vesktop"
-          else "Discord"
-        }
-        Comment=All-in-one voice and text chat
-        Exec=${bin} --start-minimized
-        Icon=${bin}
-        Terminal=false
-        Type=Application
-        Categories=Network;InstantMessaging;
-      '';
-    };
+    xdg.autostart.entries = lib.optionals cfg.autostart [
+      "${autostartFile}/share/applications/discord-autostart.desktop"
+    ];
 
     programs.nixcord = {
       discord.enable = !cfg.vesktop.enable;

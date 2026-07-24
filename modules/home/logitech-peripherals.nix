@@ -6,6 +6,12 @@
 }: let
   inherit (lib) mkIf mkEnableOption;
   cfg = config.programs.logitech-peripherals;
+
+  autostartFile = pkgs.makeDesktopItem {
+    name = "solaar-autostart";
+    exec = "solaar -w hide";
+    desktopName = "Solarr (Autostart)";
+  };
 in {
   options.programs.logitech-peripherals = {
     enable = mkEnableOption "logitech peripherals (requires to enable wireless support on root level)";
@@ -15,17 +21,8 @@ in {
   config = mkIf cfg.enable {
     home.packages = [pkgs.solaar];
 
-    xdg.configFile."autostart/solaar.desktop" = mkIf cfg.autostart {
-      text = ''
-        [Desktop Entry]
-        Name=Solaar
-        Comment=Logitech Device Manager
-        Exec=solaar -w hide
-        Icon=solaar
-        Terminal=false
-        Type=Application
-        Categories=Utility;
-      '';
-    };
+    xdg.autostart.entries = lib.optionals cfg.autostart [
+      "${autostartFile}/share/applications/solaar-autostart.desktop"
+    ];
   };
 }

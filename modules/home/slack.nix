@@ -6,6 +6,12 @@
 }: let
   inherit (lib) mkIf mkEnableOption;
   cfg = config.programs.slack;
+
+  autostartFile = pkgs.makeDesktopItem {
+    name = "slack-autostart";
+    exec = "slack -u";
+    desktopName = "Slack (Autostart)";
+  };
 in {
   options.programs.slack = {
     enable = mkEnableOption "slack";
@@ -20,17 +26,8 @@ in {
       border-color = "#4a154b";
     };
 
-    xdg.configFile."autostart/slack.desktop" = mkIf cfg.autostart {
-      text = ''
-        [Desktop Entry]
-        Name=Slack
-        Comment=Slack Desktop
-        Exec=slack -u
-        Icon=slack
-        Terminal=false
-        Type=Application
-        Categories=Network;InstantMessaging;
-      '';
-    };
+    xdg.autostart.entries = lib.optionals cfg.autostart [
+      "${autostartFile}/share/applications/slack-autostart.desktop"
+    ];
   };
 }
