@@ -55,11 +55,13 @@ in {
         {
           plugin = sysstat;
           extraConfig = ''
+            set -g status-left-length 160
+            set -g status-left '#[fg=#{?client_prefix,black,green},bg=#{?client_prefix,green,default}] #S #[default] #{online_status}'
             set -g status-right-length 160
-            set -g status-right '#{sysstat_cpu} // #{sysstat_mem} |#{online_status}%H:%M '
+            set -g status-right '#{sysstat_cpu} - #{sysstat_mem} | %H:%M#{battery_icon}'
 
-            set -g @sysstat_cpu_view_tmpl '#{cpu.pused}'
-            set -g @sysstat_mem_view_tmpl '#{mem.used}'
+            set -g @sysstat_cpu_view_tmpl 'CPU #{cpu.pused}'
+            set -g @sysstat_mem_view_tmpl 'MEM #{mem.used}/#{mem.total}'
           '';
         }
 
@@ -67,7 +69,26 @@ in {
           plugin = online-status;
           extraConfig = ''
             set -g @online_icon ' '
-            set -g @offline_icon ' #[fg=orange]OFFLINE#[default] '
+            set -g @offline_icon '#[fg=orange]NET_DOWN#[default]'
+          '';
+        }
+
+        {
+          plugin = battery;
+          extraConfig = ''
+            set -g @batt_icon_charge_tier8 ' 󰁹 '
+            set -g @batt_icon_charge_tier7 ' 󰂂 '
+            set -g @batt_icon_charge_tier6 ' 󰂁 '
+            set -g @batt_icon_charge_tier5 ' 󰁿 '
+            set -g @batt_icon_charge_tier4 ' 󰁾 '
+            set -g @batt_icon_charge_tier3 ' 󰁽 '
+            set -g @batt_icon_charge_tier2 ' 󰁻 '
+            set -g @batt_icon_charge_tier1 ' 󰂃 '
+            set -g @batt_icon_status_charged ' 󰂅 '
+            set -g @batt_icon_status_charging ' 󰂄 '
+            set -g @batt_icon_status_discharging ' 󰂌 '
+            set -g @batt_icon_status_attached ' 󰚥 '
+            set -g @batt_icon_status_unknown ' '
           '';
         }
 
