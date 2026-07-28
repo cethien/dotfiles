@@ -33,7 +33,6 @@
     libreoffice.enable = true;
 
     zen-browser = import ./zen-browser.nix {inherit config pkgs;};
-    spicetify.enable = true;
 
     git.settings = import ../_tms/home/git.nix;
     ssh.settings =

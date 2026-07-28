@@ -24,55 +24,28 @@ in {
         pointer
         fixMainViewWidth
       ];
-      theme = pkgs.spicePkgs.themes.text;
+      # theme = pkgs.spicePkgs.themes.text;
     };
 
     stylix.targets.spicetify.enable = false;
 
-    wayland.windowManager.hyprland.extraLuaFiles."99-spotify" = let
-      playerctl = "${pkgs.playerctl}/bin/playerctl";
-    in
+    wayland.windowManager.hyprland.extraLuaFiles."99-spotify" =
       lib.mkIf cfg.enable
       #lua
       ''
         hl.window_rule({
-            match = {
-                class = "^(Spotify)$",
-            },
+            match = { class = "^(Spotify)$", },
             workspace = hl.defaultWorkspace.spotify,
         })
 
-        register_persistent_app("^(Spotify)$")
-
-        local show_spotify = function()
-            local w = hl.get_window("class:^(Spotify)$")
-            if not w then
-                hl.dispatch(hl.dsp.exec_cmd("spotify --password-store=basic"))
-                return
-            end
-
-            local target_workspace = hl.defaultWorkspace.spotify
-            if w.workspace ~= target_workspace then
-                hl.dispatch(hl.dsp.window.move({
-                    workspace = target_workspace,
-                    window = "address:" .. w.address,
-                }))
-            end
-
-            hl.dispatch(hl.dsp.focus({ window = "address:" .. w.address }))
-        end
-
-        hl.bind("SUPER + M", show_spotify)
-        hl.bind("XF86Music", show_spotify)
-
-        local pl = "${playerctl} --player=spotify "
-
-        hl.bind("XF86AudioPlay", hl.dsp.exec_cmd(pl .. "play-pause"), { locked = true })
-        hl.bind("XF86AudioNext", hl.dsp.exec_cmd(pl .. "next"), { locked = true })
-        hl.bind("XF86AudioPrev", hl.dsp.exec_cmd(pl .. "previous"), { locked = true })
-
-        hl.bind("ALT + XF86AudioRaiseVolume", hl.dsp.exec_cmd(pl .. "volume 0.05+"), { locked = true })
-        hl.bind("ALT + XF86AudioLowerVolume", hl.dsp.exec_cmd(pl .. "volume 0.05-"), { locked = true })
+        -- local pl = "${pkgs.playerctl}/bin/playerctl --player=spotify "
+        --
+        -- hl.bind("XF86AudioPlay", hl.dsp.exec_cmd(pl .. "play-pause"), { locked = true })
+        -- hl.bind("XF86AudioNext", hl.dsp.exec_cmd(pl .. "next"), { locked = true })
+        -- hl.bind("XF86AudioPrev", hl.dsp.exec_cmd(pl .. "previous"), { locked = true })
+        --
+        -- hl.bind("ALT + XF86AudioRaiseVolume", hl.dsp.exec_cmd(pl .. "volume 0.05+"), { locked = true })
+        -- hl.bind("ALT + XF86AudioLowerVolume", hl.dsp.exec_cmd(pl .. "volume 0.05-"), { locked = true })
       '';
   };
 }

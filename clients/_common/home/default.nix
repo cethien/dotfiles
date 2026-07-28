@@ -48,7 +48,6 @@ in {
       bottom.enable = mkDefault true;
       utils-qol.enable = mkDefault true;
       tealdeer.enable = true;
-      cava.enable = mkDefault true;
 
       git.enable = mkDefault true;
       lazygit.enable = config.programs.git.enable;
@@ -67,8 +66,8 @@ in {
       gh.enable = mkDefault true;
       pvetui.enable = mkDefault true;
 
-      # spotify-player.enable = mkDefault true;
       wiremix.enable = mkDefault hl;
+      spotify-player.enable = mkDefault true;
       keepassxc.enable = mkDefault hl;
       keepassxc.autostart = mkDefault true;
       zen-browser.enable = mkDefault hl;

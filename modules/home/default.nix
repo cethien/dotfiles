@@ -35,7 +35,6 @@
     ./utils-qol.nix
     ./utils-fun.nix
     ./oh-my-posh.nix
-    ./cava.nix
 
     ./logitech-peripherals.nix
 
