@@ -24,7 +24,6 @@ in {
   config = {
     users.users.cethien.name = mkDefault username;
     home-manager = {
-      useGlobalPkgs = true;
       useUserPackages = true;
       backupFileExtension = "hm-bak";
       extraSpecialArgs = {inherit inputs;} // inputs;
@@ -35,6 +34,9 @@ in {
       ];
 
       users."${username}" = {
+        nixpkgs.config.allowUnfree = true;
+        nixpkgs.overlays = config.nixpkgs.overlays;
+
         imports = [
           inputs.spicetify-nix.homeManagerModules.default
           ./home

@@ -9,7 +9,6 @@
 in {
   config = mkIf cfg.enable {
     programs.spotify-player.settings = {
-      client_id = "9b20bf81c95d4710bee28bff24db41f9";
       enable_notify = false;
       device = {
         autoplay = true;

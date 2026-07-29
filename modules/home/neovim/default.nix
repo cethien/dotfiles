@@ -28,7 +28,7 @@
 
   plugins = with pkgs.vimPlugins;
     [
-      mini-nvim
+      pkgs.unstable.vimPlugins.mini-nvim
       auto-session
       scope-nvim
       toggleterm-nvim
@@ -36,7 +36,6 @@
       nvim-sops
       csvview-nvim
 
-      lorem-nvim
       genpass-nvim
 
       rest-nvim

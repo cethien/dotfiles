@@ -3,7 +3,7 @@ name: update-flake-lock
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 0 * * 0' # runs weekly on Sunday at 00:00
+    - cron: "0 0 * * 0" # runs weekly on Sunday at 00:00
 
 jobs:
   lockfile:
@@ -14,14 +14,15 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
-      
+
       - name: Install Determinate Nix
         uses: DeterminateSystems/determinate-nix-action@v3
-      
+
       - name: Update flake.lock
         uses: DeterminateSystems/update-flake-lock@main
         with:
-          inputs: nixpkgs nix-index-database zen-browser firefox-addons nixcord
+          inputs: |
+            nixpkgs nix-gaming musnix nixpkgs-unstable nix-index-database zen-browser firefox-addons spicetify-nix nixcord
           commit-msg: "chore: weekly inputs update"
           pr-title: "chore: weekly inputs update"
           pr-body: "Automated weekly update of flake inputs."

@@ -8,7 +8,7 @@
 
 # @cmd generate an age key from ssh key
 generate-age-keys() {
-	SOPS_AGE_KEY_FILE="$HOME/.sops/age/keys.txt"
+	SOPS_AGE_KEY_FILE="$HOME/.config/sops/age/keys.txt"
 
 	local key_dir=$(dirname "$SOPS_AGE_KEY_FILE")
 	mkdir -p "$key_dir"

@@ -24,6 +24,10 @@ in {
     # gtk.gtk4.theme = null;
 
     stylix = {
+      targets = {
+        gtksourceview.enable = false;
+      };
+
       polarity = "dark";
       base16Scheme = mkDefault "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
 

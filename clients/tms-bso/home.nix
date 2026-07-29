@@ -19,7 +19,7 @@
     simple-scan
     drawio
     rustdesk-flutter
-    winboat
+    # winboat
   ];
 
   services.davmail.enable = true;

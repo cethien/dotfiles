@@ -2,8 +2,8 @@
   description = "cethien's dotfiles";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
-    flake-utils.url = "github:numtide/flake-utils";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
@@ -16,16 +16,20 @@
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nix-gaming.url = "github:fufexan/nix-gaming";
+    nix-gaming.inputs.nixpkgs.follows = "nixpkgs";
+
+    musnix.url = "github:musnix/musnix";
+    musnix.inputs.nixpkgs.follows = "nixpkgs";
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
+    nix-index-database.url = "github:nix-community/nix-index-database";
+    nix-index-database.inputs.nixpkgs.follows = "nixpkgs-unstable";
+
     stylix.url = "github:nix-community/stylix";
     stylix.inputs.nixpkgs.follows = "nixpkgs-unstable";
-
-    lorem-nvim.url = "github:derektata/lorem.nvim";
-    lorem-nvim.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
     zen-browser.inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -33,17 +37,8 @@
     firefox-addons.url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
     firefox-addons.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
-    nix-gaming.url = "github:fufexan/nix-gaming";
-    nix-gaming.inputs.nixpkgs.follows = "nixpkgs-unstable";
-
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     spicetify-nix.inputs.nixpkgs.follows = "nixpkgs-unstable";
-
-    nix-index-database.url = "github:nix-community/nix-index-database";
-    nix-index-database.inputs.nixpkgs.follows = "nixpkgs-unstable";
-
-    musnix.url = "github:musnix/musnix";
-    musnix.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
     nixcord.url = "github:FlameFlag/nixcord";
     nixcord.inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -63,89 +58,94 @@
 
   outputs = inputs @ {
     self,
-    flake-utils,
     nixpkgs,
-    nixos-hardware,
-    disko,
-    deploy-rs,
     nixpkgs-unstable,
-    home-manager,
-    nix-index-database,
     ...
   }: let
     stateVersion = "25.05";
+    system = "x86_64-linux";
 
-    pkgsFor = system: import nixpkgs {inherit system;};
-
-    pkgsUnstableFor = system:
-      import nixpkgs-unstable {
+    unstableOverlay = final: prev: {
+      unstable = import nixpkgs-unstable {
         inherit system;
         config.allowUnfree = true;
-        overlays = [
-          inputs.firefox-addons.overlays.default
-          inputs.nix-gaming.overlays.default
 
-          (final: prev: {
-            spicePkgs = inputs.spicetify-nix.legacyPackages.${system};
-            vimPlugins =
-              prev.vimPlugins
-              // {
-                lorem-nvim = inputs.lorem-nvim.packages.${system}.default;
-              };
-          })
-        ];
+        overlays = [inputs.firefox-addons.overlays.default];
       };
-  in
-    flake-utils.lib.eachDefaultSystem (system: let
-      pkgs = pkgsFor system;
+      firefox-addons = final.unstable.firefox-addons;
+      spicePkgs = inputs.spicetify-nix.legacyPackages.${system};
+
+      fzf = final.unstable.fzf;
+
+      hyprland = final.unstable.hyprland;
+      steam = final.unstable.steam;
+
+      tmux = final.unstable.tmux;
+      tmuxPlugins = final.unstable.tmuxPlugins;
+      keepassxc = final.unstable.keepassxc;
+      thunderbird = final.unstable.thunderbird;
+      libreoffice-fresh = final.unstable.libreoffice-fresh;
+
+      spotify-player = final.unstable.spotify-player;
+
+      spotify = final.unstable.spotify;
+      discord = final.unstable.discord;
+      vesktop = final.unstable.vesktop;
+      slack = final.unstable.slack;
+    };
+
+    globalNixpkgsModule = {
+      nixpkgs.config.allowUnfree = true;
+
+      nixpkgs.overlays = [
+        unstableOverlay
+        inputs.nix-gaming.overlays.default
+      ];
+    };
+
+    clientNames = ["tms-bso" "tower-of-power" "hp-430-g7"];
+  in {
+    nixosConfigurations = builtins.listToAttrs (map (name: {
+        inherit name;
+        value = nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = {inherit inputs;} // inputs;
+          modules = [
+            globalNixpkgsModule
+            ./clients/_common/configuration.nix
+            ./clients/${name}/hardware-configuration.nix
+            ./clients/${name}/configuration.nix
+            {
+              system = {inherit stateVersion;};
+              networking.hostName = name;
+              _module.args = {
+                hostName = name;
+                inherit stateVersion;
+              };
+            }
+          ];
+        };
+      })
+      clientNames);
+
+    packages.${system} = let
+      pkgs = nixpkgs.legacyPackages.${system};
+    in {
       doot = pkgs.callPackage ./packages/doot {};
       booty =
         (nixpkgs.lib.nixosSystem {
           inherit system;
-          modules = [
-            ./booty/configuration.nix
-          ];
+          modules = [./booty/configuration.nix];
         }).config.system.build.isoImage;
+    };
+
+    devShells.${system} = let
+      pkgs = nixpkgs.legacyPackages.${system};
+      doot = self.packages.${system}.doot;
     in {
-      packages = {
-        inherit doot booty;
-      };
+      default = import ./shell.nix {inherit pkgs doot;};
+    };
 
-      devShells.default = import ./shell.nix {inherit pkgs doot;};
-    })
-    // flake-utils.lib.eachDefaultSystemPassThrough (system: let
-      pkgsUnstable = pkgsUnstableFor system;
-
-      clientNames = [
-        "tms-bso"
-        "tower-of-power"
-        "hp-430-g7"
-      ];
-
-      clients = builtins.listToAttrs (map (name: {
-          inherit name;
-          value = nixpkgs-unstable.lib.nixosSystem {
-            pkgs = pkgsUnstable;
-            specialArgs = {inherit inputs;} // inputs;
-            modules = [
-              ./clients/_common/configuration.nix
-              ./clients/${name}/hardware-configuration.nix
-              ./clients/${name}/configuration.nix
-              {
-                system = {inherit stateVersion;};
-                networking.hostName = name;
-                _module.args = {
-                  hostName = name;
-                  inherit stateVersion;
-                };
-              }
-            ];
-          };
-        })
-        clientNames);
-    in {
-      nixosConfigurations = clients;
-
-      templates = import ./templates;
-    });
+    templates = import ./templates;
+  };
 }
