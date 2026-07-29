@@ -28,7 +28,7 @@
 
   plugins = with pkgs.vimPlugins;
     [
-      pkgs.unstable.vimPlugins.mini-nvim
+      mini-nvim
       auto-session
       scope-nvim
       toggleterm-nvim

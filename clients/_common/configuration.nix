@@ -45,6 +45,7 @@ in {
         home.username = username;
         home.homeDirectory = "/home/${username}";
         home = {inherit stateVersion;};
+        home.enableNixpkgsReleaseCheck = false;
 
         services.udiskie.enable = config.services.udisks2.enable;
         services.udiskie.tray = "never";

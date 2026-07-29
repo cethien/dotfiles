@@ -77,17 +77,21 @@
 
       fzf = final.unstable.fzf;
 
-      hyprland = final.unstable.hyprland;
-      steam = final.unstable.steam;
 
       tmux = final.unstable.tmux;
       tmuxPlugins = final.unstable.tmuxPlugins;
+
+      neovim-unwrapped = final.unstable.neovim-unwrapped;
+      vimPlugins = final.unstable.vimPlugins;
+      vimUtils = final.unstable.vimUtils;
+
+      hyprland = final.unstable.hyprland;
+      steam = final.unstable.steam;
       keepassxc = final.unstable.keepassxc;
       thunderbird = final.unstable.thunderbird;
       libreoffice-fresh = final.unstable.libreoffice-fresh;
 
       spotify-player = final.unstable.spotify-player;
-
       spotify = final.unstable.spotify;
       discord = final.unstable.discord;
       vesktop = final.unstable.vesktop;
