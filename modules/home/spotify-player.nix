@@ -30,6 +30,9 @@ in {
         hl.bind("XF86AudioNext", hl.dsp.exec_cmd(pl .. "next"),       { locked = true })
         hl.bind("XF86AudioPrev", hl.dsp.exec_cmd(pl .. "previous"),   { locked = true })
 
+        hl.bind("SHIFT + XF86AudioNext", hl.dsp.exec_cmd(pl .. "seek 5000"),       { locked = true })
+        hl.bind("SHIFT + XF86AudioPrev", hl.dsp.exec_cmd(pl .. "seek -- -5000"),   { locked = true })
+
         hl.bind("ALT + XF86AudioRaiseVolume", hl.dsp.exec_cmd(pl .. "volume 0.05+"), { locked = true })
         hl.bind("ALT + XF86AudioLowerVolume", hl.dsp.exec_cmd(pl .. "volume 0.05-"), { locked = true })
       '';
