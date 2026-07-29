@@ -1,6 +1,6 @@
 {
-  lib,
   config,
+  lib,
   pkgs,
   zen-browser,
   ...
@@ -28,7 +28,7 @@ in {
   ];
 
   config = mkIf cfg.enable {
-    deeznuts.defaultBrowser = mkIf cfg.isDefault "zen-beta";
+    deeznuts.defaultBrowser = mkIf cfg.isDefault binName;
 
     home.packages = [
       (pkgs.google-fonts.override {

@@ -2,6 +2,7 @@
   config,
   pkgs,
 }: {
+  autostart = true;
   profiles."${config.home.username}" = let
     zen =
       import ../_tms/home/zen-browser.nix {inherit pkgs;};
