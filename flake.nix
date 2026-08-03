@@ -92,6 +92,8 @@
       keepassxc = final.unstable.keepassxc;
       thunderbird = final.unstable.thunderbird;
       libreoffice-fresh = final.unstable.libreoffice-fresh;
+      obs-studio = final.unstable.obs-studio;
+      obs-studio-plugins = final.unstable.obs-studio-plugins;
 
       spotify-player = final.unstable.spotify-player;
       spotify = final.unstable.spotify;
