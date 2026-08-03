@@ -57,7 +57,7 @@ in {
         plugins = {
           clearUrls.enable = true;
           crashHandler.enable = true;
-          favoriteGifSearch.enable = true;
+          # favoriteGifSearch.enable = true;
           fixCodeblockGap.enable = true;
           fixImagesQuality.enable = true;
           fixSpotifyEmbeds.enable = true;
