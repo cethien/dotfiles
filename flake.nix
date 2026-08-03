@@ -84,6 +84,8 @@
       neovim-unwrapped = final.unstable.neovim-unwrapped;
       vimPlugins = final.unstable.vimPlugins;
       vimUtils = final.unstable.vimUtils;
+      yazi = final.unstable.yazi;
+      yaziPlugins = final.unstable.yaziPlugins;
 
       hyprland = final.unstable.hyprland;
       steam = final.unstable.steam;
