@@ -42,27 +42,27 @@ in {
   options.programs.utils-net.enable = lib.mkEnableOption "network utilities";
 
   config = lib.mkIf cfg.enable {
+    home.shellAliases = {
+      trip = "/run/wrappers/bin/trip";
+      arp-scan = "/run/wrappers/bin/arp-scan";
+    };
+
     home.packages = with pkgs; [
       curl
       wget
-      iproute2
-      nettools
-      nmap
-      tcpdump
-      dhcpdump
-      iperf
-      mtr
+
+      ethtool
+      # bmon
       iftop
       nethogs
-      bmon
-      arp-scan
-      fping
-      tshark
-      termshark
-      speedtest-go
+      nmap
       whois
-      impala
+      termshark
 
+      iperf
+      speedtest-go
+
+      impala
       netz
       net-scan
       net-lookup

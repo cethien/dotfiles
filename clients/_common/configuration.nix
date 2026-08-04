@@ -62,43 +62,36 @@ in {
 
     programs.hyprland.enable = mkDefault true;
 
-    users.groups.nettools = {};
-    security.wrappers = {
-      ping = {
-        owner = "root";
-        group = "nettools";
-        capabilities = "cap_net_raw+ep";
-        source = "${pkgs.iputils.out}/bin/ping";
-      };
+    users.groups.net-caps = {};
 
-      trippy-cap = {
+    security.wrappers = {
+      trip = {
         owner = "root";
-        group = "nettools";
-        permissions = "u=rx,g=rx,o="; # Only owner (root) and group (nettools) can execute
+        group = "net-caps";
+        permissions = "u=rx,g=rx,o=";
         capabilities = "cap_net_raw+ep";
         source = "${pkgs.trippy}/bin/trip";
       };
 
-      tshark-cap = {
+      dumpcap = {
         owner = "root";
-        group = "nettools";
+        group = "net-caps";
         permissions = "u=rx,g=rx,o=";
-        capabilities = "cap_net_raw,cap_net_admin=ep";
-        source = "${pkgs.tshark}/bin/dumpcap";
+        capabilities = "cap_net_raw,cap_net_admin+ep";
+        source = "${pkgs.wireshark-cli}/bin/dumpcap";
       };
 
-      termshark-cap = {
+      arp-scan = {
         owner = "root";
-        group = "nettools";
+        group = "net-caps";
         permissions = "u=rx,g=rx,o=";
-        capabilities = "cap_net_raw,cap_net_admin+eip";
-        source = "${pkgs.termshark}/bin/termshark";
+        capabilities = "cap_net_raw+ep";
+        source = "${pkgs.arp-scan}/bin/arp-scan";
       };
     };
-
     users.users.cethien.extraGroups =
       [
-        "nettools"
+        "net-caps"
       ]
       ++ optionals desktop ["audio"]
       ++ optionals (config.hardware.uinput.enable) ["uinput" "input"]
