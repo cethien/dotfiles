@@ -36,22 +36,16 @@ in {
     home.shellAliases.tm = "tmux_new";
 
     programs.tmux = {
+      sensibleOnTop = true;
       clock24 = true;
       baseIndex = 1;
       disableConfirmationPrompt = true;
-      historyLimit = 5000;
-      keyMode = "vi";
       mouse = true;
       prefix = "C-a";
       terminal = "tmux-256color";
 
-      extraConfig = ''
-        ${builtins.readFile ./tmux.conf}
-      '';
-
-      sensibleOnTop = true;
+      newSession = true;
       plugins = with pkgs.tmuxPlugins; [
-        sensible
         {
           plugin = sysstat;
           extraConfig = ''
@@ -127,12 +121,11 @@ in {
         }
       ];
 
-      keybindings = [
-        {
-          key = "r";
-          action = "source-file ~/.config/tmux/tmux.conf";
-        }
+      extraConfig = ''
+        ${builtins.readFile ./tmux.conf}
+      '';
 
+      keybindings = [
         # switch panes using Ctrl-Shift-arrow without prefix
         {
           noprefix = true;
@@ -174,7 +167,7 @@ in {
         }
 
         {
-          key = "m";
+          key = "M";
           action = "copy-mode -u";
         }
       ];
