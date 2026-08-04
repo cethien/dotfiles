@@ -65,41 +65,62 @@
     stateVersion = "25.05";
     system = "x86_64-linux";
 
-    unstableOverlay = final: prev: {
-      unstable = import nixpkgs-unstable {
+    unstableOverlay = final: prev: let
+      unstablePkgs = import nixpkgs-unstable {
         inherit system;
         config.allowUnfree = true;
+      };
 
+      firefoxAddonsPkgs = import nixpkgs-unstable {
+        inherit system;
+        config.allowUnfree = true;
         overlays = [inputs.firefox-addons.overlays.default];
       };
-      firefox-addons = final.unstable.firefox-addons;
+    in {
+      unstable = unstablePkgs;
+      firefox-addons = firefoxAddonsPkgs.firefox-addons;
       spicePkgs = inputs.spicetify-nix.legacyPackages.${system};
 
-      fzf = final.unstable.fzf;
+      inherit
+        (unstablePkgs)
+        fzf
+        tmux
+        tmuxPlugins
+        neovim-unwrapped
+        vimPlugins
+        vimUtils
+        yazi
+        yaziPlugins
+        lazygit
+        lazydocker
+        ;
 
+      inherit
+        (unstablePkgs)
+        hyprland
+        keepassxc
+        thunderbird
+        libreoffice-fresh
+        obs-studio
+        obs-studio-plugins
+        spotify-player
+        spotify
+        discord
+        vesktop
+        slack
+        chromium
+        ;
 
-      tmux = final.unstable.tmux;
-      tmuxPlugins = final.unstable.tmuxPlugins;
-
-      neovim-unwrapped = final.unstable.neovim-unwrapped;
-      vimPlugins = final.unstable.vimPlugins;
-      vimUtils = final.unstable.vimUtils;
-      yazi = final.unstable.yazi;
-      yaziPlugins = final.unstable.yaziPlugins;
-
-      hyprland = final.unstable.hyprland;
-      steam = final.unstable.steam;
-      keepassxc = final.unstable.keepassxc;
-      thunderbird = final.unstable.thunderbird;
-      libreoffice-fresh = final.unstable.libreoffice-fresh;
-      obs-studio = final.unstable.obs-studio;
-      obs-studio-plugins = final.unstable.obs-studio-plugins;
-
-      spotify-player = final.unstable.spotify-player;
-      spotify = final.unstable.spotify;
-      discord = final.unstable.discord;
-      vesktop = final.unstable.vesktop;
-      slack = final.unstable.slack;
+      inherit
+        (unstablePkgs)
+        steam
+        heroic
+        retroarch
+        r2modman
+        pokemmo-installer
+        mangohud
+        prismlauncher
+        ;
     };
 
     globalNixpkgsModule = {
