@@ -122,7 +122,36 @@ in {
       ];
 
       extraConfig = ''
-        ${builtins.readFile ./tmux.conf}
+        # kitty
+        set -as terminal-features 'xterm-kitty:clipboard,ccolour,overline,smso,sitm'
+
+        set -g terminal-features "screen-256color:RGB"
+        set -g allow-passthrough on
+        set -g set-clipboard on
+        set -g renumber-windows on
+
+        # ------
+        # aestheics
+        # ------
+
+        set -g message-style fg=black,bg=yellow
+        set -g message-command-style fg=black,bg=yellow
+
+        set -g status-style bg=default
+        set -g status-position top
+        set -g status-justify left
+
+        set -g window-status-format '#[fg=dimgray,bg=default] #I:#W '
+        set -g window-status-current-format '#[fg=white,bg=default] #I:#W '
+        set -g window-style bg=default
+        set -g window-active-style bg=default
+
+        set -g pane-border-status off
+        set -g pane-border-format ""
+        set -g pane-border-style fg=white
+        set -g pane-active-border-style fg=blue
+        set -g pane-border-lines single
+        set -g pane-border-indicators off
       '';
 
       keybindings = [

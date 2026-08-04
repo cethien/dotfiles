@@ -27,7 +27,7 @@
       keybindings = [
         {
           key = "o";
-          action = ''display-popup -w 80% -h 75% -E "sshz"'';
+          action = "display-popup -w 80% -h 75% -E sshz";
         }
       ];
     };

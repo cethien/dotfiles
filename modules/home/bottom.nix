@@ -26,14 +26,14 @@ in {
     programs.tmux.keybindings = [
       {
         key = "p";
-        action = ''display-popup -w 90% -h 90% -E "btm"'';
+        action = "display-popup -w 85% -h 80% -E btm";
       }
     ];
 
     programs.bottom = {
       settings = {
+        # https://bottom.pages.dev/nightly/configuration/command-line-options/
         flags = {
-          # https://bottom.pages.dev/nightly/configuration/command-line-options/
           basic = true;
           rate = 5000;
           temperature_type = "c"; # Celsius

@@ -11,6 +11,8 @@
     src = ./newnote.sh;
     extraRuntimeDeps = [pkgs.gum];
   };
+
+  exec = "${newnote}/bin/newnote";
 in {
   options.programs.utils.enable = lib.mkEnableOption "utils";
 
@@ -26,7 +28,7 @@ in {
 
     xdg.desktopEntries.create-note = {
       name = "newnote";
-      exec = "${newnote}/bin/newnote";
+      inherit exec;
       terminal = true;
       icon = "text-editor";
       categories = ["Utility"];
@@ -35,7 +37,7 @@ in {
     programs.tmux.keybindings = [
       {
         key = "n";
-        action = "new-window -n 'newnote' '${newnote}/bin/newnote'";
+        action = "new-window -n newnote ${exec}";
       }
     ];
   };

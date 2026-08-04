@@ -36,7 +36,7 @@ in {
       keybindings = [
         {
           key = "e";
-          action = "new-window -n 'yazi' 'yazi'";
+          action = "new-window -n yazi yazi";
         }
       ];
     };

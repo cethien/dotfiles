@@ -28,8 +28,8 @@ in {
 
     programs.tmux.keybindings = [
       {
-        key = ",";
-        action = ''display-popup -w 70% -h 60% -E "qalc"'';
+        key = "-";
+        action = "new-window -n qalc qalc";
       }
     ];
 

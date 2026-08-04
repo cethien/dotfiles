@@ -81,7 +81,7 @@ in {
     programs.tmux.keybindings = [
       {
         key = ",";
-        action = "new-window -n 'networking' '${netz}/bin/netz'";
+        action = "new-window -n networking ${netz}/bin/netz";
       }
     ];
   };

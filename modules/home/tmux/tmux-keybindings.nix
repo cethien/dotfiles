@@ -35,7 +35,7 @@ in {
 
   config = {
     programs.tmux = {
-      extraConfig = ''
+      extraConfig = lib.mkAfter ''
         ${lib.concatStringsSep "\n" (map formatBind tmuxKeybindings)}
       '';
     };

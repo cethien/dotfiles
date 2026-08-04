@@ -37,8 +37,8 @@ in {
 
     programs.tmux.keybindings = [
       {
-        key = "M";
-        action = "new-window -n 'spotify' '${exec}'";
+        key = "m";
+        action = "display-popup -w 85% -h 80% -E ${exec}";
       }
     ];
 
