@@ -122,6 +122,11 @@
       tags = ["shops" "bb" "source" "git" "project"];
     }
     {
+      name = "grafana explore";
+      url = "https://grafana.tmspro.shop/explore";
+      tags = ["monitoring" "grafana"];
+    }
+    {
       name = "grafana";
       url = "https://grafana.tmspro.shop";
       tags = ["monitoring"];
