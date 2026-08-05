@@ -11,9 +11,9 @@ preview() {
 	local config_file="${argc_config:-$HOME/.config/fzf-launcher/config.toml}"
 	local item="$argc_item"
 
-	if [[ "$item" == 󰣀\ \ ssh@* ]]; then
+	if [[ "$item" == 󰣀\ ssh@* ]]; then
 		local ssh_name
-		ssh_name=$(echo "$item" | sed 's/^󰣀  ssh@//')
+		ssh_name=$(echo "$item" | sed 's/^󰣀 ssh@//')
 		if ssh -T -G "$ssh_name" &>/dev/null; then
 			ssh -T -G "$ssh_name" | grep -iE '^(user|hostname|port|identityfile) ' | bat --color=always --plain --language=ssh_config
 		else
@@ -54,7 +54,7 @@ main() {
 		while IFS= read -r host; do
 			if [[ -n "$host" ]]; then
 				local ssh_cmd="ssh -t ${host} 'tmux attach || tmux new-session'"
-				items+=("󰣀  ssh@${host}${TAB}${ssh_cmd}")
+				items+=("󰣀 ssh@${host}${TAB}${ssh_cmd}")
 			fi
 		done < <(grep -iE '^Host[[:space:]]' "$HOME/.ssh/config" | cut -d' ' -f2- | tr ' ' '\n' | grep -v '*' || true)
 	fi
