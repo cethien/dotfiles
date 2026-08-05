@@ -34,7 +34,6 @@ in {
       gnome-font-viewer
       gnome-weather
       gnome-connections
-      simple-scan
     ];
   };
 }

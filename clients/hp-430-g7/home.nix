@@ -22,7 +22,6 @@
   programs.hyprlock.monitor = "eDP-1";
 
   home.packages = with pkgs; [
-    simple-scan
     ausweisapp
     mixxx
     qlcplus

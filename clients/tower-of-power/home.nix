@@ -20,7 +20,6 @@
   services.kdeconnect.enable = true;
 
   home.packages = with pkgs; [
-    simple-scan
     ausweisapp
 
     krita
