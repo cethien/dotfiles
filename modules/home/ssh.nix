@@ -7,7 +7,6 @@
   config = {
     home.packages = with pkgs; [
       sshfs
-      (writeShellScriptBin "sshz" (builtins.readFile ./fzf-ssh.sh))
       (writeShellScriptBin "ssh-scan-from-config" (builtins.readFile ./ssh-scan-from-config.sh))
     ];
 
@@ -22,14 +21,6 @@
       };
     };
 
-    programs.tmux = {
-      resurrectPluginProcesses = ["ssh"];
-      keybindings = [
-        {
-          key = "o";
-          action = "display-popup -w 80% -h 75% -E sshz";
-        }
-      ];
-    };
+    programs.tmux.resurrectPluginProcesses = ["ssh"];
   };
 }

@@ -8,11 +8,15 @@ else
 	echo "portscan target: $TARGET"
 fi
 
-if [ -z "$TARGET" ]; then
+[ -z "$TARGET" ] && {
 	echo "no target provided"
 	exit 1
-fi
+}
 
 echo ""
 
-rustscan --no-banner --ulimit 5000 -a "$TARGET"
+if [[ "$TARGET" == *"/"* ]]; then
+	exec nmap -F --open --min-rate 1000 "$TARGET"
+fi
+
+exec nmap -sV --version-light "$TARGET"

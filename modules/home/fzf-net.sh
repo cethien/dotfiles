@@ -50,23 +50,10 @@ elif [ -n "$HAS_WIFI_DEV" ] && [ -n "$WIFI_ENABLED" ] && [ -z "$CONNECTED_WIFI" 
 
 # --- STATE 3: LOCAL LAN ONLY ---
 elif [ -n "$IS_LOCAL_LAN" ] && [ -z "$IS_ONLINE" ]; then
-	if [ -n "${TMUX:-}" ]; then
-		command -v net-scan >/dev/null && add_opt "󱚿 scan ports" "net-scan" "interactive"
-	fi
 	add_opt "󰣖 network settings" "$TUI_CMD" "exec"
 
 # --- STATE 4: FULL WAN ONLINE ---
 elif [ -n "$IS_ONLINE" ]; then
-	if [ -n "${TMUX:-}" ]; then
-		command -v net-lookup >/dev/null && add_opt "󰬏 lookup domain" "net-lookup" "interactive"
-		command -v net-scan >/dev/null && add_opt "󱚿 portscan" "net-scan" "interactive"
-		command -v speedtest-go >/dev/null && add_opt "󰓅 speedtest" "speedtest-go" "interactive"
-		if command -v iperf3 >/dev/null; then
-			IPERF_CMD="iperf3 -c speedtest.wtnet.de -p 5200 -P 10 -4 -R"
-			add_opt "󰓅 bandwith test [speedtest.wtnet.de]" "$IPERF_CMD" "interactive"
-		fi
-	fi
-
 	if [ -n "$HAS_TAILSCALE" ]; then
 		TS_STATUS=$(tailscale status --json 2>/dev/null | jq -r '.BackendState' 2>/dev/null) || TS_STATUS=""
 		if [ "$TS_STATUS" = "NeedsLogin" ]; then

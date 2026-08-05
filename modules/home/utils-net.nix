@@ -6,33 +6,34 @@
 }: let
   cfg = config.programs.utils-net;
 
+  net-portscan = pkgs.writeShellApplication {
+    name = "net-portscan";
+    runtimeInputs = with pkgs; [nmap];
+    text = builtins.readFile ./net-portscan.sh;
+    checkPhase = "";
+  };
+
+  net-lookup = pkgs.writeShellApplication {
+    name = "net-lookup";
+    runtimeInputs = with pkgs; [
+      whois
+      openssl
+      doggo
+    ];
+    text = builtins.readFile ./net-lookup.sh;
+    checkPhase = "";
+  };
+
   netz-preview = pkgs.writeShellApplication {
     name = "netz-preview";
     runtimeInputs = with pkgs; [qrencode];
     text = builtins.readFile ./fzf-net-preview.sh;
     checkPhase = "";
   };
-
-  net-scan = pkgs.writeShellApplication {
-    name = "net-scan";
-    runtimeInputs = with pkgs; [rustscan];
-    text = builtins.readFile ./net-scan.sh;
-    checkPhase = "";
-  };
-
-  net-lookup = pkgs.writeShellApplication {
-    name = "net-lookup";
-    runtimeInputs = with pkgs; [doggo whois openssl];
-    text = builtins.readFile ./net-lookup.sh;
-    checkPhase = "";
-  };
-
   netz = pkgs.writeShellApplication {
     name = "netz";
     runtimeInputs = with pkgs; [
       zbar
-      net-scan
-      net-lookup
       netz-preview
     ];
     text = builtins.readFile ./fzf-net.sh;
@@ -61,11 +62,11 @@ in {
 
       iperf
       speedtest-go
+      net-portscan
+      net-lookup
 
       impala
       netz
-      net-scan
-      net-lookup
     ];
 
     wayland.windowManager.hyprland.extraLuaFiles = {
@@ -78,10 +79,28 @@ in {
         '';
     };
 
-    programs.tmux.keybindings = [
+    programs.fzf-launcher.tools = let
+      hold = "; trap 'exit 0' INT; sleep infinity";
+    in [
       {
-        key = ",";
-        action = "new-window -n networking ${netz}/bin/netz";
+        name = "󰬏 lookup domain";
+        exec = "net-lookup" + hold;
+      }
+      {
+        name = "󱚿 portscan";
+        exec = "net-portscan" + hold;
+      }
+      {
+        name = "󰅟 trace packet routes";
+        exec = "trip $(${pkgs.gum}/bin/gum input --prompt='󰅟 trace target: ')";
+      }
+      {
+        name = "󰓅 speedtest";
+        exec = "speedtest-go" + hold;
+      }
+      {
+        name = "󰓅 bandwith test [speedtest.wtnet.de]";
+        exec = "iperf3 -c speedtest.wtnet.de -p 5200 -P 10 -4 -R" + hold;
       }
     ];
   };
