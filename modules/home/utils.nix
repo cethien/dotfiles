@@ -4,10 +4,10 @@
   config,
   ...
 }: let
-  inherit (config.lib.deeznuts.argc) mkBashBin mkBashBin';
+  inherit (config.lib.deeznuts) mkArgcBashBin mkArgcBashBin';
   cfg = config.programs.utils;
 
-  newnote = mkBashBin {
+  newnote = mkArgcBashBin {
     src = ./newnote.sh;
     extraRuntimeDeps = [pkgs.gum];
   };
@@ -19,7 +19,7 @@ in {
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
       newnote
-      (mkBashBin' ./init.sh)
+      (mkArgcBashBin' ./init.sh)
       (writeShellScriptBin "update" (builtins.readFile ./update.sh))
       (writeShellScriptBin "cleanup" (builtins.readFile ./cleanup.sh))
       (writeShellScriptBin "clip" (builtins.readFile ./clip.sh))

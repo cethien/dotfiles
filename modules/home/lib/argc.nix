@@ -5,7 +5,7 @@
   ...
 }: let
   argc = rec {
-    mkBashBin = {
+    mkArgcBashBin = {
       src,
       extraRuntimeDeps ? [],
     }: let
@@ -37,8 +37,8 @@
         '';
       };
 
-    mkBashBin' = src: mkBashBin {inherit src;};
+    mkArgcBashBin' = src: mkArgcBashBin {inherit src;};
   };
 in {
-  config.lib.deeznuts = {inherit argc;};
+  config.lib.deeznuts = argc;
 }
