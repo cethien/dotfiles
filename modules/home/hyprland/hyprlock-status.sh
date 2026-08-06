@@ -3,9 +3,9 @@
 # --- TAILSCALE ---
 TS_LABEL=""
 if command -v tailscale &>/dev/null; then
-  if tailscale status --peers=false &>/dev/null; then
-    TS_LABEL="󰖂"
-  fi
+	if tailscale status --peers=false &>/dev/null; then
+		TS_LABEL="󰖂"
+	fi
 fi
 
 # --- NETWORK (WLAN) ---
@@ -13,61 +13,65 @@ NET_LABEL=""
 WLAN_IFACE=$(ls /sys/class/net | grep '^wl' | head -n 1)
 
 if [ -n "$WLAN_IFACE" ]; then
-  CURRENT_IFACE=$(ip route | grep '^default' | awk '{print $5; exit}')
+	CURRENT_IFACE=$(ip route | grep '^default' | awk '{print $5; exit}')
 
-  if [ "$CURRENT_IFACE" = "$WLAN_IFACE" ]; then
-    WIFI_INFO=$(nmcli -t -f active,ssid,signal dev wifi 2>/dev/null | awk -F: '$1=="yes"{print $2":"$3}')
-    SSID=$(echo "$WIFI_INFO" | cut -d: -f1)
-    SIGNAL=$(echo "$WIFI_INFO" | cut -d: -f2)
+	if [ "$CURRENT_IFACE" = "$WLAN_IFACE" ]; then
+		WIFI_INFO=$(nmcli -t -f active,ssid,signal dev wifi 2>/dev/null | awk -F: '$1=="yes"{print $2":"$3}')
+		SSID=$(echo "$WIFI_INFO" | cut -d: -f1)
+		SIGNAL=$(echo "$WIFI_INFO" | cut -d: -f2)
 
-    [ -z "$SSID" ] && SSID="$WLAN_IFACE"
-    [ -z "$SIGNAL" ] && SIGNAL=0
+		[ -z "$SSID" ] && SSID="$WLAN_IFACE"
+		[ -z "$SIGNAL" ] && SIGNAL=0
 
-    # Signal strength icons
-    if ((SIGNAL >= 75)); then
-      icon="󰤟"
-    elif ((SIGNAL >= 50)); then
-      icon="󰤢"
-    elif ((SIGNAL >= 25)); then
-      icon="󰤥"
-    else
-      icon="󰤨"
-    fi
+		# Signal strength icons
+		if ((SIGNAL >= 75)); then
+			icon="󰤟"
+		elif ((SIGNAL >= 50)); then
+			icon="󰤢"
+		elif ((SIGNAL >= 25)); then
+			icon="󰤥"
+		else
+			icon="󰤨"
+		fi
 
-    NET_LABEL="${icon} ${SSID}"
-  else
-    NET_LABEL="󰖪 disconnected"
-  fi
+		NET_LABEL="${icon} ${SSID}"
+	else
+		NET_LABEL="󰖪 disconnected"
+	fi
 fi
 
 # --- BATTERY ---
 BAT_LABEL=""
 BAT_PATH="/sys/class/power_supply/BAT0"
 if [ -d "$BAT_PATH" ]; then
-  BAT_PERCENT=$(cat "$BAT_PATH/capacity")
-  BAT_STATUS=$(cat "$BAT_PATH/status")
+	BAT_PERCENT=$(cat "$BAT_PATH/capacity")
+	BAT_STATUS=$(cat "$BAT_PATH/status" | tr '[:upper:]' '[:lower:]')
 
-  if [ "$BAT_STATUS" = "charging" ]; then
-    BAT_ICON="󰂄"
-  else
-    BAT_ICONS=("󰂃" "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰁹")
-    ICON_INDEX=$((BAT_PERCENT / 11))
-    BAT_ICON=${BAT_ICONS[ICON_INDEX]}
-  fi
-  BAT_LABEL="${BAT_ICON} ${BAT_PERCENT}%"
+	CHARGING_ICONS=("󰢜" "󰂆" "󰂇" "󰂈" "󰢝" "󰂉" "󰢞" "󰂊" "󰂋" "󰂅")
+	DISCHARGING_ICONS=("󰂃" "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰁹")
+
+	ICON_INDEX=$((BAT_PERCENT / 11))
+	[ $ICON_INDEX -gt 9 ] && ICON_INDEX=9
+
+	if [ "$BAT_PERCENT" -ge 100 ] && [ "$BAT_STATUS" != "discharging" ]; then
+		BAT_LABEL="󰂅 FULL"
+	else
+		[ "$BAT_STATUS" = "charging" ] && BAT_ICON=${CHARGING_ICONS[ICON_INDEX]} || BAT_ICON=${DISCHARGING_ICONS[ICON_INDEX]}
+		BAT_LABEL="${BAT_ICON} ${BAT_PERCENT}%"
+	fi
 fi
 
 # --- OUTPUT (JOINING) ---
 SEPERATOR=""
 OUTPUT=""
 for item in "$TS_LABEL" "$NET_LABEL" "$BAT_LABEL"; do
-  if [ -n "$item" ]; then
-    if [ -z "$OUTPUT" ]; then
-      OUTPUT="$item"
-    else
-      OUTPUT="$OUTPUT  ${SEPERATOR}  $item"
-    fi
-  fi
+	if [ -n "$item" ]; then
+		if [ -z "$OUTPUT" ]; then
+			OUTPUT="$item"
+		else
+			OUTPUT="$OUTPUT  ${SEPERATOR}  $item"
+		fi
+	fi
 done
 
 echo "$OUTPUT"

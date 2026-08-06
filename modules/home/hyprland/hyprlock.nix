@@ -7,6 +7,7 @@
   inherit (lib) mkIf;
   cfg = config.programs.hyprlock;
 
+  monitor = cfg.monitor;
   fonts = config.stylix.fonts;
   colors = let
     c = config.lib.stylix.colors;
@@ -22,6 +23,22 @@
     base0D = "rgba(${c.base0D-rgb-r}, ${c.base0D-rgb-g}, ${c.base0D-rgb-b}, ${o})";
     base0E = "rgba(${c.base0E-rgb-r}, ${c.base0E-rgb-g}, ${c.base0E-rgb-b}, ${o})";
   };
+
+  withDefaults = attrs:
+    {
+      inherit monitor halign valign;
+      shadow_passes = 4;
+      shadow_size = 6;
+      shadow_color = "rgb(0,0,0)";
+      shadow_boost = 1.2;
+    }
+    // attrs;
+
+  halign = "center";
+  valign = "center";
+
+  statusScript = "${pkgs.writeShellScriptBin "hyprlock-status" (builtins.readFile ./hyprlock-status.sh)}/bin/hyprlock-status";
+  quotesScript = "${pkgs.writeShellScriptBin "hyprlock-quotes" (builtins.readFile ./hyprlock-quotes.sh)}/bin/hyprlock-quotes";
 in {
   options.programs.hyprlock.monitor = lib.mkOption {
     type = lib.types.str;
@@ -30,20 +47,12 @@ in {
 
   config = mkIf cfg.enable {
     stylix.targets.hyprlock.enable = false;
-    programs.hyprlock.settings = let
-      shadows = {
-        shadow_passes = 4;
-        shadow_size = 6;
-        shadow_color = "rgb(0,0,0)";
-        shadow_boost = 1.2;
-      };
-    in {
-      auth = {
-        fingerprint = {
-          enabled = true;
-          ready_message = "pwd or fprint";
-          present_message = "scanning...";
-        };
+
+    programs.hyprlock.settings = {
+      auth.fingerprint = {
+        enabled = true;
+        ready_message = "pwd or fprint";
+        present_message = "scanning...";
       };
 
       general = {
@@ -63,90 +72,65 @@ in {
       ];
 
       input-field = lib.mkForce [
-        (shadows
-          // {
-            monitor = cfg.monitor;
-            fade_on_empty = false;
-            font_family = fonts.monospace.name;
+        (withDefaults {
+          fade_on_empty = false;
+          font_family = fonts.monospace.name;
 
-            placeholder_color = colors.base04;
-            bar_text_color = colors.base01;
-            bar_color = colors.base01;
-            fail_color = colors.base0E;
+          placeholder_color = colors.base04;
+          bar_text_color = colors.base01;
+          bar_color = colors.base01;
+          fail_color = colors.base0E;
 
-            ring_color = colors.base02;
+          ring_color = colors.base02;
 
-            ring_color_error = colors.base0E;
-            ring_color_clear = colors.base0B;
-            ring_color_caps = colors.base09;
-            ring_color_vkey = colors.base0D;
-            ring_color_verify = colors.base0B;
+          ring_color_error = colors.base0E;
+          ring_color_clear = colors.base0B;
+          ring_color_caps = colors.base09;
+          ring_color_vkey = colors.base0D;
+          ring_color_verify = colors.base0B;
 
-            placeholder_text = "";
-            fail_text = "whoops! try again";
+          placeholder_text = "";
+          fail_text = "whoops! try again";
 
-            halign = "center";
-            valign = "center";
-            position = "0, 0";
-          })
+          position = "0, 0";
+        })
       ];
 
-      label = lib.mkMerge [
-        [
-          (shadows
-            // {
-              monitor = cfg.monitor;
+      label = let
+        mkLabel = attrs:
+          withDefaults ({
+              font_family = fonts.sansSerif.name;
               color = colors.base05;
-              font_family = fonts.sansSerif.name;
-              font_size = "95";
-              halign = "center";
-              valign = "center";
-              position = "0, 325";
-              text = "$TIME";
-            })
-          (shadows
-            // {
-              monitor = cfg.monitor;
-              color = colors.base05;
-              font_family = fonts.sansSerif.name;
-              font_size = "22";
-              halign = "center";
-              valign = "center";
-              position = "0, 200";
-              text = ''cmd[update:1000] echo $(date +"%A, %B %d")'';
-            })
-          (shadows
-            // {
-              monitor = cfg.monitor;
-              color = colors.base05;
-              font_family = fonts.sansSerif.name;
-              font_size = "22";
-              halign = "center";
-              valign = "center";
-              position = "0, -255";
-              text = ''cmd[update:1000] ${pkgs.writeShellScriptBin "hyprlock-status" (builtins.readFile ./hyprlock-status.sh)}/bin/hyprlock-status'';
-            })
-
-          (shadows
-            // {
-              monitor = cfg.monitor;
-              color = colors.base04;
-              font_family = fonts.sansSerif.name;
-              font_size = "14";
-              text_align = "center";
-              halign = "center";
-              valign = "center";
-              position = "0, -150";
-              text = ''cmd[update:0] ${pkgs.writeShellScriptBin "hyprlock-quotes" (builtins.readFile ./hyprlock-quotes.sh)}/bin/hyprlock-quotes'';
-            })
-        ]
+            }
+            // attrs);
+      in [
+        (mkLabel {
+          font_size = "95";
+          position = "0, 325";
+          text = "$TIME";
+        })
+        (mkLabel {
+          font_size = "22";
+          position = "0, 200";
+          text = ''cmd[update:1000] echo $(date +"%A, %B %d")'';
+        })
+        (mkLabel {
+          font_size = "22";
+          position = "0, -255";
+          text = "cmd[update:1000] ${statusScript}";
+        })
+        (mkLabel {
+          color = colors.base04;
+          font_size = "14";
+          text_align = "center";
+          position = "0, -150";
+          text = "cmd[update:0] ${quotesScript}";
+        })
       ];
     };
 
-    wayland.windowManager.hyprland.extraLuaFiles."99-lock" =
-      #lua
-      ''
-        hl.bind("SUPER + L", hl.dsp.exec_cmd("hyprlock"))
-      '';
+    wayland.windowManager.hyprland.extraLuaFiles."99-lock" = ''
+      hl.bind("SUPER + L", hl.dsp.exec_cmd("hyprlock"))
+    '';
   };
 }
