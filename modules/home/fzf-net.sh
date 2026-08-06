@@ -1,25 +1,35 @@
 #!/usr/bin/env bash
 
-command -v tailscale >/dev/null && HAS_TAILSCALE=1 || HAS_TAILSCALE=""
-command -v impala >/dev/null && TUI_CMD="impala" || TUI_CMD="nmtui"
+# Hilfsfunktion für QR Scan (vermeidet klobige Strings & ShellCheck-Warnungen)
+connect_via_qr() {
+	local data ssid pass
+	data=$(zbarcam -1 --raw /dev/video0 2>/dev/null)
+	[ -z "$data" ] && return 1
 
-HAS_WIFI_DEV=$(nmcli -t -f TYPE device | grep -q "wifi" && echo "1" || echo "")
-WIFI_ENABLED=$(nmcli radio wifi | grep -q "enabled" && echo "1" || echo "")
+	ssid=$(echo "$data" | sed -n 's/.*S:\([^;]*\).*/\1/p')
+	pass=$(echo "$data" | sed -n 's/.*P:\([^;]*\).*/\1/p')
 
-CONNECTED_WIFI=$(nmcli -t -f TYPE,STATE device | grep -q "^wifi:connected" && echo "1" || echo "")
-CONNECTED_ETH=$(nmcli -t -f TYPE,STATE device | grep -q "^ethernet:connected" && echo "1" || echo "")
-HAS_DEFAULT_ROUTE=$(ip route | grep -q "^default" && echo "1" || echo "")
+	if [ -n "$ssid" ]; then
+		nmcli dev wifi connect "$ssid" password "$pass"
+	fi
+}
 
-IS_ONLINE=""
-IS_LOCAL_LAN=""
-IS_DISCONNECTED=""
+# Exportieren, falls interaktiv aus Subshell aufgerufen
+export -f connect_via_qr
 
-if [ -n "$HAS_DEFAULT_ROUTE" ]; then
-	IS_ONLINE=1
-elif [ -n "$CONNECTED_ETH" ] || [ -n "$CONNECTED_WIFI" ]; then
-	IS_LOCAL_LAN=1
-else
-	IS_DISCONNECTED=1
+HAS_WIFI_DEV=$(nmcli -t -f TYPE device 2>/dev/null | grep -q "^wifi" && echo "1")
+WIFI_ENABLED=$(nmcli radio wifi 2>/dev/null | grep -q "^enabled" && echo "1")
+
+IS_CONNECTED=""
+if ip route get 1.1.1.1 >/dev/null 2>&1; then
+	IS_CONNECTED="1"
+fi
+
+# 1. Kein Netz + WiFi aus/geblockt oder nicht vorhanden -> Direkt Impala
+if [ -z "$IS_CONNECTED" ]; then
+	if [ -z "$HAS_WIFI_DEV" ] || [ -z "$WIFI_ENABLED" ]; then
+		exec impala
+	fi
 fi
 
 declare -A ACTIONS
@@ -33,62 +43,46 @@ add_opt() {
 	ACTION_TYPES["$label"]="$type"
 }
 
-# --- STATE 1: COMPLETELY DISCONNECTED ---
-if [ -n "$IS_DISCONNECTED" ]; then
-	if [ -n "$HAS_WIFI_DEV" ] && [ -z "$WIFI_ENABLED" ]; then
-		add_opt "󰖩 enable wifi" "nmcli radio wifi on" "silent"
+# 2. Statusbasierte Menüpunkte
+if [ -n "$IS_CONNECTED" ]; then
+	# Verbunden: LAN oder WLAN
+	add_opt "󰣖 network settings" "impala" "exec"
+
+	if command -v tailscale >/dev/null; then
+		TS_STATUS=$(tailscale status --json 2>/dev/null | jq -r '.BackendState' 2>/dev/null)
+		case "$TS_STATUS" in
+		"NeedsLogin") add_opt "󰍂 login to tailscale" "sudo tailscale login" "silent" ;;
+		"Running") add_opt "󰌙 disable tailscale" "tailscale down" "silent" ;;
+		"Stopped") add_opt "󰌘 enable tailscale" "tailscale up --accept-routes" "silent" ;;
+		esac
 	fi
-	add_opt "󰣖 network settings" "$TUI_CMD" "exec"
-
-# --- STATE 2: WIFI AN, ABER NICHT VERBUNDEN ---
-elif [ -n "$HAS_WIFI_DEV" ] && [ -n "$WIFI_ENABLED" ] && [ -z "$CONNECTED_WIFI" ] && [ -z "$CONNECTED_ETH" ]; then
-	if command -v zbarcam >/dev/null; then
-		QR_CONNECT_CMD='DATA=$(zbarcam -1 --raw /dev/video0); SSID=$(echo "$DATA" | sed -n "s/.*S:\([^;]*\).*/\1/p"); PASS=$(echo "$DATA" | sed -n "s/.*P:\([^;]*\).*/\1/p"); nmcli dev wifi connect "$SSID" password "$PASS"'
-		add_opt "󰄀 connect via qr" "$QR_CONNECT_CMD" "interactive"
+else
+	# Nicht verbunden: QR-Option NUR anzeigen, wenn WLAN-Hardware da & eingeschaltet ist
+	if [ -n "$HAS_WIFI_DEV" ] && [ -n "$WIFI_ENABLED" ]; then
+		add_opt "󰄀 connect via qr" "connect_via_qr" "interactive"
 	fi
-	add_opt "󰣖 network settings" "$TUI_CMD" "exec"
-
-# --- STATE 3: LOCAL LAN ONLY ---
-elif [ -n "$IS_LOCAL_LAN" ] && [ -z "$IS_ONLINE" ]; then
-	add_opt "󰣖 network settings" "$TUI_CMD" "exec"
-
-# --- STATE 4: FULL WAN ONLINE ---
-elif [ -n "$IS_ONLINE" ]; then
-	if [ -n "$HAS_TAILSCALE" ]; then
-		TS_STATUS=$(tailscale status --json 2>/dev/null | jq -r '.BackendState' 2>/dev/null) || TS_STATUS=""
-		if [ "$TS_STATUS" = "NeedsLogin" ]; then
-			add_opt "󰍂 login to tailscale" "sudo tailscale login" "silent"
-		elif [ "$TS_STATUS" = "Running" ]; then
-			add_opt "󰌙 disable tailscale" "tailscale down" "silent"
-		elif [ "$TS_STATUS" = "Stopped" ]; then
-			add_opt "󰌘 enable tailscale" "tailscale up --accept-routes" "silent"
-		fi
-	fi
-
-	add_opt "󰣖 network settings" "$TUI_CMD" "exec"
+	add_opt "󰣖 network settings" "impala" "exec"
 fi
 
 [ ${#MENU_ITEMS[@]} -eq 0 ] && exit 0
 
+# Preview Setup
 ACTIVE_DEV=$(ip route get 1.1.1.1 2>/dev/null | grep -oP 'dev \K\S+')
 CONN_NAME=""
 [ -n "$ACTIVE_DEV" ] && CONN_NAME=$(nmcli -t -f GENERAL.CONNECTION dev show "$ACTIVE_DEV" 2>/dev/null | cut -d: -f2)
 
 PREVIEW_OPTS=()
 if [ -n "$CONN_NAME" ]; then
-	PREVIEW_OPTS+=(
-		--preview="netz-preview {}"
+	PREVIEW_OPTS=(
+		--preview="netz-preview"
 		--preview-window="right:60%:wrap"
 		--preview-label=" $CONN_NAME "
 	)
 else
-	PREVIEW_OPTS+=(--preview-window="hidden")
+	PREVIEW_OPTS=(--preview-window="hidden")
 fi
 
-CHOICE=$(printf "%s\n" "${MENU_ITEMS[@]}" | fzf \
-	--prompt="network > " \
-	"${PREVIEW_OPTS[@]}")
-
+CHOICE=$(printf "%s\n" "${MENU_ITEMS[@]}" | fzf --prompt="network > " "${PREVIEW_OPTS[@]}")
 [ -z "$CHOICE" ] && exit 0
 
 CMD="${ACTIONS[$CHOICE]}"
@@ -101,7 +95,6 @@ case "$TYPE" in
 "interactive")
 	clear
 	eval "$CMD"
-	echo ""
 	read -n 1 -s -r -p "Press any key to continue..."
 	;;
 "silent")

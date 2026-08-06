@@ -28,6 +28,7 @@
     ./lazydocker.nix
     ./pvetui.nix
     ./pandoc
+    ./impala.nix
 
     ./utils.nix
     ./utils-net.nix

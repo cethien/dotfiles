@@ -3,7 +3,6 @@
 ACTIVE_DEV=$(ip route get 1.1.1.1 2>/dev/null | grep -oP 'dev \K\S+')
 [ -z "$ACTIVE_DEV" ] && exit 0
 
-# 1. QR-Code (nur bei aktivem WLAN)
 ACTIVE_WIFI=$(nmcli -t -f active,ssid dev wifi 2>/dev/null | grep '^yes:' | cut -d: -f2)
 if [ -n "$ACTIVE_WIFI" ] && command -v qrencode >/dev/null; then
 	PASS=$(nmcli -s -g 802-11-wireless-security.psk connection show "$ACTIVE_WIFI" 2>/dev/null)
@@ -26,7 +25,6 @@ mapfile -t DNS_LIST < <(echo "$SHOW_OUT" | grep -E '(IP4.DNS|IP6.DNS)' | awk '{p
 IP="${IPV4:-$IPV6}"
 GW="${GWV4:-$GWV6}"
 
-# 2. Direct Instant Output
 [ -n "$DOMAIN" ] && echo -e "\033[1;36mdomain:\033[0m  $DOMAIN"
 [ -n "$IP" ] && echo -e "\033[1;33mip:\033[0m      $IP"
 
@@ -38,6 +36,6 @@ fi
 if [ ${#DNS_LIST[@]} -gt 0 ]; then
 	echo -e "\033[1;34mdns:\033[0m     ${DNS_LIST[0]}"
 	for ((i = 1; i < ${#DNS_LIST[@]}; i++)); do
-		echo "         ${DNS_LIST[$i]}"
+		echo "        ${DNS_LIST[$i]}"
 	done
 fi

@@ -25,23 +25,6 @@
 
     ${builtins.readFile ./net-lookup.sh}
   '';
-
-  netz-preview = pkgs.writeShellApplication {
-    name = "netz-preview";
-    runtimeInputs = with pkgs; [qrencode];
-    text = builtins.readFile ./fzf-net-preview.sh;
-    checkPhase = "";
-  };
-
-  netz = pkgs.writeShellApplication {
-    name = "netz";
-    runtimeInputs = with pkgs; [
-      zbar
-      netz-preview
-    ];
-    text = builtins.readFile ./fzf-net.sh;
-    checkPhase = "";
-  };
 in {
   options.programs.utils-net.enable = lib.mkEnableOption "network utilities";
 
@@ -61,26 +44,14 @@ in {
       nethogs
       nmap
       whois
+      doggo
       termshark
 
       iperf
       speedtest-go
       net-portscan
       net-lookup
-
-      impala
-      netz
     ];
-
-    wayland.windowManager.hyprland.extraLuaFiles = {
-      "99-utils-net" =
-        # lua
-        ''
-          Modal("netz", { binds = {
-          	"SUPER + N",
-          } })
-        '';
-    };
 
     programs.tmux.launcher.entries = [
       {
