@@ -15,6 +15,7 @@
 in {
   imports = [
     ./tmux-keybindings.nix
+    ./tmux-launcher.nix
   ];
 
   options.programs.tmux = {
@@ -193,11 +194,6 @@ in {
           noprefix = true;
           key = "C-M-Left";
           action = "previous-window";
-        }
-
-        {
-          key = "M";
-          action = "copy-mode -u";
         }
       ];
     };

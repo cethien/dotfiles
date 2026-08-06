@@ -35,13 +35,6 @@ in {
       explicit_icon = "󰯹";
     };
 
-    programs.tmux.keybindings = [
-      {
-        key = "m";
-        action = "display-popup -w 85% -h 80% -E ${exec}";
-      }
-    ];
-
     wayland.windowManager.hyprland.extraLuaFiles."99-spotify-player" =
       #lua
       ''

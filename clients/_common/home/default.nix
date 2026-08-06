@@ -41,7 +41,6 @@ in {
       zoxide.enable = true;
       ripgrep.enable = true;
       fzf.enable = true;
-      fzf-launcher.enable = true;
       fd.enable = true;
       eza.enable = true;
       bat.enable = true;

@@ -79,28 +79,35 @@ in {
         '';
     };
 
-    programs.fzf-launcher.tools = let
-      hold = "; trap 'exit 0' INT; sleep infinity";
-    in [
+    programs.tmux.launcher.entries = [
       {
-        name = "󰬏 lookup domain";
-        exec = "net-lookup" + hold;
+        icon = "󰇖";
+        name = "lookup domain";
+        exec = "net-lookup";
+        hold = true;
       }
       {
-        name = "󱚿 portscan";
-        exec = "net-portscan" + hold;
+        icon = "󰈈";
+        name = "portscan";
+        exec = "net-portscan";
+        hold = true;
       }
       {
-        name = "󰅟 trace packet routes";
-        exec = "trip $(${pkgs.gum}/bin/gum input --prompt='󰅟 trace target: ')";
+        icon = "󰏔";
+        name = "trace packet routes";
+        exec = "trip $(${pkgs.gum}/bin/gum input --prompt='trace target: ')";
       }
       {
-        name = "󰓅 speedtest";
-        exec = "speedtest-go" + hold;
+        icon = "󰓅";
+        name = "speedtest";
+        exec = "speedtest-go";
+        hold = true;
       }
       {
-        name = "󰓅 bandwith test [speedtest.wtnet.de]";
-        exec = "iperf3 -c speedtest.wtnet.de -p 5200 -P 10 -4 -R" + hold;
+        icon = "󰾆";
+        name = "bandwith test [speedtest.wtnet.de]";
+        exec = "iperf3 -c speedtest.wtnet.de -p 5200 -P 10 -4 -R";
+        hold = true;
       }
     ];
   };

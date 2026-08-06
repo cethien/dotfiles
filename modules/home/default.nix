@@ -16,7 +16,6 @@
     ./neovim
 
     ./fzf.nix
-    ./fzf-launcher
     ./ssh.nix
     ./yazi
     ./bottom.nix

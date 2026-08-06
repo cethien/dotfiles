@@ -34,11 +34,45 @@ in {
       categories = ["Utility"];
     };
 
-    programs.tmux.keybindings = [
-      {
-        key = "n";
-        action = "new-window -n newnote ${exec}";
-      }
-    ];
+    programs.tmux = {
+      launcher.entries = let
+        nix-shell-wrapper = pkgs.writeShellScriptBin "nix-shell-wrapper" ''
+          input=$(${pkgs.gum}/bin/gum input --placeholder="e.g. ripgrep fd  OR  cowsay")
+
+          [ -z "$input" ] && exit 0
+
+          args=""
+          for pkg in $input; do
+            if [[ "$pkg" == *#* ]]; then
+              args="$args $pkg"
+            else
+              args="$args nixpkgs#$pkg"
+            fi
+          done
+
+          exec nix shell $args
+        '';
+        icon = "󱄅";
+      in [
+        {
+          inherit icon;
+          name = "run";
+          exec = ", $(${pkgs.gum}/bin/gum input --placeholder='e.g. cowsay hello')";
+          hold = true;
+        }
+        {
+          inherit icon;
+          name = "shell";
+          exec = "${nix-shell-wrapper}/bin/nix-shell-wrapper";
+        }
+      ];
+
+      keybindings = [
+        {
+          key = "n";
+          action = "new-window -n newnote ${exec}";
+        }
+      ];
+    };
   };
 }
