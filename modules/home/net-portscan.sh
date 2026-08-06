@@ -9,7 +9,7 @@ else
 fi
 
 [ -z "$TARGET" ] && {
-	echo "no target provided"
+	echo "no target provided" >&2
 	exit 1
 }
 

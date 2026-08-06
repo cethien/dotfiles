@@ -10,9 +10,11 @@ header() {
 }
 
 get_target() {
-	local target="$1"
+	local target="${1:-}"
 	if [ -z "$target" ]; then
 		read -r -e -p "lookup domain: " target
+	else
+		echo "lookup domain: $target"
 	fi
 
 	[ -z "$target" ] && {
@@ -83,10 +85,8 @@ check_dns() {
 	doggo "$target" A AAAA MX NS TXT CNAME "@${local_ns:-1.1.1.1}"
 }
 
-# --- Execution ---
-TARGET=$(get_target "${1:-}")
+TARGET=$(get_target "${1:-}" | tail -n 1)
 
-echo "lookup domain: $TARGET"
 echo ""
 
 RDAP_JSON=$(curl -sL -m 3 "https://rdap.org/domain/$TARGET" 2>/dev/null)

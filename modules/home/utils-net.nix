@@ -6,23 +6,25 @@
 }: let
   cfg = config.programs.utils-net;
 
-  net-portscan = pkgs.writeShellApplication {
-    name = "net-portscan";
-    runtimeInputs = with pkgs; [nmap];
-    text = builtins.readFile ./net-portscan.sh;
-    checkPhase = "";
-  };
+  net-portscan = pkgs.writeShellScriptBin "net-portscan" ''
+    export PATH="${pkgs.lib.makeBinPath (with pkgs; [
+      nmap
+    ])}:$PATH"
 
-  net-lookup = pkgs.writeShellApplication {
-    name = "net-lookup";
-    runtimeInputs = with pkgs; [
+    ${builtins.readFile ./net-portscan.sh}
+  '';
+
+  net-lookup = pkgs.writeShellScriptBin "net-lookup" ''
+    export PATH="${pkgs.lib.makeBinPath (with pkgs; [
       whois
       openssl
       doggo
-    ];
-    text = builtins.readFile ./net-lookup.sh;
-    checkPhase = "";
-  };
+      jq
+      curl
+    ])}:$PATH"
+
+    ${builtins.readFile ./net-lookup.sh}
+  '';
 
   netz-preview = pkgs.writeShellApplication {
     name = "netz-preview";
@@ -30,6 +32,7 @@
     text = builtins.readFile ./fzf-net-preview.sh;
     checkPhase = "";
   };
+
   netz = pkgs.writeShellApplication {
     name = "netz";
     runtimeInputs = with pkgs; [
