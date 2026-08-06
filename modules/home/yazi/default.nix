@@ -41,15 +41,13 @@ in {
       ];
     };
 
-    xdg.mimeApps.defaultApplications."inode/directory" = ["yazi.desktop"];
-
-    wayland.windowManager.hyprland.extraLuaFiles = {
-      "99-yazi" =
-        #lua
-        ''
-          hl.bind("SUPER + E", hl.dsp.exec_cmd("kitty --class yazi -e yazi"))
-        '';
-    };
+    # wayland.windowManager.hyprland.extraLuaFiles = {
+    #   "99-yazi" =
+    #     #lua
+    #     ''
+    #       hl.bind("SUPER + E", hl.dsp.exec_cmd("kitty --class yazi -e yazi"))
+    #     '';
+    # };
 
     programs.yazi = {
       keymap.mgr.prepend_keymap = let
@@ -191,6 +189,26 @@ in {
           run = [''shell "$SHELL" --block''];
           desc = "Open $SHELL here";
         }
+        {
+          on = ["b" "n"];
+          run = ["plugin bookmarks save"];
+          desc = "Save current position as a bookmark";
+        }
+        {
+          on = ["b" "b"];
+          run = ["plugin bookmarks jump"];
+          desc = "Jump to a bookmark";
+        }
+        {
+          on = ["b" "d"];
+          run = ["plugin bookmarks delete"];
+          desc = "Delete a bookmark";
+        }
+        {
+          on = ["b" "D"];
+          run = ["plugin bookmarks delete_all"];
+          desc = "Delete all bookmarks";
+        }
       ];
 
       plugins = {
@@ -211,14 +229,17 @@ in {
           compress
           rsync
           piper
+          bookmarks
           ;
       };
+
       initLua =
         #lua
         ''
           require("git"):setup()
           require("githead"):setup()
         '';
+
       settings.plugin = {
         prepend_fetchers = [
           {

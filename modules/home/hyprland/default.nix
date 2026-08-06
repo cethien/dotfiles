@@ -23,7 +23,6 @@ in {
       enable = true;
       extraPortals = with pkgs; [
         xdg-desktop-portal-hyprland
-        # xdg-desktop-portal-termfilechooser
         xdg-desktop-portal-gtk
       ];
       config = {
@@ -33,7 +32,6 @@ in {
         hyprland = {
           default = [
             "hyprland"
-            # "termfilechooser"
             "gtk"
           ];
         };
@@ -46,11 +44,6 @@ in {
           allow_token_by_default = true
         }
       '';
-
-      # "xdg-desktop-portal-termfilechooser/config".text = ''
-      #   [filechooser]
-      #   cmd=kitty --class "yazi-portal" -e yazi --chooser-file="$out"
-      # '';
     };
 
     home.packages = with pkgs; [
@@ -70,6 +63,7 @@ in {
       imv.enable = true;
       zathura.enable = true;
       fileroller.enable = true;
+      nautilus.enable = true;
       hyprshot.enable = true;
       text-extract.enable = true;
     };

@@ -11,6 +11,7 @@
     ./imv.nix
     ./zathura.nix
     ./fileroller.nix
+    ./nautilus.nix
 
     ./tmux
     ./neovim
