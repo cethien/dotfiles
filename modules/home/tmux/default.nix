@@ -153,6 +153,9 @@ in {
         set -g pane-active-border-style fg=blue
         set -g pane-border-lines single
         set -g pane-border-indicators off
+
+        set -g popup-border-lines rounded
+        set -g popup-border-style fg=green
       '';
 
       keybindings = [

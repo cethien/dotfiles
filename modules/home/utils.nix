@@ -56,13 +56,13 @@ in {
       in [
         {
           inherit icon;
-          name = "run";
+          name = "nix run";
           exec = ", $(${pkgs.gum}/bin/gum input --placeholder='e.g. cowsay hello')";
           hold = true;
         }
         {
           inherit icon;
-          name = "shell";
+          name = "nix shell";
           exec = "${nix-shell-wrapper}/bin/nix-shell-wrapper";
         }
       ];
