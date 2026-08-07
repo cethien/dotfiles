@@ -26,12 +26,23 @@
     dependencies = [pkgs.genpass];
   };
 
+  floatty-nvim = pkgs.vimUtils.buildVimPlugin {
+    pname = "floatty-nvim";
+    version = "2.1.0";
+    src = pkgs.fetchFromGitHub {
+      owner = "ingur";
+      repo = "floatty.nvim";
+      rev = "ba6c7cd828474084001d131fc0160fcb3bbef6d2";
+      hash = "sha256-hU+3FV08UXru1H6kwBqlw1IS1EsyUbPzdFL1div4kMI=";
+    };
+  };
+
   plugins = with pkgs.vimPlugins;
     [
       mini-nvim
       auto-session
       scope-nvim
-      toggleterm-nvim
+      floatty-nvim
 
       nvim-sops
       csvview-nvim

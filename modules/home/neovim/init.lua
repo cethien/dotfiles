@@ -194,18 +194,42 @@ vim.keymap.set("n", "<leader>hh", pick.builtin.help, { desc = "Help Tags" })
 require("auto-session").setup()
 require("scope").setup()
 
-require("toggleterm").setup({
-	open_mapping = [[<c-t>]],
+local term = require("floatty").setup({
+	window = {
+		row = function()
+			return vim.o.lines - 11
+		end,
+		width = 1.0,
+		height = 10,
+	},
 })
+
+vim.keymap.set("n", "<C-t>", function()
+	term.toggle()
+end)
+vim.keymap.set("t", "<C-t>", function()
+	term.toggle()
+end)
+
+local lazygit = require("floatty").setup({
+	cmd = "lazygit --screen-mode half",
+	id = vim.fn.getcwd,
+	window = {
+		width = 1.0,
+		height = 0.85,
+		v_align = "top",
+	},
+})
+
+vim.keymap.set("n", "<C-g>", function()
+	lazygit.toggle()
+end)
+vim.keymap.set("t", "<C-g>", function()
+	lazygit.toggle()
+end)
 
 require("csvview").setup({})
-require("genpass")
-
-require("nvim_sops").setup({
-	defaults = { ageKeyFile = "$HOME/.sops/age/keys.txt" },
-})
-vim.keymap.set("n", "<leader>ef", vim.cmd.SopsEncrypt, { desc = "[E]ncrypt [F]ile" })
-vim.keymap.set("n", "<leader>df", vim.cmd.SopsDecrypt, { desc = "[D]ecrypt [F]ile" })
+-- require("genpass")
 
 -- git/vcs
 local git = require("mini.git")
@@ -213,4 +237,4 @@ local diff = require("mini.diff")
 git.setup()
 diff.setup()
 
-vim.keymap.set("n", "<leader>ga", diff.toggle_overlay, { desc = "Git " })
+vim.keymap.set("n", "<leader>ga", diff.toggle_overlay, { desc = "Git" })

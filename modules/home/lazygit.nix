@@ -27,6 +27,16 @@ in {
     programs.lazygit = {
       shellWrapperName = "lzg";
       settings = {
+        gui = {
+          sidePanels = [
+            ["files"]
+            ["commits" "remotes" "tags"]
+            ["stash" "worktrees" "branches"]
+          ];
+          showCommandLog = false;
+          showRandomTip = false;
+          showBottomLine = false;
+        };
         update.method = "never";
         disableStartupPopups = true;
         notARepository = "quit";
