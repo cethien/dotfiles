@@ -28,6 +28,14 @@ in {
   config = mkIf cfg.enable {
     home.packages = [cfg.package];
 
+    programs.tmux.launcher.entries = [
+      {
+        name = "pvetui";
+        icon = "";
+        exec = "pvetui";
+      }
+    ];
+
     programs.pvetui.settings = {
       cache_dir = mkDefault "${config.xdg.cacheHome}/pvetui";
       show_icons = mkDefault true;
