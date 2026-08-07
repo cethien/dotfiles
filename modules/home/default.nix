@@ -28,6 +28,7 @@
     ./lazygit.nix
     ./lazydocker.nix
     ./pvetui.nix
+    ./vm-curator.nix
     ./pandoc
     ./impala.nix
 

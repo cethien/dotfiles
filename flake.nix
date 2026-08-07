@@ -42,6 +42,9 @@
 
     nixcord.url = "github:FlameFlag/nixcord";
     nixcord.inputs.nixpkgs.follows = "nixpkgs-unstable";
+
+    vm-curator.url = "github:mroboff/vm-curator";
+    vm-curator.inputs.nixpkgs.follows = "nixpkgs-unstable";
   };
 
   nixConfig = {
@@ -80,6 +83,7 @@
       unstable = unstablePkgs;
       firefox-addons = firefoxAddonsPkgs.firefox-addons;
       spicePkgs = inputs.spicetify-nix.legacyPackages.${system};
+      vm-curator = inputs.vm-curator.packages.${system}.default;
 
       inherit
         (unstablePkgs)

@@ -574,6 +574,7 @@
         "sops-nix": "sops-nix",
         "spicetify-nix": "spicetify-nix",
         "stylix": "stylix",
+        "vm-curator": "vm-curator",
         "zen-browser": "zen-browser"
       }
     },
@@ -796,6 +797,26 @@
       "original": {
         "owner": "numtide",
         "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "vm-curator": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1785447042,
+        "narHash": "sha256-lq6UuT0ECmuYT2sByYVUi8GHTM2mq0X1c45/WA8+Zss=",
+        "owner": "mroboff",
+        "repo": "vm-curator",
+        "rev": "03eb69e019df4a802b86fd44f5624360a86e0bf9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mroboff",
+        "repo": "vm-curator",
         "type": "github"
       }
     },

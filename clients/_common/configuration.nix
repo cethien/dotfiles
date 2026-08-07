@@ -9,6 +9,8 @@
 }: let
   inherit (lib) mkDefault optionals;
   hl = config.programs.hyprland.enable;
+  virt = config.virtualisation.libvirtd.enable;
+  docker = config.virtualisation.docker.enable;
   gnome = config.services.desktopManager.gnome.enable;
   desktop = hl || gnome;
   username = "cethien";
@@ -56,7 +58,8 @@ in {
           systemd.enable = !config.programs.hyprland.withUWSM;
         };
         programs.steam.enable = config.programs.steam.enable;
-        programs.lazydocker.enable = config.virtualisation.docker.enable;
+        programs.lazydocker.enable = docker;
+        programs.vm-curator.enable = virt;
       };
     };
 
@@ -124,7 +127,7 @@ in {
       sane.enable = mkDefault true;
     };
 
-    programs.virt-manager.enable = desktop && config.virtualisation.libvirtd.enable;
+    programs.virt-manager.enable = desktop && virt;
     virtualisation = {
       spiceUSBRedirection.enable = true;
       libvirtd = {
