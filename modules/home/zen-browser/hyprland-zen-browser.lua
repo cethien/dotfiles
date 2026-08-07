@@ -18,9 +18,15 @@ hl.window_rule({
 
 hl.bind("SUPER + W", function()
 	local active_win = hl.get_active_window()
-	local browser_ws = hl.defaultWorkspace.browser or 2
+	local browser_ws = hl.defaultWorkspace and hl.defaultWorkspace.browser
 
-	if active_win and active_win.fullscreen and active_win.fullscreen > 0 then
+	if
+		active_win
+		and active_win.fullscreen
+		and active_win.fullscreen > 0
+		and active_win.content_type
+		and active_win.content_type == "game"
+	then
 		return
 	end
 
@@ -33,7 +39,7 @@ hl.bind("SUPER + W", function()
 	local current_ws = hl.get_active_workspace()
 
 	if active_win and active_win.address == w.address then
-		if current_ws and current_ws.id ~= browser_ws then
+		if browser_ws and current_ws and current_ws.id ~= browser_ws then
 			hl.dispatch(hl.dsp.window.move({ window = "address:" .. w.address, workspace = browser_ws }))
 			hl.dispatch(hl.dsp.focus({ window = "address:" .. w.address }))
 		end
@@ -41,7 +47,9 @@ hl.bind("SUPER + W", function()
 	end
 
 	if current_ws then
-		hl.dispatch(hl.dsp.window.move({ window = "address:" .. w.address, workspace = current_ws.id }))
+		if browser_ws then
+			hl.dispatch(hl.dsp.window.move({ window = "address:" .. w.address, workspace = current_ws.id }))
+		end
 		hl.dispatch(hl.dsp.focus({ window = "address:" .. w.address }))
 	end
 end)
@@ -52,16 +60,26 @@ hl.on("window.fullscreen", function()
 		return
 	end
 
-	if active_win.fullscreen and active_win.fullscreen > 0 then
+	local browser_ws = hl.defaultWorkspace and hl.defaultWorkspace.browser
+
+	if not browser_ws then
+		return
+	end
+
+	if
+		active_win.fullscreen
+		and active_win.fullscreen > 0
+		and active_win.content_type
+		and active_win.content_type == "game"
+	then
 		if active_win.class == "zen-beta" then
 			return
 		else
 			local zen = hl.get_window("class:^zen-beta$")
 			if zen then
-				local fallback_workspace = hl.defaultWorkspace.browser or 2
 				hl.dispatch(hl.dsp.window.move({
 					window = "address:" .. zen.address,
-					workspace = fallback_workspace,
+					workspace = browser_ws,
 					follow = false,
 				}))
 			end
