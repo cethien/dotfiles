@@ -61,33 +61,35 @@ build-booty() {
 
 # @cmd updates inputs
 # @describe                           updates inputs [defaults client modules]
-# @flag --hosts                       exclusively update host related inputs
-# @flag --nixpkgs                     also update nixpkgs / nixpkgs-unstable (defaults to nixpkgs-unstable, use with --hosts for nixpkgs)
-# @flag --zen                         only zen and firefox addons
-# @flag --tools                       update repo tooling
+# @flag --pkgs                        update nixpkgs
+# @flag --client                      update client tooling
+# @flag --repo                    		update repo tooling
 flake-update() {
 	local INPUTS=()
+	[ -n "$argc_client" ] && INPUTS=(
+		nixos-hardware
+		nix-gaming
+		musnix
+		home-manager
+		stylix
+	)
 
-	if [ -n "$argc_hosts" ]; then
-		[ -n "$argc_nixpkgs" ] && INPUTS+=(nixpkgs)
-	else
-		[ -n "$argc_nixpkgs" ] && INPUTS+=(nixpkgs-unstable)
-		INPUTS+=(
-			nixos-hardware
-			nix-gaming
-			musnix
-			home-manager
-			stylix
-			spicetify-nix
-			zen-browser
-			firefox-addons
-		)
-	fi
+	[ -n "$argc_pkgs" ] && INPUTS+=(
+		nixpkgs
+		nixpkgs-unstable
+		nix-index-database
+		zen-browser
+		firefox-addons
+		spicetify-nix
+		nixcord
+		vm-curator
+	)
 
-	INPUTS+=(sops-nix)
-	[ -n "$argc_tools" ] && INPUTS+=(flake-utils deploy-rs disko)
-
-	[ -n "$argc_zen" ] && INPUTS=(zen-browser firefox-addons)
+	[ -n "$argc_repo" ] && INPUTS+=(
+		disko
+		deploy-rs
+		sops-nix
+	)
 
 	echo "Updating: ${INPUTS[*]}"
 	nix flake update "${INPUTS[@]}"
