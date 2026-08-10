@@ -13,7 +13,6 @@
 
     htop
 
-    lazygit
     yazi
   ];
 

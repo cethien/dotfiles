@@ -26,13 +26,14 @@ in {
   config = mkIf cfg.enable {
     programs.lazygit = {
       shellWrapperName = "lzg";
+      # https://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#overriding-default-config-file-location
       settings = {
         gui = {
           sidePanels = [
-            ["status"]
-            ["files"]
-            ["commits" "remotes" "tags"]
-            ["stash" "worktrees" "branches"]
+            ["files" "worktrees"]
+            ["commits"]
+            ["status" "branches" "remotes"]
+            ["stash"]
           ];
           showCommandLog = false;
           showRandomTip = false;
@@ -40,30 +41,31 @@ in {
         };
         update.method = "never";
         disableStartupPopups = true;
-        notARepository = "quit";
+        notARepository = "prompt";
         promptToReturnFromSubprocess = false;
 
         os.openDirInEditor = "${tmux-editor}/bin/tmux-editor";
 
-        customCommands = [
+        customCommands = let
+          license = "${pkgs.license-go}/bin/license";
+        in [
           {
             key = "l";
             description = "Add LICENSE file";
             context = "files";
-            command = "${pkgs.license-go}/bin/license -o LICENSE {{.Form.License}}";
+            command = "${license} -o LICENSE {{.Form.License}}";
             prompts = [
               {
                 type = "menuFromCommand";
                 title = "select license";
                 key = "License";
-                command = "${pkgs.license-go}/bin/license -list";
+                command = "${license} -list";
                 filter = "^(?P<id>\\S+)\\s+(?P<desc>.*)";
                 valueFormat = "{{ .id }}";
                 labelFormat = "{{ .id | yellow }} {{ .desc | cyan }}";
               }
             ];
           }
-
           {
             key = "<f1>";
             description = "Show code statistics";
@@ -75,6 +77,7 @@ in {
         ];
       };
     };
+
     programs.tmux.resurrectPluginProcesses = ["lazygit"];
 
     programs.neovim = {
@@ -82,13 +85,12 @@ in {
         # lua
         ''
           local lazygit = require("floatty").setup({
-          	cmd = "lazygit",
-          	id = vim.fn.getcwd,
-          	window = {
-          		width = 1.0,
-          		height = 0.85,
-          		v_align = "top",
-          	},
+              cmd = "lazygit",
+              id = vim.fn.getcwd,
+              window = {
+          				width = 0.975,
+                  height = 0.9,
+              },
           })
 
           vim.keymap.set("n", "<C-g>", function()
