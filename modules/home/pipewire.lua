@@ -1,11 +1,3 @@
-Modal("wiremix", {
-	binds = {
-		"SUPER + SHIFT + M",
-		"SHIFT + XF86Music",
-		"SHIFT + XF86Tools",
-	},
-})
-
 -- Global volume controls (Super + Volume keys)
 hl.bind("SUPER + XF86AudioRaiseVolume", function()
 	os.execute("wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+")
