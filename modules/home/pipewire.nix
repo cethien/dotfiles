@@ -37,6 +37,9 @@ in {
         ];
       };
     };
+
+    home.packages = [pkgs.crosspipe];
+
     wayland.windowManager.hyprland.extraLuaFiles = {
       "99-pipewire".content = ./pipewire.lua;
       "99-wiremix".content =
