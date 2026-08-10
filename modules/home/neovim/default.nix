@@ -44,7 +44,6 @@
       scope-nvim
       floatty-nvim
 
-      nvim-sops
       csvview-nvim
 
       genpass-nvim
