@@ -65,6 +65,7 @@
     ./pokemmo.nix
     ./r2modman.nix
     ./mangohud.nix
+    ./palworld.nix
 
     ./freerdp.nix
     ./slack.nix

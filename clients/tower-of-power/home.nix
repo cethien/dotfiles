@@ -37,6 +37,7 @@
     logitech-peripherals.enable = true;
     logitech-peripherals.autostart = true;
 
+    palworld-save-tools.enable = true;
     pokemmo.enable = true;
     retroarch.enable = true;
     prismlauncher.enable = true;
