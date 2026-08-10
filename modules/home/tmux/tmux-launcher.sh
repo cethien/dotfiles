@@ -49,6 +49,33 @@ generate_ssh_entries() {
 	fi
 }
 
+generate_docker_entries() {
+	local ssh_config="$HOME/.ssh/config"
+	if [[ -f "$ssh_config" ]]; then
+		awk '
+            /^[ \t]*Host[ \t]+/ { 
+                host = $2 
+            }
+            /# *@docker/ { 
+                if (host != "" && host != "*") {
+                    print host
+                }
+            }
+        ' "$ssh_config" | while IFS= read -r host; do
+			if [[ -n "$host" ]]; then
+				local icon="󰡨"
+				local name="docker@${host}"
+				local display_name="${icon} ${name}"
+				local exec_cmd="DOCKER_HOST=\"ssh://${host}\" lazydocker"
+				local preview_cmd="ssh -o ConnectTimeout=2 -q ${host} 'docker ps --format \"table {{.Names}}\t{{.Status}}\"' 2>/dev/null || echo 'Docker not reachable or no containers running'"
+
+				# Format: DISPLAY_NAME \t PURE_NAME \t EXEC \t PREVIEW
+				printf "%s${TAB}%s${TAB}%s${TAB}%s\n" "$display_name" "$name" "$exec_cmd" "$preview_cmd"
+			fi
+		done
+	fi
+}
+
 main() {
 	local config_file="${argc_config:-$HOME/.config/tmux/launcher.toml}"
 	local entries=()
@@ -58,6 +85,7 @@ main() {
 	done < <(
 		generate_toml_entries "$config_file"
 		generate_ssh_entries
+		generate_docker_entries
 	)
 
 	[[ ${#entries[@]} -eq 0 ]] && exit 0

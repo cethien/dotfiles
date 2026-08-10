@@ -1,9 +1,21 @@
 {
-  "Host weclapp-test".HostName = "10.0.30.60";
-  "Host weclapp".HostName = "10.0.30.21";
+  "Host weclapp-test" = {
+    HostName = "10.0.30.60";
+    "# @docker" = "";
+  };
+  "Host weclapp" = {
+    HostName = "10.0.30.21";
+    "# @docker" = "";
+  };
   "Host magento".HostName = "10.0.30.40";
-  "Host services-prod".HostName = "10.0.30.20";
-  "Host services-admin".HostName = "10.0.30.10";
+  "Host services-prod" = {
+    HostName = "10.0.30.20";
+    "# @docker" = "";
+  };
+  "Host services-admin" = {
+    HostName = "10.0.30.10";
+    "# @docker" = "";
+  };
   "Host dns-01".HostName = "10.0.30.5";
   "Host dns-02".HostName = "10.0.30.6";
 
