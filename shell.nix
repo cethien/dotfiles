@@ -12,6 +12,8 @@ pkgs.mkShell {
     stylua
     marksman
     prettierd
+    pyright
+    ruff
 
     nurl
 

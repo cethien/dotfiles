@@ -38,16 +38,27 @@
 
   tomlFormat = pkgs.formats.toml {};
 
+  tmuxLauncherPreviewPkg = pkgs.writers.writePython3Bin "tmux-launcher-preview" {
+    libraries = [pkgs.python3Packages.colorama];
+    makeWrapperArgs = [
+      "--prefix PATH : ${lib.makeBinPath (with pkgs; [
+        openssh
+        gawk
+        gnugrep
+        coreutils
+        procps
+      ])}"
+    ];
+  } (builtins.readFile ./tmux-launcher-preview.py);
+
   fzfLauncherPkg = config.lib.deeznuts.mkArgcBashBin {
     src = ./tmux-launcher.sh;
     extraRuntimeDeps = with pkgs; [
       fzf
       yq-go
       openssh
-      bat
-      gawk
-      gnused
       tmux
+      tmuxLauncherPreviewPkg
     ];
   };
 in {
@@ -71,7 +82,7 @@ in {
     programs.tmux.keybindings = [
       {
         key = "o";
-        action = "display-popup -w 80% -h 75% -E '${fzfLauncherPkg}/bin/tmux-launcher'";
+        action = "display-popup -w 90% -h 80% -E '${fzfLauncherPkg}/bin/tmux-launcher'";
       }
     ];
   };
