@@ -35,9 +35,12 @@ in {
             ["status" "branches" "remotes"]
             ["stash"]
           ];
+
           showCommandLog = false;
           showRandomTip = false;
           showBottomLine = false;
+          timeFormat = "2006-01-02";
+          shortTimeFormat = "15:04";
         };
         update.method = "never";
         disableStartupPopups = true;
