@@ -30,6 +30,7 @@ in {
         gui = {
           sidePanels = [
             ["files"]
+            ["status"]
             ["commits" "remotes" "tags"]
             ["stash" "worktrees" "branches"]
           ];
@@ -75,5 +76,28 @@ in {
       };
     };
     programs.tmux.resurrectPluginProcesses = ["lazygit"];
+
+    programs.neovim = {
+      initLua =
+        # lua
+        ''
+          local lazygit = require("floatty").setup({
+          	cmd = "lazygit",
+          	id = vim.fn.getcwd,
+          	window = {
+          		width = 1.0,
+          		height = 0.85,
+          		v_align = "top",
+          	},
+          })
+
+          vim.keymap.set("n", "<C-g>", function()
+          	lazygit.toggle()
+          end)
+          vim.keymap.set("t", "<C-g>", function()
+          	lazygit.toggle()
+          end)
+        '';
+    };
   };
 }

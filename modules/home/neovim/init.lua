@@ -194,39 +194,27 @@ vim.keymap.set("n", "<leader>hh", pick.builtin.help, { desc = "Help Tags" })
 require("auto-session").setup()
 require("scope").setup()
 
-local term = require("floatty").setup({
+local floatty = require("floatty")
+
+local function bind_toggle(keys, config)
+	local term = floatty.setup(config)
+	vim.keymap.set("n", keys, function()
+		term.toggle()
+	end)
+	vim.keymap.set("t", keys, function()
+		term.toggle()
+	end)
+end
+
+bind_toggle("<C-t>", {
 	window = {
 		row = function()
-			return vim.o.lines - 11
+			return vim.o.lines - 15
 		end,
 		width = 1.0,
-		height = 10,
+		height = 12,
 	},
 })
-
-vim.keymap.set("n", "<C-t>", function()
-	term.toggle()
-end)
-vim.keymap.set("t", "<C-t>", function()
-	term.toggle()
-end)
-
-local lazygit = require("floatty").setup({
-	cmd = "lazygit --screen-mode half",
-	id = vim.fn.getcwd,
-	window = {
-		width = 1.0,
-		height = 0.85,
-		v_align = "top",
-	},
-})
-
-vim.keymap.set("n", "<C-g>", function()
-	lazygit.toggle()
-end)
-vim.keymap.set("t", "<C-g>", function()
-	lazygit.toggle()
-end)
 
 require("csvview").setup({})
 -- require("genpass")
