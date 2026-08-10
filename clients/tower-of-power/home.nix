@@ -23,7 +23,6 @@
     ausweisapp
 
     krita
-    ardour
     mixxx
     qlcplus
   ];
@@ -48,6 +47,7 @@
     apps-creative.enable = true;
     gimp.enable = true;
     obs-studio.enable = true;
+    ardour.enable = true;
 
     thunderbird.enable = true;
     thunderbird.autostart = true;

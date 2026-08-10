@@ -56,6 +56,7 @@
     ./gimp.nix
     ./fonts.nix
     ./obs-studio.nix
+    ./ardour.nix
 
     ./steam.nix
     ./heroic.nix
