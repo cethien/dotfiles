@@ -29,8 +29,8 @@ in {
       settings = {
         gui = {
           sidePanels = [
-            ["files"]
             ["status"]
+            ["files"]
             ["commits" "remotes" "tags"]
             ["stash" "worktrees" "branches"]
           ];
