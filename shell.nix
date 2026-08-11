@@ -12,8 +12,15 @@ pkgs.mkShell {
     stylua
     marksman
     prettierd
+
     pyright
     ruff
+
+    go
+    gopls
+    gotools
+    golangci-lint
+    gofumpt
 
     nurl
 

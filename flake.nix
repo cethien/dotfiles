@@ -84,6 +84,7 @@
       firefox-addons = firefoxAddonsPkgs.firefox-addons;
       spicePkgs = inputs.spicetify-nix.legacyPackages.${system};
       vm-curator = inputs.vm-curator.packages.${system}.default;
+      tmux-launcher = unstablePkgs.callPackage ./packages/tmux-launcher {};
 
       inherit
         (unstablePkgs)
@@ -163,8 +164,10 @@
 
     packages.${system} = let
       pkgs = nixpkgs.legacyPackages.${system};
+      unstablePkgs = nixpkgs-unstable.legacyPackages.${system};
     in {
       doot = pkgs.callPackage ./packages/doot {};
+      tmux-launcher = unstablePkgs.callPackage ./packages/tmux-launcher {};
       booty =
         (nixpkgs.lib.nixosSystem {
           inherit system;

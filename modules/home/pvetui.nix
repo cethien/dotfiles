@@ -28,11 +28,17 @@ in {
   config = mkIf cfg.enable {
     home.packages = [cfg.package];
 
-    programs.tmux.launcher.entries = [
+    programs.tmux.launcher.settings.entries = [
       {
+        exec = "pvetui";
         name = "pvetui";
         icon = "";
-        exec = "pvetui";
+        preview_text = ''
+          `pvetui` is a terminal user interface for managing *Proxmox VE clusters*.
+
+          It provides an interactive interface for managing virtual machines, containers,
+          nodes, and other Proxmox resources directly from the terminal.
+        '';
       }
     ];
 
