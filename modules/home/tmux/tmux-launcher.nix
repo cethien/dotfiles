@@ -81,7 +81,7 @@ in {
 
     programs.tmux.keybindings = [
       {
-        key = "o";
+        key = "Space";
         action = "display-popup -w 90% -h 80% -E '${fzfLauncherPkg}/bin/tmux-launcher'";
       }
     ];
