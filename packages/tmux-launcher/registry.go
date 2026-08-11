@@ -19,7 +19,6 @@ func (r *Registry) CollectAllEntries() ([]Entry, error) {
 	for _, mod := range r.modules {
 		entries, err := mod.GetEntries()
 		if err != nil {
-			// Fehler ignorieren oder loggen, damit ein kaputtes Modul nicht alles blockiert
 			continue
 		}
 		allEntries = append(allEntries, entries...)

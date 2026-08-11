@@ -7,6 +7,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"sort"
 	"strings"
 
 	"github.com/urfave/cli/v3"
@@ -22,6 +23,11 @@ func runLauncher(configPath string, selfBin string) error {
 	if err != nil || len(allEntries) == 0 {
 		return nil
 	}
+
+	history := LoadHistory()
+	sort.SliceStable(allEntries, func(i, j int) bool {
+		return history.GetScore(allEntries[i].Name) > history.GetScore(allEntries[j].Name)
+	})
 
 	var inputBuf bytes.Buffer
 	for _, e := range allEntries {
@@ -47,12 +53,15 @@ func runLauncher(configPath string, selfBin string) error {
 
 	selected := strings.TrimSpace(string(out))
 	parts := strings.Split(selected, "\t")
-	if len(parts) < 3 {
+	if len(parts) < 5 {
 		return nil
 	}
 
 	windowTitle := parts[1]
 	execCmd := parts[2]
+	selectedName := parts[4]
+
+	history.RecordUse(selectedName)
 
 	if os.Getenv("TMUX") != "" {
 		tmuxCmd := exec.Command("tmux", "new-window", "-n", windowTitle, execCmd)

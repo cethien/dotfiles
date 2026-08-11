@@ -25,7 +25,7 @@ type TomlConfig struct {
 type TomlModule struct {
 	ConfigPath   string
 	SelfBin      string
-	SessionEmoji string // Fixer Kaomoji für diesen Run
+	SessionEmoji string
 }
 
 func NewTomlModule(configPath string, selfBin string) *TomlModule {
@@ -62,11 +62,6 @@ func (m *TomlModule) GetEntries() ([]Entry, error) {
 			continue
 		}
 
-		displayName := e.Name
-		if e.Icon != "" {
-			displayName = fmt.Sprintf("%s %s", e.Icon, e.Name)
-		}
-
 		execCmd := e.Exec
 		if e.Hold {
 			execCmd = fmt.Sprintf("%s; echo -e '\\n[Finished] Press Ctrl+C to close...'; trap 'exit 0' INT; sleep infinity", e.Exec)
@@ -83,7 +78,8 @@ func (m *TomlModule) GetEntries() ([]Entry, error) {
 		}
 
 		entries = append(entries, Entry{
-			DisplayName: displayName,
+			Icon:        e.Icon,
+			Name:        e.Name,
 			WindowTitle: e.Name,
 			ExecCmd:     execCmd,
 			PreviewCmd:  previewCmd,

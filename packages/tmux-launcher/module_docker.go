@@ -72,9 +72,11 @@ func (m *DockerModule) GetEntries() ([]Entry, error) {
 
 	var entries []Entry
 	for _, host := range dockerHosts {
+		name := fmt.Sprintf("docker@%s", host)
 		entries = append(entries, Entry{
-			DisplayName: fmt.Sprintf("󰡨 docker@%s", host),
-			WindowTitle: fmt.Sprintf("docker@%s", host),
+			Icon:        "󰡨",
+			Name:        name,
+			WindowTitle: name,
 			ExecCmd:     fmt.Sprintf("DOCKER_HOST=\"ssh://%s\" lazydocker", host),
 			PreviewCmd:  fmt.Sprintf("%s preview docker --host %s", m.SelfBin, host),
 		})

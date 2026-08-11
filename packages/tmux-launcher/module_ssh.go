@@ -62,9 +62,11 @@ func (m *SshModule) GetEntries() ([]Entry, error) {
 
 	var entries []Entry
 	for _, host := range hosts {
+		name := fmt.Sprintf("ssh@%s", host)
 		entries = append(entries, Entry{
-			DisplayName: fmt.Sprintf("󰣀 ssh@%s", host),
-			WindowTitle: fmt.Sprintf("ssh@%s", host),
+			Icon:        "󰣀",
+			Name:        name,
+			WindowTitle: name,
 			ExecCmd:     fmt.Sprintf("ssh -t %s 'tmux attach || tmux new-session || exec $SHELL'", host),
 			PreviewCmd:  fmt.Sprintf("%s preview ssh --host %s", m.SelfBin, host),
 		})
