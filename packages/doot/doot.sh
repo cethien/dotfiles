@@ -6,6 +6,31 @@
 # @flag -y --yes $SKIP_CONFIRM skip confirm messages
 # @flag -f --skip-validation $SKIP_VALIDATION skip inventory validation
 
+_log-info() {
+	gum log --time TimeOnly --level info "$*"
+}
+
+_log-success() {
+	gum log --time TimeOnly --level info --prefix "SUCCESS" "$*"
+}
+
+_log-warn() {
+	gum log --time TimeOnly --level warn "$*"
+}
+
+_log-error() {
+	gum log --time TimeOnly --level error "$*"
+}
+
+_confirm() {
+	if [[ -n "${argc_yes:-}" ]]; then
+		_log-warn "confirmation skipped"
+		return 0
+	fi
+
+	gum confirm "$1"
+}
+
 # @cmd generate an age key from ssh key
 generate-age-keys() {
 	SOPS_AGE_KEY_FILE="$HOME/.config/sops/age/keys.txt"
@@ -91,7 +116,7 @@ flake-update() {
 		sops-nix
 	)
 
-	echo "Updating: ${INPUTS[*]}"
+	_log-info "Updating inputs: ${INPUTS[*]}"
 	nix flake update "${INPUTS[@]}"
 }
 
@@ -113,47 +138,13 @@ switch() {
 	fi
 
 	if command -v nixos-rebuild &>/dev/null; then
-		_confirm "switch system $TARGET_HOST?"
+		_confirm "switch system $TARGET_HOST?" || return 0
 		sudo nixos-rebuild "$action" --flake ".#$TARGET_HOST" --fallback --no-write-lock-file $offline_flags
 		return
 	fi
 
-	if command -v nixos-rebuild &>/dev/null; then
-		_log-error "no nixos config for '$TARGET_HOST'"
-		return 1
-	fi
-
+	_log-error "no nixos config for '$TARGET_HOST'"
 	return 1
-}
-
-_confirm() {
-	if [[ -n "${argc_yes:-}" ]]; then
-		_log-warn "confirmation skipped"
-		return 0
-	fi
-
-	read -rp "$(_log "❓ $1 [y/N] > ")" reply
-	[[ "$reply" =~ ^[yY]$ ]]
-}
-
-_log() {
-	echo "[$(date +'%H:%M:%S')] $*"
-}
-
-_log-info() {
-	_log "ℹ️ $*"
-}
-
-_log-success() {
-	_log "✅ $*"
-}
-
-_log-error() {
-	_log "❌ ERROR: $*"
-}
-
-_log-warn() {
-	_log "⚠️ $*"
 }
 
 _q() { command yq -eoy "$1" inventory.toml; }
