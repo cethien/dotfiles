@@ -6,6 +6,16 @@
 }: let
   cfg = config.programs.utils-net;
 
+  net-bandwidth = pkgs.writeShellScriptBin "net-bandwidth" ''
+    export PATH="${pkgs.lib.makeBinPath (with pkgs; [
+      iperf3
+      gum
+      coreutils
+    ])}:$PATH"
+
+    ${builtins.readFile ./net-bandwidth.sh}
+  '';
+
   net-portscan = pkgs.writeShellScriptBin "net-portscan" ''
     export PATH="${pkgs.lib.makeBinPath (with pkgs; [
       nmap
@@ -51,9 +61,25 @@ in {
       speedtest-go
       net-portscan
       net-lookup
+      net-bandwidth
     ];
 
     programs.tmux.launcher.settings.entries = [
+      {
+        icon = "󰾆";
+        name = "bandwidth test";
+        exec = "net-bandwidth";
+        hold = true;
+        preview_text = ''
+          # Network Bandwidth Test (`iperf3`)
+
+          Throughput test tool with presets and a raw CLI input option.
+
+          ### Usage:
+          - **Presets:** Quick-run public servers (*wilhelm.tel*, *HE*)
+          - **Custom:** Raw arguments prompt (`> iperf3 <your-flags>`)
+        '';
+      }
       {
         icon = "󰇖";
         name = "lookup domain";
@@ -107,21 +133,6 @@ in {
           # Speedtest CLI
 
           Measures latency, download, and upload speeds via Ookla servers using `speedtest-go`.
-        '';
-      }
-      {
-        icon = "󰾆";
-        name = "bandwidth test";
-        exec = "iperf3 -c speedtest.wtnet.de -p 5200 -P 10 -4 -R";
-        hold = true;
-        preview_text = ''
-          # Wilhelm.Tel iPerf3 Benchmark
-
-          Runs a parallel multi-stream throughput test against wilhelm.tel infrastructure.
-
-          - **Target Host:** `speedtest.wtnet.de`
-          - **Parameters:** 10 parallel streams, IPv4, Reverse mode
-          - **Website:** [https://speedtest.wtnet.de](https://speedtest.wtnet.de)
         '';
       }
     ];
