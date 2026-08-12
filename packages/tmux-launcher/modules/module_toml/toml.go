@@ -1,10 +1,12 @@
-package main
+package module_toml
 
 import (
 	"encoding/base64"
 	"fmt"
 	"os"
+	"strings"
 
+	"github.com/cethien/tmux-launcher/types"
 	"github.com/charmbracelet/glamour"
 	"github.com/charmbracelet/lipgloss"
 	"github.com/muesli/termenv"
@@ -22,25 +24,25 @@ type TomlConfig struct {
 	} `toml:"entries"`
 }
 
-type TomlModule struct {
+type Module struct {
 	ConfigPath   string
 	SelfBin      string
 	SessionEmoji string
 }
 
-func NewTomlModule(configPath string, selfBin string) *TomlModule {
-	return &TomlModule{
+func New(configPath string, selfBin string) *Module {
+	return &Module{
 		ConfigPath:   configPath,
 		SelfBin:      selfBin,
-		SessionEmoji: GetRandomKaomoji(),
+		SessionEmoji: GetRandomKaomoji(), // Wird direkt intern gewürfelt!
 	}
 }
 
-func (m *TomlModule) Name() string {
+func (m *Module) Name() string {
 	return "toml"
 }
 
-func (m *TomlModule) GetEntries() ([]Entry, error) {
+func (m *Module) GetEntries() ([]types.Entry, error) {
 	data, err := os.ReadFile(m.ConfigPath)
 	if err != nil {
 		if os.IsNotExist(err) {
@@ -56,7 +58,7 @@ func (m *TomlModule) GetEntries() ([]Entry, error) {
 
 	encodedEmoji := base64.StdEncoding.EncodeToString([]byte(m.SessionEmoji))
 
-	var entries []Entry
+	var entries []types.Entry
 	for _, e := range cfg.Entries {
 		if e.Name == "" || e.Exec == "" {
 			continue
@@ -70,14 +72,14 @@ func (m *TomlModule) GetEntries() ([]Entry, error) {
 		var previewCmd string
 		if e.PreviewText != "" {
 			encoded := base64.StdEncoding.EncodeToString([]byte(e.PreviewText))
-			previewCmd = fmt.Sprintf("%s preview text --b64 %s", m.SelfBin, encoded)
+			previewCmd = fmt.Sprintf("%s preview --module toml --target text:%s", m.SelfBin, encoded)
 		} else if e.Preview != "" {
 			previewCmd = e.Preview
 		} else {
-			previewCmd = fmt.Sprintf("%s preview empty --kaomoji %s", m.SelfBin, encodedEmoji)
+			previewCmd = fmt.Sprintf("%s preview --module toml --target empty:%s", m.SelfBin, encodedEmoji)
 		}
 
-		entries = append(entries, Entry{
+		entries = append(entries, types.Entry{
 			Icon:        e.Icon,
 			Name:        e.Name,
 			WindowTitle: e.Name,
@@ -86,6 +88,23 @@ func (m *TomlModule) GetEntries() ([]Entry, error) {
 		})
 	}
 	return entries, nil
+}
+
+func (m *Module) RenderPreview(target string) error {
+	kind, payload, found := strings.Cut(target, ":")
+	if !found {
+		payload = target
+		kind = "empty"
+	}
+
+	switch kind {
+	case "text":
+		return RunPreviewText(payload)
+	case "empty":
+		return RunPreviewEmpty(payload)
+	default:
+		return fmt.Errorf("unknown toml preview target kind: %s", kind)
+	}
 }
 
 func RunPreviewText(b64Text string) error {

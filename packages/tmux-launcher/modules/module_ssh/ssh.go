@@ -1,77 +1,75 @@
-package main
+package module_ssh
 
 import (
-	"bufio"
 	"fmt"
-	"os"
 	"os/exec"
-	"path/filepath"
-	"regexp"
 	"strconv"
 	"strings"
 
+	"github.com/cethien/tmux-launcher/types"
 	"github.com/charmbracelet/lipgloss"
 	"github.com/charmbracelet/lipgloss/table"
 	"github.com/muesli/termenv"
 )
 
-type SshModule struct {
+type Module struct {
 	SelfBin string
 }
 
-func NewSshModule(selfBin string) *SshModule {
-	return &SshModule{SelfBin: selfBin}
+func New(selfBin string) *Module {
+	return &Module{SelfBin: selfBin}
 }
 
-func (m *SshModule) Name() string {
+func (m *Module) Name() string {
 	return "ssh"
 }
 
-func (m *SshModule) GetEntries() ([]Entry, error) {
-	home, err := os.UserHomeDir()
+func (m *Module) GetEntries() ([]types.Entry, error) {
+	hosts, err := parseSshConfig()
 	if err != nil {
 		return nil, err
 	}
 
-	cfgPath := filepath.Join(home, ".ssh", "config")
-	file, err := os.Open(cfgPath)
-	if err != nil {
-		return nil, nil
-	}
-	defer file.Close()
+	var entries []types.Entry
+	entries = append(entries, getTerminalEntries(m.SelfBin, hosts)...)
+	entries = append(entries, getSystemctlEntries(m.SelfBin, hosts)...)
+	entries = append(entries, getDockerEntries(m.SelfBin, hosts)...)
 
-	var hosts []string
-	hostRegex := regexp.MustCompile(`(?i)^\s*Host\s+(.+)$`)
-	scanner := bufio.NewScanner(file)
+	return entries, nil
+}
 
-	for scanner.Scan() {
-		line := scanner.Text()
-		matches := hostRegex.FindStringSubmatch(line)
-		if len(matches) > 1 {
-			for h := range strings.FieldsSeq(matches[1]) {
-				if h != "*" && !strings.HasPrefix(h, "!") {
-					hosts = append(hosts, h)
-				}
-			}
-		}
+func (m *Module) RenderPreview(target string) error {
+	kind, host, found := strings.Cut(target, ":")
+	if !found {
+		host = target
+		kind = "ssh"
 	}
 
-	if err := scanner.Err(); err != nil {
-		return nil, err
+	switch kind {
+	case "docker":
+		return RunPreviewDocker(host)
+	case "systemctl":
+		return RunPreviewSystemctl(host)
+	case "ssh":
+		return RunPreviewSsh(host)
+	default:
+		return fmt.Errorf("unknown ssh preview target kind: %s", kind)
 	}
+}
 
-	var entries []Entry
-	for _, host := range hosts {
-		name := fmt.Sprintf("ssh@%s", host)
-		entries = append(entries, Entry{
+func getTerminalEntries(selfBin string, hosts []ConfigHost) []types.Entry {
+	var entries []types.Entry
+	for _, h := range hosts {
+		name := fmt.Sprintf("ssh@%s", h.Name)
+		entries = append(entries, types.Entry{
 			Icon:        "󰣀",
 			Name:        name,
 			WindowTitle: name,
-			ExecCmd:     fmt.Sprintf("ssh -t %s 'tmux attach || tmux new-session || exec $SHELL'", host),
-			PreviewCmd:  fmt.Sprintf("%s preview ssh --host %s", m.SelfBin, host),
+			ExecCmd:     fmt.Sprintf("ssh -t %s 'tmux attach || tmux new-session || exec $SHELL'", h.Name),
+			PreviewCmd:  fmt.Sprintf("%s preview --module ssh --target ssh:%s", selfBin, h.Name),
 		})
 	}
-	return entries, nil
+	return entries
 }
 
 func parseOSRelease(raw string) string {

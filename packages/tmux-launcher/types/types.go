@@ -1,4 +1,4 @@
-package main
+package types
 
 import "fmt"
 
@@ -24,4 +24,5 @@ func (e Entry) ToFzfLine() string {
 type Module interface {
 	Name() string
 	GetEntries() ([]Entry, error)
+	RenderPreview(target string) error
 }

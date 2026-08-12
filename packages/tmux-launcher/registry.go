@@ -1,21 +1,29 @@
 package main
 
+import (
+	"github.com/cethien/tmux-launcher/types"
+)
+
 type Registry struct {
-	modules []Module
+	modules map[string]types.Module
 }
 
 func NewRegistry() *Registry {
 	return &Registry{
-		modules: make([]Module, 0),
+		modules: make(map[string]types.Module),
 	}
 }
 
-func (r *Registry) Register(m Module) {
-	r.modules = append(r.modules, m)
+func (r *Registry) Register(m types.Module) {
+	r.modules[m.Name()] = m
 }
 
-func (r *Registry) CollectAllEntries() ([]Entry, error) {
-	var allEntries []Entry
+func (r *Registry) GetModule(name string) types.Module {
+	return r.modules[name]
+}
+
+func (r *Registry) CollectAllEntries() ([]types.Entry, error) {
+	var allEntries []types.Entry
 	for _, mod := range r.modules {
 		entries, err := mod.GetEntries()
 		if err != nil {

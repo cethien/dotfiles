@@ -1,88 +1,14 @@
-package main
+package module_ssh
 
 import (
-	"bufio"
 	"fmt"
-	"os"
 	"os/exec"
-	"path/filepath"
 	"strings"
 
+	"github.com/cethien/tmux-launcher/types"
 	"github.com/charmbracelet/lipgloss"
 	"github.com/muesli/termenv"
 )
-
-type DockerModule struct {
-	SelfBin string
-}
-
-func NewDockerModule(selfBin string) *DockerModule {
-	return &DockerModule{SelfBin: selfBin}
-}
-
-func (m *DockerModule) Name() string {
-	return "docker"
-}
-
-func (m *DockerModule) GetEntries() ([]Entry, error) {
-	home, err := os.UserHomeDir()
-	if err != nil {
-		return nil, err
-	}
-
-	cfgPath := filepath.Join(home, ".ssh", "config")
-	file, err := os.Open(cfgPath)
-	if err != nil {
-		return nil, nil
-	}
-	defer file.Close()
-
-	var dockerHosts []string
-	var currentHost string
-	hasDockerTag := false
-
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		line := scanner.Text()
-		trimmed := strings.TrimSpace(line)
-
-		if strings.HasPrefix(strings.ToLower(trimmed), "host ") {
-			if currentHost != "" && currentHost != "*" && hasDockerTag {
-				dockerHosts = append(dockerHosts, currentHost)
-			}
-			fields := strings.Fields(trimmed)
-			if len(fields) > 1 {
-				currentHost = fields[1]
-			} else {
-				currentHost = ""
-			}
-			hasDockerTag = false
-		} else if strings.Contains(line, "#") && strings.Contains(line, "@docker") {
-			hasDockerTag = true
-		}
-	}
-
-	if err := scanner.Err(); err != nil {
-		return nil, err
-	}
-
-	if currentHost != "" && currentHost != "*" && hasDockerTag {
-		dockerHosts = append(dockerHosts, currentHost)
-	}
-
-	var entries []Entry
-	for _, host := range dockerHosts {
-		name := fmt.Sprintf("docker@%s", host)
-		entries = append(entries, Entry{
-			Icon:        "󰡨",
-			Name:        name,
-			WindowTitle: name,
-			ExecCmd:     fmt.Sprintf("DOCKER_HOST=\"ssh://%s\" lazydocker", host),
-			PreviewCmd:  fmt.Sprintf("%s preview docker --host %s", m.SelfBin, host),
-		})
-	}
-	return entries, nil
-}
 
 type containerInfo struct {
 	Name   string
@@ -91,6 +17,25 @@ type containerInfo struct {
 	Ports  string
 	CPU    string
 	Mem    string
+}
+
+func getDockerEntries(selfBin string, hosts []ConfigHost) []types.Entry {
+	var entries []types.Entry
+	for _, h := range hosts {
+		if !h.HasDocker {
+			continue
+		}
+
+		name := fmt.Sprintf("docker@%s", h.Name)
+		entries = append(entries, types.Entry{
+			Icon:        "󰡨",
+			Name:        name,
+			WindowTitle: name,
+			ExecCmd:     fmt.Sprintf("DOCKER_HOST=\"ssh://%s\" lazydocker", h.Name),
+			PreviewCmd:  fmt.Sprintf("%s preview --module ssh --target docker:%s", selfBin, h.Name),
+		})
+	}
+	return entries
 }
 
 func RunPreviewDocker(host string) error {
@@ -164,9 +109,10 @@ func RunPreviewDocker(host string) error {
 				name := fields[0]
 				if c, exists := containers[name]; exists {
 					c.CPU = fields[1]
-					memParts := strings.Split(fields[2], " / ")
-					if len(memParts) > 0 {
-						c.Mem = memParts[0]
+					if before, _, found := strings.Cut(fields[2], " / "); found {
+						c.Mem = before
+					} else {
+						c.Mem = fields[2]
 					}
 				}
 			}
@@ -209,11 +155,7 @@ func RunPreviewDocker(host string) error {
 func cleanPorts(raw string) string {
 	var cleaned []string
 	for p := range strings.SplitSeq(raw, ", ") {
-		if !strings.Contains(p, "->") {
-			continue
-		}
-
-		if strings.HasPrefix(p, ":::") {
+		if !strings.Contains(p, "->") || strings.HasPrefix(p, ":::") {
 			continue
 		}
 

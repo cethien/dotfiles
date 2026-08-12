@@ -1,23 +1,20 @@
 package main
 
 import (
-	"bytes"
 	"context"
 	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"sort"
-	"strings"
 
+	"github.com/cethien/tmux-launcher/modules/module_ssh"
+	"github.com/cethien/tmux-launcher/modules/module_toml"
 	"github.com/urfave/cli/v3"
 )
 
 func runLauncher(configPath string, selfBin string) error {
-	registry := NewRegistry()
-	registry.Register(NewTomlModule(configPath, selfBin))
-	registry.Register(NewSshModule(selfBin))
-	registry.Register(NewDockerModule(selfBin))
+	registry := buildRegistry(configPath, selfBin)
 
 	allEntries, err := registry.CollectAllEntries()
 	if err != nil || len(allEntries) == 0 {
@@ -29,50 +26,31 @@ func runLauncher(configPath string, selfBin string) error {
 		return history.GetScore(allEntries[i].Name) > history.GetScore(allEntries[j].Name)
 	})
 
-	var inputBuf bytes.Buffer
-	for _, e := range allEntries {
-		inputBuf.WriteString(e.ToFzfLine() + "\n")
-	}
-
-	fzfCmd := exec.Command(
-		"fzf",
-		"--cycle",
-		"--prompt=launch > ",
-		"--delimiter=\t",
-		"--with-nth=1",
-		"--preview=eval {4}",
-		"--preview-window=right:65%",
-	)
-	fzfCmd.Stdin = &inputBuf
-	fzfCmd.Stderr = os.Stderr
-
-	out, err := fzfCmd.Output()
-	if err != nil || len(out) == 0 {
+	fzf := NewFzfRunner("launch")
+	selectedEntry, err := fzf.Select(allEntries)
+	if err != nil || selectedEntry == nil {
 		return nil
 	}
 
-	selected := strings.TrimSpace(string(out))
-	parts := strings.Split(selected, "\t")
-	if len(parts) < 5 {
-		return nil
-	}
-
-	windowTitle := parts[1]
-	execCmd := parts[2]
-	selectedName := parts[4]
-
-	history.RecordUse(selectedName)
+	history.RecordUse(selectedEntry.Name)
 
 	if os.Getenv("TMUX") != "" {
-		tmuxCmd := exec.Command("tmux", "new-window", "-n", windowTitle, execCmd)
+		tmuxCmd := exec.Command("tmux", "new-window", "-n", selectedEntry.WindowTitle, selectedEntry.ExecCmd)
 		return tmuxCmd.Run()
 	}
 
-	shCmd := exec.Command("sh", "-c", execCmd)
+	shCmd := exec.Command("sh", "-c", selectedEntry.ExecCmd)
 	shCmd.Stdout = os.Stdout
 	shCmd.Stdin = os.Stdin
 	shCmd.Stderr = os.Stderr
 	return shCmd.Run()
+}
+
+func buildRegistry(configPath string, selfBin string) *Registry {
+	registry := NewRegistry()
+	registry.Register(module_toml.New(configPath, selfBin))
+	registry.Register(module_ssh.New(selfBin))
+	return registry
 }
 
 func main() {
@@ -116,58 +94,37 @@ func main() {
 			},
 			{
 				Name:  "preview",
-				Usage: "Preview providers for fzf",
-				Commands: []*cli.Command{
-					{
-						Name:  "ssh",
-						Usage: "Preview for SSH host",
-						Flags: []cli.Flag{
-							&cli.StringFlag{
-								Name:     "host",
-								Aliases:  []string{"H"},
-								Required: true,
-								Usage:    "SSH host name",
-							},
-						},
-						Action: func(ctx context.Context, cmd *cli.Command) error {
-							return RunPreviewSsh(cmd.String("host"))
-						},
+				Usage: "Render preview for a specific module target",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:     "module",
+						Aliases:  []string{"m"},
+						Required: true,
+						Usage:    "Target module name",
 					},
-					{
-						Name:  "docker",
-						Usage: "Preview for Docker containers on host",
-						Flags: []cli.Flag{
-							&cli.StringFlag{
-								Name:     "host",
-								Aliases:  []string{"H"},
-								Required: true,
-								Usage:    "SSH host name",
-							},
-						},
-						Action: func(ctx context.Context, cmd *cli.Command) error {
-							return RunPreviewDocker(cmd.String("host"))
-						},
+					&cli.StringFlag{
+						Name:     "target",
+						Aliases:  []string{"t"},
+						Required: true,
+						Usage:    "Target payload for the preview renderer",
 					},
-					{
-						Name:  "text",
-						Usage: "Preview for markdown text",
-						Flags: []cli.Flag{
-							&cli.StringFlag{Name: "b64", Required: true},
-						},
-						Action: func(ctx context.Context, cmd *cli.Command) error {
-							return RunPreviewText(cmd.String("b64"))
-						},
+					&cli.StringFlag{
+						Name:    "config",
+						Aliases: []string{"c"},
+						Value:   defaultCfg,
 					},
-					{
-						Name:  "empty",
-						Usage: "Fallback preview for empty entries",
-						Flags: []cli.Flag{
-							&cli.StringFlag{Name: "kaomoji"},
-						},
-						Action: func(ctx context.Context, cmd *cli.Command) error {
-							return RunPreviewEmpty(cmd.String("kaomoji"))
-						},
-					},
+				},
+				Action: func(ctx context.Context, cmd *cli.Command) error {
+					modName := cmd.String("module")
+					target := cmd.String("target")
+
+					registry := buildRegistry(cmd.String("config"), selfBin)
+					mod := registry.GetModule(modName)
+					if mod == nil {
+						return fmt.Errorf("module '%s' not registered", modName)
+					}
+
+					return mod.RenderPreview(target)
 				},
 			},
 		},
