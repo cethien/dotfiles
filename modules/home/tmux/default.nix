@@ -44,6 +44,7 @@ in {
       mouse = true;
       prefix = "C-a";
       terminal = "tmux-256color";
+      keyMode = "vi";
 
       newSession = true;
       plugins = with pkgs.tmuxPlugins; [

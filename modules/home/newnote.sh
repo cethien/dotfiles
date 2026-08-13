@@ -12,6 +12,7 @@ DEFAULT="$(date +%Y%m%d)_untitled"
 
 if [ -z "$argc_filename" ]; then
 	if ! INPUT=$(gum input \
+		--no-show-help \
 		--prompt "󱓧 filename > " \
 		--prompt.foreground "5" \
 		--placeholder "$DEFAULT" \

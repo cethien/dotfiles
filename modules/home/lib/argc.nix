@@ -24,15 +24,13 @@
           cp $src "$out/bin/${name}"
           chmod +x "$out/bin/${name}"
 
-          # Wrap with argc, bash, and any extra tools like ffmpeg
           wrapProgram "$out/bin/${name}" \
-            --prefix PATH : ${lib.makeBinPath ([pkgs.argc pkgs.bash] ++ extraRuntimeDeps)}
+            --prefix PATH : ${lib.makeBinPath ([pkgs.argc pkgs.bash pkgs.gum] ++ extraRuntimeDeps)}
 
-          # Generate completions for the big three
           for shell in bash zsh fish; do
-            mkdir -p $out/share/''${shell}-completion/completions
-            ${pkgs.argc}/bin/argc --argc-completions $shell ${name} > \
-            $out/share/''${shell}-completion/completions/${name}
+            mkdir -p "$out/share/''${shell}-completion/completions"
+            ${pkgs.argc}/bin/argc --argc-completions $shell $src ${name} > \
+              "$out/share/''${shell}-completion/completions/${name}"
           done
         '';
       };
