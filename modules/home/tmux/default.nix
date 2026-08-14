@@ -115,10 +115,10 @@ in {
           plugin = tmux-sm;
           extraConfig = ''
             set -g @session_manager_key 's'
-            set -g @session_manager_height '70%'
-            set -g @session_manager_width '80%'
-            set -g @sessionizer_height '70%'
-            set -g @sessionizer_width '80%'
+            set -g @session_manager_height '100%'
+            set -g @session_manager_width '100%'
+
+            set -g @sessionizer_key ""
           '';
         }
       ];

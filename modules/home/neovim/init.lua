@@ -69,7 +69,6 @@ mini_files.setup({
 	windows = { max_number = 3, preview = true, width_preview = 80 },
 })
 
--- Framework to flatly register mappings for mini.files
 local registered_maps = {}
 local function register_mf(keys, desc, action)
 	table.insert(registered_maps, { keys = keys, desc = desc, action = action })
@@ -92,7 +91,6 @@ vim.api.nvim_create_autocmd("User", {
 	end,
 })
 
--- [1] Copy absolute path
 register_mf("<M-c>", "Copy absolute path", function(get_path)
 	local path = get_path()
 	if path then

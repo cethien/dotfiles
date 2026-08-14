@@ -49,20 +49,12 @@ in {
       };
     };
 
-    home.packages = with pkgs; [
-      up
+    home.packages = with pkgs.unstable; [
       libqalculate
 
-      (pkgs.writeShellScriptBin "termshot" ''
-        mkdir -p ~/Pictures
-        FILENAME="${config.home.homeDirectory}/Pictures/termshot_$(date +%Y%m%d_%H%M%S).png"
-        command ${pkgs.termshot}/bin/termshot -f "$FILENAME" -c --no-decoration -- "$@"
-        if [ -f "$FILENAME" ]; then
-          command ${pkgs.wl-clipboard}/bin/wl-copy < "$FILENAME"
-          echo "Saved to $FILENAME and Clipboard"
-        fi
-      '')
+      termshot
 
+      systemctl-tui
       bluetui
 
       caligula
@@ -105,8 +97,10 @@ in {
       };
     };
 
+    programs.tmux.resurrectPluginProcesses = ["systemctl-tui"];
+
     home.shellAliases = {
-      sysz = "${pkgs.systemctl-tui}/bin/systemctl-tui";
+      sysz = "systemctl-tui";
 
       cdd = "cd ~/Downloads";
       cdc = "cd ~/.config";
