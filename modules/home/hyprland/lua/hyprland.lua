@@ -65,6 +65,6 @@ hl.config({
 	input = {
 		kb_layout = "de",
 		kb_variant = "nodeadkeys",
-		follow_mouse = 1,
+		follow_mouse = 0,
 	},
 })
