@@ -91,8 +91,8 @@ in {
               cmd = "lazygit",
               id = vim.fn.getcwd,
               window = {
-          				width = 0.975,
-                  height = 0.9,
+          				width = 1,
+                  height = 1,
               },
           })
 
