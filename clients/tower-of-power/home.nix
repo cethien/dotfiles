@@ -3,9 +3,9 @@
   lib,
   pkgs,
   ...
-}: {
-  # work
-
+}: let
+  tmsSsh = import ../_tms/home/ssh.nix {inherit pkgs;};
+in {
   imports = [
     ../_common/home/cethien
   ];
@@ -32,6 +32,13 @@
     slack.enable = true;
     freerdp.enable = true;
     freerdp.connections = import ../_tms/home/rdp.nix;
+    ssh.includes = [
+      (tmsSsh.asIncludePath {
+        User = "bsotnikow";
+        IdentityFile = "~/.ssh/id_ed25519_tmsproshop_bsotnikow";
+        IdentitiesOnly = "yes";
+      })
+    ];
 
     # ---
     logitech-peripherals.enable = true;
@@ -63,19 +70,6 @@
 
     rclone.enable = true;
     git.settings = (import ../_common/home/git.nix) // (import ../_tms/home/git.nix);
-    ssh.settings =
-      (import ../_common/home/ssh.nix)
-      // (
-        lib.mapAttrs (name: value:
-          value
-          // {
-            User =
-              if value ? User
-              then value.User
-              else "bsotnikow";
-            IdentityFile = "~/.ssh/id_ed25519_tmsproshop_bsotnikow";
-            IdentitiesOnly = "yes";
-          }) (import ../_tms/home/ssh.nix)
-      );
+    ssh.settings = import ../_common/home/ssh.nix;
   };
 }

@@ -3,7 +3,9 @@
   lib,
   pkgs,
   ...
-}: {
+}: let
+  tmsSsh = import ../_tms/home/ssh.nix {};
+in {
   imports = [
     ./home
   ];
@@ -34,9 +36,11 @@
 
     git.settings = import ../_tms/home/git.nix;
     ssh.settings =
-      import ../_tms/home/ssh.nix
+      tmsSsh.raw
       // {
-        "Host *".IdentityFile = "~/.ssh/id_ed25519";
+        "Host *" = {
+          IdentityFile = "~/.ssh/id_ed25519";
+        };
       };
     freerdp.enable = true;
     freerdp.connections = import ../_tms/home/rdp.nix;
