@@ -23,8 +23,6 @@ in {
     ausweisapp
 
     krita
-    mixxx
-    qlcplus
   ];
 
   programs = {
@@ -41,6 +39,7 @@ in {
     ];
 
     # ---
+
     logitech-peripherals.enable = true;
     logitech-peripherals.autostart = true;
 
@@ -55,7 +54,7 @@ in {
     apps-creative.enable = true;
     gimp.enable = true;
     obs-studio.enable = true;
-    ardour.enable = true;
+    renoise.enable = true;
 
     thunderbird.enable = true;
     thunderbird.autostart = true;

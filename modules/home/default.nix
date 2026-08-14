@@ -57,6 +57,7 @@
     ./fonts.nix
     ./obs-studio.nix
     ./ardour.nix
+    ./mixxx.nix
 
     ./steam.nix
     ./heroic.nix

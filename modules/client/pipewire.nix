@@ -23,6 +23,10 @@ in {
   config = mkIf cfg.enable {
     musnix.enable = true;
 
+    environment.sessionVariables = {
+      LD_LIBRARY_PATH = ["${pkgs.pipewire.jack}/lib"];
+    };
+
     services.pulseaudio.enable = false;
     security.rtkit.enable = true;
     services.pipewire = {

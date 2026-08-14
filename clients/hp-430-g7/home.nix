@@ -25,8 +25,6 @@ in {
 
   home.packages = with pkgs; [
     ausweisapp
-    mixxx
-    qlcplus
   ];
 
   programs.zen-browser.profiles."${config.home.username}" = let
@@ -74,6 +72,9 @@ in {
   };
 
   programs = {
+    renoise.enable = true;
+    mixxx.enable = true;
+
     freerdp.enable = true;
     freerdp.connections = import ../_tms/home/rdp.nix;
     ssh.includes = [
