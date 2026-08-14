@@ -7,7 +7,6 @@
   config = {
     home.packages = with pkgs; [
       sshfs
-      (writeShellScriptBin "ssh-scan-from-config" (builtins.readFile ./ssh-scan-from-config.sh))
     ];
 
     programs.ssh = {
@@ -15,10 +14,19 @@
       settings = {
         "Host *" = {
           Compression = "yes";
+          ControlMaster = "auto";
+          ControlPath = "~/.ssh/sockets/%r@%h:%p";
+          ControlPersist = "10m";
+
+          ServerAliveInterval = 60;
+          ServerAliveCountMax = 3;
+
           HashKnownHosts = "yes";
         };
       };
     };
+
+    home.file.".ssh/sockets/.keep".text = "";
 
     programs.tmux.resurrectPluginProcesses = ["ssh"];
   };
