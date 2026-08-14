@@ -1,59 +1,63 @@
 {pkgs ? null}: let
-  raw = {
-    "Host weclapp-test".HostName = "10.0.30.60";
-    "Host weclapp".HostName = "10.0.30.21";
-    "Host magento".HostName = "10.0.30.40";
-    "Host services-prod".HostName = "10.0.30.20";
-    "Host services-admin".HostName = "10.0.30.10";
-    "Host dns-01".HostName = "10.0.30.5";
-    "Host dns-02".HostName = "10.0.30.6";
+  mkHost = attrs:
+    {
+      RemoteCommand = "command -v tmux >/dev/null 2>&1 && (tmux attach || tmux new-session) || exec $SHELL";
+      RequestTTY = "yes";
+    }
+    // attrs;
 
-    "Host wp-test" = {
+  raw = {
+    "Host weclapp-test" = mkHost {HostName = "10.0.30.60";};
+    "Host weclapp" = mkHost {HostName = "10.0.30.21";};
+    "Host magento" = mkHost {HostName = "10.0.30.40";};
+    "Host services-prod" = mkHost {HostName = "10.0.30.20";};
+    "Host services-admin" = mkHost {HostName = "10.0.30.10";};
+    "Host dns-01" = mkHost {HostName = "10.0.30.5";};
+    "Host dns-02" = mkHost {HostName = "10.0.30.6";};
+
+    "Host wp-test" = mkHost {
       HostName = "10.180.80.92";
       User = "sysadmin";
     };
-    "Host toja" = {
+    "Host toja" = mkHost {
       HostName = "10.102.99.210";
       User = "root";
     };
 
     # --- INFRA
-    "Host truenas" = {
+    "Host truenas" = mkHost {
       HostName = "10.180.80.87";
       User = "truenas_admin";
     };
-    "Host pi".HostName = "10.0.10.20";
-    "Host pve-node-a" = {
+    "Host pi" = mkHost {HostName = "10.0.10.20";};
+    "Host pve-node-a" = mkHost {
       HostName = "10.0.10.5";
       User = "root";
     };
-    "Host pve-node-b" = {
+    "Host pve-node-b" = mkHost {
       HostName = "10.180.80.250";
       User = "root";
     };
-    "Host pve-node-c" = {
+    "Host pve-node-c" = mkHost {
       HostName = "10.0.10.7";
       User = "root";
     };
 
     # --- EXTERNAL
-    "Host magento-staging-hetzner".HostName = "65.108.1.248";
-    "Host magento-prod" = {
+    "Host magento-staging-hetzner" = mkHost {HostName = "65.108.1.248";};
+    "Host magento-prod" = mkHost {
       HostName = "109.71.72.118";
       User = "web-user";
     };
-    "Host magento-staging" = {
+    "Host magento-staging" = mkHost {
       HostName = "109.71.72.244";
       User = "web-user";
     };
-    "Host kasserver-cdn" = {
+    "Host kasserver-cdn" = mkHost {
       HostName = "w01516e3.kasserver.com";
       User = "ssh-w01516e3";
     };
   };
-
-  asSettings = defaults:
-    builtins.mapAttrs (name: value: defaults // value) raw;
 
   toSshConfigString = settings: let
     toBlock = key: attrs: let
@@ -67,8 +71,6 @@
   in
     builtins.concatStringsSep "\n\n" (map (key: toBlock key settings.${key}) (builtins.attrNames settings));
 in {
-  inherit raw asSettings;
-
-  asIncludePath = defaults:
-    toString (pkgs.writeText "tms-ssh-config" (toSshConfigString (asSettings defaults)));
+  inherit raw;
+  asIncludePath = toString (pkgs.writeText "tms-ssh-config" (toSshConfigString raw));
 }

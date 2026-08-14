@@ -15,7 +15,6 @@
 in {
   imports = [
     ./tmux-keybindings.nix
-    ./tmux-launcher.nix
   ];
 
   options.programs.tmux = {

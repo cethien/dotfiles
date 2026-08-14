@@ -15,7 +15,6 @@
       settings = {
         "Host *" = {
           Compression = "yes";
-          ForwardAgent = "yes";
           HashKnownHosts = "yes";
         };
       };
