@@ -1,4 +1,5 @@
 {pkgs ? null}: let
+  # Basiseinstellungen für jeden TMS-Host
   mkHost = attrs:
     {
       RemoteCommand = "command -v tmux >/dev/null 2>&1 && (tmux attach || tmux new-session) || exec $SHELL";
@@ -72,5 +73,9 @@
     builtins.concatStringsSep "\n\n" (map (key: toBlock key settings.${key}) (builtins.attrNames settings));
 in {
   inherit raw;
-  asIncludePath = toString (pkgs.writeText "tms-ssh-config" (toSshConfigString raw));
+
+  asIncludePath = extraAttrs: let
+    finalRaw = builtins.mapAttrs (name: hostAttrs: extraAttrs // hostAttrs) raw;
+  in
+    toString (pkgs.writeText "tms-ssh-config" (toSshConfigString finalRaw));
 }
