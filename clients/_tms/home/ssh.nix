@@ -70,5 +70,5 @@ in {
   inherit raw asSettings;
 
   asIncludePath = defaults:
-    pkgs.writeText "tms-ssh-config" (toSshConfigString (asSettings defaults));
+    toString (pkgs.writeText "tms-ssh-config" (toSshConfigString (asSettings defaults)));
 }
