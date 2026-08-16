@@ -68,7 +68,5 @@ in {
     rofi.powermenu.options = "shutdown/reboot";
 
     rclone.enable = true;
-    git.settings = (import ../_common/home/git.nix) // (import ../_tms/home/git.nix);
-    ssh.settings = import ../_common/home/ssh.nix;
   };
 }

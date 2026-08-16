@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkDefault mkMerge;
+  inherit (lib) mkDefault;
   cfg = config.programs.git;
 in {
   config = {
@@ -15,8 +15,9 @@ in {
       };
 
       alias = {
-        ignore = "!gi() { ${pkgs.git-ignore}/bin/git-ignore -w $@;}; gi";
-        license = "!gl() { ${pkgs.license-go}/bin/license -o LICENSE $@ ;}; gl";
+        ignore = "!${pkgs.git-ignore}/bin/git-ignore -w";
+        license = "!${pkgs.license-go}/bin/license -o LICENSE";
+        view-statistics = "!${pkgs.scc}/bin/scc --no-cocomo --no-size";
       };
       core = {
         eol = "lf";
@@ -25,15 +26,9 @@ in {
       init.defaultBranch = "main";
       pull.rebase = true;
       rebase.autostash = true;
+      fetch.prune = true;
       push.autoSetupRemote = true;
       advice.addIgnoredFile = false;
-
-      url = {
-        "git@github.com:".insteadOf = "gh:";
-        "git@gitlab.com:".insteadOf = "gl:";
-        "git@codeberg.org:".insteadOf = "cb:";
-        "git@bitbucket.org:".insteadOf = "bb:";
-      };
     };
 
     programs.diff-so-fancy.enable = true;

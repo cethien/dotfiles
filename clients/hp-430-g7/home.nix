@@ -86,6 +86,5 @@ in {
     ];
 
     rclone.enable = true;
-    ssh.settings = import ../_common/home/ssh.nix;
   };
 }
