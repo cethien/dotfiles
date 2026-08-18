@@ -206,11 +206,12 @@ end
 
 bind_toggle("<C-t>", {
 	window = {
-		row = function()
-			return vim.o.lines - 15
-		end,
+		-- row = function()
+		-- 	return vim.o.lines - 15
+		-- end,
+		v_align = "top",
 		width = 1.0,
-		height = 12,
+		height = 16,
 	},
 })
 
