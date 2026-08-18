@@ -54,6 +54,15 @@ in {
 
         hl.window_rule({
             match = {
+                initial_title = "^Godot$",
+            },
+            content = "game",
+            workspace = hl.defaultWorkspace.game,
+        })
+
+
+        hl.window_rule({
+            match = {
                 class = "steam",
                 title = "^(Steam Big Picture)$",
             },
