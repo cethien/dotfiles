@@ -18,6 +18,7 @@ in {
     };
 
     programs.steam.enable = true;
+    services.flatpak.enable = true;
 
     # nvidia gpu
     services.xserver.videoDrivers = ["nvidia"];

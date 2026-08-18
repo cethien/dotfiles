@@ -10,7 +10,9 @@ in {
   options.programs.pokemmo.enable = mkEnableOption "pokemmo";
 
   config = mkIf cfg.enable {
-    home.packages = [pkgs.pokemmo-installer];
+    home.packages = [
+      # pkgs.unstable.pokemmo-installer
+    ];
     wayland.windowManager.hyprland.extraLuaFiles = {
       "99-pokemmo" =
         #lua
