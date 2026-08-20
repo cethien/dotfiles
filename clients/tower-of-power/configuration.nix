@@ -57,10 +57,16 @@ in {
     ];
 
     services.udev.extraRules = ''
-      KERNEL=="hidraw\*", ATTRS{idProduct}=="6012", ATTRS{idVendor}=="2dc8", MODE="0660", GROUP="input"
+      # 8BitDo Controller
+      KERNEL=="hidraw*", ATTRS{idProduct}=="6012", ATTRS{idVendor}=="2dc8", MODE="0660", GROUP="input"
       KERNEL=="hidraw*", ATTRS{idProduct}=="6012", ATTRS{idVendor}=="2dc8", MODE="0660", TAG+="uaccess"
-      KERNEL=="hidraw\*", KERNELS=="\*2DC8:6012\*", MODE="0660", GROUP="input"
+      KERNEL=="hidraw*", KERNELS=="*2DC8:6012*", MODE="0660", GROUP="input"
       KERNEL=="hidraw*", KERNELS=="*2DC8:6012*", MODE="0660", TAG+="uaccess"
+
+      # Keychron Q11 Ultra 8K
+      KERNEL=="hidraw*", ATTRS{idVendor}=="3434", MODE="0666", TAG+="uaccess"
+      SUBSYSTEM=="input", ATTRS{idVendor}=="3434", ENV{LIBINPUT_IGNORE_DEVICE}="0"
+      SUBSYSTEM=="input", ATTRS{name}=="Keychron Keychron Ultra-Link 8K*", MODE="0666", TAG+="uaccess", ENV{LIBINPUT_IGNORE_DEVICE}="0"
     '';
 
     virtualisation = {

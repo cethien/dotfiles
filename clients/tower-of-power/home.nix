@@ -42,6 +42,7 @@ in {
 
     logitech-peripherals.enable = true;
     logitech-peripherals.autostart = true;
+    keychron.enable = true;
 
     palworld-save-tools.enable = true;
     pokemmo.enable = true;

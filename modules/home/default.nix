@@ -40,6 +40,7 @@
     ./oh-my-posh.nix
 
     ./logitech-peripherals.nix
+    ./keychron.nix
 
     ./chromium.nix
     ./zen-browser
