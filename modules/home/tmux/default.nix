@@ -198,6 +198,12 @@ in {
           key = "C-M-Left";
           action = "previous-window";
         }
+
+        {
+          key = "c";
+          unbind = true;
+          action = ''new-window -ac "#{pane_current_path}"'';
+        }
       ];
     };
   };

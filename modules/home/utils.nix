@@ -33,7 +33,7 @@ in {
     programs.tmux.keybindings = [
       {
         key = "n";
-        action = "new-window -n newnote ${exec}";
+        action = "new-window -an newnote ${exec}";
       }
     ];
   };

@@ -24,7 +24,12 @@
       if binding ? description
       then "-N \"${binding.description}\" "
       else "";
-  in "bind ${table}${repeatable}${prefix}${desc}${binding.key} ${binding.action}";
+
+    unbindCmd =
+      if binding.unbind or false
+      then "unbind ${binding.key}\n"
+      else "";
+  in "${unbindCmd}bind ${table}${repeatable}${prefix}${desc}${binding.key} ${binding.action}";
 in {
   options.programs.tmux = {
     keybindings = mkOption {

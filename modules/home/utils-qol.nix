@@ -29,7 +29,7 @@ in {
     programs.tmux.keybindings = [
       {
         key = "-";
-        action = "new-window -n qalc qalc";
+        action = "new-window -an qalc qalc";
       }
     ];
 
