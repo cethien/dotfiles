@@ -16,6 +16,9 @@
   ];
 
   extraPackages = with pkgs-unstable; [
+    docker-language-server
+    dockerfmt
+
     emmet-language-server
     vscode-langservers-extracted
     marksman
@@ -24,6 +27,8 @@
 
     lua-language-server
     stylua
+
+    ruff
 
     sqls
 

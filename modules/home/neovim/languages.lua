@@ -113,6 +113,7 @@ require("conform").setup({
 		yaml = { "prettierd" },
 		toml = { "taplo" },
 
+		dockerfile = { "dockerfmt" },
 		caddyfile = { "caddy_fmt" },
 		corefile = { "caddy_fmt" },
 		alloy = { "alloy_fmt" },

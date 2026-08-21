@@ -5,16 +5,6 @@
 }:
 pkgs.mkShell {
   packages = with pkgs-unstable; [
-    # Language Servers, Linter & Formatter
-    nixd
-    alejandra
-    bash-language-server
-    shfmt
-    lua-language-server
-    stylua
-    marksman
-    prettierd
-
     # CLI Helper, Security & Scripting Tools (Rolling)
     sops
     age
