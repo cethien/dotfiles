@@ -1,7 +1,8 @@
 {
-  pkgs,
   config,
   lib,
+  pkgs,
+  pkgs-unstable,
   ...
 }: let
   inherit (lib) mkIf mkOption types sort mapAttrsToList;
@@ -50,6 +51,7 @@ in {
     # };
 
     programs.yazi = {
+      package = pkgs-unstable.yazi;
       keymap.mgr.prepend_keymap = let
         ripdrag = "${pkgs.ripdrag}/bin/ripdrag";
       in [
@@ -217,7 +219,7 @@ in {
         tree-to-clipboard = ./plugins/tree-to-clipboard;
         ffmpeg-convert = ./plugins/ffmpeg-convert;
         inherit
-          (pkgs.yaziPlugins)
+          (pkgs-unstable.yaziPlugins)
           mount
           recycle-bin
           git

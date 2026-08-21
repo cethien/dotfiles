@@ -1,7 +1,7 @@
 {
   lib,
   config,
-  pkgs,
+  pkgs-unstable,
   ...
 }: let
   inherit (lib) mkIf;
@@ -9,6 +9,15 @@
 in {
   config = mkIf cfg.enable {
     programs.prismlauncher = {
+      package = pkgs-unstable.prismlauncher.override {
+        jdks = with pkgs-unstable; [
+          zulu25
+          zulu17 # 1.17 - 1.20.4
+          zulu8 # < 1.12.2
+          zulu # default / fallback
+        ];
+      };
+
       settings = {
         Language = "en_US";
         BackgroundCat = "teawie";
@@ -16,23 +25,8 @@ in {
         WrapperCommand = "gamemoderun";
         MaxMemAlloc = 16384;
         EnableMangoHud = config.programs.mangohud.enable;
-        JavaPath = "${pkgs.zulu25}/bin/java";
-        JavaDir = "${pkgs.zulu25}/bin";
-        JvmArgs = "-XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200";
-      };
 
-      package = pkgs.prismlauncher.override {
-        jdks = with pkgs; [
-          zulu
-          zulu25
-          zulu17
-          zulu8
-        ];
-        additionalLibs = with pkgs; [
-          glfw3-minecraft
-          libGL
-          libpulseaudio
-        ];
+        JvmArgs = "-XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC";
       };
     };
 

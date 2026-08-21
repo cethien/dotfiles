@@ -2,11 +2,16 @@
   config,
   lib,
   pkgs,
-  nixcord,
+  inputs,
   ...
 }: let
   inherit (lib) mkIf;
   cfg = config.programs.nixcord;
+
+  pkg =
+    if cfg.vesktop.enable
+    then pkgs.vesktop
+    else config.programs.nixcord.discord.package;
 
   bin =
     if cfg.vesktop.enable
@@ -14,12 +19,12 @@
     else "discord";
 
   autostartFile = pkgs.makeDesktopItem {
-    exec = "${bin} --start-minimized";
+    exec = "${lib.getExe pkg} --start-minimized";
     name = "discord-autostart";
     desktopName = "Discord (Autostart)";
   };
 in {
-  imports = [nixcord.homeModules.nixcord];
+  imports = [inputs.nixcord.homeModules.nixcord];
 
   options.programs.nixcord.autostart = lib.mkEnableOption "hyprland autostart";
 
@@ -39,7 +44,6 @@ in {
       discord.enable = !cfg.vesktop.enable;
       discord.vencord.enable = true;
 
-      # vesktop.enable = true;
       vesktop.settings = {
         discordBranch = "stable";
         staticTitle = true;
@@ -57,7 +61,6 @@ in {
         plugins = {
           clearUrls.enable = true;
           crashHandler.enable = true;
-          # favoriteGifSearch.enable = true;
           fixCodeblockGap.enable = true;
           fixImagesQuality.enable = true;
           fixSpotifyEmbeds.enable = true;
@@ -79,7 +82,7 @@ in {
           youtubeAdblock.enable = true;
           spotifyCrack.enable = true;
 
-          # vencord-only
+          # vencord / vesktop shared plugins
           alwaysExpandRoles.enable = true;
           betterGifPicker.enable = true;
           blurNsfw.enable = true;

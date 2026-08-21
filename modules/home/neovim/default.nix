@@ -2,31 +2,35 @@
   lib,
   config,
   pkgs,
+  pkgs-unstable,
   ...
 }: let
   inherit (lib) mkIf;
   inherit (config.lib.deeznuts) mkMimeApps;
 
-  ui = import ./ui.nix {inherit pkgs;};
-  languages = import ./languages.nix {inherit pkgs;};
-  autocomplete = import ./autocomplete.nix {inherit pkgs;};
+  ui = import ./ui.nix {inherit pkgs pkgs-unstable;};
+  languages = import ./languages.nix {inherit pkgs pkgs-unstable;};
+  autocomplete = import ./autocomplete.nix {inherit pkgs pkgs-unstable;};
 
-  extraPackages = with pkgs;
+  extraPackages =
     [
+      pkgs.genpass
+    ]
+    ++ (with pkgs-unstable; [
       ripgrep
       fd
-    ]
+    ])
     ++ ui.extraPackages
     ++ autocomplete.extraPackages
     ++ languages.extraPackages;
 
-  genpass-nvim = pkgs.vimUtils.buildVimPlugin {
+  genpass-nvim = pkgs-unstable.vimUtils.buildVimPlugin {
     name = "genpass-nvim";
     src = ./plugins/genpass;
     dependencies = [pkgs.genpass];
   };
 
-  floatty-nvim = pkgs.vimUtils.buildVimPlugin {
+  floatty-nvim = pkgs-unstable.vimUtils.buildVimPlugin {
     pname = "floatty-nvim";
     version = "2.1.0";
     src = pkgs.fetchFromGitHub {
@@ -37,21 +41,20 @@
     };
   };
 
-  plugins = with pkgs.vimPlugins;
+  plugins =
     [
+      floatty-nvim
+    ]
+    ++ (with pkgs-unstable.vimPlugins; [
       mini-nvim
       auto-session
       scope-nvim
-      floatty-nvim
-
       csvview-nvim
 
-      genpass-nvim
+      # genpass-nvim
 
       rest-nvim
-      vim-dadbod
-      vim-dadbod-ui
-    ]
+    ])
     ++ ui.plugins
     ++ autocomplete.plugins
     ++ languages.plugins;
@@ -68,23 +71,25 @@
 in {
   config = mkIf config.programs.neovim.enable {
     programs.neovim = {
+      package = pkgs-unstable.neovim-unwrapped;
       viAlias = true;
       vimAlias = true;
       inherit extraPackages plugins initLua;
 
-      # legacy
       withRuby = false;
       withPython3 = false;
     };
     stylix.targets.neovim.enable = false;
 
-    home.sessionVariables.EDITOR = "nvim";
+    home.packages = [pkgs-unstable.nvimpager];
     home.shellAliases.v = "nvim";
+    home.sessionVariables = {
+      EDITOR = "nvim";
+      MANPAGER = "nvim --clean +Man!";
+      PAGER = "nvim --clean -R";
+    };
+
     programs.tmux.resurrectPluginProcesses = [''"~nvim->nvim *"''];
-
-    home.packages = [pkgs.nvimpager];
-    home.sessionVariables.PAGER = "nvimpager";
-
     xdg.mimeApps.defaultApplications = mkMimeApps {
       text = {
         desktop = "nvim.desktop";
@@ -119,11 +124,10 @@ in {
           "text/x-toml"
           "text/x-ini"
           "text/x-properties"
-          "text/x-po" # gettext translation
+          "text/x-po"
           "text/x-sass"
           "text/x-scss"
           "text/css"
-          # "text/html"
           "application/javascript"
           "application/x-javascript"
           "application/json"
@@ -132,8 +136,8 @@ in {
           "text/xml"
           "application/x-sh"
           "application/x-shellscript"
-          "inode/x-empty" # empty file
-          "inode/directory" # may be opened in tree-style editors
+          "inode/x-empty"
+          "inode/directory"
         ];
       };
     };

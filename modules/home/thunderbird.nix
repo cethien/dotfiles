@@ -2,6 +2,7 @@
   lib,
   config,
   pkgs,
+  pkgs-unstable,
   ...
 }: let
   inherit (lib) mkIf mkEnableOption;
@@ -21,6 +22,7 @@ in {
 
   config = mkIf cfg.enable {
     programs.thunderbird = {
+      package = pkgs-unstable.thunderbird;
       languagePacks = ["en-US" "en-GB" "de"];
     };
 

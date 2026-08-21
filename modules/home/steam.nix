@@ -2,6 +2,7 @@
   lib,
   config,
   pkgs,
+  pkgs-unstable,
   ...
 }: let
   inherit (lib) mkIf mkEnableOption;
@@ -30,7 +31,7 @@ in {
       "${autostartFile}/share/applications/steam-autostart.desktop"
     ];
 
-    home.packages = with pkgs; [protonplus];
+    home.packages = with pkgs-unstable; [protonplus];
 
     programs.zen-browser = {
       profiles."${uname}".extensions.packages = with pkgs.firefox-addons; [

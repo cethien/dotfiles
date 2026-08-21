@@ -2,15 +2,19 @@
   config,
   lib,
   pkgs,
+  pkgs-unstable,
   ...
 }: let
   inherit (lib) mkIf;
   cfg = config.programs.hyprshot;
 in {
   config = mkIf cfg.enable {
-    home.packages = [pkgs.gradia];
+    home.packages = [pkgs-unstable.gradia];
 
-    programs.hyprshot.saveLocation = "${config.home.homeDirectory}/Pictures";
+    programs.hyprshot = {
+      package = pkgs-unstable.hyprshot;
+      saveLocation = "${config.home.homeDirectory}/Pictures";
+    };
 
     wayland.windowManager.hyprland.extraLuaFiles."99-hyprshot" =
       #lua

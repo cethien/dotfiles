@@ -2,26 +2,25 @@
   lib,
   config,
   pkgs,
-  stylix,
+  pkgs-unstable,
+  inputs,
   ...
 }:
 with lib; let
   cfg = config.stylix;
 in {
   imports = [
-    stylix.homeModules.stylix
+    inputs.stylix.homeModules.stylix
   ];
 
   config = mkIf cfg.enable {
+    home.pointerCursor.enable = true;
     home.file.".config/uwsm/env-hyprland".text = let
       c = config.stylix.cursor;
     in ''
-      "export HYPRCURSOR_THEME=${c.name}"
-      "export HYPRCURSOR_SIZE=${toString c.size}"
+      export HYPRCURSOR_THEME=${c.name}
+      export HYPRCURSOR_SIZE=${toString c.size}
     '';
-
-    # new behavior 26.05
-    # gtk.gtk4.theme = null;
 
     stylix = {
       targets = {
@@ -29,38 +28,38 @@ in {
       };
 
       polarity = "dark";
-      base16Scheme = mkDefault "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+      base16Scheme = mkDefault "${pkgs-unstable.base16-schemes}/share/themes/catppuccin-mocha.yaml";
 
       cursor = {
         size = mkDefault 26;
-        package = pkgs.simp1e-cursors;
+        package = pkgs-unstable.simp1e-cursors;
         name = "Simp1e-Tokyo-Night";
       };
 
       icons = {
         enable = true;
-        package = pkgs.tela-icon-theme;
+        package = pkgs-unstable.tela-icon-theme;
         dark = "Tela-dracula-dark";
         light = "Tela-dracula";
       };
 
       fonts = {
         sansSerif = {
-          package = pkgs.nerd-fonts.noto;
+          package = pkgs-unstable.nerd-fonts.noto;
           name = "NotoSans Nerd Font";
         };
         serif = {
-          package = pkgs.nerd-fonts.noto;
+          package = pkgs-unstable.nerd-fonts.noto;
           name = "NotoSerif Nerd Font";
         };
 
         monospace = {
-          package = pkgs.nerd-fonts.jetbrains-mono;
+          package = pkgs-unstable.nerd-fonts.jetbrains-mono;
           name = "JetbrainsMono Nerd Font";
         };
 
         emoji = {
-          package = pkgs.noto-fonts-color-emoji;
+          package = pkgs-unstable.noto-fonts-color-emoji;
           name = "Noto Color emoji";
         };
 

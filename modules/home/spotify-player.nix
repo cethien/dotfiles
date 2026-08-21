@@ -2,6 +2,7 @@
   lib,
   config,
   pkgs,
+  pkgs-unstable,
   ...
 }: let
   inherit (lib) mkIf;
@@ -9,30 +10,33 @@
 
   spotify-player-wrapper = pkgs.writeShellScriptBin "spotify-player-wrapper" ''
     if ! pgrep -f "spotify_player --daemon" >/dev/null; then
-      ${pkgs.spotify-player}/bin/spotify_player --daemon &
+      spotify_player --daemon &
       sleep 1
     fi
-    exec ${pkgs.spotify-player}/bin/spotify_player "$@"
+    exec spotify_player "$@"
   '';
 
   exec = "${spotify-player-wrapper}/bin/spotify-player-wrapper";
 in {
   config = mkIf cfg.enable {
-    programs.spotify-player.settings = {
-      enable_notify = false;
-      pause_on_startup = true;
-      device = {
-        autoplay = true;
-        audio_cache = true;
-        normalization = true;
-      };
+    programs.spotify-player = {
+      package = pkgs-unstable.spotify-player;
+      settings = {
+        enable_notify = false;
+        pause_on_startup = true;
+        device = {
+          autoplay = true;
+          audio_cache = true;
+          normalization = true;
+        };
 
-      border_type = "Rounded";
-      playback_format = "{track} {liked}\n{artists}\n{album}\n{status} {metadata}";
-      play_icon = "󰐊";
-      pause_icon = "󰏤";
-      liked_icon = "󰥲";
-      explicit_icon = "󰯹";
+        border_type = "Rounded";
+        playback_format = "{track} {liked}\n{artists}\n{album}\n{status} {metadata}";
+        play_icon = "󰐊";
+        pause_icon = "󰏤";
+        liked_icon = "󰥲";
+        explicit_icon = "󰯹";
+      };
     };
 
     wayland.windowManager.hyprland.extraLuaFiles."99-spotify-player" =

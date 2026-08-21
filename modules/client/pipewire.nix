@@ -2,16 +2,15 @@
   lib,
   config,
   pkgs,
-  nix-gaming,
-  musnix,
+  inputs,
   ...
 }: let
   inherit (lib) mkIf;
   cfg = config.services.pipewire;
 in {
   imports = [
-    nix-gaming.nixosModules.pipewireLowLatency
-    musnix.nixosModules.musnix
+    inputs.nix-gaming.nixosModules.pipewireLowLatency
+    inputs.musnix.nixosModules.musnix
   ];
 
   # options.services.pipewire.active-mic = lib.mkOption {

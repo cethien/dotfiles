@@ -2,6 +2,7 @@
   lib,
   config,
   pkgs,
+  pkgs-unstable,
   inputs,
   hostName,
   stateVersion,
@@ -28,7 +29,7 @@ in {
     home-manager = {
       useUserPackages = true;
       backupFileExtension = "hm-bak";
-      extraSpecialArgs = {inherit inputs;} // inputs;
+      extraSpecialArgs = {inherit inputs pkgs-unstable;};
 
       sharedModules = [
         ../../modules/home
@@ -54,6 +55,8 @@ in {
 
         wayland.windowManager.hyprland = {
           enable = mkDefault hl;
+          package = config.programs.hyprland.package;
+          portalPackage = config.programs.hyprland.portalPackage;
           # https://wiki.hypr.land/Useful-Utilities/Systemd-start/#uwsm
           systemd.enable = !config.programs.hyprland.withUWSM;
         };
@@ -73,7 +76,7 @@ in {
         group = "net-caps";
         permissions = "u=rx,g=rx,o=";
         capabilities = "cap_net_raw+ep";
-        source = "${pkgs.trippy}/bin/trip";
+        source = "${pkgs-unstable.trippy}/bin/trip";
       };
 
       dumpcap = {
@@ -81,7 +84,7 @@ in {
         group = "net-caps";
         permissions = "u=rx,g=rx,o=";
         capabilities = "cap_net_raw,cap_net_admin+ep";
-        source = "${pkgs.wireshark-cli}/bin/dumpcap";
+        source = "${pkgs-unstable.wireshark-cli}/bin/dumpcap";
       };
 
       arp-scan = {
@@ -89,7 +92,7 @@ in {
         group = "net-caps";
         permissions = "u=rx,g=rx,o=";
         capabilities = "cap_net_raw+ep";
-        source = "${pkgs.arp-scan}/bin/arp-scan";
+        source = "${pkgs-unstable.arp-scan}/bin/arp-scan";
       };
     };
     users.users.cethien.extraGroups =
@@ -132,7 +135,7 @@ in {
       spiceUSBRedirection.enable = true;
       libvirtd = {
         qemu = {
-          package = pkgs.qemu_kvm;
+          package = pkgs-unstable.qemu_kvm;
           swtpm.enable = true;
         };
       };
@@ -222,7 +225,7 @@ in {
       consoleLogLevel = 3;
       initrd.verbose = false;
 
-      kernelPackages = pkgs.linuxPackages_latest;
+      kernelPackages = pkgs-unstable.linuxPackages_latest;
       kernelParams = [
         "quiet"
         "splash"

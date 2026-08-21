@@ -2,6 +2,7 @@
   lib,
   config,
   pkgs,
+  pkgs-unstable,
   ...
 }: let
   inherit (lib) mkIf;
@@ -9,7 +10,7 @@
 in {
   config = mkIf cfg.enable {
     programs.wiremix = {
-      package = pkgs.unstable.wiremix;
+      package = pkgs-unstable.wiremix;
       settings = {
         max_volume_percent = 115.0;
         tabs = ["playback" "output" "recording" "input" "configuration"];
@@ -38,7 +39,7 @@ in {
       };
     };
 
-    home.packages = [pkgs.crosspipe];
+    home.packages = [pkgs-unstable.crosspipe];
 
     wayland.windowManager.hyprland.extraLuaFiles = {
       "99-pipewire".content = ./pipewire.lua;

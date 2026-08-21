@@ -1,6 +1,7 @@
 {
   lib,
   pkgs,
+  pkgs-unstable,
   config,
   ...
 }: let
@@ -10,11 +11,21 @@
 in {
   config = mkIf cfg.enable {
     programs.retroarch = {
+      # package = pkgs-unstable.retroarch;
+
       cores = {
-        mgba.enable = true; # GB / GBC / GBA
-        dolphin.enable = true; # GC / Wii
-        melonds.enable = true; # NDS
-        citra.enable = true; # N3DS
+        mgba.enable = true; # gb / gbc / gba
+        dolphin.enable = true; # gc / wii
+        melonds.enable = true; # nds
+        desmume.enable = true; # nds alternative
+        citra.enable = true; # n3ds
+      };
+
+      settings = {
+        video_driver = "vulkan";
+        video_fullscreen = "true";
+        video_windowed_fullscreen = "true";
+        video_vsync = "true";
       };
     };
 

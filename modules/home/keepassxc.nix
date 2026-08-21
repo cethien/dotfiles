@@ -2,6 +2,7 @@
   lib,
   config,
   pkgs,
+  pkgs-unstable,
   ...
 }: let
   inherit (lib) mkIf;
@@ -10,54 +11,57 @@
   uname = config.home.username;
 in {
   config = mkIf cfg.enable {
-    programs.keepassxc.settings = {
-      Browser = {
-        Enabled = true;
-        AlwaysAllowAccess = true;
-        UpdateBinaryPath = false;
-        CustomProxyLocation = "";
-        SearchInAllDatabases = true;
-      };
+    programs.keepassxc = {
+      package = pkgs-unstable.keepassxc;
+      settings = {
+        Browser = {
+          Enabled = true;
+          AlwaysAllowAccess = true;
+          UpdateBinaryPath = false;
+          CustomProxyLocation = "";
+          SearchInAllDatabases = true;
+        };
 
-      FdoSecrets = {
-        Enabled = true;
-        ConfirmAccessItem = false;
-        ConfirmDeleteItem = false;
-        ShowNotification = false;
-      };
+        FdoSecrets = {
+          Enabled = true;
+          ConfirmAccessItem = false;
+          ConfirmDeleteItem = false;
+          ShowNotification = false;
+        };
 
-      SSHAgent.Enabled = true;
+        SSHAgent.Enabled = true;
 
-      PasswordGenerator = {
-        Length = 24;
-        SpecialChars = false;
-      };
+        PasswordGenerator = {
+          Length = 24;
+          SpecialChars = false;
+        };
 
-      GUI = {
-        AdvancedSettings = true;
-        MinimizeOnClose = true;
-        MinimizeOnStartup = true;
-        MinimizeOnTray = true;
-        ShowTrayIcon = true;
+        GUI = {
+          AdvancedSettings = true;
+          MinimizeOnClose = true;
+          MinimizeOnStartup = true;
+          MinimizeOnTray = true;
+          ShowTrayIcon = true;
 
-        ApplicationTheme = "dark";
-        HidePasswords = true;
-      };
+          ApplicationTheme = "dark";
+          HidePasswords = true;
+        };
 
-      General.MinimizeAfterUnlock = false;
+        General.MinimizeAfterUnlock = false;
 
-      Security = {
-        IconDownloadFallback = true;
-        QuickUnlock = false;
-        LockDatabaseIdle = false;
+        Security = {
+          IconDownloadFallback = true;
+          QuickUnlock = false;
+          LockDatabaseIdle = false;
+        };
       };
     };
 
     services.ssh-agent.enable = true;
-    home.packages = [pkgs.libsecret];
+    home.packages = [pkgs-unstable.libsecret];
 
     programs.zen-browser = {
-      nativeMessagingHosts = [pkgs.keepassxc];
+      nativeMessagingHosts = [pkgs-unstable.keepassxc];
       profiles."${uname}".extensions.packages = [
         pkgs.firefox-addons.keepassxc-browser
       ];
@@ -70,7 +74,7 @@ in {
         text = builtins.toJSON {
           name = "org.keepassxc.keepassxc_browser";
           description = "KeePassXC integration with Chromium-based browsers";
-          path = "${pkgs.keepassxc}/bin/keepassxc-proxy";
+          path = "${pkgs-unstable.keepassxc}/bin/keepassxc-proxy";
           type = "stdio";
           allowed_origins = [
             "chrome-extension://oboonakemofpalcgghocfoadofidjkkk/"
@@ -81,7 +85,7 @@ in {
 
       keepassxcChromium = pkgs.symlinkJoin {
         name = "keepassxc-with-chromium";
-        paths = [pkgs.keepassxc keepassxcChromiumHost];
+        paths = [pkgs-unstable.keepassxc keepassxcChromiumHost];
       };
     in {
       nativeMessagingHosts = [keepassxcChromium];

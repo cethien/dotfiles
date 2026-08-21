@@ -2,12 +2,16 @@
   lib,
   config,
   pkgs,
+  pkgs-unstable,
   ...
 }: let
   cfg = config.programs.spicetify;
 in {
   config = {
     programs.spicetify = {
+      spotifyPackage = pkgs-unstable.spotify;
+      spicetifyPackage = pkgs-unstable.spicetify-cli;
+      spotifywmPackage = pkgs-unstable.spotifywm;
       spotifyLaunchFlags = "--password-store=basic";
       enabledExtensions = with pkgs.spicePkgs.extensions; [
         adblockify

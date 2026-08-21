@@ -2,10 +2,12 @@
   lib,
   config,
   pkgs,
+  pkgs-unstable,
   ...
 }: {
   programs.obs-studio = {
-    plugins = with pkgs.obs-studio-plugins; [
+    package = pkgs-unstable.obs-studio;
+    plugins = with pkgs-unstable.obs-studio-plugins; [
       obs-vkcapture
       obs-pipewire-audio-capture
 

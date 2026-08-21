@@ -1,6 +1,8 @@
 {
   lib,
   config,
+  pkgs,
+  pkgs-unstable,
   ...
 }:
 with lib; let
@@ -8,6 +10,7 @@ with lib; let
 in {
   config = mkIf config.wayland.windowManager.hyprland.enable {
     services.hypridle = {
+      package = pkgs-unstable.hypridle;
       enable = mkDefault true;
 
       settings = {

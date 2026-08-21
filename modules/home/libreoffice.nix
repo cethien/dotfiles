@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  pkgs-unstable,
   ...
 }: let
   inherit (config.lib.deeznuts) mkMimeApps;
@@ -11,7 +12,7 @@ in {
   options.programs.libreoffice.enable = mkEnableOption "libreoffice";
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [
+    home.packages = with pkgs-unstable; [
       libreoffice-fresh
 
       # fonts

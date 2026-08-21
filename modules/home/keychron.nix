@@ -8,7 +8,7 @@
 in {
   options.programs.keychron.enable = lib.mkEnableOption "keychron stuff";
 
-  config = {
+  config = lib.mkIf cfg.enable {
     xdg.desktopEntries."keychron-launcher" = {
       name = "Keychron Launcher";
       genericName = "Keyboard configuration";

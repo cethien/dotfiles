@@ -2,6 +2,7 @@
   lib,
   config,
   pkgs,
+  pkgs-unstable,
   ...
 }: let
   inherit (lib) mkIf mkOption types;
@@ -36,6 +37,7 @@ in {
     home.shellAliases.tm = "tmux_new";
 
     programs.tmux = {
+      package = pkgs-unstable.tmux;
       sensibleOnTop = true;
       clock24 = true;
       baseIndex = 1;
@@ -46,7 +48,7 @@ in {
       keyMode = "vi";
 
       newSession = true;
-      plugins = with pkgs.tmuxPlugins; [
+      plugins = with pkgs-unstable.tmuxPlugins; [
         {
           plugin = sysstat;
           extraConfig = ''
@@ -130,6 +132,7 @@ in {
         set -g allow-passthrough on
         set -g set-clipboard on
         set -g renumber-windows on
+        set -g automatic-rename on
 
         # ------
         # aestheics

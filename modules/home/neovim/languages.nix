@@ -1,5 +1,8 @@
-{pkgs}: {
-  plugins = with pkgs.vimPlugins; [
+{
+  pkgs,
+  pkgs-unstable,
+}: {
+  plugins = with pkgs-unstable.vimPlugins; [
     nvim-treesitter.withAllGrammars
     nvim-treesitter-context
 
@@ -12,7 +15,7 @@
     typst-preview-nvim
   ];
 
-  extraPackages = with pkgs; [
+  extraPackages = with pkgs-unstable; [
     emmet-language-server
     vscode-langservers-extracted
     marksman

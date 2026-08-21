@@ -31,6 +31,7 @@
     ./vm-curator.nix
     ./pandoc
     ./impala.nix
+    ./qalculate.nix
 
     ./utils.nix
     ./utils-net.nix

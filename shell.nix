@@ -1,9 +1,11 @@
 {
-  pkgs ? import <nixpkgs> {},
+  pkgs,
+  pkgs-unstable,
   doot,
 }:
 pkgs.mkShell {
-  packages = with pkgs; [
+  packages = with pkgs-unstable; [
+    # Language Servers, Linter & Formatter
     nixd
     alejandra
     bash-language-server
@@ -13,26 +15,18 @@ pkgs.mkShell {
     marksman
     prettierd
 
-    pyright
-    ruff
-
-    go
-    gopls
-    gotools
-    golangci-lint
-    gofumpt
-
-    nurl
-
+    # CLI Helper, Security & Scripting Tools (Rolling)
     sops
     age
     ssh-to-age
-    yq-go
     argc
     gum
-    doot
-
+    yq-go
+    nurl
     act
+
+    # Custom Flake Package
+    doot
   ];
 
   shellHook = let
@@ -44,8 +38,7 @@ pkgs.mkShell {
       };
       workspace = {
         library = [
-          # 1. Hyprland Typen/Stubs aus dem Nix-Store
-          "${pkgs.hyprland}/share/hypr/stubs"
+          "${pkgs-unstable.hyprland}/share/hypr/stubs"
           yaziStubs
           "$VIMRUNTIME/lua"
         ];
@@ -78,8 +71,6 @@ pkgs.mkShell {
       GREEN="\033[1;32m"
       YELLOW="\033[1;33m"
       RESET="\033[0m"
-
-
 
       if [ "$FIRST_RUN" = true ]; then
         echo -e "$GREEN🚀 '$DOOT_CMD' command is ready. Run '$DOOT_CMD' for usage.$RESET"

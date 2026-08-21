@@ -2,6 +2,7 @@
   lib,
   config,
   pkgs,
+  pkgs-unstable,
   ...
 }: let
   inherit (lib) mkIf;
@@ -48,85 +49,88 @@ in {
   config = mkIf cfg.enable {
     stylix.targets.hyprlock.enable = false;
 
-    programs.hyprlock.settings = {
-      auth.fingerprint = {
-        enabled = true;
-        ready_message = "pwd or fprint";
-        present_message = "scanning...";
+    programs.hyprlock = {
+      package = pkgs-unstable.hyprlock;
+      settings = {
+        auth.fingerprint = {
+          enabled = true;
+          ready_message = "pwd or fprint";
+          present_message = "scanning...";
+        };
+
+        general = {
+          disable_loading_bar = true;
+          grace = 0;
+          hide_cursor = true;
+          no_fade_in = true;
+          ignore_empty_input = true;
+        };
+
+        background = [
+          {
+            path = "screenshot";
+            blur_passes = 4;
+            blur_size = 12;
+          }
+        ];
+
+        input-field = lib.mkForce [
+          (withDefaults {
+            fade_on_empty = false;
+            font_family = fonts.monospace.name;
+
+            placeholder_color = colors.base04;
+            bar_text_color = colors.base01;
+            bar_color = colors.base01;
+            fail_color = colors.base0E;
+
+            ring_color = colors.base02;
+
+            ring_color_error = colors.base0E;
+            ring_color_clear = colors.base0B;
+            ring_color_caps = colors.base09;
+            ring_color_vkey = colors.base0D;
+            ring_color_verify = colors.base0B;
+
+            placeholder_text = "";
+            fail_text = "whoops! try again";
+
+            position = "0, 0";
+          })
+        ];
+
+        label = let
+          mkLabel = attrs:
+            withDefaults ({
+                font_family = fonts.sansSerif.name;
+                color = colors.base05;
+              }
+              // attrs);
+        in [
+          (mkLabel {
+            font_size = "95";
+            position = "0, 325";
+            text = "$TIME";
+          })
+          (mkLabel {
+            font_size = "22";
+            position = "0, 200";
+            text = ''cmd[update:1000] echo $(date +"%A, %B %d")'';
+          })
+          (mkLabel {
+            font_size = "22";
+            position = "0, -255";
+            text = "cmd[update:1000] ${statusScript}";
+          })
+          (mkLabel {
+            color = colors.base04;
+            font_size = "14";
+            text_align = "center";
+            position = "0, -150";
+            text = "cmd[update:0] ${quotesScript}";
+          })
+        ];
       };
-
-      general = {
-        disable_loading_bar = true;
-        grace = 0;
-        hide_cursor = true;
-        no_fade_in = true;
-        ignore_empty_input = true;
-      };
-
-      background = [
-        {
-          path = "screenshot";
-          blur_passes = 4;
-          blur_size = 12;
-        }
-      ];
-
-      input-field = lib.mkForce [
-        (withDefaults {
-          fade_on_empty = false;
-          font_family = fonts.monospace.name;
-
-          placeholder_color = colors.base04;
-          bar_text_color = colors.base01;
-          bar_color = colors.base01;
-          fail_color = colors.base0E;
-
-          ring_color = colors.base02;
-
-          ring_color_error = colors.base0E;
-          ring_color_clear = colors.base0B;
-          ring_color_caps = colors.base09;
-          ring_color_vkey = colors.base0D;
-          ring_color_verify = colors.base0B;
-
-          placeholder_text = "";
-          fail_text = "whoops! try again";
-
-          position = "0, 0";
-        })
-      ];
-
-      label = let
-        mkLabel = attrs:
-          withDefaults ({
-              font_family = fonts.sansSerif.name;
-              color = colors.base05;
-            }
-            // attrs);
-      in [
-        (mkLabel {
-          font_size = "95";
-          position = "0, 325";
-          text = "$TIME";
-        })
-        (mkLabel {
-          font_size = "22";
-          position = "0, 200";
-          text = ''cmd[update:1000] echo $(date +"%A, %B %d")'';
-        })
-        (mkLabel {
-          font_size = "22";
-          position = "0, -255";
-          text = "cmd[update:1000] ${statusScript}";
-        })
-        (mkLabel {
-          color = colors.base04;
-          font_size = "14";
-          text_align = "center";
-          position = "0, -150";
-          text = "cmd[update:0] ${quotesScript}";
-        })
-      ];
     };
 
     wayland.windowManager.hyprland.extraLuaFiles."99-lock" = ''

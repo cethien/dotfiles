@@ -1,7 +1,8 @@
 {
-  lib,
   config,
+  lib,
   pkgs,
+  pkgs-unstable,
   ...
 }: let
   inherit (lib) mkIf mkEnableOption;
@@ -10,6 +11,6 @@ in {
   options.programs.heroic.enable = mkEnableOption "heroic launcher";
 
   config = mkIf cfg.enable {
-    home.packages = [pkgs.heroic];
+    home.packages = [pkgs-unstable.heroic];
   };
 }

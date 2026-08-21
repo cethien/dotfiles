@@ -1,6 +1,7 @@
 {
   lib,
   pkgs,
+  pkgs-unstable,
   config,
   ...
 }: let
@@ -15,9 +16,14 @@ in {
   };
 
   config = mkIf cfg.enable {
-    programs.rofi = import ./rofi-theme.nix {inherit config lib;};
+    programs.rofi = let
+      rofi-theme = import ./rofi-theme.nix {inherit config lib;};
+    in {
+      inherit (rofi-theme) extraConfig theme;
+      package = pkgs-unstable.rofi;
+    };
 
-    home.packages = with pkgs; [gpu-screen-recorder];
+    home.packages = with pkgs-unstable; [gpu-screen-recorder];
 
     xdg.configFile."rofimoji.rc".text = ''
       action = type

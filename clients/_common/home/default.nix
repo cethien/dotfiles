@@ -48,6 +48,7 @@ in {
       bottom.enable = mkDefault true;
       utils-qol.enable = mkDefault true;
       tealdeer.enable = true;
+      qalculate.enable = true;
 
       git.enable = mkDefault true;
       lazygit.enable = config.programs.git.enable;

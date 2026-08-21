@@ -68,70 +68,27 @@
     stateVersion = "25.05";
     system = "x86_64-linux";
 
-    unstableOverlay = final: prev: let
-      unstablePkgs = import nixpkgs-unstable {
-        inherit system;
-        config.allowUnfree = true;
-      };
+    pkgs-unstable = import nixpkgs-unstable {
+      inherit system;
+      config.allowUnfree = true;
+    };
 
-      firefoxAddonsPkgs = import nixpkgs-unstable {
-        inherit system;
-        config.allowUnfree = true;
-        overlays = [inputs.firefox-addons.overlays.default];
-      };
-    in {
-      unstable = unstablePkgs;
+    firefoxAddonsPkgs = import nixpkgs-unstable {
+      inherit system;
+      config.allowUnfree = true;
+      overlays = [inputs.firefox-addons.overlays.default];
+    };
+
+    customAdditionsOverlay = final: prev: {
       firefox-addons = firefoxAddonsPkgs.firefox-addons;
       spicePkgs = inputs.spicetify-nix.legacyPackages.${system};
       vm-curator = inputs.vm-curator.packages.${system}.default;
-
-      inherit
-        (unstablePkgs)
-        fzf
-        tmux
-        tmuxPlugins
-        neovim-unwrapped
-        vimPlugins
-        vimUtils
-        yazi
-        yaziPlugins
-        lazygit
-        lazydocker
-        ;
-
-      inherit
-        (unstablePkgs)
-        hyprland
-        keepassxc
-        thunderbird
-        libreoffice-fresh
-        obs-studio
-        obs-studio-plugins
-        spotify-player
-        spotify
-        discord
-        vesktop
-        slack
-        chromium
-        ;
-
-      inherit
-        (unstablePkgs)
-        steam
-        heroic
-        retroarch
-        r2modman
-        pokemmo-installer
-        mangohud
-        prismlauncher
-        ;
     };
 
     globalNixpkgsModule = {
       nixpkgs.config.allowUnfree = true;
-
       nixpkgs.overlays = [
-        unstableOverlay
+        customAdditionsOverlay
         inputs.nix-gaming.overlays.default
       ];
     };
@@ -142,7 +99,9 @@
         inherit name;
         value = nixpkgs.lib.nixosSystem {
           inherit system;
-          specialArgs = {inherit inputs;} // inputs;
+
+          specialArgs = {inherit inputs pkgs-unstable;};
+
           modules = [
             globalNixpkgsModule
             ./clients/_common/configuration.nix
@@ -176,7 +135,7 @@
       pkgs = nixpkgs.legacyPackages.${system};
       doot = self.packages.${system}.doot;
     in {
-      default = import ./shell.nix {inherit pkgs doot;};
+      default = import ./shell.nix {inherit pkgs pkgs-unstable doot;};
     };
 
     templates = import ./templates;

@@ -2,11 +2,11 @@
   lib,
   config,
   pkgs,
+  pkgs-unstable,
   ...
 }: let
   inherit (lib) mkIf mkEnableOption;
   cfg = config.programs.chromium;
-  inherit (config.lib.deeznuts.hyprland) mkDefaultWorkspaceWindowRule;
 in {
   options.programs.chromium = {
     autostart = mkEnableOption "chromium autostart";
@@ -17,6 +17,8 @@ in {
     deeznuts.defaultBrowser = mkIf cfg.isDefault "chromium";
 
     programs.chromium = {
+      package = pkgs-unstable.chromium;
+
       extensions = [
         # ublock lite
         {id = "ddkjiahejlhfcafbddmgiahcphecmpfh";}
@@ -60,6 +62,9 @@ in {
       ];
 
       commandLineArgs = [
+        "--ozone-platform-hint=auto"
+        "--enable-features=WaylandWindowDecorations,WebRTCPipeWireCapturer"
+
         "--enable-logging=stderr"
         "--ignore-gpu-blocklist"
         "--restore-last-session"

@@ -2,7 +2,7 @@
   config,
   lib,
   pkgs,
-  zen-browser,
+  inputs,
   ...
 }: let
   inherit (lib) mkIf mkEnableOption;
@@ -24,7 +24,7 @@ in {
   };
 
   imports = [
-    zen-browser.homeModules.beta
+    inputs.zen-browser.homeModules.beta
   ];
 
   config = mkIf cfg.enable {

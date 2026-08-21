@@ -1,7 +1,8 @@
 {
-  pkgs,
-  lib,
   config,
+  lib,
+  pkgs,
+  pkgs-unstable,
   ...
 }: let
   inherit (lib) mkIf mkEnableOption;
@@ -19,7 +20,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home.packages = [pkgs.slack];
+    home.packages = [pkgs-unstable.slack];
 
     services.mako.settings."app-name=Slack" = {
       default-timeout = 0;

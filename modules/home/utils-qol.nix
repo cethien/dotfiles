@@ -2,6 +2,7 @@
   lib,
   config,
   pkgs,
+  pkgs-unstable,
   ...
 }: let
   inherit (lib) mkIf;
@@ -49,9 +50,7 @@ in {
       };
     };
 
-    home.packages = with pkgs.unstable; [
-      libqalculate
-
+    home.packages = with pkgs-unstable; [
       termshot
 
       systemctl-tui

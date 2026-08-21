@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  pkgs-unstable,
   ...
 }: let
   inherit (lib) mkIf mkEnableOption optionals;
@@ -15,9 +16,9 @@ in {
   config = mkIf dawEnabled {
     home.packages =
       []
-      ++ optionals cfg.renoise.enable [pkgs.renoise]
-      ++ optionals cfg.ardour.enable [pkgs.ardour]
-      ++ optionals dawEnabled (with pkgs.unstable; [
+      ++ optionals cfg.renoise.enable [pkgs-unstable.renoise]
+      ++ optionals cfg.ardour.enable [pkgs-unstable.ardour]
+      ++ optionals dawEnabled (with pkgs-unstable; [
         vital
       ]);
 

@@ -1,7 +1,7 @@
 {
   lib,
   config,
-  pkgs,
+  pkgs-unstable,
   ...
 }: let
   inherit (lib) mkIf mkEnableOption;
@@ -11,7 +11,7 @@ in {
 
   config = mkIf cfg.enable {
     home.packages = [
-      # pkgs.unstable.pokemmo-installer
+      # pkgs-unstable.pokemmo
     ];
     wayland.windowManager.hyprland.extraLuaFiles = {
       "99-pokemmo" =

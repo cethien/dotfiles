@@ -2,6 +2,7 @@
   lib,
   config,
   pkgs,
+  pkgs-unstable,
   ...
 }: let
   inherit (lib) mkIf;
@@ -21,8 +22,7 @@ in {
   config = mkIf cfg.enable {
     xdg.portal = {
       enable = true;
-      extraPortals = with pkgs; [
-        xdg-desktop-portal-hyprland
+      extraPortals = with pkgs-unstable; [
         xdg-desktop-portal-gtk
       ];
       config = {

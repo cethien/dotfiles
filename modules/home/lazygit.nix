@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  pkgs-unstable,
   ...
 }: let
   inherit (lib) mkIf;
@@ -25,6 +26,7 @@
 in {
   config = mkIf cfg.enable {
     programs.lazygit = {
+      package = pkgs-unstable.lazygit;
       shellWrapperName = "lzg";
       # https://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#overriding-default-config-file-location
       settings = {
@@ -50,7 +52,7 @@ in {
         os.openDirInEditor = "${tmux-editor}/bin/tmux-editor";
 
         customCommands = let
-          license = "${pkgs.license-go}/bin/license";
+          license = "${pkgs-unstable.license-go}/bin/license";
         in [
           {
             key = "l";

@@ -2,6 +2,7 @@
   lib,
   config,
   pkgs,
+  pkgs-unstable,
   ...
 }: let
   cfg = config.programs.hyprland;
@@ -9,7 +10,11 @@
 in {
   config = lib.mkIf cfg.enable {
     services.getty.autologinUser = u.name;
-    programs.hyprland.withUWSM = true;
+    programs.hyprland = {
+      package = pkgs-unstable.hyprland;
+      portalPackage = pkgs-unstable.xdg-desktop-portal-hyprland;
+      withUWSM = true;
+    };
 
     environment.loginShellInit = ''
       if [ "$(tty)" = "/dev/tty1" ]; then

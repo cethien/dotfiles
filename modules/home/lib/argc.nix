@@ -2,6 +2,8 @@
   lib,
   config,
   pkgs,
+  pkgs-unstable,
+  inputs,
   ...
 }: let
   argc = rec {
@@ -13,11 +15,11 @@
     in
       pkgs.stdenv.mkDerivation {
         pname = name;
-        version = "0.1.0";
+        version = inputs.self.lastModifiedDate or "dev";
         inherit src;
         dontUnpack = true;
 
-        nativeBuildInputs = [pkgs.argc pkgs.makeWrapper];
+        nativeBuildInputs = [pkgs-unstable.argc pkgs-unstable.makeWrapper];
 
         installPhase = ''
           mkdir -p $out/bin
@@ -25,11 +27,11 @@
           chmod +x "$out/bin/${name}"
 
           wrapProgram "$out/bin/${name}" \
-            --prefix PATH : ${lib.makeBinPath ([pkgs.argc pkgs.bash pkgs.gum] ++ extraRuntimeDeps)}
+            --prefix PATH : ${lib.makeBinPath ([pkgs.bash pkgs-unstable.argc pkgs-unstable.gum] ++ extraRuntimeDeps)}
 
           for shell in bash zsh fish; do
             mkdir -p "$out/share/''${shell}-completion/completions"
-            ${pkgs.argc}/bin/argc --argc-completions $shell $src ${name} > \
+            ${pkgs-unstable.argc}/bin/argc --argc-completions $shell $src ${name} > \
               "$out/share/''${shell}-completion/completions/${name}"
           done
         '';
