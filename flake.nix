@@ -83,6 +83,7 @@
       firefox-addons = firefoxAddonsPkgs.firefox-addons;
       spicePkgs = inputs.spicetify-nix.legacyPackages.${system};
       vm-curator = inputs.vm-curator.packages.${system}.default;
+      amethyst-mm = final.callPackage ./packages/amethyst.nix {};
     };
 
     globalNixpkgsModule = {
