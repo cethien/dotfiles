@@ -25,6 +25,11 @@ in {
   ];
 
   config = {
+    sops = {
+      defaultSopsFile = ../../secrets.enc.yml;
+      age.sshKeyPaths = ["${u.home}/.ssh/id_ed25519"];
+    };
+
     users.users.cethien.name = mkDefault username;
     home-manager = {
       useUserPackages = true;
@@ -45,6 +50,12 @@ in {
           ./home
           ../${hostName}/home.nix
         ];
+
+        sops = {
+          defaultSopsFile = ../../secrets.enc.yml;
+          age.sshKeyPaths = ["/home/${username}/.ssh/id_ed25519"];
+        };
+
         home.username = username;
         home.homeDirectory = "/home/${username}";
         home = {inherit stateVersion;};

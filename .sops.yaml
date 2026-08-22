@@ -3,7 +3,7 @@ keys:
   - &bso age1je3sgapfwhs57fyapxaagxr9428d084384vvaxmxmpnqfwajne5qvqfpwl
 
 creation_rules:
-  - path_regex: .*secrets\.yml$
+  - path_regex: secrets\.enc\.yml$
     key_groups:
       - age:
           - *bso

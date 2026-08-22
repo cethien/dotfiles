@@ -12,9 +12,7 @@ in {
       inherit name email;
     };
 
-    sops.secrets.rclone_gdrive_token = {
-      sopsFile = ./secrets.yml;
-    };
+    sops.secrets."gdrive_token" = {};
 
     services.syncthing.settings = {
       options.urAccepted = -1;
@@ -42,7 +40,7 @@ in {
         type = "drive";
         scope = "drive";
       };
-      secrets.token = config.sops.secrets.rclone_gdrive_token.path;
+      secrets.token = config.sops.secrets."gdrive_token".path;
 
       mounts = {
         "" = {

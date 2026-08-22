@@ -9,13 +9,16 @@ pkgs.mkShell {
     sops
     age
     ssh-to-age
+
     argc
     gum
     yq-go
+
+    nix-output-monitor
     nurl
+
     act
 
-    # Custom Flake Package
     doot
   ];
 
