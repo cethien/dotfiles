@@ -1,7 +1,8 @@
 {
-  lib,
   config,
+  lib,
   pkgs,
+  pkgs-unstable,
   ...
 }: let
   cfg = config.userfonts;
@@ -31,7 +32,7 @@ in {
     #   };
     # };
 
-    home.packages = with pkgs; [
+    home.packages = with pkgs-unstable; [
       (google-fonts.override {
         fonts = [
           "Lato"

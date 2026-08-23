@@ -41,20 +41,18 @@
     };
   };
 
-  plugins =
+  plugins = with pkgs-unstable.vimPlugins;
     [
-      floatty-nvim
-    ]
-    ++ (with pkgs-unstable.vimPlugins; [
       mini-nvim
       auto-session
       scope-nvim
-      csvview-nvim
+      floatty-nvim
 
       # genpass-nvim
 
+      csvview-nvim
       rest-nvim
-    ])
+    ]
     ++ ui.plugins
     ++ autocomplete.plugins
     ++ languages.plugins;

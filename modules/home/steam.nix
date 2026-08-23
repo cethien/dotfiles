@@ -44,38 +44,30 @@ in {
     wayland.windowManager.hyprland.extraLuaFiles."99-steam" =
       # lua
       ''
-        hl.window_rule({
-            match = {
-                initial_class = "^(steam_app_.*|Godot)$",
-                initial_title = "..*",
-            },
-            content = "game",
-            workspace = hl.defaultWorkspace.game,
+        game_windowrule({
+        	xdg_tag = "^proton-game$",
+        	initial_title = "..*",
+        })
+
+        game_windowrule({
+        	initial_class = "^Godot$",
+        	initial_title = "..*",
         })
 
         hl.window_rule({
-            match = {
-                initial_title = "^Godot$",
-            },
-            content = "game",
-            workspace = hl.defaultWorkspace.game,
-        })
-
-
-        hl.window_rule({
-            match = {
-                class = "steam",
-                title = "^(Steam Big Picture)$",
-            },
-            workspace = hl.defaultWorkspace.game_launcher,
+        	match = {
+        		class = "steam",
+        		title = "^(Steam Big Picture)$",
+        	},
+        	workspace = hl.defaultWorkspace.game_launcher,
         })
 
         hl.window_rule({
-            match = {
-                class = "steam",
-                title = "^(Friends List)$",
-            },
-            workspace = hl.defaultWorkspace.chat,
+        	match = {
+        		class = "steam",
+        		title = "^(Friends List)$",
+        	},
+        	workspace = hl.defaultWorkspace.chat,
         })
       '';
   };

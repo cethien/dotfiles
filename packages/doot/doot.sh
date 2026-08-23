@@ -87,12 +87,16 @@ build-booty() {
 # @cmd updates inputs
 # @describe                           updates inputs [defaults client modules]
 # @flag --pkgs                        update nixpkgs
-# @flag --client                      update client tooling
+# @flag --modules                     update client tooling
 # @flag --repo                    		update repo tooling
-flake-update() {
+update() {
+	if [ -z "$argc_modules" ] && [ -z "$argc_pkgs" ] && [ -z "$argc_repo" ]; then
+		argc_pkgs=1
+	fi
+
 	local INPUTS=()
-	[ -n "$argc_client" ] && INPUTS=(
-		nixos-hardware
+
+	[ -n "$argc_modules" ] && INPUTS+=(
 		nix-gaming
 		musnix
 		home-manager
@@ -100,6 +104,7 @@ flake-update() {
 	)
 
 	[ -n "$argc_pkgs" ] && INPUTS+=(
+		nixos-hardware
 		nixpkgs
 		nixpkgs-unstable
 		nix-index-database
