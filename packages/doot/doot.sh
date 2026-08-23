@@ -112,7 +112,6 @@ update() {
 		firefox-addons
 		spicetify-nix
 		nixcord
-		vm-curator
 	)
 
 	[ -n "$argc_repo" ] && INPUTS+=(

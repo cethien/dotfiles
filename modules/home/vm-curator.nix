@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  pkgs-unstable,
   ...
 }: let
   inherit (lib) mkIf mkEnableOption;
@@ -10,6 +11,6 @@ in {
   options.programs.vm-curator.enable = mkEnableOption "vm-curator";
 
   config = mkIf cfg.enable {
-    home.packages = [pkgs.vm-curator];
+    home.packages = [pkgs-unstable.vm-curator];
   };
 }

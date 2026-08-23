@@ -42,9 +42,6 @@
 
     nixcord.url = "github:FlameFlag/nixcord";
     nixcord.inputs.nixpkgs.follows = "nixpkgs-unstable";
-
-    vm-curator.url = "github:mroboff/vm-curator";
-    vm-curator.inputs.nixpkgs.follows = "nixpkgs-unstable";
   };
 
   nixConfig = {
@@ -82,7 +79,6 @@
     customAdditionsOverlay = final: prev: {
       firefox-addons = firefoxAddonsPkgs.firefox-addons;
       spicePkgs = inputs.spicetify-nix.legacyPackages.${system};
-      vm-curator = inputs.vm-curator.packages.${system}.default;
       amethyst-mm = final.callPackage ./packages/amethyst.nix {};
     };
 
