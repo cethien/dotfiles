@@ -14,7 +14,7 @@ in {
     ./rofi
     ./hypridle.nix
     ./hyprlock.nix
-    ./hyprshot.nix
+    ./grimblast.nix
     ./text-extract.nix
     ./mako.nix
   ];
@@ -64,7 +64,7 @@ in {
       zathura.enable = true;
       fileroller.enable = true;
       nautilus.enable = true;
-      hyprshot.enable = true;
+      grimblast.enable = true;
       text-extract.enable = true;
     };
 
