@@ -20,7 +20,15 @@ vim.lsp.enable("marksman") -- typst
 vim.lsp.enable("tinymist") -- typst
 vim.lsp.enable("texlab") -- latex
 
-vim.lsp.enable("gopls") -- Go
+vim.lsp.config("gopls", {
+	filetypes = { "go", "gomod", "gowork", "gotmpl" },
+	settings = {
+		gopls = {
+			templateExtensions = { "tmpl", "gotmpl" },
+		},
+	},
+})
+vim.lsp.enable("gopls")
 vim.lsp.enable("templ") -- Templ (Go Web)
 vim.lsp.enable("pyright") -- Python
 vim.lsp.enable("rust_analyzer") -- Rust
@@ -64,6 +72,8 @@ vim.filetype.add({
 		["caddyfile"] = "caddyfile",
 		["corefile"] = "corefile",
 		["alloy"] = "alloy",
+		["tmpl"] = "gotmpl",
+		["gotmpl"] = "gotmpl",
 	},
 })
 

@@ -28,6 +28,8 @@
     lua-language-server
     stylua
 
+    gopls
+
     ruff
 
     sqls
