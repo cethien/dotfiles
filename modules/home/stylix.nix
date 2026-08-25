@@ -5,8 +5,8 @@
   pkgs-unstable,
   inputs,
   ...
-}:
-with lib; let
+}: let
+  inherit (lib) mkIf mkDefault;
   cfg = config.stylix;
 in {
   imports = [
