@@ -75,14 +75,17 @@ in {
     ];
 
     programs = {
+      zoxide.package = pkgs-unstable.zoxide;
       zoxide.options = ["--cmd cd"];
 
+      ripgrep.package = pkgs-unstable.ripgrep;
       ripgrep.arguments = [
         "--max-columns-preview"
         "--colors=line:style:bold"
       ];
 
       eza = {
+        package = pkgs-unstable.eza;
         git = true;
         icons = "always";
         extraOptions = [
@@ -90,8 +93,8 @@ in {
         ];
       };
 
+      bat.package = pkgs-unstable.bat;
       bat.config = {
-        pager = "${pkgs.nvimpager}/bin/nvimpager";
         style = "plain";
       };
     };
@@ -108,9 +111,9 @@ in {
 
       cat = "bat";
       tree = "eza -T";
-      ps = "${pkgs.procs}/bin/procs";
-      df = "${pkgs.duf}/bin/duf";
-      du = "${pkgs.gdu}/bin/gdu";
+      ps = "${pkgs-unstable.procs}/bin/procs";
+      df = "${pkgs-unstable.duf}/bin/duf";
+      du = "${pkgs-unstable.gdu}/bin/gdu";
 
       reload = "source ~/.$(basename $SHELL)rc && clear";
     };
