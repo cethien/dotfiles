@@ -5,6 +5,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
     disko.url = "github:nix-community/disko";
@@ -58,6 +59,7 @@
 
   outputs = inputs @ {
     self,
+    determinate,
     nixpkgs,
     nixpkgs-unstable,
     ...
@@ -100,6 +102,7 @@
           specialArgs = {inherit inputs pkgs-unstable;};
 
           modules = [
+            determinate.nixosModules.default
             globalNixpkgsModule
             ./clients/_common/configuration.nix
             ./clients/${name}/hardware-configuration.nix

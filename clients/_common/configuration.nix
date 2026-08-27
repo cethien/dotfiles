@@ -39,9 +39,12 @@ in {
       sharedModules = [
         ../../modules/home
         inputs.sops-nix.homeManagerModules.sops
+        inputs.determinate.homeManagerModules.default
       ];
 
       users."${username}" = {
+        nix.package = lib.mkForce null;
+
         nixpkgs.config.allowUnfree = true;
         nixpkgs.overlays = config.nixpkgs.overlays;
 
@@ -218,7 +221,11 @@ in {
         options = "--delete-older-than 7d";
       };
       settings = {
-        extra-experimental-features = "nix-command flakes";
+        experimental-features = [
+          "nix-command"
+          "flakes"
+        ];
+
         warn-dirty = false;
         trusted-users = ["@wheel"];
         allowed-users = ["@wheel"];

@@ -126,6 +126,7 @@ update() {
 
 # @cmd switch to nixos-configuration / home-manager config
 # @flag -b --boot use boot action to prepare config without switching (eg. kernel updates)
+# @arg args* Extra flags to pass directly to nixos-rebuild
 switch() {
 	local action="switch"
 	if [ -n "$argc_boot" ]; then
@@ -143,7 +144,13 @@ switch() {
 
 	if command -v nixos-rebuild &>/dev/null; then
 		_confirm "switch system $TARGET_HOST?" || return 0
-		sudo nixos-rebuild "$action" --flake ".#$TARGET_HOST" --fallback --no-write-lock-file $offline_flags
+
+		sudo nixos-rebuild "$action" \
+			--flake ".#$TARGET_HOST" \
+			--fallback \
+			--no-write-lock-file \
+			$offline_flags \
+			"${argc_args[@]}"
 		return
 	fi
 
