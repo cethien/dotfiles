@@ -130,6 +130,7 @@ in {
 
       ffmpeg
 
+      photoflare
       drawy
       simple-scan
     ];
