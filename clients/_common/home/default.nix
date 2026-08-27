@@ -123,6 +123,7 @@ in {
       p7zip
       file
       yq-go
+      caddy
 
       parted
       openssl
