@@ -84,7 +84,6 @@ in {
     home.sessionVariables = {
       EDITOR = "nvim";
       MANPAGER = "nvim --clean +Man!";
-      PAGER = "nvim --clean -R";
     };
 
     programs.tmux.resurrectPluginProcesses = [''"~nvim->nvim *"''];

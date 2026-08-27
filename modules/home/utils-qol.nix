@@ -51,6 +51,8 @@ in {
     };
 
     home.packages = with pkgs-unstable; [
+      moor
+
       termshot
 
       systemctl-tui
@@ -100,6 +102,10 @@ in {
     };
 
     programs.tmux.resurrectPluginProcesses = ["systemctl-tui"];
+
+    home.sessionVariables = {
+      PAGER = "moor";
+    };
 
     home.shellAliases = {
       sysz = "systemctl-tui";
