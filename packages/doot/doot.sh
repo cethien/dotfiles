@@ -84,11 +84,33 @@ build-booty() {
 	command nix build .#booty
 }
 
+_local_diff() {
+	local target_host
+	target_host=$(hostname | tr '[:upper:]' '[:lower:]')
+
+	_log-info "Building dry-run for $target_host to compare changes..."
+
+	if nixos-rebuild build --flake ".#$target_host"; then
+		trap 'rm -f ./result' EXIT
+		echo ""
+		nvd diff /run/current-system ./result
+	else
+		_log-error "Failed to build system config for diff"
+		return 1
+	fi
+}
+
+# @cmd show diff between current system and local flake
+diff() {
+	_local_diff
+}
+
 # @cmd updates inputs
-# @describe                           updates inputs [defaults client modules]
-# @flag --pkgs                        update nixpkgs
-# @flag --modules                     update client tooling
-# @flag --repo                    		update repo tooling
+# @describe                            updates inputs [defaults client modules]
+# @flag --pkgs                         update nixpkgs
+# @flag --modules                      update client tooling
+# @flag --repo                         update repo tooling
+# @flag --no-diff                      skip system diff after update
 update() {
 	if [ -z "$argc_modules" ] && [ -z "$argc_pkgs" ] && [ -z "$argc_repo" ]; then
 		argc_pkgs=1
@@ -122,6 +144,10 @@ update() {
 
 	_log-info "Updating inputs: ${INPUTS[*]}"
 	nix flake update "${INPUTS[@]}"
+
+	if [ -z "$argc_no_diff" ]; then
+		_local_diff
+	fi
 }
 
 # @cmd switch to nixos-configuration / home-manager config

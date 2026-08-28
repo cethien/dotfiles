@@ -17,6 +17,8 @@ pkgs.stdenv.mkDerivation {
 
     gum
     argc
+
+    nvd
   ];
 
   installPhase = ''

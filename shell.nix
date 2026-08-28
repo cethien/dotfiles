@@ -16,6 +16,7 @@ pkgs.mkShell {
 
     nix-output-monitor
     nurl
+    nvd
 
     act
 
