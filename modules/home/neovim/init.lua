@@ -225,3 +225,14 @@ git.setup()
 diff.setup()
 
 vim.keymap.set("n", "<leader>ga", diff.toggle_overlay, { desc = "Git" })
+
+vim.api.nvim_create_user_command("FileHistory", function()
+	local file = vim.api.nvim_buf_get_name(0)
+	if file == "" then
+		return
+	end
+
+	vim.cmd("Git log --follow -p -- " .. vim.fn.fnameescape(file))
+end, { desc = "Show full git log & diffs for current file" })
+
+vim.cmd([[command! GFH GitFileHistory]])
