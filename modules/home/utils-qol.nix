@@ -51,8 +51,6 @@ in {
     };
 
     home.packages = with pkgs-unstable; [
-      moor
-
       termshot
 
       systemctl-tui
@@ -99,13 +97,21 @@ in {
       bat.config = {
         style = "plain";
       };
+
+      less.package = pkgs-unstable.less;
+      less.options = {
+        RAW-CONTROL-CHARS = true;
+        quit-if-one-screen = true;
+        ignore-case = true;
+        no-init = true;
+      };
+    };
+
+    home.sessionVariables = {
+      PAGER = "less";
     };
 
     programs.tmux.resurrectPluginProcesses = ["systemctl-tui"];
-
-    home.sessionVariables = {
-      PAGER = "moor";
-    };
 
     home.shellAliases = {
       sysz = "systemctl-tui";
