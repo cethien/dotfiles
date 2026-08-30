@@ -1,29 +1,24 @@
--- Global volume controls (Super + Volume keys)
+-- Global volume controls via SwayOSD (Super + Volume keys)
 hl.bind("SUPER + XF86AudioRaiseVolume", function()
-	os.execute("wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+")
+	swayosd("--output-volume raise")
 end)
 hl.bind("SUPER + XF86AudioLowerVolume", function()
-	os.execute("wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%-")
+	swayosd("--output-volume lower")
 end)
 
--- Helper to execution system-wide endpoint toggles (Mic, Speaker)
-local function toggle_system_mute(target, name, icon_on, icon_off)
-	os.execute(string.format("wpctl set-mute %s toggle", target))
-
-	local handle = io.popen(string.format("wpctl get-volume %s", target))
-	if handle then
-		local result = handle:read("*a")
-		handle:close()
-
-		if result:find("MUTED") then
-			os.execute(string.format("notify-send '%s %s' 'muted'", icon_off, name))
-		else
-			os.execute(string.format("notify-send '%s %s' 'unmuted'", icon_on, name))
-		end
-	end
+local function toggle_mic()
+	swayosd("--input-volume mute-toggle")
 end
+hl.bind("XF86AudioMicMute", toggle_mic, { locked = true })
+hl.bind("ALT + XF86AudioMute", toggle_mic, { locked = true })
+hl.bind("SUPER + ALT + F9", toggle_mic, { locked = true })
 
--- System-wide AFK Toggle
+local function toggle_speakers()
+	swayosd("--output-volume mute-toggle")
+end
+hl.bind("SUPER + XF86AudioMute", toggle_speakers, { locked = true })
+hl.bind("SUPER + SHIFT + F9", toggle_speakers, { locked = true })
+
 local function toggle_afk()
 	local mic_handle = io.popen("wpctl get-volume @DEFAULT_AUDIO_SOURCE@")
 	local spk_handle = io.popen("wpctl get-volume @DEFAULT_AUDIO_SINK@")
@@ -39,15 +34,18 @@ local function toggle_afk()
 	if not mic_res:find("MUTED") or not spk_res:find("MUTED") then
 		os.execute("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ 1")
 		os.execute("wpctl set-mute @DEFAULT_AUDIO_SINK@ 1")
-		os.execute("notify-send '󰩈 afk' 'goodbye'")
+		swayosd("--custom-icon system-lock-screen --custom-message 'AFK (Muted)'")
 	else
 		os.execute("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ 0")
 		os.execute("wpctl set-mute @DEFAULT_AUDIO_SINK@ 0")
-		os.execute("notify-send '󰟀 afk' 'welcome back'")
+		swayosd("--custom-icon user-available --custom-message 'Welcome Back'")
 	end
 end
 
--- Unified helper for application specific volume/mute actions
+-- AFK Mute mappings
+hl.bind("SUPER + SHIFT + XF86AudioMute", toggle_afk, { locked = true })
+hl.bind("SUPER + F9", toggle_afk, { locked = true })
+
 local function apply_focused_action(action, amount)
 	local active_window = hl.get_active_window()
 
@@ -88,22 +86,3 @@ end)
 hl.bind("XF86AudioMute", function()
 	apply_focused_action("mute")
 end)
-
--- Mic Mute mappings
-local function toggle_mic()
-	toggle_system_mute("@DEFAULT_AUDIO_SOURCE@", "mic", "󰍬", "󰍭")
-end
-hl.bind("XF86AudioMicMute", toggle_mic, { locked = true })
-hl.bind("ALT + XF86AudioMute", toggle_mic, { locked = true })
-hl.bind("SUPER + ALT + F9", toggle_mic, { locked = true })
-
--- Speaker Mute mappings (Super + Shift)
-local function toggle_speakers()
-	toggle_system_mute("@DEFAULT_AUDIO_SINK@", "speakers", "󰓃", "󰓄")
-end
-hl.bind("SUPER + XF86AudioMute", toggle_speakers, { locked = true })
-hl.bind("SUPER + SHIFT + F9", toggle_speakers, { locked = true })
-
--- AFK Mute mappings
-hl.bind("SUPER + SHIFT + XF86AudioMute", toggle_afk, { locked = true })
-hl.bind("SUPER + F9", toggle_afk, { locked = true })

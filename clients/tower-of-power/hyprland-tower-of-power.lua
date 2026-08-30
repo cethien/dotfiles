@@ -1,13 +1,16 @@
 local asus = "desc:ASUSTek COMPUTER INC VG27AQML1A S9LMQS167913"
 local arzopa = "desc:GWD ARZOPA 000000000001"
 
+hl.swayosdMonitor = "DP-1"
+
 hl.defaultWorkspace = {
 	game = 3,
 	game_launcher = 3,
-	browser = 4,
-	chat = 4,
-	pip = 4,
-	spotify = 4,
+	browser = 5,
+	chat = 5,
+	pip = 5,
+	spotify = 5,
+	audio = 4,
 }
 
 hl.monitor({
@@ -17,6 +20,7 @@ hl.monitor({
 	scale = 1,
 	bitdepth = 10,
 	supports_hdr = 1,
+	sdrbrightness = 1.2,
 	vrr = 2,
 })
 
@@ -38,6 +42,18 @@ hl.workspace_rule({
 	workspace = "3",
 })
 
+hl.workspace_rule({
+	monitor = asus,
+	workspace = "4",
+	persistent = true,
+	layout = "monocle",
+})
+
+hl.window_rule({
+	match = { workspace = "4", float = true },
+	center = false,
+})
+
 hl.monitor({
 	output = arzopa,
 	mode = "preferred",
@@ -46,7 +62,7 @@ hl.monitor({
 })
 
 hl.workspace_rule({
-	workspace = "4",
+	workspace = "5",
 	monitor = arzopa,
 	persistent = true,
 	default = true,
@@ -61,7 +77,6 @@ hl.config({
 		cm_enabled = true,
 		cm_auto_hdr = 1,
 		use_fp16 = 2,
-		direct_scanout = 0,
 	},
 })
 
