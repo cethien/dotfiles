@@ -54,6 +54,10 @@ in {
           ${suffContent}
           EOF
         '')
+
+        (pkgs.writeShellScriptBin "roll" ''
+          echo "https://youtu.be/dQw4w9WgXcQ"
+        '')
       ];
 
     home.shellAliases = {

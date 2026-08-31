@@ -51,6 +51,9 @@ in {
       tealdeer.enable = true;
       qalculate.enable = true;
 
+      msmtp.enable = mkDefault true;
+      utils-mail.enable = mkDefault true;
+
       git.enable = mkDefault true;
       lazygit.enable = config.programs.git.enable;
       direnv.enable = true;

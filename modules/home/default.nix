@@ -35,6 +35,7 @@
 
     ./utils.nix
     ./utils-net.nix
+    ./utils-mail.nix
     ./utils-remote.nix
     ./utils-qol.nix
     ./utils-fun.nix

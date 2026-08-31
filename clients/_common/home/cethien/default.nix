@@ -64,6 +64,7 @@ in {
       };
     };
 
+    sops.secrets."gmx_password" = {};
     accounts = let
       thunderbird = {
         enable = true;
@@ -91,8 +92,6 @@ in {
       };
 
       email.accounts."${email}" = {
-        primary = true;
-        inherit thunderbird;
         realName = "Borislaw Sotnikow";
         address = email;
         userName = email;
@@ -109,6 +108,11 @@ in {
           port = 993;
           tls.enable = true;
         };
+        passwordCommand = "cat ${config.sops.secrets."gmx_password".path}";
+
+        primary = true;
+        msmtp.enable = true;
+        inherit thunderbird;
       };
     };
   };
