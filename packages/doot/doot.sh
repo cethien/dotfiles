@@ -152,8 +152,13 @@ update() {
 
 # @cmd switch to nixos-configuration / home-manager config
 # @flag -b --boot use boot action to prepare config without switching (eg. kernel updates)
+# @flag -p --pull git pull first
 # @arg args* Extra flags to pass directly to nixos-rebuild
 switch() {
+	if [[ -n "$argc_pull" ]]; then
+		git pull --rebase --autostash
+	fi
+
 	local action="switch"
 	if [ -n "$argc_boot" ]; then
 		action="boot"
