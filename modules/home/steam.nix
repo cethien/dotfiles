@@ -50,7 +50,7 @@ in {
         })
 
         game_windowrule({
-        	initial_class = "^Godot$",
+        	initial_class = "^(steam_app_.*|Godot)$",
         	initial_title = "..*",
         })
 
