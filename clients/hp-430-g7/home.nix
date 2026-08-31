@@ -51,10 +51,18 @@ in {
       };
     };
 
-    spaces."on deez road again" = {
-      id = "1d6bd4a3-319b-4782-b201-cfb3bd230a90";
-      position = 1000;
-      icon = "🚄";
+    spaces = {
+      "lets get this bread" = {
+        id = "8e725798-defd-4b13-bc8b-ae3fd4bad512";
+        position = 1001;
+        icon = "🍞";
+        container = containers."tmsproshop.de".id;
+      };
+      "on deez road again" = {
+        id = "1d6bd4a3-319b-4782-b201-cfb3bd230a90";
+        position = 1000;
+        icon = "🚄";
+      };
     };
 
     tms = import ../_tms/home/zen-browser.nix {inherit pkgs;};

@@ -26,28 +26,40 @@
       };
     };
 
-    spaces."deez nuts" = {
-      id = "cd0b7a9b-bb11-42e8-a10a-52ea6813e6b4";
-      position = 1000;
-      icon = "🥙";
+    spaces = {
+      "deez nuts" = {
+        id = "cd0b7a9b-bb11-42e8-a10a-52ea6813e6b4";
+        position = 1000;
+        icon = "🥙";
+      };
+
+      "lets get this bread" = {
+        id = "8e725798-defd-4b13-bc8b-ae3fd4bad512";
+        position = 1001;
+        icon = "🍞";
+        container = containers."tmsproshop.de".id;
+      };
     };
 
-    pins = {
+    pins = let
+      main = spaces."deez nuts".id;
+    in {
       "whatsapp" = {
+        workspace = main;
         id = "9d8a8f91-7e29-4688-ae2e-da4e49d4a179";
         url = "https://web.whatsapp.com/";
-        isEssential = true;
         position = 101;
       };
 
       "calendar" = {
+        workspace = main;
         id = "591c45e0-737f-47d1-86e8-bf173ce87df9";
         url = "https://calendar.google.com";
-        isEssential = true;
         position = 102;
       };
 
       "youtube" = {
+        workspace = main;
         id = "217cf342-d929-419b-9a41-75ed87239d99";
         url = "https://www.youtube.com/feed/subscriptions";
         position = 1001;
