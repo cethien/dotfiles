@@ -1,18 +1,26 @@
 let
-  shared = {
-    username = "Administrator";
-    domain = "tmspro.shop";
-  };
-  old.domain = "ad.tmsproshop.de";
-in {
-  # "exchange" = shared // {fullAddress = "10.0.50.10";};
-  # "dc-01" = shared // {fullAddress = "10.0.50.11";};
-  # "dc-02" = shared // {fullAddress = "10.0.50.12";};
+  mkEntry = fullAddress: overrides:
+    {
+      username = "Administrator";
+      domain = "ad.tmspro.shop";
+      inherit fullAddress;
+    }
+    // overrides;
 
-  "timas" = {
-    fullAddress = "10.102.99.80";
-    username = "LocalAdmin";
+  old = {
+    username = "Administrator";
+    domain = "ad.tmsproshop.de";
   };
-  "exchange-2019" = shared // old // {fullAddress = "10.102.99.98";};
-  "dc-2016" = shared // old // {fullAddress = "10.102.99.99";};
+in {
+  "windows-admin-center" = mkEntry "10.0.50.10" {};
+  "dc-01" = mkEntry "10.0.50.05" {};
+  "dc-02" = mkEntry "10.0.50.06" {};
+  # "exchange" = mkEntry "10.0.50.07" {};
+
+  "timas" = mkEntry "10.102.99.80" {
+    username = "LocalAdmin";
+    domain = null;
+  };
+  "exchange-2019" = mkEntry "10.102.99.98" old;
+  "dc-2016" = mkEntry "10.102.99.99" old;
 }

@@ -24,6 +24,11 @@
           tags = ["vd" "wordpress"];
         }
         {
+          name = "magento-shops admin";
+          url = "https://absperrshop.de/admin_b1sk2x";
+          tags = ["magento"];
+        }
+        {
           name = "erstehilfeshop";
           url = "https://erstehilfeshop.de";
           tags = ["ehs"];
@@ -113,13 +118,18 @@
     }
     {
       name = "bitbucket";
-      url = "bitbucket.org/tmsproshop";
+      url = "https://bitbucket.org/tmsproshop";
       tags = ["bb" "source" "git"];
     }
     {
       name = "magento bitbucket";
-      url = "bitbucket.org/tmsproshop";
+      url = "https://bitbucket.org/tmsproshop/magento";
       tags = ["shops" "bb" "source" "git" "project"];
+    }
+    {
+      name = "windows admin center";
+      url = "https://wac.tmspro.shop";
+      tags = ["windows server"];
     }
     {
       name = "grafana explore";
@@ -137,7 +147,7 @@
       tags = ["prometheus" "monitoring"];
     }
     {
-      name = "alerts";
+      name = "alertmanager";
       url = "https://alerts.tmspro.shop";
       tags = ["alertmanager" "monitoring"];
     }

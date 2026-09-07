@@ -17,6 +17,21 @@
       User = "root";
     };
 
+    "Host wac" = {
+      HostName = "10.0.50.10";
+      User = "administrator@ad.tmspro.shop";
+    };
+
+    "Host dc-01" = {
+      HostName = "10.0.50.5";
+      User = "administrator@ad.tmspro.shop";
+    };
+
+    "Host dc-02" = {
+      HostName = "10.0.50.6";
+      User = "administrator@ad.tmspro.shop";
+    };
+
     # --- INFRA
     "Host truenas" = {
       HostName = "10.180.80.87";
@@ -37,12 +52,12 @@
     };
 
     # --- EXTERNAL
-    "Host magento-staging-hetzner" = {HostName = "65.108.1.248";};
-    "Host magento-prod" = {
+    "Host hetzner-staging" = {HostName = "65.108.1.248";};
+    "Host maxcluster-prod" = {
       HostName = "109.71.72.118";
       User = "web-user";
     };
-    "Host magento-staging" = {
+    "Host maxcluster-staging" = {
       HostName = "109.71.72.244";
       User = "web-user";
     };
