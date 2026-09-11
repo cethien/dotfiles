@@ -13,9 +13,6 @@ let
   };
 in {
   "windows-admin-center" = mkEntry "10.0.50.10" {};
-  "dc-01" = mkEntry "10.0.50.05" {};
-  "dc-02" = mkEntry "10.0.50.06" {};
-  # "exchange" = mkEntry "10.0.50.07" {};
 
   "timas" = mkEntry "10.102.99.80" {
     username = "LocalAdmin";
