@@ -1,7 +1,8 @@
 {
-  pkgs,
-  lib,
   config,
+  lib,
+  pkgs,
+  pkgs-unstable,
   inputs,
   ...
 }: let
@@ -111,8 +112,9 @@ in {
     home.packages = with pkgs; [
       sops
       age
+      ssh-to-age
       devenv
-      secretspec
+      pkgs-unstable.secretspec
 
       curl
       wget

@@ -33,9 +33,6 @@ in {
       "${autostartFile}/share/applications/tmux-autostart.desktop"
     ];
 
-    programs.bash.initExtra = builtins.readFile ./tmux-bashinit.sh;
-    home.shellAliases.tm = "tmux_new";
-
     programs.tmux = {
       package = pkgs-unstable.tmux;
       sensibleOnTop = true;

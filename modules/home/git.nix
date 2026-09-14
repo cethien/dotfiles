@@ -5,9 +5,15 @@
   ...
 }: let
   inherit (lib) mkDefault;
+  inherit (config.lib.deeznuts) mkArgcBashBin';
   cfg = config.programs.git;
+
+  git-wts = mkArgcBashBin' ./git-wts.sh;
 in {
   config = {
+    home.packages = [git-wts];
+    home.shellAliases."gwts" = "git-wts";
+
     programs.git.settings = {
       user = {
         name = mkDefault "cethien";
