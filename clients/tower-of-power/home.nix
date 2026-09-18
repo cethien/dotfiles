@@ -16,6 +16,7 @@ in {
     "50-tower-of-power".content = ./hyprland-tower-of-power.lua;
   };
   programs.hyprlock.monitor = "desc:GWD ARZOPA 000000000001";
+  services.mako.settings.output = "HDMI-A-1";
 
   services.kdeconnect.enable = true;
 
