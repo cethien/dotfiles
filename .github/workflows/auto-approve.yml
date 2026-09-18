@@ -1,0 +1,17 @@
+name: Auto Approve PR
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  auto-approve:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Auto Approve PR
+        uses: lekman/auto-approve-action@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          allowed-authors: "github-actions[bot]"
+          required-labels: "auto-approve"
+          label-match-mode: "any"
