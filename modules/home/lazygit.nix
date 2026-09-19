@@ -34,7 +34,7 @@ in {
           sidePanels = [
             ["files" "worktrees"]
             ["commits"]
-            ["status" "branches" "remotes"]
+            ["branches" "remotes"]
             ["stash"]
           ];
 
