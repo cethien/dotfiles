@@ -37,7 +37,7 @@ in {
       keybindings = [
         {
           key = "e";
-          action = "new-window -an yazi yazi $HOME";
+          action = ''new-window -an yazi yazi "#{pane_current_path}"'';
         }
       ];
     };
