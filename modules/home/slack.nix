@@ -8,18 +8,9 @@
   inherit (lib) mkIf mkEnableOption;
   cfg = config.programs.slack;
 
-  slack-password-fix = pkgs.symlinkJoin {
-    name = "slack-password-fix";
-    paths = [pkgs-unstable.slack];
-    buildInputs = [pkgs.makeWrapper];
-    postBuild = ''
-      wrapProgram $out/bin/slack --add-flags "--password-store=basic"
-    '';
-  };
-
   autostartFile = pkgs.makeDesktopItem {
     name = "slack-autostart";
-    exec = "${slack-password-fix}/bin/slack -u";
+    exec = "${pkgs-unstable.slack}/bin/slack -u";
     desktopName = "Slack (Autostart)";
   };
 in {
@@ -29,7 +20,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home.packages = [slack-password-fix];
+    home.packages = [pkgs-unstable.slack];
 
     services.mako.settings."app-name=Slack" = {
       default-timeout = 0;

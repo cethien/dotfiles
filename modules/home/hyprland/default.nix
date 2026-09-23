@@ -73,6 +73,10 @@ in {
       swayosd.enable = true;
       battery-checker.enable = true;
       hyprpaper.enable = true;
+      gnome-keyring = {
+        enable = true;
+        components = ["secrets"];
+      };
     };
 
     wayland.windowManager.hyprland = {

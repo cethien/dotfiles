@@ -22,14 +22,7 @@ in {
           SearchInAllDatabases = true;
         };
 
-        FdoSecrets = {
-          Enabled = true;
-          ConfirmAccessItem = false;
-          ConfirmDeleteItem = false;
-          ShowNotification = false;
-        };
 
-        SSHAgent.Enabled = true;
 
         PasswordGenerator = {
           Length = 24;
@@ -57,8 +50,6 @@ in {
       };
     };
 
-    services.ssh-agent.enable = true;
-    home.packages = [pkgs-unstable.libsecret];
 
     programs.zen-browser = {
       nativeMessagingHosts = [pkgs-unstable.keepassxc];

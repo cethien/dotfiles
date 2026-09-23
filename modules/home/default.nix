@@ -48,6 +48,7 @@
     ./zen-browser
     ./aria2.nix
     ./keepassxc.nix
+    ./bitwarden.nix
     ./thunderbird.nix
     ./libreoffice.nix
     ./dbeaver.nix

@@ -31,8 +31,8 @@ else
 fi
 
 PASS=""
-if [ -n "$RDP_HOST" ] && command -v secret-tool >/dev/null; then
-	PASS=$(secret-tool lookup URL "$RDP_HOST" 2>/dev/null || echo "")
+if [ -n "$RDP_HOST" ] && command -v rbw >/dev/null; then
+	PASS=$(rbw get "$(rbw search "$RDP_HOST" 2>/dev/null)" 2>/dev/null || echo "")
 fi
 
 [ -n "$PASS" ] && ARGS+=("/p:$PASS")
