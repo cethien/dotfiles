@@ -131,6 +131,8 @@ in {
       yq-go
       caddy
 
+      cht-sh
+
       parted
       openssl
 
