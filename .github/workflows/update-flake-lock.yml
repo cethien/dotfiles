@@ -30,5 +30,4 @@ jobs:
           pr-title: "chore: weekly inputs update"
           pr-body: "Automated weekly update of flake inputs."
           pr-labels: |
-            auto-approve
             dependencies
