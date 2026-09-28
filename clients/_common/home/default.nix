@@ -66,9 +66,23 @@ in {
           warn_timeout = 0;
         };
       };
+      devenv.enable = true;
+      devenv.package = pkgs-unstable.devenv;
+      # secretspec.enable = true;
+      secretspec = {
+        package = pkgs-unstable.secretspec;
+        settings = {
+          defaults = {
+            profile = "default";
+            provider = "sops";
+          };
+        };
+      };
+
       neovim.enable = true;
       pandoc.enable = true;
       lazysql.enable = true;
+      lazysql.package = pkgs-unstable.lazysql;
       gh.enable = mkDefault true;
       pvetui.enable = mkDefault true;
 
@@ -113,8 +127,6 @@ in {
       sops
       age
       ssh-to-age
-      devenv
-      pkgs-unstable.secretspec
 
       curl
       wget
