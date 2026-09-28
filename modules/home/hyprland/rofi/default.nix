@@ -19,7 +19,7 @@ in {
     programs.rofi = let
       rofi-theme = import ./rofi-theme.nix {inherit config lib;};
     in {
-      inherit (rofi-theme) extraConfig theme;
+      inherit (rofi-theme) settings theme;
       package = pkgs-unstable.rofi;
     };
 

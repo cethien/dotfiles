@@ -6,15 +6,12 @@
   ...
 }: let
   inherit (config.lib.deeznuts) mkMimeApps;
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf;
   cfg = config.programs.libreoffice;
 in {
-  options.programs.libreoffice.enable = mkEnableOption "libreoffice";
-
   config = mkIf cfg.enable {
+    programs.libreoffice.package = pkgs-unstable.libreoffice-stable;
     home.packages = with pkgs-unstable; [
-      libreoffice-stable
-
       # fonts
       corefonts
       vista-fonts

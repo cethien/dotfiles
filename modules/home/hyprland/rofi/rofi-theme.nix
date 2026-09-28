@@ -6,7 +6,7 @@
   inherit (lib) mkForce;
   inherit (config.lib.formats.rasi) mkLiteral;
 in {
-  extraConfig = {
+  settings = {
     modi = "drun";
     show-icons = false;
     display-drun = " ";
