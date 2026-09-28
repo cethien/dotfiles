@@ -128,6 +128,7 @@ update() {
 	[ -n "$argc_pkgs" ] && INPUTS+=(
 		nixos-hardware
 		nixpkgs
+		determinate
 		nixpkgs-unstable
 		nix-index-database
 		zen-browser
@@ -168,7 +169,6 @@ switch() {
 	if [ -n "$argc_boot" ]; then
 		action="boot"
 	fi
-
 
 	export TARGET_HOST
 	TARGET_HOST=$(hostname | tr '[:upper:]' '[:lower:]')
