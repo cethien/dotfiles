@@ -29,4 +29,10 @@ hl.workspace_rule({
 	default = true,
 })
 
+hl.config({
+	input = {
+		numlock_by_default = true,
+	},
+})
+
 hl.bind("SUPER + F12", hl.dsp.exec_cmd("slack"))
