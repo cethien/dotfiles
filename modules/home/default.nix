@@ -16,6 +16,7 @@
     ./tmux
     ./neovim
 
+    ./sops.nix
     ./fzf.nix
     ./ssh.nix
     ./yazi
@@ -32,7 +33,6 @@
     ./pandoc
     ./impala.nix
     ./qalculate.nix
-
     ./utils.nix
     ./utils-net.nix
     ./utils-mail.nix

@@ -66,6 +66,7 @@ in {
           warn_timeout = 0;
         };
       };
+      sops.enable = true;
       devenv.enable = true;
       devenv.package = pkgs-unstable.devenv;
       # secretspec.enable = true;
@@ -124,10 +125,6 @@ in {
     # fonts.fontconfig.enable = true;
 
     home.packages = with pkgs; [
-      sops
-      age
-      ssh-to-age
-
       curl
       wget
       gnutar
