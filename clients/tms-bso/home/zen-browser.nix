@@ -79,7 +79,7 @@ in {
   autostart = true;
   profiles."${config.home.username}" = let
     zen =
-      import ../_tms/home/zen-browser.nix {inherit pkgs;};
+      import ../../_tms/home/zen-browser.nix {inherit pkgs;};
   in {
     bookmarks = {
       force = true;

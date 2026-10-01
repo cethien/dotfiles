@@ -32,7 +32,7 @@ in {
     thunderbird.autostart = true;
     libreoffice.enable = true;
 
-    zen-browser = import ./zen-browser.nix {inherit config pkgs;};
+    zen-browser = import ./home/zen-browser.nix {inherit config pkgs;};
     rbw.enable = true;
     rbw.settings = import ../_tms/home/bitwarden.nix;
 

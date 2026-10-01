@@ -147,7 +147,7 @@
       tags = ["prometheus" "monitoring"];
     }
     {
-      name = "alertmanager";
+      name = "alerts";
       url = "https://alerts.tmspro.shop";
       tags = ["alertmanager" "monitoring"];
     }
