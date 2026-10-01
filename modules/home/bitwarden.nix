@@ -5,17 +5,12 @@
   pkgs-unstable,
   ...
 }: let
-  inherit (lib) mkIf mkEnableOption;
-  cfg = config.programs.bitwarden;
+  inherit (lib) mkIf;
+  cfg = config.programs.rbw;
   uname = config.home.username;
 in {
-  options.programs.bitwarden.enable = mkEnableOption "bitwarden + rbw stuff";
-
   config = mkIf cfg.enable {
-    home.packages = [pkgs-unstable.bitwarden-desktop];
-
     programs.rbw = {
-      enable = true;
       settings = {
         pinentry = pkgs.pinentry-rofi;
       };

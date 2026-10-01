@@ -94,5 +94,7 @@ in {
     ];
 
     rclone.enable = true;
+    rbw.enable = true;
+    rbw.settings = import ../_tms/home/bitwarden.nix;
   };
 }

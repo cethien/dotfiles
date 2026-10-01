@@ -32,15 +32,9 @@ in {
     thunderbird.autostart = true;
     libreoffice.enable = true;
 
-    bitwarden.enable = true;
-    rbw = {
-      settings = {
-        base_url = "https://vault.tmspro.shop";
-        email = "b.sotnikow@tmsproshop.de";
-      };
-    };
-
     zen-browser = import ./zen-browser.nix {inherit config pkgs;};
+    rbw.enable = true;
+    rbw.settings = import ../_tms/home/bitwarden.nix;
 
     ssh.settings =
       tmsSsh.raw
