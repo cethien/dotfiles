@@ -4,7 +4,15 @@
 # @describe tooling for deez nuts
 # @meta inherit-flag-options
 # @flag -y --yes $SKIP_CONFIRM skip confirm messages
-# @flag -f --skip-validation $SKIP_VALIDATION skip inventory validation
+
+_confirm() {
+	if [[ -n "${argc_yes:-}" ]]; then
+		_log-warn "confirmation skipped"
+		return 0
+	fi
+
+	gum confirm "$1"
+}
 
 _log-info() {
 	gum log --time TimeOnly --level info "$*"
@@ -20,15 +28,6 @@ _log-warn() {
 
 _log-error() {
 	gum log --time TimeOnly --level error "$*"
-}
-
-_confirm() {
-	if [[ -n "${argc_yes:-}" ]]; then
-		_log-warn "confirmation skipped"
-		return 0
-	fi
-
-	gum confirm "$1"
 }
 
 # @cmd generate an age key from ssh key
@@ -139,7 +138,6 @@ update() {
 
 	[ -n "$argc_repo" ] && INPUTS+=(
 		disko
-		deploy-rs
 		sops-nix
 	)
 
@@ -174,6 +172,7 @@ switch() {
 	TARGET_HOST=$(hostname | tr '[:upper:]' '[:lower:]')
 
 	local offline_flags=""
+	# Sänk you for travelling with Deutsche Bahn
 	if ! ping -c 1 -W 1 cache.nixos.org &>/dev/null; then
 		_log-info "Network unreachable: forcing offline mode"
 		offline_flags="--offline --option substitute false"
@@ -194,7 +193,5 @@ switch() {
 	_log-error "no nixos config for '$TARGET_HOST'"
 	return 1
 }
-
-_q() { command yq -eoy "$1" inventory.toml; }
 
 eval "$(argc --argc-eval "$0" "$@")"

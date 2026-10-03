@@ -6,6 +6,7 @@
   inputs,
   ...
 }: let
+  # i might be mad but not 200-lines-caseblock-mad
   argc = rec {
     mkArgcBashBin = {
       src,

@@ -7,6 +7,7 @@
   inherit (lib) mkOption types;
 
   deeznuts = {
+    # hell i will write libreoffice.desktop 50 times
     mkMimeApps = categories: let
       getDesktopFile = val:
         if lib.hasSuffix ".desktop" val
