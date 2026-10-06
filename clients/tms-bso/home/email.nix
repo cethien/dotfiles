@@ -59,8 +59,10 @@ in {
     programs.thunderbird.profiles."${mail}" = {
       isDefault = true;
       settings = {
+        "layers.acceleration.force-enabled" = true;
         "mailnews.start_page.enabled" = true;
-        "mailnews.start_page.url" = "https://thunderbird.net/${pkgs.thunderbird.version}/releasenotes/";
+        "mailnews.start_page.url" = "https://thunderbird.net/en-US/thunderbird/${pkgs.thunderbird.version}/releasenotes/";
+        "mail.mst.style" = 1;
 
         "calendar.itip.send_notifications" = false;
         "calendar.itip.notify" = false;
@@ -75,6 +77,7 @@ in {
         "ldap_2.autoComplete.useDirectory" = true;
         "ldap_2.autoComplete.directoryServer" = "ldap_2.servers.tmsproshop";
       };
+
       feedAccounts = {
         "News" = {};
       };
