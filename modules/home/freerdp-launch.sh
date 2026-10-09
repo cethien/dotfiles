@@ -8,6 +8,16 @@ if [ -z "$TARGET" ]; then
 	exit 1
 fi
 
+WIDTH=""
+HEIGHT=""
+if command -v hyprctl >/dev/null && [ -n "${WAYLAND_DISPLAY:-}" ]; then
+	RES=$(hyprctl monitors -j | jq -r '.[0] | "\(.width) \(.height)"' 2>/dev/null || echo "")
+	if [ -n "$RES" ]; then
+		WIDTH=$(echo "$RES" | awk '{print $1}')
+		HEIGHT=$(echo "$RES" | awk '{print $2}')
+	fi
+fi
+
 ARGS=(
 	"-wallpaper"
 	"-themes"
@@ -21,6 +31,8 @@ ARGS=(
 	"+dynamic-resolution"
 	"/cert:ignore"
 )
+
+[ -n "$WIDTH" ] && [ -n "$HEIGHT" ] && ARGS=("/w:$WIDTH" "/h:$HEIGHT" "${ARGS[@]}")
 
 if [ -f "$TARGET" ]; then
 	RDP_HOST=$(awk -F':' '/^full address:s:/ {print $NF}' "$TARGET" | tr -d '\r\n')
@@ -62,7 +74,18 @@ set +e
 EXIT_CODE=$?
 set -e
 
-if [ $EXIT_CODE -ne 0 ]; then
+# 131 = hyprland kill
+OK_CODES=(0 1 131)
+
+IS_OK=0
+for code in "${OK_CODES[@]}"; do
+	if [ "$EXIT_CODE" -eq "$code" ]; then
+		IS_OK=1
+		break
+	fi
+done
+
+if [ "$IS_OK" -eq 0 ]; then
 	if command -v notify-send >/dev/null; then
 		notify-send -u critical "FreeRDP Error" "Connection failed for $RDP_HOST (Exit: $EXIT_CODE)"
 	fi
