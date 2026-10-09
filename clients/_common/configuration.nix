@@ -155,9 +155,6 @@ in {
       };
     };
 
-    services.gnome.gnome-keyring.enable = hl;
-    programs.seahorse.enable = config.services.gnome.gnome-keyring.enable;
-
     programs.command-not-found.enable = true;
 
     time.timeZone = "Europe/Berlin";

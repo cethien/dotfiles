@@ -31,5 +31,7 @@ in {
     programs.gpu-screen-recorder.enable = true;
 
     security.pam.services.hyprlock.fprintAuth = true;
+    services.gnome.gnome-keyring.enable = true;
+    programs.seahorse.enable = config.services.gnome.gnome-keyring.enable;
   };
 }
