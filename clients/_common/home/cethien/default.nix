@@ -12,7 +12,11 @@ in {
       inherit name email;
     };
 
-    sops.secrets."gdrive_token" = {};
+    sops.secrets = {
+      "rclone_gdrive/client_id" = {};
+      "rclone_gdrive/client_secret" = {};
+      "rclone_gdrive/token" = {};
+    };
 
     services.syncthing.settings = {
       options.urAccepted = -1;
@@ -39,8 +43,10 @@ in {
       config = {
         type = "drive";
         scope = "drive";
+        client_id = "ext_cat ${config.sops.secrets."rclone_gdrive/client_id".path}";
+        client_secret = "ext_cat ${config.sops.secrets."rclone_gdrive/client_secret".path}";
       };
-      secrets.token = config.sops.secrets."gdrive_token".path;
+      secrets.token = config.sops.secrets."rclone_gdrive/token".path;
 
       mounts = {
         "" = {
