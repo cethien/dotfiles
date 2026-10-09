@@ -1,7 +1,7 @@
 {
+  config,
   lib,
   pkgs,
-  config,
   inputs,
   ...
 }: let
@@ -9,6 +9,9 @@
 in {
   imports = [
     inputs.nixos-hardware.nixosModules.common-pc-laptop
+    inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
+    inputs.nixos-hardware.nixosModules.common-cpu-intel-comet-lake
+
     ../_common/configuration.nix
     ../_common/disko.nix
     # ../tms-bso/smb
@@ -38,18 +41,8 @@ in {
 
     hardware = {
       enableRedistributableFirmware = true;
-      graphics = {
-        enable = true;
-        extraPackages = with pkgs; [
-          intel-media-driver
-        ];
-      };
-
       # scanner
       sane.extraBackends = [pkgs.hplip];
-    };
-    environment.sessionVariables = {
-      LIBVA_DRIVER_NAME = "iHD";
     };
 
     boot = {

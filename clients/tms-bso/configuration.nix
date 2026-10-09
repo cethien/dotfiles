@@ -1,13 +1,16 @@
 {
-  lib,
   config,
+  lib,
   pkgs,
-  stateVersion,
+  inputs,
   ...
 }: let
   u = config.users.users.cethien;
 in {
   imports = [
+    inputs.nixos-hardware.nixosModules.common-pc-laptop
+    inputs.nixos-hardware.nixosModules.lenovo-thinkpad-l14-amd
+
     ../_common/configuration.nix
     ../_common/disko.nix
     ../_tms/smb.nix
