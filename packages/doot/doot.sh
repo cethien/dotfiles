@@ -105,43 +105,39 @@ diff() {
 }
 
 # @cmd updates inputs
-# @describe                            updates inputs [defaults client modules]
-# @flag --pkgs                         update nixpkgs
-# @flag --modules                      update client tooling
-# @flag --repo                         update repo tooling
+# @describe                            updates inputs [defaults to all apps & system base]
+# @flag --repo                         update repo tooling only (disko, sops)
 # @flag --no-diff                      skip system diff after update
 update() {
-	if [ -z "$argc_modules" ] && [ -z "$argc_pkgs" ] && [ -z "$argc_repo" ]; then
-		argc_pkgs=1
-	fi
-
 	local INPUTS=()
 
-	[ -n "$argc_modules" ] && INPUTS+=(
-		nix-gaming
-		musnix
-		home-manager
-		stylix
-	)
+	if [ -n "$argc_repo" ]; then
+		INPUTS+=(
+			disko
+			sops-nix
+		)
+		_log-info "Updating core repo inputs: ${INPUTS[*]}"
+	else
+		INPUTS+=(
+			nixos-hardware
+			nixpkgs
+			determinate
 
-	[ -n "$argc_pkgs" ] && INPUTS+=(
-		nixos-hardware
-		nixpkgs
-		determinate
-		nixpkgs-unstable
-		nix-index-database
-		zen-browser
-		firefox-addons
-		spicetify-nix
-		nixcord
-	)
+			zen-browser
+			firefox-addons
+			spicetify-nix
 
-	[ -n "$argc_repo" ] && INPUTS+=(
-		disko
-		sops-nix
-	)
+			nixpkgs-unstable
+			home-manager
+			nix-index-database
 
-	_log-info "Updating inputs: ${INPUTS[*]}"
+			nixcord
+			nix-gaming
+			musnix
+		)
+		_log-info "Updating ALL system and app inputs: ${INPUTS[*]}"
+	fi
+
 	nix flake update "${INPUTS[@]}"
 
 	if [ -z "$argc_no_diff" ]; then
