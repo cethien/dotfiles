@@ -1,7 +1,11 @@
 {pkgs ? null}: let
   raw = {
-    "Host weclapp-test" = {HostName = "10.0.30.60";};
+    "Host timas" = {HostName = "10.0.30.25";};
+    "Host rclone" = {HostName = "10.0.30.24";};
+    "Host bnl-new" = {HostName = "10.0.30.23";};
+    "Host toja-new" = {HostName = "10.0.30.22";};
     "Host weclapp" = {HostName = "10.0.30.21";};
+    "Host weclapp-test" = {HostName = "10.0.30.60";};
     "Host magento" = {HostName = "10.0.30.40";};
     "Host services-prod" = {HostName = "10.0.30.20";};
     "Host services-admin" = {HostName = "10.0.30.10";};
