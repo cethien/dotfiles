@@ -124,7 +124,7 @@ update() {
 			determinate
 
 			zen-browser
-			firefox-addons
+			nur
 			spicetify-nix
 
 			nixpkgs-unstable

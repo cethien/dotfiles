@@ -32,8 +32,9 @@
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
     zen-browser.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
-    firefox-addons.url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
-    firefox-addons.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    # firefox-addons
+    nur.url = "github:nix-community/NUR";
+    nur.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     spicetify-nix.inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -71,11 +72,11 @@
     firefoxAddonsPkgs = import nixpkgs-unstable {
       inherit system;
       config.allowUnfree = true;
-      overlays = [inputs.firefox-addons.overlays.default];
+      overlays = [inputs.nur.overlays.default];
     };
 
     customAdditionsOverlay = final: prev: {
-      firefox-addons = firefoxAddonsPkgs.firefox-addons;
+      firefox-addons = firefoxAddonsPkgs.nur.repos.rycee.firefox-addons;
       spicePkgs = inputs.spicetify-nix.legacyPackages.${system};
       amethyst-mm = final.callPackage ./packages/amethyst.nix {};
     };
