@@ -21,10 +21,11 @@ in {
   services.kdeconnect.enable = true;
 
   home.packages = with pkgs; [
-    amethyst-mm
     ausweisapp
 
     krita
+
+    amethyst-mm
   ];
 
   programs = {
@@ -56,7 +57,7 @@ in {
 
     apps-creative.enable = true;
     gimp.enable = true;
-    obs-studio.enable = true;
+    # obs-studio.enable = true;
     renoise.enable = true;
 
     thunderbird.enable = true;

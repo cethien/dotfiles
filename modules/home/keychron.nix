@@ -12,7 +12,7 @@ in {
     xdg.desktopEntries."keychron-launcher" = {
       name = "Keychron Launcher";
       genericName = "Keyboard configuration";
-      exec = "${pkgs.ungoogled-chromium}/bin/chromium --app=https://launcher.keychron.com/ --password-store=basic";
+      exec = "${pkgs.ungoogled-chromium}/bin/chromium --app=https://launcher.keychron.com/";
       icon = "keychron";
       type = "Application";
       categories = ["Utility"];
