@@ -12,6 +12,7 @@
   environment.systemPackages = with pkgs; [
     disko
     (pkgs.writeShellScriptBin "nixos-here" (builtins.readFile ./nixos-here.sh))
+    nixos-anywhere
 
     git
     neovim
