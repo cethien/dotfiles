@@ -16,7 +16,7 @@ in {
     wayland.windowManager.hyprland.extraLuaFiles."99-grimblast" =
       #lua
       ''
-        local cmd = "DEFAULT_TARGET_DIR=$HOME/Pictures/ grimblast -fno copysave area"
+        local cmd = "DEFAULT_TARGET_DIR=$HOME/Pictures/screenshots/ grimblast --freeze copysave area"
         hl.bind("SUPER + SHIFT + S", hl.dsp.exec_cmd(cmd))
       '';
   };
