@@ -47,6 +47,7 @@
     ./chromium.nix
     ./zen-browser
     ./aria2.nix
+    ./rclone.nix
     ./keepassxc.nix
     ./bitwarden.nix
     ./thunderbird.nix

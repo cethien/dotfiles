@@ -43,10 +43,12 @@ in {
       config = {
         type = "drive";
         scope = "drive";
-        client_id = "ext_cat ${config.sops.secrets."rclone_gdrive/client_id".path}";
-        client_secret = "ext_cat ${config.sops.secrets."rclone_gdrive/client_secret".path}";
       };
-      secrets.token = config.sops.secrets."rclone_gdrive/token".path;
+      secrets = {
+        client_id = config.sops.secrets."rclone_gdrive/client_id".path;
+        client_secret = config.sops.secrets."rclone_gdrive/client_secret".path;
+        token = config.sops.secrets."rclone_gdrive/token".path;
+      };
 
       mounts = {
         "" = {
