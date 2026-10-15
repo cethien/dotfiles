@@ -28,6 +28,7 @@
     ./gh-cli.nix
     ./lazygit.nix
     ./lazydocker.nix
+    ./dtop.nix
     ./pvetui.nix
     ./vm-curator.nix
     ./pandoc

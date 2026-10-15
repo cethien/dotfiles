@@ -75,7 +75,9 @@ in {
           systemd.enable = !config.programs.hyprland.withUWSM;
         };
         programs.steam.enable = config.programs.steam.enable;
-        programs.lazydocker.enable = docker;
+        programs.dtop.enable = docker;
+        programs.dtop.settings.all = true;
+        programs.dtop.package = pkgs-unstable.dtop;
         programs.vm-curator.enable = virt;
       };
     };
