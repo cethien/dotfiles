@@ -1,6 +1,16 @@
 {pkgs}: {
   bookmarks = [
     {
+      name = "dbasement";
+      url = "https://databasement.tmspro.shop";
+      tags = ["admin" "backups" "database"];
+    }
+    {
+      name = "dozzle";
+      url = "https://dozzle.tmspro.shop";
+      tags = ["docker" "admin"];
+    }
+    {
       name = "shops";
       bookmarks = [
         {
@@ -156,8 +166,9 @@
       url = "https://mailpit.tmspro.shop";
       tags = ["mail relay"];
     }
+
     {
-      name = "github";
+      name = "infra-repo";
       url = "https://github.com/orgs/tmsproshopgmbh/repositories";
       tags = ["github" "source" "git" "projects"];
     }
