@@ -21,10 +21,9 @@ in {
   services.kdeconnect.enable = true;
 
   home.packages = with pkgs; [
+    cheese
     ausweisapp
-
     krita
-
     amethyst-mm
   ];
 
