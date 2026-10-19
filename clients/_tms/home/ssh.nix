@@ -8,7 +8,7 @@
     "Host weclapp-test" = {HostName = "10.0.30.60";};
     "Host magento" = {HostName = "10.0.30.40";};
     "Host services-prod" = {HostName = "10.0.30.20";};
-    "Host backup"  = {HostName = "10.0.30.11";};
+    "Host backups" = {HostName = "10.0.30.11";};
     "Host services-admin" = {HostName = "10.0.30.10";};
     "Host dns-01" = {HostName = "10.0.30.5";};
     "Host dns-02" = {HostName = "10.0.30.6";};
