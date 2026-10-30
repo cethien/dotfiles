@@ -26,6 +26,11 @@ in {
         "hp-430-g7".id = "NJ467AX-LE6UDUN-5PQUZW7-ORDECKC-MWWUZIY-LLYXZ3Q-A2SNZPR-3FE2NQP";
       };
       folders = {
+        our-kind-of-normal = {
+          id = "our-kind-of-normal";
+          path = "${config.home.homeDirectory}/our-kind-of-normal";
+          devices = ["hp-430-g7" "xiaomi-15" "tower-of-power"];
+        };
         hollow-crown = {
           id = "hollow-crown";
           path = "${config.home.homeDirectory}/hollow-crown";
