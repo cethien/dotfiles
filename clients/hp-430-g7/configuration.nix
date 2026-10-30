@@ -42,9 +42,9 @@ in {
 
     hardware = {
       enableRedistributableFirmware = true;
-      # scanner
-      sane.extraBackends = [pkgs.hplip];
+      sane.extraBackends = [pkgs.hplipWithPlugin];
     };
+    services.printing.drivers = [pkgs.hplipWithPlugin];
 
     boot = {
       plymouth = {

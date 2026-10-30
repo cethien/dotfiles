@@ -48,8 +48,9 @@ in {
       xpadneo.enable = true;
 
       # scanner
-      sane.extraBackends = [pkgs.hplip];
+      sane.extraBackends = [pkgs.hplipWithPlugin];
     };
+    services.printing.drivers = [pkgs.hplipWithPlugin];
 
     services.udev.packages = with pkgs; [
       game-devices-udev-rules
