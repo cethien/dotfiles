@@ -188,6 +188,11 @@
       tags = ["tailscale" "vpn"];
     }
     {
+      name = "slack";
+      url = "https://app.slack.com/client";
+      tags = ["messenger"];
+    }
+    {
       name = "pve-node-a";
       url = "https://10.0.10.5:8006";
       tags = ["proxmox" "vms"];
