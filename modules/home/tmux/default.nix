@@ -13,6 +13,19 @@
     exec = "tmux start-server";
     desktopName = "tmux server (autostart)";
   };
+
+  tmux-workspace = pkgs.writeShellScriptBin "tmux-workspace" ''
+    SESSION_NAME=$(basename "$PWD" | sed 's/[[:space:].-]/_/g')
+    if ! tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
+      tmux new-session -d -s "$SESSION_NAME" -c "$PWD"
+    fi
+
+    if [ -n "$TMUX" ]; then
+      tmux switch-client -t "$SESSION_NAME"
+    else
+      tmux attach-session -t "$SESSION_NAME"
+    fi
+  '';
 in {
   imports = [
     ./tmux-keybindings.nix
@@ -28,6 +41,10 @@ in {
 
   config = mkIf cfg.enable {
     programs.fzf.tmux.enableShellIntegration = true;
+
+    home.shellAliases = {
+      tw = "${tmux-workspace}/bin/tmux-workspace";
+    };
 
     xdg.autostart.entries = [
       "${autostartFile}/share/applications/tmux-autostart.desktop"
