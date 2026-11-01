@@ -33,3 +33,7 @@ jobs:
           pr-body: "Automated weekly update of flake inputs."
           pr-labels: |
             dependencies
+
+      - name: Test build NixOS configurations
+        run: |
+          nix flake check --all-systems
