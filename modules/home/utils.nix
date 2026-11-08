@@ -8,12 +8,13 @@
   cfg = config.programs.utils;
 
   newnote = mkArgcBashBin' ./newnote.sh;
-  exec = "${newnote}/bin/newnote";
+  execNewnote = "${newnote}/bin/newnote";
 
   update = mkArgcBashBin {
     src = ./update.sh;
     extraRuntimeDeps = [pkgs.nvd];
   };
+  execUpdate = "${update}/bin/update";
 in {
   options.programs.utils.enable = lib.mkEnableOption "utils";
 
@@ -27,18 +28,33 @@ in {
       (writeShellScriptBin "uln" (builtins.readFile ./uln.sh))
     ];
 
-    xdg.desktopEntries.create-note = {
-      name = "newnote";
-      inherit exec;
-      terminal = true;
-      icon = "text-editor";
-      categories = ["Utility"];
+    xdg.desktopEntries = {
+      create-note = {
+        name = "newnote";
+        exec = execNewnote;
+        terminal = true;
+        icon = "text-editor";
+        categories = ["Utility"];
+      };
+
+      system-update = {
+        name = "System Update";
+        comment = "Update NixOS or system packages";
+        exec = "sudo ${execUpdate}";
+        terminal = true;
+        icon = "system-software-update";
+        categories = ["System" "Settings"];
+      };
     };
 
     programs.tmux.keybindings = [
       {
         key = "n";
-        action = "new-window -an newnote ${exec}";
+        action = "new-window -an newnote ${execNewnote}";
+      }
+      {
+        key = "u";
+        action = "new-window -an update sudo ${execUpdate}";
       }
     ];
   };

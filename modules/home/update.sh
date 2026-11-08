@@ -7,6 +7,7 @@ set -euo pipefail
 
 # @cmd
 # @flag -y --yes Skip confirmation prompt
+# @flag -b --boot Only build and set boot target instead of switching live
 main() {
 	_check_sudo
 
@@ -29,9 +30,13 @@ _is_nixos() {
 }
 
 _update_nixos() {
-	local target_host flake_uri
+	local target_host flake_uri action="switch"
 	target_host=$(hostname | tr '[:upper:]' '[:lower:]')
 	flake_uri="github:cethien/dotfiles#${target_host}"
+
+	if [[ -n "${argc_boot:-}" ]]; then
+		action="boot"
+	fi
 
 	gum log --time TimeOnly --level info "Building system closure for ${target_host}..."
 
@@ -40,14 +45,14 @@ _update_nixos() {
 	nvd diff /run/current-system ./result
 
 	if [[ -z "${argc_yes:-}" ]]; then
-		if ! gum confirm "Apply configuration to ${target_host}?"; then
+		if ! gum confirm "Apply configuration to ${target_host} (action: ${action})?"; then
 			gum log --time TimeOnly --level warn "Aborted."
 			rm -f ./result
 			exit 0
 		fi
 	fi
 
-	nixos-rebuild switch --flake "${flake_uri}" --fallback
+	nixos-rebuild "${action}" --flake "${flake_uri}" --fallback
 	rm -f ./result
 }
 
