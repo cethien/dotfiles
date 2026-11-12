@@ -1,16 +1,18 @@
 {pkgs ? null}: let
   raw = {
-    "Host timas" = {HostName = "10.0.30.25";};
-    "Host rclone" = {HostName = "10.0.30.24";};
-    "Host bnl-new" = {HostName = "10.0.30.23";};
-    "Host toja-new" = {HostName = "10.0.30.22";};
-    "Host weclapp" = {HostName = "10.0.30.21";};
-    "Host weclapp-test" = {HostName = "10.0.30.60";};
     "Host magento" = {HostName = "10.0.30.40";};
+    "Host timas" = {HostName = "10.0.30.25";};
+    "Host toja-new" = {HostName = "10.0.30.22";};
+    "Host weclapp-test" = {HostName = "10.0.30.60";};
+    "Host weclapp" = {HostName = "10.0.30.21";};
+    "Host nextcloud" = {HostName = "10.0.30.30";};
+    "Host rclone" = {HostName = "10.0.30.24";};
     "Host services-prod" = {HostName = "10.0.30.20";};
-    "Host auth" = {HostName = "10.0.30.12";};
-    "Host backups" = {HostName = "10.0.30.11";};
+
     "Host services-admin" = {HostName = "10.0.30.10";};
+    "Host backups" = {HostName = "10.0.30.11";};
+
+    "Host auth" = {HostName = "10.0.30.12";};
     "Host dns-01" = {HostName = "10.0.30.5";};
     "Host dns-02" = {HostName = "10.0.30.6";};
 
@@ -43,7 +45,7 @@
       HostName = "10.180.80.87";
       User = "truenas_admin";
     };
-    "Host pi" = {HostName = "10.0.10.20";};
+    "Host pi" = {HostName = "10.0.10.21";};
     "Host pve-node-a" = {
       HostName = "10.0.10.5";
       User = "root";
