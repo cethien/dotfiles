@@ -81,6 +81,7 @@ in {
       };
 
       neovim.enable = true;
+      opencode.enable = true;
       pandoc.enable = true;
       lazysql.enable = true;
       lazysql.package = pkgs-unstable.lazysql;

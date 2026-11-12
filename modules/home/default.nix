@@ -15,6 +15,7 @@
 
     ./tmux
     ./neovim
+    ./opencode.nix
 
     ./sops.nix
     ./fzf.nix
