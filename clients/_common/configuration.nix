@@ -79,6 +79,8 @@ in {
         programs.dtop.settings.all = true;
         programs.dtop.package = pkgs-unstable.dtop;
         programs.vm-curator.enable = virt;
+
+        home.packages = lib.optionals docker [pkgs-unstable.regctl];
       };
     };
 
