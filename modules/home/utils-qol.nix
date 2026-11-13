@@ -63,6 +63,27 @@
     }
   ];
 
+  freeze = pkgs.writeShellScriptBin "freeze" ''
+    set -e
+    file="$PWD/$(${pkgs.coreutils}/bin/date +%Y%m%d_%H%M%S)_terminal.png"
+
+    if [ "$#" -eq 0 ]; then
+      if [ -t 0 ]; then
+        printf 'usage: freeze <command> [args...] OR <command> | freeze\n' >&2
+        exit 2
+      fi
+
+      input=$(${pkgs.coreutils}/bin/mktemp)
+      trap 'rm -f "$input"' EXIT
+      ${pkgs.coreutils}/bin/cat >"$input"
+      ${lib.getExe pkgs-unstable.charm-freeze} --language ansi --window -o "$file" "$input" </dev/null
+    else
+      command=$(printf '%q ' "$@")
+      ${lib.getExe pkgs-unstable.charm-freeze} --execute "$command" --window -o "$file" </dev/null
+    fi
+
+    printf 'saved %s\n' "$file" >&2
+  '';
 in {
   options.programs.utils-qol.enable = lib.mkEnableOption "qol utils";
 
@@ -167,7 +188,7 @@ in {
     };
 
     home.packages = with pkgs-unstable; [
-      termshot
+      freeze
 
       systemctl-tui
       bluetui
