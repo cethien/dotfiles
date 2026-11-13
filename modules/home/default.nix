@@ -41,7 +41,6 @@
     ./utils-remote.nix
     ./utils-qol.nix
     ./utils-fun.nix
-    ./oh-my-posh.nix
 
     ./logitech-peripherals.nix
     ./keychron.nix

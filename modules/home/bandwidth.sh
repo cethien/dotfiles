@@ -12,7 +12,9 @@ SELECTED=$(gum choose --no-show-help --header="Select iPerf3 Target / Mode:" "${
 if [[ "$SELECTED" == "+ custom" ]]; then
 	EXTRA_ARGS=$(gum input --no-show-help --placeholder="-c 192.168.1.50 -p 5201 -P 4" --prompt="> iperf3 ")
 	[ -z "$EXTRA_ARGS" ] && exit 0
-	eval "iperf3 $EXTRA_ARGS"
+	read -r -a args <<<"$EXTRA_ARGS"
+	iperf3 "${args[@]}"
 else
-	eval "iperf3 -c $SELECTED"
+	read -r -a args <<<"$SELECTED"
+	iperf3 -c "${args[@]}"
 fi

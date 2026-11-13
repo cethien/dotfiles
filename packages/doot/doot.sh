@@ -34,7 +34,8 @@ _log-error() {
 generate-age-keys() {
 	SOPS_AGE_KEY_FILE="$HOME/.config/sops/age/keys.txt"
 
-	local key_dir=$(dirname "$SOPS_AGE_KEY_FILE")
+	local key_dir
+	key_dir=$(dirname "$SOPS_AGE_KEY_FILE")
 	mkdir -p "$key_dir"
 	touch "$SOPS_AGE_KEY_FILE"
 
@@ -70,7 +71,8 @@ generate-age-keys() {
 				_log-warn "key from $key is already in $SOPS_AGE_KEY_FILE"
 			else
 				echo "$new_age_key" >>"$SOPS_AGE_KEY_FILE"
-				local pubkey=$(echo "$new_age_key" | age-keygen -y 2>/dev/null)
+				local pubkey
+				pubkey=$(echo "$new_age_key" | age-keygen -y 2>/dev/null)
 				_log-success "added identity from $key"
 				echo -e "public key: ${pubkey}"
 			fi

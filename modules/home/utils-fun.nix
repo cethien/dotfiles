@@ -31,9 +31,9 @@ in {
     };
 
     home.packages = let
-      reasonsJson = builtins.fetchurl {
+      reasonsJson = pkgs.fetchurl {
         url = "https://raw.githubusercontent.com/hotheadhacker/no-as-a-service/refs/heads/main/reasons.json";
-        sha256 = "sha256:00a16hrbc99i3fcrihg6xf61fip6kc9dbd0brsvrd5kw0zwbjdgm";
+        sha256 = "00a16hrbc99i3fcrihg6xf61fip6kc9dbd0brsvrd5kw0zwbjdgm";
       };
       suffContent = builtins.readFile ./suff.txt;
     in

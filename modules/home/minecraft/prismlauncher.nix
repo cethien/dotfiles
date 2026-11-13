@@ -13,7 +13,6 @@ in {
         jdks = with pkgs-unstable; [
           zulu25
           zulu17 # 1.17 - 1.20.4
-          zulu8 # < 1.12.2
           zulu # default / fallback
         ];
       };

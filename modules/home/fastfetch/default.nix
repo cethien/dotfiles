@@ -13,7 +13,7 @@
 
     logo = {
       type = "kitty";
-      source = toString cfg.logo;
+      source = "${cfg.logo}";
       height = 20;
       padding = {
         top = 1;

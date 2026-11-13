@@ -16,8 +16,8 @@ get_system_stats() {
 BAT_PATH="/sys/class/power_supply/BAT0"
 [ -d "$BAT_PATH" ] && HAS_BATTERY=1
 get_battery_status() {
-  BAT_PERCENTAGE=$(cat $BAT_PATH/capacity)
-  BAT_STATUS=$(cat $BAT_PATH/status)
+  BAT_PERCENTAGE=$(cat "$BAT_PATH/capacity")
+  BAT_STATUS=$(cat "$BAT_PATH/status")
 
   BAT_ICONS=("󰂃" "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰁹")
   BAT_CHARGING_ICON="󰂄"
@@ -45,7 +45,7 @@ get_network_status() {
     SSID=""
     SIGNAL=0
     if command -v nmcli &>/dev/null; then
-      read SSID SIGNAL <<<$(nmcli -t -f active,ssid,signal dev wifi | awk -F: '$1=="yes"{print $2, $3}')
+      read -r SSID SIGNAL <<<"$(nmcli -t -f active,ssid,signal dev wifi | awk -F: '$1=="yes"{print $2, $3}')"
     fi
 
     ICON="󰤯" # Weak signal

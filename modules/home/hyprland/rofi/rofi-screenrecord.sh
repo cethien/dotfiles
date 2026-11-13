@@ -8,7 +8,7 @@ TITLE="screen record"
 REC_SAVE_DIR="$HOME/Videos/"
 REC_FORMAT="mp4"
 
-TEMP_DIR="${TMDIR:-/tmp/}"
+TEMP_DIR="${TMPDIR:-/tmp/}"
 REC_PID_FILE="${TEMP_DIR}gsr.pid"
 REC_FILENAME_FILE="${TEMP_DIR}gsr.file"
 REC_LOG_FILE="${TEMP_DIR}gsr.log"
@@ -22,13 +22,14 @@ start_record() {
   local audio_args=()
 
   if [[ "$target_type" == "window" ]]; then
-    local win_data=$(hyprctl activewindow -j)
-    local address=$(echo "$win_data" | jq -r '.address')
-    local title=$(echo "$win_data" | jq -r '.title' | tr ' ' '_')
+    local win_data title
+    win_data=$(hyprctl activewindow -j)
+    title=$(echo "$win_data" | jq -r '.title' | tr ' ' '_')
     target_args+=("-w" "portal")
     REC_OUTPUT="${REC_OUTPUT_BASE}_${title}.${REC_FORMAT}"
   else
-    local monitor=$(hyprctl activeworkspace -j | jq -r '.monitor')
+    local monitor
+    monitor=$(hyprctl activeworkspace -j | jq -r '.monitor')
     target_args+=("-w" "$monitor")
     REC_OUTPUT="${REC_OUTPUT_BASE}_${monitor}.${REC_FORMAT}"
   fi

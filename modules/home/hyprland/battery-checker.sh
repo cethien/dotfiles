@@ -15,12 +15,12 @@ TITLE_LOW="Battery Low"
 TITLE_VERY_LOW="Battery Very Low"
 TITLE_CRIT="Battery Critical"
 
-# Notification Messages (Supports $CAPACITY variable evaluation later)
+# Notification Messages (printf templates)
 MSG_CONNECTED="Charger Connected ⚡"
 MSG_DISCONNECTED="Charger Disconnected ⚠️"
-MSG_LOW="Battery is at \$CAPACITY%."
-MSG_VERY_LOW="Battery is at \$CAPACITY%. Plug in your charger immediately!"
-MSG_CRIT="Battery has dropped to \$CAPACITY%! Shutting down soon!"
+MSG_LOW="Battery is at %s%%."
+MSG_VERY_LOW="Battery is at %s%%. Plug in your charger immediately!"
+MSG_CRIT="Battery has dropped to %s%%! Shutting down soon!"
 
 # Volatile State Cache File Location
 STATE_FILE="/run/user/${UID}/battery-checker.state"
@@ -39,6 +39,7 @@ CURRENT_CAPACITY=$(cat /sys/class/power_supply/BAT0/capacity)
 
 # Load the previous state if it exists, otherwise initialize tracking states
 if [ -f "$STATE_FILE" ]; then
+  # shellcheck source=/dev/null
   source "$STATE_FILE"
 else
   LAST_STATUS=""
@@ -69,27 +70,24 @@ fi
 # BATTERY THRESHOLD LOGIC
 # ==========================================
 if [ "$CURRENT_STATUS" = "Discharging" ]; then
-  # Inject current battery capacity into message templates
-  CAPACITY="$CURRENT_CAPACITY"
-  eval MSG_LOW_EVAL=\"$MSG_LOW\"
-  eval MSG_VERY_LOW_EVAL=\"$MSG_VERY_LOW\"
-  eval MSG_CRIT_EVAL=\"$MSG_CRIT\"
-
   # Tier 3: Critical
   if [ "$CURRENT_CAPACITY" -le "$THRESHOLD_CRIT" ] && [ "$CRIT_NOTIFIED" -eq 0 ]; then
-    notify-send -u critical -a "System" "$TITLE_CRIT" "$MSG_CRIT_EVAL"
+    printf -v msg "$MSG_CRIT" "$CURRENT_CAPACITY"
+    notify-send -u critical -a "System" "$TITLE_CRIT" "$msg"
     CRIT_NOTIFIED=1
     STATE_CHANGED=1
 
   # Tier 2: Very Low
   elif [ "$CURRENT_CAPACITY" -le "$THRESHOLD_VERY_LOW" ] && [ "$CURRENT_CAPACITY" -gt "$THRESHOLD_CRIT" ] && [ "$VERY_LOW_NOTIFIED" -eq 0 ]; then
-    notify-send -u critical -a "System" "$TITLE_VERY_LOW" "$MSG_VERY_LOW_EVAL"
+    printf -v msg "$MSG_VERY_LOW" "$CURRENT_CAPACITY"
+    notify-send -u critical -a "System" "$TITLE_VERY_LOW" "$msg"
     VERY_LOW_NOTIFIED=1
     STATE_CHANGED=1
 
   # Tier 1: Low
   elif [ "$CURRENT_CAPACITY" -le "$THRESHOLD_LOW" ] && [ "$CURRENT_CAPACITY" -gt "$THRESHOLD_VERY_LOW" ] && [ "$LOW_NOTIFIED" -eq 0 ]; then
-    notify-send -u normal -a "System" "$TITLE_LOW" "$MSG_LOW_EVAL"
+    printf -v msg "$MSG_LOW" "$CURRENT_CAPACITY"
+    notify-send -u normal -a "System" "$TITLE_LOW" "$msg"
     LOW_NOTIFIED=1
     STATE_CHANGED=1
   fi

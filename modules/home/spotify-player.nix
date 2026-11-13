@@ -8,15 +8,17 @@
   inherit (lib) mkIf;
   cfg = config.programs.spotify-player;
 
-  spotify-player-wrapper = pkgs.writeShellScriptBin "spotify-player-wrapper" ''
-    if ! pgrep -f "spotify_player --daemon" >/dev/null; then
-      spotify_player --daemon &
-      sleep 1
+  launcher = pkgs.writeShellScript "spotify-launch" ''
+    if ! ${pkgs.procps}/bin/pgrep -f "spotify_player --daemon" >/dev/null; then
+      ${lib.getExe cfg.package} --daemon &
     fi
-    exec spotify_player "$@"
-  '';
 
-  exec = "${spotify-player-wrapper}/bin/spotify-player-wrapper";
+    if command -v spotify >/dev/null 2>&1; then
+      exec spotify
+    else
+      exec ${pkgs.xdg-utils}/bin/xdg-open https://open.spotify.com
+    fi
+  '';
 in {
   config = mkIf cfg.enable {
     programs.spotify-player = {
@@ -42,10 +44,8 @@ in {
     wayland.windowManager.hyprland.extraLuaFiles."99-spotify-player" =
       #lua
       ''
-        Modal("spotify_player", {
-            exec = "${exec}";
-            binds = { "SUPER + M", "XF86Music" }
-        })
+        hl.bind("SUPER + M", hl.dsp.exec_cmd("${launcher}"))
+        hl.bind("XF86Music", hl.dsp.exec_cmd("${launcher}"))
 
         local pl = "spotify_player playback "
 

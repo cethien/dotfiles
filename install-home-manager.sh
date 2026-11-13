@@ -17,7 +17,7 @@ if command -v apt-get &>/dev/null && [ "$USER" = "root" ]; then
 fi
 
 HOME_DIR="$HOME"
-ACTUAL_USER="${USER:-kollege}"
+ACTUAL_USER="${USER:-$(id -un)}"
 
 # 2. Install Nix in single-user mode (no sudo, no daemon required)
 if ! command -v nix &>/dev/null; then
@@ -61,7 +61,7 @@ nix flake init -t "github:cethien/dotfiles#home-manager" --dir "$HM_DIR"
 # 6. Automatically inject the current system username into flake.nix
 if [ -f "$HM_DIR/flake.nix" ]; then
 	echo -e "${BLUE}==> Setting local username ($ACTUAL_USER) inside flake.nix...${NC}"
-	sed -i "s/<changeme>/$ACTUAL_USER/g" "$HM_DIR/flake.nix"
+	sed -i "s|<changeme>|${ACTUAL_USER//&/\\&}|g" "$HM_DIR/flake.nix"
 fi
 
 echo -e "${GREEN}==> Bootstrap phase complete!${NC}"

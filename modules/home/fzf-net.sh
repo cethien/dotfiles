@@ -90,7 +90,7 @@ TYPE="${ACTION_TYPES[$CHOICE]}"
 
 case "$TYPE" in
 "exec")
-	exec $CMD
+	exec "$CMD"
 	;;
 "interactive")
 	clear
