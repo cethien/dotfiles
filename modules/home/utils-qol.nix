@@ -7,6 +7,62 @@
 }: let
   inherit (lib) mkIf;
   cfg = config.programs.utils-qol;
+
+  markdownOpeners = [
+    {
+      name = "glow";
+      prio = 10;
+    }
+    {
+      name = "edit";
+      prio = 20;
+    }
+    {
+      name = "vivify";
+      prio = 40;
+    }
+    {
+      name = "reveal";
+      prio = 90;
+    }
+  ];
+  htmlOpeners = [
+    {
+      name = "lynx";
+      prio = 10;
+    }
+    {
+      name = "edit";
+      prio = 20;
+    }
+    {
+      name = "open";
+      prio = 60;
+    }
+    {
+      name = "reveal";
+      prio = 90;
+    }
+  ];
+  epubOpeners = [
+    {
+      name = "epr";
+      prio = 10;
+    }
+    {
+      name = "bk";
+      prio = 20;
+    }
+    {
+      name = "open";
+      prio = 60;
+    }
+    {
+      name = "reveal";
+      prio = 90;
+    }
+  ];
+
 in {
   options.programs.utils-qol.enable = lib.mkEnableOption "qol utils";
 
@@ -36,13 +92,73 @@ in {
 
     programs.yazi = {
       openRulesMerged = {
-        "application/iso9660-image" = ["caligula"];
+        "application/iso9660-image" = [
+          "caligula"
+          {
+            name = "open";
+            prio = 60;
+          }
+          {
+            name = "reveal";
+            prio = 90;
+          }
+        ];
+        "text/markdown" = markdownOpeners;
+        "text/x-markdown" = markdownOpeners;
+        "text/html" = htmlOpeners;
+        "application/xhtml+xml" = htmlOpeners;
+        "application/epub+zip" = epubOpeners;
+      };
+      openUrlRulesMerged = {
+        "*.{md,markdown}" = markdownOpeners;
+        "*.{htm,html,xhtml}" = htmlOpeners;
+        "*.epub" = epubOpeners;
       };
       settings.opener = {
         caligula = [
           {
-            run = ''caligula burn "$@" --root=always -f -z=none -s=skip'';
-            desc = "caligula";
+            run = ''caligula burn %s1 --root=always -f -z=none -s=skip'';
+            desc = "Burn disk image (Caligula)";
+            block = true;
+            for = "unix";
+          }
+        ];
+        glow = [
+          {
+            run = ''glow -p %s1'';
+            desc = "Read Markdown (glow)";
+            block = true;
+            for = "unix";
+          }
+        ];
+        vivify = [
+          {
+            run = ''viv %s1'';
+            desc = "Live Markdown viewer (Vivify)";
+            block = true;
+            for = "unix";
+          }
+        ];
+        lynx = [
+          {
+            run = ''lynx %s1'';
+            desc = "Read HTML (Lynx)";
+            block = true;
+            for = "unix";
+          }
+        ];
+        epr = [
+          {
+            run = ''epr %s1'';
+            desc = "Read EPUB (epr)";
+            block = true;
+            for = "unix";
+          }
+        ];
+        bk = [
+          {
+            run = ''bk %s1'';
+            desc = "Read EPUB (bk)";
             block = true;
             for = "unix";
           }

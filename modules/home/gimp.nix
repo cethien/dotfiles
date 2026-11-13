@@ -26,9 +26,10 @@ in {
       settings.opener = {
         gimp = [
           {
-            run = ''gimp "$@"'';
+            run = ''gimp %s'';
             desc = "GIMP";
             for = "unix";
+            orphan = true;
           }
         ];
       };

@@ -7,6 +7,20 @@
   inherit (lib) mkIf;
   inherit (config.lib.deeznuts) mkMimeApps;
   cfg = config.programs.mpv;
+  videoOpeners = [
+    {
+      name = "mpv";
+      prio = 10;
+    }
+    {
+      name = "play";
+      prio = 60;
+    }
+    {
+      name = "reveal";
+      prio = 90;
+    }
+  ];
 in {
   config = mkIf cfg.enable {
     programs.mpv = {
@@ -74,44 +88,38 @@ in {
 
     programs.yazi = {
       openRulesMerged = {
-        "video/mp4" = [
-          {
-            name = "mpv";
-            prio = 1;
-          }
-        ];
-        "video/webm" = [
-          {
-            name = "mpv";
-            prio = 1;
-          }
-        ];
-        "video/*" = [
-          {
-            name = "mpv";
-            prio = 1;
-          }
-        ];
+        "video/mp4" = videoOpeners;
+        "video/webm" = videoOpeners;
+        "video/*" = videoOpeners;
         "audio/*" = [
           {
             name = "mpv-audio";
-            prio = 1;
+            prio = 10;
+          }
+          {
+            name = "play";
+            prio = 60;
+          }
+          {
+            name = "reveal";
+            prio = 90;
           }
         ];
       };
       settings.opener = {
         mpv = [
           {
-            run = ''mpv "$@"'';
+            run = ''mpv %s'';
             desc = "mpv";
             for = "unix";
+            orphan = true;
           }
         ];
 
         mpv-audio = [
           {
-            run = ''mpv --audio-display=no --volume=70 "$@"'';
-            desc = "mpv tui for audio";
+            run = ''mpv --audio-display=no --volume=70 %s'';
+            desc = "Play audio in terminal (mpv)";
             for = "unix";
             block = true;
           }

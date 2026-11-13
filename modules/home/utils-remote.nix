@@ -19,16 +19,36 @@ in {
   config = lib.mkIf cfg.enable {
     programs.yazi = {
       openRulesMerged = {
-        "audio/*" = ["castnow"];
-        "video/*" = ["castnow-transcode"];
-        "video/mp4" = ["castnow"];
-        "video/webm" = ["castnow"];
+        "audio/*" = [
+          {
+            name = "castnow";
+            prio = 30;
+          }
+        ];
+        "video/*" = [
+          {
+            name = "castnow-transcode";
+            prio = 30;
+          }
+        ];
+        "video/mp4" = [
+          {
+            name = "castnow";
+            prio = 30;
+          }
+        ];
+        "video/webm" = [
+          {
+            name = "castnow";
+            prio = 30;
+          }
+        ];
       };
 
       settings.opener = {
         castnow = [
           {
-            run = ''caligula "$@"'';
+            run = ''castnow %s'';
             desc = "Cast to Chromecast";
             for = "unix";
             block = true;
@@ -36,7 +56,7 @@ in {
         ];
         castnow-transcode = [
           {
-            run = ''caligula --tomp4 "$@"'';
+            run = ''castnow --tomp4 %s'';
             desc = "Cast to Chromecast (Transcode)";
             for = "unix";
             block = true;

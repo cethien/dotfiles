@@ -13,31 +13,34 @@ in {
       openRulesMerged = {
         "image/svg+xml" = ["inkscape"];
         "image/*" = ["krita"];
-        "audio/*" = ["kwave"];
+        "audio/*" = ["audacity"];
       };
 
       settings.opener = {
         inkscape = [
           {
-            run = ''inkscape "$@"'';
+            run = ''inkscape %s'';
             desc = "Inkscape";
             for = "unix";
+            orphan = true;
           }
         ];
 
         krita = [
           {
-            run = ''krita "$@"'';
+            run = ''krita %s'';
             desc = "Krita";
             for = "unix";
+            orphan = true;
           }
         ];
 
-        kwave = [
+        audacity = [
           {
-            run = ''kwave "$@"'';
-            desc = "KWave";
+            run = ''audacity %s'';
+            desc = "Audacity";
             for = "unix";
+            orphan = true;
           }
         ];
       };
@@ -46,6 +49,8 @@ in {
     home.packages = with pkgs; [
       krita
       inkscape
+
+      audacity
 
       # fonts
       helvetica-neue-lt-std

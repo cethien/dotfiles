@@ -25,9 +25,15 @@
     });
 in {
   options = {
-    programs.yazi.openRulesMerged = mkOption {
-      type = types.attrsOf (types.listOf openerType);
-      default = {};
+    programs.yazi = {
+      openRulesMerged = mkOption {
+        type = types.attrsOf (types.listOf openerType);
+        default = {};
+      };
+      openUrlRulesMerged = mkOption {
+        type = types.attrsOf (types.listOf openerType);
+        default = {};
+      };
     };
   };
 
@@ -287,15 +293,30 @@ in {
       ];
 
       settings = {
-        open.prepend_rules =
-          mapAttrsToList (mime: openers: let
-            sortedOpeners = sort (a: b: a.prio < b.prio) openers;
-            sortedNames = map (o: o.name) sortedOpeners;
-          in {
-            inherit mime;
-            use = sortedNames;
-          })
-          cfg.openRulesMerged;
+        open.prepend_rules = let
+          mkRules = matchBy:
+            mapAttrsToList (pattern: openers: let
+              sortedOpeners = sort (a: b: a.prio < b.prio) openers;
+            in {
+              ${matchBy} = pattern;
+              use = map (opener: opener.name) sortedOpeners;
+            });
+
+          # Yazi uses only the first matching open rule. Exact MIME rules must
+          # therefore precede wildcards such as image/* and video/*.
+          ruleBefore = a: b: let
+            aPattern = a.mime or a.url;
+            bPattern = b.mime or b.url;
+            aWildcard = lib.hasInfix "*" aPattern;
+            bWildcard = lib.hasInfix "*" bPattern;
+          in
+            if aWildcard == bWildcard
+            then aPattern < bPattern
+            else !aWildcard;
+        in
+          sort ruleBefore
+          ((mkRules "url" cfg.openUrlRulesMerged)
+            ++ (mkRules "mime" cfg.openRulesMerged));
       };
 
       shellWrapperName = "y";

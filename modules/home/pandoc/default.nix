@@ -22,7 +22,7 @@ in {
       settings.opener = {
         pandoc = [
           {
-            run = ''pandoc "$@"'';
+            run = ''pandoc %s'';
             desc = "pandoc";
             for = "unix";
           }
