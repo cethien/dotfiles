@@ -39,6 +39,10 @@ in {
         Modal("netz", { binds = {
             "SUPER + N",
         } })
+
+        Modal("impala", { binds = {
+            "SUPER + SHIFT + N",
+        } })
       '';
   };
 }
