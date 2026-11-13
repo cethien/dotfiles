@@ -67,9 +67,6 @@ vim.api.nvim_create_autocmd("CursorHold", {
 		})
 	end,
 })
-vim.keymap.set("n", "<leader>qf", vim.diagnostic.setqflist, {
-	desc = "Project Diagnostics to Quickfix",
-})
 
 require("tokyonight").setup({
 	style = "storm",

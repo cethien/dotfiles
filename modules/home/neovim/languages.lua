@@ -50,7 +50,19 @@ vim.lsp.enable("vue_ls") -- Vue
 -- vim.lsp.enable("sqls")
 
 vim.lsp.enable("just")
+
+vim.lsp.config("yamlls", {
+	settings = {
+		yaml = {
+			schemas = {
+				["https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/tasks.json"] = "**/playbooks/tasks/*.yml",
+				["https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible.json"] = "**/playbooks/*.yml",
+			},
+		},
+	},
+})
 vim.lsp.enable("ansiblels")
+
 vim.lsp.enable("docker_language_server")
 vim.lsp.enable("helm_ls")
 vim.lsp.enable("terraformls")
@@ -99,6 +111,7 @@ require("conform").setup({
 
 		go = { "gofumpt", "goimports" },
 		templ = { "templ" },
+		gotmpl = { "prettierd" },
 		python = { "ruff_format" },
 		rust = { "rustfmt" },
 		c = { "clang-format" },

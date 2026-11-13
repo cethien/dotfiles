@@ -29,9 +29,15 @@ require("blink.cmp").setup({
 				inherit_defaults = true,
 				"latex",
 			},
+			sql = {
+				inherit_defaults = true,
+				"dadbod",
+			},
 		},
 
 		providers = {
+			dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
+
 			latex = {
 				name = "Latex",
 				module = "blink-cmp-latex",

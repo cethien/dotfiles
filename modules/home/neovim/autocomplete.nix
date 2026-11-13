@@ -26,5 +26,6 @@ in {
     blink-cmp-nixpkgs-maintainers
     blink-cmp-conventional-commits
     blink-cmp-latex
+    vim-dadbod-completion
   ];
 }
