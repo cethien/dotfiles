@@ -8,6 +8,7 @@
 in {
   imports = [
     ../_common/home/cethien
+    ../_tms/home/tailscale.nix
   ];
 
   stylix.image = ../_common/home/wallpapers/boy_and_cat_sitting_on_stairs.jpeg;

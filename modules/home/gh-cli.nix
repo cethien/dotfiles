@@ -8,6 +8,9 @@
   cfg = config.programs.gh;
 in {
   config = mkIf cfg.enable {
+    sops.secrets."gh_token" = {};
+    home.sessionVariables.GH_TOKEN = "$(cat ${config.sops.secrets."gh_token".path})";
+
     programs.neovim = {
       plugins = [pkgs.vimPlugins.octo-nvim];
       initLua =

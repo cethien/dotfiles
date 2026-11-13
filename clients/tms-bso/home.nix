@@ -8,6 +8,7 @@
 in {
   imports = [
     ./home
+    ../_tms/home/tailscale.nix
   ];
 
   stylix.image = ../_common/home/wallpapers/bliss_4K.jpg;
@@ -18,8 +19,10 @@ in {
   programs.hyprlock.monitor = "eDP-1";
 
   home.packages = with pkgs; [
-    rustdesk-flutter
     # winboat
+    rustdesk-flutter
+    nextcloud-client
+    nextcloud-talk-desktop
   ];
 
   services.davmail.enable = true;
