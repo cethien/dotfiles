@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # @describe System update script (NixOS via Flake or APT/Nala fallback)
-# @meta require-tools nixos-rebuild,nvd,gum
+# @meta require-tools nvd,gum
 # @meta show-help-with gum format
 
 # @cmd

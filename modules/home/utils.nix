@@ -12,7 +12,7 @@
 
   update = mkArgcBashBin {
     src = ./update.sh;
-    extraRuntimeDeps = [pkgs.nvd];
+    extraRuntimeDeps = with pkgs; [nvd hostname-debian];
   };
   execUpdate = "${update}/bin/update";
 in {
@@ -22,7 +22,10 @@ in {
     home.packages = with pkgs; [
       newnote
       update
-      (mkArgcBashBin' ./init.sh)
+      (mkArgcBashBin {
+        src = ./init.sh;
+        extraRuntimeDeps = with pkgs; [nix git tmux direnv];
+      })
       (writeShellScriptBin "cleanup" (builtins.readFile ./cleanup.sh))
       (writeShellScriptBin "clip" (builtins.readFile ./clip.sh))
       (writeShellScriptBin "uln" (builtins.readFile ./uln.sh))

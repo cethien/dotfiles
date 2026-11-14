@@ -33,7 +33,12 @@ in
         --prefix PATH : ${pkgs.lib.makeBinPath runtimeDeps}
 
       mkdir -p $out/share/bash-completion/completions
-      argc --argc-completions bash doot \
+      argc --argc-completions bash doot |
+        sed \
+          -e "s|_argc_completer|_doot_argc_completer|g" \
+          -e "s|argc doot|doot|g" \
+          -e "s|argc --argc-compgen|${pkgs.argc}/bin/argc --argc-compgen|" \
+          -e "s|bash \"\"|bash $out/bin/.doot-wrapped|" \
         > $out/share/bash-completion/completions/doot
     '';
   }

@@ -5,10 +5,13 @@
   ...
 }: let
   inherit (lib) mkDefault;
-  inherit (config.lib.deeznuts) mkArgcBashBin';
+  inherit (config.lib.deeznuts) mkArgcBashBin;
   cfg = config.programs.git;
 
-  git-wts = mkArgcBashBin' ./git-wts.sh;
+  git-wts = mkArgcBashBin {
+    src = ./git-wts.sh;
+    extraRuntimeDeps = with pkgs; [git tmux];
+  };
 in {
   config = {
     home.packages = [git-wts];
