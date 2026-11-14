@@ -67,6 +67,13 @@
     pkgs-unstable = import nixpkgs-unstable {
       inherit system;
       config.allowUnfree = true;
+      overlays = [
+        # Backport hyprwm/aquamarine#477 and #478 until aquamarine > 0.16.0
+        # is available. Fixes NVIDIA atomic modeset failures (aquamarine#472).
+        (final: prev: {
+          aquamarine = final.callPackage ./packages/aquamarine {inherit (prev) aquamarine;};
+        })
+      ];
     };
 
     firefoxAddonsPkgs = import nixpkgs-unstable {
