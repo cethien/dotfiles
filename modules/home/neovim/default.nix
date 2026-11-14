@@ -86,7 +86,7 @@ in {
       MANPAGER = "nvim --clean +Man!";
     };
 
-    programs.tmux.resurrectPluginProcesses = [''"~nvim->nvim *"''];
+    programs.tmux.resurrectPluginProcesses = [''"~nvim->nvim"''];
     xdg.mimeApps.defaultApplications = mkMimeApps {
       text = {
         desktop = "nvim.desktop";

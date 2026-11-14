@@ -24,7 +24,13 @@ pkgs.mkShell {
   ];
 
   shellHook = let
-    yaziStubs = "${pkgs.yazi}/share/yazi/stubs";
+    yaziStubs = pkgs.runCommand "yazi-types-stubs" {} ''
+      mkdir -p $out/types.yazi
+      cp ${pkgs.fetchurl {
+        url = "https://raw.githubusercontent.com/yazi-rs/plugins/1ef5fe02a6122f8f3bb47a41056aab3f4b8598bf/types.yazi/main.lua";
+        hash = "sha256-oIDDSsrvKH206SD3rlzW0DiaJkmLLswgBcg3esaTGMs=";
+      }} $out/types.yazi/main.lua
+    '';
 
     luarcContent = {
       diagnostics = {
@@ -33,8 +39,8 @@ pkgs.mkShell {
       workspace = {
         library = [
           "${pkgs-unstable.hyprland}/share/hypr/stubs"
-          yaziStubs
-          "$VIMRUNTIME/lua"
+          "${yaziStubs}/types.yazi"
+          "${pkgs-unstable.neovim-unwrapped}/share/nvim/runtime/lua"
         ];
         checkThirdParty = false;
       };
