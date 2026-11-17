@@ -37,11 +37,11 @@ in {
       # lua
       ''
         Modal("netz", { binds = {
-            "SUPER + N",
+            "SUPER + SHIFT + N",
         } })
 
         Modal("impala", { binds = {
-            "SUPER + SHIFT + N",
+            "SUPER + N",
         } })
       '';
   };

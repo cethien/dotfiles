@@ -68,19 +68,18 @@ add_opt() {
 	ACTION_TYPES["$label"]="$type"
 }
 
-# 2. Statusbasierte Menüpunkte
+if command -v tailscale >/dev/null; then
+	TS_STATUS=$(tailscale status --json 2>/dev/null | jq -r '.BackendState' 2>/dev/null)
+	case "$TS_STATUS" in
+	"NeedsLogin") add_opt "󰍂 login to tailscale" "sudo tailscale login" "silent" ;;
+	"Running") add_opt "󰌙 disable tailscale" "tailscale down" "silent" ;;
+	"Stopped") add_opt "󰌘 enable tailscale" "tailscale up --accept-routes" "silent" ;;
+	esac
+fi
+
 if [ -n "$IS_CONNECTED" ]; then
 	# Verbunden: LAN oder WLAN
 	add_opt "󰣖 network settings" "impala" "exec"
-
-	if command -v tailscale >/dev/null; then
-		TS_STATUS=$(tailscale status --json 2>/dev/null | jq -r '.BackendState' 2>/dev/null)
-		case "$TS_STATUS" in
-		"NeedsLogin") add_opt "󰍂 login to tailscale" "sudo tailscale login" "silent" ;;
-		"Running") add_opt "󰌙 disable tailscale" "tailscale down" "silent" ;;
-		"Stopped") add_opt "󰌘 enable tailscale" "tailscale up --accept-routes" "silent" ;;
-		esac
-	fi
 else
 	# Nicht verbunden: QR-Option NUR anzeigen, wenn WLAN-Hardware da & eingeschaltet ist
 	if [ -n "$HAS_WIFI_DEV" ] && [ -n "$WIFI_ENABLED" ]; then
