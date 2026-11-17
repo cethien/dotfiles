@@ -7,6 +7,10 @@
   name = "cethien";
   email = "borislaw.sotnikow@gmx.de";
 in {
+  imports = [
+    ./ssh.nix
+  ];
+
   config = {
     programs.git.settings.user = {
       inherit name email;

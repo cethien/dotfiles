@@ -1,11 +1,19 @@
 {pkgs}: let
   runtimeDeps = with pkgs; [
     bash
+    coreutils
     age
     ssh-to-age
     gum
     argc
     nvd
+    nix
+    openssh
+    iputils
+    git
+    deploy-rs
+    nixos-anywhere
+    keepassxc
   ];
 in
   pkgs.stdenv.mkDerivation {

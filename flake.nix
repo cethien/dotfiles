@@ -11,6 +11,9 @@
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
+    deploy-rs.url = "github:serokell/deploy-rs";
+    deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
+
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -59,6 +62,7 @@
     determinate,
     nixpkgs,
     nixpkgs-unstable,
+    deploy-rs,
     ...
   }: let
     stateVersion = "25.05";
@@ -97,8 +101,62 @@
     };
 
     clientNames = ["tms-bso" "tower-of-power" "hp-430-g7"];
+
+    hosts = import ./hosts;
+
+    mkHost = name: host: let
+      configurationModule = host.configurationModule or name;
+    in
+      nixpkgs.lib.nixosSystem {
+        inherit system;
+
+        specialArgs = {inherit inputs pkgs-unstable;};
+
+        modules = [
+          determinate.nixosModules.default
+          globalNixpkgsModule
+          inputs.disko.nixosModules.disko
+          inputs.sops-nix.nixosModules.sops
+          ./hosts/_common/configuration.nix
+          ./hosts/${configurationModule}/configuration.nix
+          {
+            sops = {
+              age.keyFile = "/var/lib/sops/key.txt";
+              defaultSopsFile = ./secrets.enc.yml;
+            };
+            system = {inherit stateVersion;};
+            networking.hostName = host.hostName or name;
+          }
+        ];
+      };
+
+    # Dedicated deploy key generated as ~/.ssh/nix-deploy.
+    deployKeyPath = "~/.ssh/nix-deploy";
+
+    mkDeployNode = name: host: {
+      hostname = host.ip;
+      profiles.system = {
+        user = "root";
+        sshUser = "nix-deploy";
+        sshOpts = [
+          "-i"
+          deployKeyPath
+          "-o"
+          "ControlMaster=no"
+          "-o"
+          "ControlPath=none"
+          "-o"
+          "StrictHostKeyChecking=no"
+          "-o"
+          "UserKnownHostsFile=/dev/null"
+        ];
+        profilePath = "/nix/var/nix/profiles/system";
+        path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.${name};
+      };
+    };
   in {
-    nixosConfigurations = builtins.listToAttrs (map (name: {
+    nixosConfigurations =
+      (builtins.listToAttrs (map (name: {
         inherit name;
         value = nixpkgs.lib.nixosSystem {
           inherit system;
@@ -122,7 +180,11 @@
           ];
         };
       })
-      clientNames);
+      clientNames))
+      // (builtins.mapAttrs mkHost hosts);
+
+    deploy.nodes = builtins.mapAttrs mkDeployNode hosts;
+    checks.${system} = deploy-rs.lib.${system}.deployChecks self.deploy;
 
     packages.${system} = let
       pkgs = nixpkgs.legacyPackages.${system};

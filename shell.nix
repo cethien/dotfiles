@@ -18,6 +18,9 @@ pkgs.mkShell {
     nurl
     nvd
 
+    deploy-rs
+    nixos-anywhere
+
     act
 
     doot

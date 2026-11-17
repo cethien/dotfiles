@@ -64,6 +64,13 @@
         url = "https://www.youtube.com/feed/subscriptions";
         position = 1001;
       };
+
+      "dashboard" = {
+        workspace = main;
+        id = "a48c1e4c-7854-439a-a900-625d9e789e21";
+        url = "https://holzrussen.net";
+        position = 1002;
+      };
     };
     settings = {
       "media.videocontrols.picture-in-picture.enable-when-switching-tabs.enabled" = true;

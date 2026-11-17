@@ -18,6 +18,7 @@
   u = config.users.users.cethien;
 in {
   imports = [
+    ../../modules
     ../../modules/client
     inputs.disko.nixosModules.disko
     inputs.sops-nix.nixosModules.sops
