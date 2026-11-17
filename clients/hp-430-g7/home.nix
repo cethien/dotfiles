@@ -66,13 +66,13 @@ in {
       };
     };
 
-    tms = import ../_tms/home/zen-browser.nix {inherit pkgs;};
+    zen = import ../_common/home/cethien/zen.nix {inherit pkgs;};
   in {
     bookmarks = {
       force = true;
-      settings = tms.bookmarks;
+      settings = zen.bookmarks;
     };
-    extensions.packages = tms.extensions;
+    extensions.packages = zen.extensions;
 
     containersForce = true;
     inherit containers;
