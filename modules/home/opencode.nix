@@ -9,7 +9,7 @@
     owner = "JuliusBrussee";
     repo = "caveman";
     rev = "main";
-    hash = "sha256-I/pMhDvXZp8KOGhWRCNeSIz+3z4ag1m6wdo6kl+JbXs=";
+    hash = "sha256-1X2DjYa4xqO1ZqwxdFjCmaypp0+HYncEpXaut4i9LkE=";
   };
 in {
   config = lib.mkIf config.programs.opencode.enable {
