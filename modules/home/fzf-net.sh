@@ -2,16 +2,41 @@
 
 # Hilfsfunktion für QR Scan (vermeidet klobige Strings & ShellCheck-Warnungen)
 connect_via_qr() {
-	local data ssid pass
+	local data ssid="" pass="" hidden="no"
 	data=$(zbarcam -1 --raw /dev/video0 2>/dev/null)
 	[ -z "$data" ] && return 1
 
-	ssid=$(echo "$data" | sed -n 's/.*S:\([^;]*\).*/\1/p')
-	pass=$(echo "$data" | sed -n 's/.*P:\([^;]*\).*/\1/p')
+	# Format: WIFI:S:<ssid>;T:<wpa|wep|nopass>;P:<pass>;H:<true|false>;;
+	# Werte dürfen \; \, \: \\ enthalten (QR-Escaping), daher zeichenweise parsen.
+	local payload="${data#WIFI:}" key raw val c
+	while [ -n "$payload" ]; do
+		key="${payload%%:*}"
+		raw="${payload#*:}"
+		val=""
+		while [ -n "$raw" ]; do
+			c="${raw:0:1}"
+			raw="${raw:1}"
+			case "$c" in
+			"\\") val+="${raw:0:1}"; raw="${raw:1}" ;;
+			";") break ;;
+			*) val+="$c" ;;
+			esac
+		done
+		payload="$raw"
+		case "$key" in
+		S) ssid="$val" ;;
+		P) pass="$val" ;;
+		H) [ "$val" = "true" ] && hidden="yes" ;;
+		esac
+	done
 
-	if [ -n "$ssid" ]; then
-		nmcli dev wifi connect "$ssid" password "$pass"
-	fi
+	[ -z "$ssid" ] && return 1
+
+	# Versteckte Netze sind nicht im Scan-Ergebnis. Ohne "hidden yes" bricht nmcli
+	# mit "Error: No network with SSID '<ssid>' found." ab.
+	local args=(--wait 45 dev wifi connect "$ssid" hidden "$hidden")
+	[ -n "$pass" ] && args+=(password "$pass")
+	nmcli "${args[@]}"
 }
 
 # Exportieren, falls interaktiv aus Subshell aufgerufen
