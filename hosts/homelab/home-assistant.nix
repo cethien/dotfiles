@@ -4,16 +4,17 @@
   pkgs-unstable,
   ...
 }: let
-  # HA 2026.8+ manages HTTP settings in .storage/http, not in configuration.yaml.
-  # YAML is migrated once and then ignored; seeding the stable slot directly
-  # avoids a pending config that has to be confirmed in the UI within 5 minutes.
-  haConfig = pkgs.writeText "home-assistant-configuration.yaml" ''
-    homeassistant:
-      time_zone: Europe/Berlin
-    lovelace:
-      dashboards: {}
-      resources: []
-  '';
+  yamlFormat = pkgs.formats.yaml {};
+
+  haConfig = yamlFormat.generate "home-assistant-configuration.yaml" {
+    default_config = {};
+    homeassistant.time_zone = "Europe/Berlin";
+    lovelace = {
+      dashboards = {};
+      resources = [];
+    };
+    mobile_app = {};
+  };
 
   httpStore = pkgs.writeText "home-assistant-http-store.json" (builtins.toJSON {
     version = 2;
@@ -45,10 +46,11 @@ in {
       enable = true;
       package = pkgs-unstable.home-assistant;
 
-      # `default_config` covers onboarding; add Matter explicitly so the
-      # integration is available once a Thread border router is attached.
+      # `default_config` covers onboarding, `mobile_app` enables companion-app
+      # pairing, and Matter is available once a Thread border router is attached.
       extraComponents = [
         "default_config"
+        "mobile_app"
         "met"
         "esphome"
         "matter"
