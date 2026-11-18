@@ -1,4 +1,4 @@
-{pkgs-unstable, ...}: let
+{config, lib, pkgs-unstable, ...}: let
   homepage = pkgs-unstable.homepage-dashboard.overrideAttrs (old: {
     postInstall =
       (old.postInstall or "")
@@ -9,6 +9,12 @@
       '';
   });
 in {
+  options.homelab.homepage.services = lib.mkOption {
+    type = lib.types.listOf lib.types.attrs;
+    default = [];
+    description = "Service cards contributed by each homelab service module.";
+  };
+
   config = {
     services.homepage-dashboard = {
       enable = true;
@@ -46,6 +52,9 @@ in {
       };
 
       services = [
+        {
+          services = config.homelab.homepage.services;
+        }
         {
           infra = [
             {

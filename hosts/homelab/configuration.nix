@@ -3,6 +3,7 @@
     ./disko.nix
     ./home-assistant.nix
     ./homepage
+    ./your-spotify.nix
   ];
 
   config = {

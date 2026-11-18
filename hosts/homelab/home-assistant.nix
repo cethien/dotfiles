@@ -91,17 +91,13 @@ in {
       reverse_proxy 127.0.0.1:8123
     '';
 
-    services.homepage-dashboard.services = lib.mkBefore [
+    homelab.homepage.services = lib.mkBefore [
       {
-        services = [
-          {
-            "Home Assistant" = {
-              href = "https://ha.holzrussen.net";
-              icon = "sh-home-assistant";
-              description = "smart home hub";
-            };
-          }
-        ];
+        "Home Assistant" = {
+          href = "https://ha.holzrussen.net";
+          icon = "sh-home-assistant";
+          description = "smart home hub";
+        };
       }
     ];
   };

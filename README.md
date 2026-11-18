@@ -19,7 +19,7 @@ definition (`cethien`) so it is available to both clients and hosts.
 Homelab services run as native NixOS/systemd units — no Docker, Arion or WUD.
 System updates are handled by deploy-rs, so a container update notifier is redundant.
 The system and NixOS modules stay on the stable `nixpkgs` input; only service binaries
-(Caddy, Home Assistant, Matter Server and Homepage) come from `pkgs-unstable`, the same
+(Caddy, Home Assistant, Matter Server, Homepage and Your Spotify) come from `pkgs-unstable`, the same
 mixing pattern used by the clients. Each service keeps its own Caddy vhost and Homepage
 card in its own file. `sysz` (an fzf TUI for systemctl) is in the common system
 packages for inspecting/managing systemd units on the host.
@@ -50,8 +50,10 @@ file, so the vhosts live beside what they proxy:
 
 - `hosts/homelab/home-assistant.nix`: `ha.holzrussen.net` → `127.0.0.1:8123`
 - `hosts/homelab/homepage/default.nix`: `holzrussen.net` → `127.0.0.1:8082`
+- `hosts/homelab/your-spotify.nix`: `spotify.holzrussen.net` → client assets;
+  `spotify-api.holzrussen.net` → `127.0.0.1:3000`
 
-Both use the `cloudflare_tls` snippet (Let's Encrypt DNS challenge). Ports 80/443 are
+All use the `cloudflare_tls` snippet (Let's Encrypt DNS challenge). Ports 80/443 are
 opened in `hosts/homelab/configuration.nix`; the backends stay on loopback.
 
 Home Assistant and the Matter controller are native services in
@@ -89,11 +91,37 @@ Homepage (`hosts/homelab/homepage/default.nix`) uses the NixOS
 behind Caddy). The old YAML files were folded into the module's `settings`, `services`,
 `widgets` and `bookmarks` options; only `images/background.jpg` remains as a file and
 is copied into the package's public images dir. Groups are ordered via the `layout`
-list: `services` (Home Assistant card), then `infra` as a 2-column row (GL.iNet router
-`http://172.16.1.1` and its AdGuard Home `http://172.16.1.1:3000`), then the `Links`
-bookmarks to this repo and the Cloudflare dashboard. An ordered list is required —
-a plain attr set would sort `infra` before `services`. CPU/memory/disk/uptime/network
+list: `services` (Home Assistant and Your Spotify cards), then `infra` as a 2-column
+row (GL.iNet router `http://172.16.1.1` and its AdGuard Home `http://172.16.1.1:3000`),
+then the `Links` bookmarks to this repo and the Cloudflare dashboard. An ordered list is
+required — a plain attr set would sort `infra` before `services`. Each service module
+contributes its card to the `services` group through the `homelab.homepage.services`
+option, so cards compose instead of duplicating the group. CPU/memory/disk/uptime/network
 widgets read from `/` (no more `/host` bind mount).
+
+Your Spotify (`hosts/homelab/your-spotify.nix`) runs the NixOS
+`services.your_spotify` module with the unstable package, a local
+`services.mongodb` (unauthenticated, loopback only) and the Node server on
+`127.0.0.1:3000`. Caddy serves the prebuilt client on
+`spotify.holzrussen.net` and reverse-proxies `spotify-api.holzrussen.net`
+straight to the Node server. The API gets its own hostname because the Node
+process only serves the API, while the UI is a separate static build; their
+route names (`/artist`, `/album`, `/track`, …) also collide with the client
+SPA routes, so a plain root-level reverse proxy only works on a dedicated API
+hostname. Both names need DNS records pointing at the host. The Spotify
+developer app credentials live in `secrets.enc.yml` as
+`your_spotify/client_id` and `your_spotify/client_secret` (dummy values until
+the app is created); set the app's redirect URI to
+`https://spotify-api.holzrussen.net/oauth/spotify/callback`.
+
+Your Spotify polls the Spotify API on its own — there is no manual "fetch"
+button. The loop runs every ~2 minutes and the first pass backfills the last
+24 hours, so the dashboard can stay empty for a couple of minutes after login
+(or until something is played). Follow it with
+`journalctl -u your_spotify -f`; it logs `refreshing...` and then the number of
+tracks/albums/artists written. For listening history older than that, use
+Settings → Account → **Import data** with a Spotify account-data export. If
+sync stops with 401/403 errors, use **Relog to Spotify** on the same page.
 
 In the devshell, use `doot`:
 
