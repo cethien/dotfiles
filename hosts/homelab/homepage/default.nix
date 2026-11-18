@@ -1,12 +1,12 @@
-{
-  pkgs-unstable,
-  ...
-}: let
+{pkgs-unstable, ...}: let
   homepage = pkgs-unstable.homepage-dashboard.overrideAttrs (old: {
-    postInstall = (old.postInstall or "") + ''
-      mkdir -p $out/share/homepage/public/images
-      cp ${./images/background.jpg} $out/share/homepage/public/images/background.jpg
-    '';
+    postInstall =
+      (old.postInstall or "")
+      + ''
+        mkdir -p $out/share/homepage/public/images
+        cp ${./images/background.jpg} $out/share/homepage/public/images/background.jpg
+        cp ${./images/logo.png} $out/share/homepage/public/images/logo.png
+      '';
   });
 in {
   config = {
@@ -67,6 +67,11 @@ in {
       ];
 
       widgets = [
+        {
+          logo = {
+            icon = "/images/logo.png";
+          };
+        }
         {
           resources = {
             cpu = true;
