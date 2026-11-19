@@ -26,6 +26,7 @@ in {
     '';
 
     services.udisks2.enable = true;
+    environment.systemPackages = [pkgs.ntfs3g];
     services.upower.enable = true;
 
     programs.gpu-screen-recorder.enable = true;
