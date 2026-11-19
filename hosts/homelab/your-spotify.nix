@@ -1,12 +1,12 @@
 {
   config,
   lib,
-  pkgs-unstable,
+  pkgs,
   ...
 }: let
   domain = "spotify.holzrussen.net";
-  apiDomain = "spotify-api.holzrussen.net";
   port = 3000;
+  apiBase = "https://${domain}/api";
 
   cfg = config.services.your_spotify;
 in {
@@ -26,16 +26,20 @@ in {
     services.your_spotify = {
       enable = true;
       enableLocalDB = true;
-      package = pkgs-unstable.your_spotify;
+      package = pkgs.your_spotify_fork;
 
       spotifySecretFile = config.sops.secrets."your_spotify/client_secret".path;
 
       settings = {
         CLIENT_ENDPOINT = "https://${domain}";
-        API_ENDPOINT = "https://${apiDomain}";
+        API_ENDPOINT = "https://${domain}";
         PORT = port;
         TIMEZONE = "Europe/Berlin";
         SPOTIFY_PUBLIC = "dummy-client-id";
+      };
+
+      clientPackage = pkgs.your_spotify_fork.client.override {
+        apiEndpoint = apiBase;
       };
     };
 
@@ -49,15 +53,19 @@ in {
       import cloudflare_tls
       encode zstd gzip
 
-      root * ${cfg.clientPackage}
-      try_files {path} /index.html
-      file_server
-    '';
+      handle /oauth/spotify/callback {
+        reverse_proxy 127.0.0.1:${toString port}
+      }
 
-    services.caddy.virtualHosts.${apiDomain}.extraConfig = ''
-      import cloudflare_tls
-      encode zstd gzip
-      reverse_proxy 127.0.0.1:${toString port}
+      handle_path /api/* {
+        reverse_proxy 127.0.0.1:${toString port}
+      }
+
+      handle {
+        root * ${cfg.clientPackage}
+        try_files {path} /index.html
+        file_server
+      }
     '';
 
     homelab.homepage.services = [

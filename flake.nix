@@ -90,6 +90,7 @@
       firefox-addons = firefoxAddonsPkgs.nur.repos.rycee.firefox-addons;
       spicePkgs = inputs.spicetify-nix.legacyPackages.${system};
       amethyst-mm = final.callPackage ./packages/amethyst.nix {};
+      your_spotify_fork = final.callPackage ./packages/your_spotify {};
     };
 
     globalNixpkgsModule = {

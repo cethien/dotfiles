@@ -100,7 +100,9 @@ option, so cards compose instead of duplicating the group. CPU/memory/disk/uptim
 widgets read from `/` (no more `/host` bind mount).
 
 Your Spotify (`hosts/homelab/your-spotify.nix`) runs the NixOS
-`services.your_spotify` module with the unstable package, a local
+`services.your_spotify` module with a custom package for the actively
+maintained [TheTastyHanuta fork](https://github.com/TheTastyHanuta/your_spotify)
+(`packages/your_spotify/`, `1.20.1-fork.8`), a local
 `services.mongodb` (unauthenticated, loopback only) and the Node server on
 `127.0.0.1:3000`. Everything lives on `spotify.holzrussen.net`: Caddy serves
 the static client, proxies `/api/*` (prefix stripped) to the server for the
