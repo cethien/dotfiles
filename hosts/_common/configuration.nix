@@ -27,7 +27,25 @@
       htop
       curl
       git
+
+      htop
+      sysstat
       sysz
+
+      duf
+      iotop
+      ncdu
+
+      fzf
+
+      curl
+      nettools
+      iproute2
+      traceroute
+      mtr
+      dig
+      bmon
+      nmap
     ];
 
     nix.settings.experimental-features = ["nix-command" "flakes"];

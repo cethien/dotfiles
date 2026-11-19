@@ -50,8 +50,8 @@ file, so the vhosts live beside what they proxy:
 
 - `hosts/homelab/home-assistant.nix`: `ha.holzrussen.net` → `127.0.0.1:8123`
 - `hosts/homelab/homepage/default.nix`: `holzrussen.net` → `127.0.0.1:8082`
-- `hosts/homelab/your-spotify.nix`: `spotify.holzrussen.net` → client assets;
-  `spotify-api.holzrussen.net` → `127.0.0.1:3000`
+- `hosts/homelab/your-spotify.nix`: `spotify.holzrussen.net` → client assets,
+  `/api/*` and `/oauth/spotify/callback` → `127.0.0.1:3000`
 
 All use the `cloudflare_tls` snippet (Let's Encrypt DNS challenge). Ports 80/443 are
 opened in `hosts/homelab/configuration.nix`; the backends stay on loopback.
@@ -102,17 +102,17 @@ widgets read from `/` (no more `/host` bind mount).
 Your Spotify (`hosts/homelab/your-spotify.nix`) runs the NixOS
 `services.your_spotify` module with the unstable package, a local
 `services.mongodb` (unauthenticated, loopback only) and the Node server on
-`127.0.0.1:3000`. Caddy serves the prebuilt client on
-`spotify.holzrussen.net` and reverse-proxies `spotify-api.holzrussen.net`
-straight to the Node server. The API gets its own hostname because the Node
-process only serves the API, while the UI is a separate static build; their
-route names (`/artist`, `/album`, `/track`, …) also collide with the client
-SPA routes, so a plain root-level reverse proxy only works on a dedicated API
-hostname. Both names need DNS records pointing at the host. The Spotify
-developer app credentials live in `secrets.enc.yml` as
-`your_spotify/client_id` and `your_spotify/client_secret` (dummy values until
-the app is created); set the app's redirect URI to
-`https://spotify-api.holzrussen.net/oauth/spotify/callback`.
+`127.0.0.1:3000`. Everything lives on `spotify.holzrussen.net`: Caddy serves
+the static client, proxies `/api/*` (prefix stripped) to the server for the
+UI's API calls, and proxies the exact `/oauth/spotify/callback` path for
+Spotify's login redirect. The API needs a prefix because its routes
+(`/artist`, `/album`, `/track`, …) collide with the client SPA routes;
+callback is the one server path that must stay at the root, since the server
+builds its redirect URI from `API_ENDPOINT`. The Spotify developer app
+credentials live in `secrets.enc.yml` as `your_spotify/client_id` and
+`your_spotify/client_secret` (dummy values until the app is created); set the
+app's redirect URI to
+`https://spotify.holzrussen.net/oauth/spotify/callback`.
 
 Your Spotify polls the Spotify API on its own — there is no manual "fetch"
 button. The loop runs every ~2 minutes and the first pass backfills the last
