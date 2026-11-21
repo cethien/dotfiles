@@ -50,8 +50,6 @@ file, so the vhosts live beside what they proxy:
 
 - `hosts/homelab/home-assistant.nix`: `ha.holzrussen.net` → `127.0.0.1:8123`
 - `hosts/homelab/homepage/default.nix`: `holzrussen.net` → `127.0.0.1:8082`
-- `hosts/homelab/your-spotify.nix`: `spotify.holzrussen.net` → client assets,
-  `/api/*` and `/oauth/spotify/callback` → `127.0.0.1:3000`
 
 All use the `cloudflare_tls` snippet (Let's Encrypt DNS challenge). Ports 80/443 are
 opened in `hosts/homelab/configuration.nix`; the backends stay on loopback.
@@ -91,39 +89,13 @@ Homepage (`hosts/homelab/homepage/default.nix`) uses the NixOS
 behind Caddy). The old YAML files were folded into the module's `settings`, `services`,
 `widgets` and `bookmarks` options; only `images/background.jpg` remains as a file and
 is copied into the package's public images dir. Groups are ordered via the `layout`
-list: `services` (Home Assistant and Your Spotify cards), then `infra` as a 2-column
+list: `services` (Home Assistant card), then `infra` as a 2-column
 row (GL.iNet router `http://172.16.1.1` and its AdGuard Home `http://172.16.1.1:3000`),
 then the `Links` bookmarks to this repo and the Cloudflare dashboard. An ordered list is
 required — a plain attr set would sort `infra` before `services`. Each service module
 contributes its card to the `services` group through the `homelab.homepage.services`
 option, so cards compose instead of duplicating the group. CPU/memory/disk/uptime/network
 widgets read from `/` (no more `/host` bind mount).
-
-Your Spotify (`hosts/homelab/your-spotify.nix`) runs the NixOS
-`services.your_spotify` module with a custom package for the actively
-maintained [TheTastyHanuta fork](https://github.com/TheTastyHanuta/your_spotify)
-(`packages/your_spotify/`, `1.20.1-fork.8`), a local
-`services.mongodb` (unauthenticated, loopback only) and the Node server on
-`127.0.0.1:3000`. Everything lives on `spotify.holzrussen.net`: Caddy serves
-the static client, proxies `/api/*` (prefix stripped) to the server for the
-UI's API calls, and proxies the exact `/oauth/spotify/callback` path for
-Spotify's login redirect. The API needs a prefix because its routes
-(`/artist`, `/album`, `/track`, …) collide with the client SPA routes;
-callback is the one server path that must stay at the root, since the server
-builds its redirect URI from `API_ENDPOINT`. The Spotify developer app
-credentials live in `secrets.enc.yml` as `your_spotify/client_id` and
-`your_spotify/client_secret` (dummy values until the app is created); set the
-app's redirect URI to
-`https://spotify.holzrussen.net/oauth/spotify/callback`.
-
-Your Spotify polls the Spotify API on its own — there is no manual "fetch"
-button. The loop runs every ~2 minutes and the first pass backfills the last
-24 hours, so the dashboard can stay empty for a couple of minutes after login
-(or until something is played). Follow it with
-`journalctl -u your_spotify -f`; it logs `refreshing...` and then the number of
-tracks/albums/artists written. For listening history older than that, use
-Settings → Account → **Import data** with a Spotify account-data export. If
-sync stops with 401/403 errors, use **Relog to Spotify** on the same page.
 
 In the devshell, use `doot`:
 

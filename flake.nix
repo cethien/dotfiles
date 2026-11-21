@@ -90,7 +90,6 @@
       firefox-addons = firefoxAddonsPkgs.nur.repos.rycee.firefox-addons;
       spicePkgs = inputs.spicetify-nix.legacyPackages.${system};
       amethyst-mm = final.callPackage ./packages/amethyst.nix {};
-      your_spotify_fork = final.callPackage ./packages/your_spotify {};
     };
 
     globalNixpkgsModule = {
@@ -158,30 +157,30 @@
   in {
     nixosConfigurations =
       (builtins.listToAttrs (map (name: {
-        inherit name;
-        value = nixpkgs.lib.nixosSystem {
-          inherit system;
+          inherit name;
+          value = nixpkgs.lib.nixosSystem {
+            inherit system;
 
-          specialArgs = {inherit inputs pkgs-unstable;};
+            specialArgs = {inherit inputs pkgs-unstable;};
 
-          modules = [
-            determinate.nixosModules.default
-            globalNixpkgsModule
-            ./clients/_common/configuration.nix
-            ./clients/${name}/hardware-configuration.nix
-            ./clients/${name}/configuration.nix
-            {
-              system = {inherit stateVersion;};
-              networking.hostName = name;
-              _module.args = {
-                hostName = name;
-                inherit stateVersion;
-              };
-            }
-          ];
-        };
-      })
-      clientNames))
+            modules = [
+              determinate.nixosModules.default
+              globalNixpkgsModule
+              ./clients/_common/configuration.nix
+              ./clients/${name}/hardware-configuration.nix
+              ./clients/${name}/configuration.nix
+              {
+                system = {inherit stateVersion;};
+                networking.hostName = name;
+                _module.args = {
+                  hostName = name;
+                  inherit stateVersion;
+                };
+              }
+            ];
+          };
+        })
+        clientNames))
       // (builtins.mapAttrs mkHost hosts);
 
     deploy.nodes = builtins.mapAttrs mkDeployNode hosts;

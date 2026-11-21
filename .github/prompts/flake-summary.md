@@ -4,7 +4,7 @@ Your job is to tell the owner what actually matters, not to restate every change
 
 Prioritize:
 - Desktop/session stack: hyprland, aquamarine, xdg-desktop-portal, pipewire, wireplumber, mesa, nvidia, linux kernel, wayland
-- Homelab services: mongodb, caddy, home-assistant, your_spotify, dashboard
+- Homelab services: caddy, home-assistant, dashboard
 - Runtime/security-critical userland: openssl, curl, git, openssh, sudo, nix
 - Major/minor version jumps, downgrades, and large closure-size changes
 - If aquamarine appears, note whether it is still the locally patched 0.16.0 build or a newer upstream version
