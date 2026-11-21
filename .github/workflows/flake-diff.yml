@@ -7,6 +7,10 @@ on:
     paths:
       - flake.lock
 
+concurrency:
+  group: pr-checks-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
 jobs:
   diff:
     name: System diff + summary
