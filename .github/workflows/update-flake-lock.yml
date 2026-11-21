@@ -2,6 +2,11 @@ name: update-flake-lock
 
 on:
   workflow_dispatch:
+    inputs:
+      update-unstable:
+        description: "Also update nixpkgs-unstable (and inputs that follow it)"
+        type: boolean
+        default: false
   schedule:
     - cron: "0 0 * * 5" # Friday at Midnight UTC
 
@@ -38,6 +43,7 @@ jobs:
             zen-browser
             nur
             spicetify-nix
+            ${{ inputs['update-unstable'] && 'nixpkgs-unstable' || '' }}
           commit-msg: "chore: weekly inputs update"
           pr-title: "chore: weekly inputs update"
           pr-body: "Automated weekly update of flake inputs."

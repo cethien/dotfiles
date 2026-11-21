@@ -1,0 +1,150 @@
+name: flake update diff
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+    paths:
+      - flake.lock
+
+jobs:
+  diff:
+    name: System diff + summary
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      id-token: write
+    steps:
+      - name: Checkout PR head
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Install Determinate Nix
+        uses: DeterminateSystems/determinate-nix-action@v3
+
+      - name: Set up Nix binary cache
+        uses: DeterminateSystems/magic-nix-cache-action@main
+        continue-on-error: true
+        with:
+          use-flakehub: false
+          use-gha-cache: true
+
+      - name: Build base and head systems, then diff them
+        env:
+          BASE_REF: origin/${{ github.base_ref }}
+          HOSTS: tms-bso tower-of-power hp-430-g7 homelab
+        run: |
+          set -euo pipefail
+
+          git worktree add --detach "$RUNNER_TEMP/base" "$BASE_REF"
+          trap 'git worktree remove --force "$RUNNER_TEMP/base" 2>/dev/null || true' EXIT
+
+          : > diff-all.txt
+
+          for host in $HOSTS; do
+            echo "=== $host ===" | tee -a diff-all.txt
+
+            nix build "$RUNNER_TEMP/base#nixosConfigurations.${host}.config.system.build.toplevel" \
+              --no-write-lock-file \
+              --out-link "$RUNNER_TEMP/base-$host"
+
+            nix build ".#nixosConfigurations.${host}.config.system.build.toplevel" \
+              --no-write-lock-file \
+              --out-link "$RUNNER_TEMP/head-$host"
+
+            nix shell nixpkgs#nvd -c nvd diff "$RUNNER_TEMP/base-$host" "$RUNNER_TEMP/head-$host" \
+              >> diff-all.txt 2>&1 || true
+          done
+
+      - name: Upload full diff
+        uses: actions/upload-artifact@v7
+        with:
+          name: flake-update-diff
+          path: diff-all.txt
+
+      - name: Prepare summary input
+        run: |
+          set -euo pipefail
+          limit=50000
+          if [ "$(wc -c < diff-all.txt)" -gt "$limit" ]; then
+            head -c "$limit" diff-all.txt > report.txt
+            printf '\n[diff truncated for summary; full diff is in the artifact]\n' >> report.txt
+          else
+            cp diff-all.txt report.txt
+          fi
+
+      - name: Summarize diff with OpenCode Go
+        id: summary
+        continue-on-error: true
+        env:
+          OPENCODE_API_KEY: ${{ secrets.OPENCODE_API_KEY }}
+          SUMMARY_MODEL: ${{ vars.SUMMARY_MODEL || 'glm-5.3-flash' }}
+          SESSION_ID: ses_flake-diff-${{ github.run_id }}
+        run: |
+          set -euo pipefail
+
+          if [ -z "${OPENCODE_API_KEY:-}" ]; then
+            echo "OPENCODE_API_KEY is not configured; skipping summary."
+            exit 0
+          fi
+
+          jq -n \
+            --arg model "$SUMMARY_MODEL" \
+            --rawfile system .github/prompts/flake-summary.md \
+            --rawfile report report.txt \
+            '{model: $model, messages: [{role: "system", content: $system}, {role: "user", content: ("Summarize this flake update diff:\n\n" + $report)}]}' \
+            > payload.json
+
+          curl -fsS \
+            -A "cethien-dotfiles-flake-summary/1.0" \
+            -H "Authorization: Bearer $OPENCODE_API_KEY" \
+            -H "Content-Type: application/json" \
+            -H "x-opencode-session: $SESSION_ID" \
+            https://opencode.ai/inference/go/openai/v1/chat/completions \
+            --data-binary @payload.json \
+            > response.json
+
+          {
+            echo 'text<<SUMMARY_EOF'
+            jq -r '.choices[0].message.content // "No summary available."' response.json
+            echo 'SUMMARY_EOF'
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Comment summary on PR
+        if: github.event.pull_request.head.repo.full_name == github.repository
+        uses: actions/github-script@v9
+        env:
+          SUMMARY: ${{ steps.summary.outputs.text }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        with:
+          script: |
+            const marker = '<!-- flake-update-summary -->';
+            const summary = (process.env.SUMMARY || '').trim()
+              || '_Summary unavailable. Check the workflow log or paste the diff into AI manually._';
+            const body = [
+              marker,
+              '### Flake update summary',
+              '',
+              summary,
+              '',
+              '<details><summary>Full nvd diff</summary>',
+              '',
+              `Download the **flake-update-diff** artifact from [this run](${process.env.RUN_URL}).`,
+              '',
+              '</details>',
+            ].join('\n');
+
+            const { owner, repo } = context.repo;
+            const issue_number = context.issue.number;
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner, repo, issue_number, per_page: 100,
+            });
+            const existing = comments.find(c => c.body && c.body.includes(marker));
+
+            if (existing) {
+              await github.rest.issues.updateComment({ owner, repo, comment_id: existing.id, body });
+            } else {
+              await github.rest.issues.createComment({ owner, repo, issue_number, body });
+            }
