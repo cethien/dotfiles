@@ -36,6 +36,8 @@ in {
         PORT = port;
         TIMEZONE = "Europe/Berlin";
         SPOTIFY_PUBLIC = "dummy-client-id";
+        SPOTIFY_API_DELAY_MS = "3500";
+        DISABLE_POLLING = "true";
       };
 
       clientPackage = pkgs.your_spotify_fork.client.override {
