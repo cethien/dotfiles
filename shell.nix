@@ -24,6 +24,10 @@ pkgs.mkShell {
     act
 
     doot
+
+    # Formatting & Git Hooks
+    alejandra
+    lefthook
   ];
 
   shellHook = let
@@ -64,6 +68,10 @@ pkgs.mkShell {
 
       cp -f ${luarcFile} "$PWD/.luarc.json"
       chmod +w "$PWD/.luarc.json"
+
+      if [ -d "$PWD/.git" ] && [ -f "$PWD/.lefthook.yml" ] && command -v lefthook >/dev/null 2>&1; then
+        lefthook install >/dev/null 2>&1 || true
+      fi
 
       DOOT_CMD="doot"
       if [ ! -d "$PWD/.direnv" ] && [ -z "$DIRENV_DIR" ]; then

@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://json.schemastore.org/lefthook.json
+# vim: set ts=2 sw=2 tw=0 fo=cnqoj
+
+pre-commit:
+  parallel: true
+  commands:
+    alejandra:
+      glob: "*.nix"
+      stage_fixed: true
+      run: |
+        if ! command -v alejandra >/dev/null 2>&1; then
+          exit 0
+        fi
+        alejandra {staged_files}
