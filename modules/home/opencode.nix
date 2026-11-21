@@ -8,8 +8,8 @@
   cavemanSrc = pkgs.fetchFromGitHub {
     owner = "JuliusBrussee";
     repo = "caveman";
-    rev = "main";
-    hash = "sha256-1X2DjYa4xqO1ZqwxdFjCmaypp0+HYncEpXaut4i9LkE=";
+    rev = "a192894723a8f47e7f504c7b5041967ff1f18e55";
+    hash = "sha256-qG7njZgc+JCg+AAVNcFmOYjWMIAy73q4BociYG+WsEw=";
   };
 in {
   config = lib.mkIf config.programs.opencode.enable {
