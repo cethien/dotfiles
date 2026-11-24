@@ -20,9 +20,9 @@ in {
 
   home.packages = with pkgs; [
     # winboat
-    rustdesk-flutter
     nextcloud-client
     nextcloud-talk-desktop
+    rustdesk
   ];
 
   services.davmail.enable = true;
