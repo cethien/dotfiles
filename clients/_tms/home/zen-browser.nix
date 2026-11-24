@@ -1,8 +1,13 @@
 {pkgs}: {
   bookmarks = [
     {
-      name = "dbasement";
-      url = "https://databasement.tmspro.shop";
+      name = "auth";
+      url = "https://auth.tmspro.shop";
+      tags = ["admin" "authentik" "sso"];
+    }
+    {
+      name = "dbasus";
+      url = "https://databasus.tmspro.shop";
       tags = ["admin" "backups" "database"];
     }
     {

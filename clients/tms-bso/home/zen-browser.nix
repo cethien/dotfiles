@@ -47,16 +47,16 @@
   pins = let
     work = spaces."lets get this bread".id;
   in {
-    "admin" = {
+    "dashboard" = {
       id = "9d8a8f91-7e29-4688-ae2e-da4e49d4a179";
       url = "https://admin.tmspro.shop/";
       position = 1010;
       isEssential = true;
       workspace = work;
     };
-    "tmspro.shop" = {
+    "jira" = {
       id = "96070d37-4b78-490f-87d1-884474bd9434";
-      url = "https://tmspro.shop";
+      url = "https://tmsproshop.atlassian.net/jira";
       position = 1011;
       isEssential = true;
       workspace = work;
