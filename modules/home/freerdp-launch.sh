@@ -75,7 +75,8 @@ EXIT_CODE=$?
 set -e
 
 # 131 = hyprland kill
-OK_CODES=(0 1 131)
+# 145 = SIGTERM (normal session close)
+OK_CODES=(0 1 131 145)
 
 IS_OK=0
 for code in "${OK_CODES[@]}"; do
