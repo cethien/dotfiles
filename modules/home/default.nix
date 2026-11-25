@@ -52,6 +52,7 @@
     ./keepassxc.nix
     ./bitwarden.nix
     ./thunderbird.nix
+    ./aerc.nix
     ./libreoffice.nix
     ./dbeaver.nix
 

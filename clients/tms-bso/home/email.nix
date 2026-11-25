@@ -7,8 +7,6 @@
   mail = "b.sotnikow@tmsproshop.de";
   userName = "b.sotnikow@ad.tmsproshop.de";
 in {
-  imports = [./emails-sales.nix];
-
   config = {
     accounts.email.accounts."${mail}" = {
       primary = true;
@@ -17,6 +15,16 @@ in {
         enable = true;
         profiles = ["${mail}"];
       };
+
+      aerc = {
+        enable = true;
+        extraAccounts = {
+          "signature-file" = "${config.home.homeDirectory}/.config/aerc/signature.html";
+          "address-book-cmd" = "DAVMAIL_LDAP_PASSWORD_FILE=${config.sops.secrets."tms/mail_password".path} davmail-contacts %s";
+        };
+      };
+
+      passwordCommand = "cat ${config.sops.secrets."tms/mail_password".path}";
 
       address = mail;
       realName = "Borislaw Sotnikow";
@@ -38,21 +46,6 @@ in {
         host = "localhost";
         port = 55555;
         tls.enable = false;
-      };
-    };
-
-    accounts.calendar.accounts."${mail}" = {
-      primary = true;
-      remote = {
-        url = "http://localhost:1080/users/${mail}/calendar/";
-        type = "caldav";
-        inherit userName;
-      };
-
-      thunderbird = {
-        enable = true;
-        profiles = ["${mail}"];
-        color = "#b798f1";
       };
     };
 
@@ -82,6 +75,11 @@ in {
         "News" = {};
       };
     };
+
+    sops.secrets."tms/mail_password" = {};
+
+    home.file.".config/aerc/signature.html".text =
+      builtins.readFile ./email-signature.html;
 
     services.davmail = {
       imitateOutlook = true;
