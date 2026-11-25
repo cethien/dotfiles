@@ -50,7 +50,8 @@ in {
       };
 
       actions = true;
-      anchor = "top-center";
+      anchor = "bottom-center";
+      outer-margin = "0,0,16,0";
       border-radius = 4;
       default-timeout = 6000;
       ignore-timeout = false;
@@ -61,6 +62,7 @@ in {
       padding = 16;
       markup = true;
       width = 600;
+      background-color = "#1C1C2B";
     };
   };
 }
