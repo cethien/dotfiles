@@ -19,8 +19,8 @@ in {
       aerc = {
         enable = true;
         extraAccounts = {
-          "signature-file" = "${config.home.homeDirectory}/.config/aerc/signature.html";
-          "address-book-cmd" = "DAVMAIL_LDAP_PASSWORD_FILE=${config.sops.secrets."tms/mail_password".path} davmail-contacts %s";
+          "enable-folders-sort" = true;
+          "folders-sort" = "INBOX,Drafts,Junk,Sent,Archive";
         };
       };
 
@@ -28,13 +28,6 @@ in {
 
       address = mail;
       realName = "Borislaw Sotnikow";
-
-      signature = {
-        htmlFormat = true;
-        delimiter = "---";
-        showSignature = "append";
-        text = builtins.readFile ./email-signature.html;
-      };
 
       inherit userName;
       smtp = {
@@ -77,9 +70,6 @@ in {
     };
 
     sops.secrets."tms/mail_password" = {};
-
-    home.file.".config/aerc/signature.html".text =
-      builtins.readFile ./email-signature.html;
 
     services.davmail = {
       imitateOutlook = true;

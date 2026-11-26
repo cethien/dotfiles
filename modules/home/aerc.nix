@@ -13,25 +13,51 @@ in {
       xdg-utils
     ];
 
+    programs.aerc = {
+      extraConfig = {
+        general."unsafe-accounts-conf" = true;
+        ui."mouse-enabled" = true;
+
+        viewer = {
+          alternatives = "text/html,text/plain";
+          "html-inline-images" = true;
+        };
+
+        filters = {
+          "text/plain" = "${cfg.package}/libexec/aerc/filters/colorize";
+          "text/html" = "! ${cfg.package}/libexec/aerc/filters/html";
+        };
+
+        openers = {
+          "text/html" = "sh -c '${pkgs.xdg-utils}/bin/xdg-open \"$1\" && sleep 2' _";
+        };
+
+        compose = {
+          editor = "nvim";
+          "focus-body" = true;
+        };
+        "multipart-converters"."text/html" = "${lib.getExe config.programs.pandoc.package} -f gfm -t html --standalone";
+      };
+
+      extraBinds = lib.mkMerge [
+        (builtins.readFile "${cfg.package}/share/aerc/binds.conf")
+        ''
+          [messages]
+          * = :flag -t<Enter>
+
+          [compose::review]
+          H = :multipart text/html<Enter>
+          y = :multipart text/html<Enter>:send<Enter>
+          P = :send<Enter>
+        ''
+      ];
+    };
+
     programs.tmux.keybindings = [
       {
         key = "m";
         action = "new-window -an aerc ${execAerc}";
       }
     ];
-
-    # xdg.desktopEntries.aerc = {
-    #   name = "aerc";
-    #   genericName = "Email Client";
-    #   exec = execAerc;
-    #   terminal = true;
-    #   icon = "mail";
-    #   categories = ["Network" "Email"];
-    # };
-    #
-    # wayland.windowManager.hyprland.extraLuaFiles."99-aerc" = lib.mkIf (config.wayland.windowManager.hyprland.enable or false) ''
-    #   hl.bind("SUPER + SHIFT + F12", hl.dsp.exec_cmd("kitty -e ${execAerc}"))
-    #   hl.bind("SHIFT + XF86Mail", hl.dsp.exec_cmd("kitty -e ${execAerc}"))
-    # '';
   };
 }

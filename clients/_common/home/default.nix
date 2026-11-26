@@ -55,6 +55,10 @@ in {
       msmtp.enable = mkDefault true;
       utils-mail.enable = mkDefault true;
 
+      aerc.enable = mkDefault (
+        lib.any (a: a.aerc.enable or false) (lib.attrValues (config.accounts.email.accounts or {}))
+      );
+
       git.enable = mkDefault true;
       lazygit.enable = config.programs.git.enable;
       direnv.enable = true;
