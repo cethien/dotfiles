@@ -3,12 +3,17 @@
     {
       name = "auth";
       url = "https://auth.tmspro.shop";
-      tags = ["admin" "authentik" "sso"];
+      tags = ["authentik" "admin" "sso"];
     }
     {
       name = "dbasus";
       url = "https://databasus.tmspro.shop";
-      tags = ["admin" "backups" "database"];
+      tags = ["databasus" "admin" "backups" "database"];
+    }
+    {
+      name = "zb";
+      url = "https://zerobyte.tmspro.shop";
+      tags = ["zerobyte" "restic" "admin" "backups" "data"];
     }
     {
       name = "dozzle";
@@ -16,79 +21,33 @@
       tags = ["docker" "admin"];
     }
     {
-      name = "shops";
-      bookmarks = [
-        {
-          name = "leitplanken-discounter";
-          url = "https://leitplanken-discounter.de";
-          tags = ["ld"];
-        }
-        {
-          name = "leitplanken-discounter admin";
-          url = "https://leitplanken-discounter.de/wp-login";
-          tags = ["ld" "wordpress"];
-        }
-        {
-          name = "verkehrsschilder-discounter";
-          url = "https://verkehrsschilder-discounter.de";
-          tags = ["vd"];
-        }
-        {
-          name = "verkehrsschilder-discounter admin";
-          url = "https://verkehrsschilder-discounter.de/wp-login";
-          tags = ["vd" "wordpress"];
-        }
-        {
-          name = "magento-shops admin";
-          url = "https://absperrshop.de/admin_b1sk2x";
-          tags = ["magento"];
-        }
-        {
-          name = "erstehilfeshop";
-          url = "https://erstehilfeshop.de";
-          tags = ["ehs"];
-        }
-        {
-          name = "absperrshop";
-          url = "https://absperrshop.de";
-          tags = ["ass"];
-        }
-        {
-          name = "rammschutzshop";
-          url = "https://rammschutzshop.de";
-          tags = ["rss"];
-        }
-        {
-          name = "markierungsshop";
-          url = "https://markierungsshop.de";
-          tags = ["mks"];
-        }
-      ];
+      name = "wud";
+      url = "https://wud.tmspro.shop";
+      tags = ["whats up docker" "docker" "admin"];
     }
     {
-      name = "snipe-it";
-      url = "https://snipe-it.tmspro.shop";
+      name = "inv";
+      url = "https://inventory.tmspro.shop";
       tags = ["snipe-it" "inventory"];
     }
-
     {
-      name = "intranet";
+      name = "intra";
       url = "https://tmspro.shop";
-      tags = ["homarr" "landingpage"];
+      tags = ["homarr" "intranet" "landingpage"];
     }
     {
-      name = "vaultwarden";
+      name = "bw";
       url = "https://vault.tmspro.shop";
-      tags = ["vaultwarden" "passwords"];
+      tags = ["bitwarden" "vaultwarden" "passwords"];
     }
     {
-      name = "vaultwarden admin";
+      name = "bw-admin";
       url = "https://vault.tmspro.shop/admin";
-      tags = ["vaultwarden" "admin" "passwords"];
+      tags = ["bitwarden" "vaultwarden" "admin" "passwords"];
     }
 
     {
-      name = "weclapp test";
+      name = "weclapp-test";
       url = "https://update.weclapp.tmspro.shop/";
       tags = ["erp"];
     }
@@ -99,14 +58,14 @@
     }
 
     {
-      name = "kanboard";
+      name = "kb";
       url = "https://kanboard.tmspro.shop/";
-      tags = ["tasks"];
+      tags = ["kanboard" "tasks"];
     }
     {
-      name = "bildnamensliste";
+      name = "bnl";
       url = "https://bnl.tmspro.shop/";
-      tags = ["bnl" "tools"];
+      tags = ["bildnamenliste" "tools"];
     }
 
     {
@@ -124,30 +83,30 @@
     {
       name = "jira";
       url = "https://tmsproshop.atlassian.net/jira";
-      tags = ["atlassian" "tasks"];
+      tags = ["jira" "atlassian" "tasks"];
     }
     {
-      name = "confluence";
+      name = "wiki";
       url = "https://tmsproshop.atlassian.net/wiki";
-      tags = ["atlassian" "docs"];
+      tags = ["confluence" "atlassian" "docs"];
     }
     {
-      name = "bitbucket";
+      name = "bb";
       url = "https://bitbucket.org/tmsproshop";
-      tags = ["bb" "source" "git"];
+      tags = ["bitbucket" "source" "git"];
     }
     {
-      name = "magento bitbucket";
+      name = "bb-magento";
       url = "https://bitbucket.org/tmsproshop/magento";
-      tags = ["shops" "bb" "source" "git" "project"];
+      tags = ["shops" "bitbucket" "source" "git" "project"];
     }
     {
-      name = "windows admin center";
+      name = "wac";
       url = "https://wac.tmspro.shop";
-      tags = ["windows server"];
+      tags = ["windows admin center" "windows server"];
     }
     {
-      name = "grafana explore";
+      name = "grafana-explore";
       url = "https://grafana.tmspro.shop/explore";
       tags = ["monitoring" "grafana"];
     }
@@ -157,7 +116,7 @@
       tags = ["monitoring"];
     }
     {
-      name = "prometheus";
+      name = "prom";
       url = "https://prometheus.tmspro.shop";
       tags = ["prometheus" "monitoring"];
     }
@@ -173,18 +132,18 @@
     }
 
     {
-      name = "infra-repo";
+      name = "gh-tms";
       url = "https://github.com/orgs/tmsproshopgmbh/repositories";
       tags = ["github" "source" "git" "projects"];
     }
     {
-      name = "infra github";
+      name = "gh-infra";
       url = "https://github.com/orgs/tmsproshopgmbh/infra";
       tags = ["github" "source" "git" "repo"];
     }
     {
-      name = "o2business";
-      url = "https://admin.digitalphone.o2business.de/";
+      name = "o2";
+      url = "https://newadmin.digitalphone.o2business.de/";
       tags = ["telefonie" "phone"];
     }
     {
@@ -198,14 +157,14 @@
       tags = ["messenger"];
     }
     {
-      name = "pve-node-a";
+      name = "pve-a";
       url = "https://10.0.10.5:8006";
-      tags = ["proxmox" "vms"];
+      tags = ["pve-node-a" "proxmox" "vms"];
     }
     {
       name = "pve-node-b";
       url = "https://10.180.80.250:8006";
-      tags = ["proxmox" "vms"];
+      tags = ["pve-node-b" "proxmox" "vms"];
     }
     {
       name = "pve-node-c";
@@ -225,7 +184,7 @@
     {
       name = "unifi";
       url = "https://10.180.80.99";
-      tags = ["switch" "network"];
+      tags = ["ubiquity" "switch" "network"];
     }
     {
       name = "pve storage";
@@ -233,7 +192,7 @@
       tags = ["synology" "nas" "nfs"];
     }
     {
-      name = "smb storage";
+      name = "smb";
       url = "https://10.102.99.213:5001/";
       tags = ["synology" "san" "smb"];
     }
@@ -258,9 +217,60 @@
       tags = ["hosting" "magento" "staging"];
     }
     {
-      name = "cloudflare";
+      name = "cf";
       url = "https://dash.cloudflare.com/";
-      tags = ["dns" "domains"];
+      tags = ["cloudflare" "dns" "domains"];
+    }
+
+    {
+      name = "shops";
+      bookmarks = [
+        {
+          name = "ld";
+          url = "https://leitplanken-discounter.de";
+          tags = ["leitplanken-discounter"];
+        }
+        {
+          name = "ld-admin";
+          url = "https://leitplanken-discounter.de/wp-login";
+          tags = ["leitplanken-discounter" "wordpress"];
+        }
+        {
+          name = "vd";
+          url = "https://verkehrsschilder-discounter.de";
+          tags = ["verkehrsschilder-discounter"];
+        }
+        {
+          name = "vd-admin";
+          url = "https://verkehrsschilder-discounter.de/wp-login";
+          tags = ["verkehrsschilder-discounter" "wordpress"];
+        }
+        {
+          name = "mage-admin";
+          url = "https://absperrshop.de/admin_b1sk2x";
+          tags = ["magento" "shops" "admin"];
+        }
+        {
+          name = "ehs";
+          url = "https://erstehilfeshop.de";
+          tags = ["erstehilfeshop" "shops"];
+        }
+        {
+          name = "ass";
+          url = "https://absperrshop.de";
+          tags = ["absperrshop" "shops"];
+        }
+        {
+          name = "rss";
+          url = "https://rammschutzshop.de";
+          tags = ["rammschutzshop" "shops"];
+        }
+        {
+          name = "mks";
+          url = "https://markierungsshop.de";
+          tags = ["markierungsshop" "shops"];
+        }
+      ];
     }
   ];
 
