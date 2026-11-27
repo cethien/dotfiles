@@ -24,6 +24,13 @@ in {
     programs.thunderbird = {
       package = pkgs-unstable.thunderbird;
       languagePacks = ["en-US" "en-GB" "de"];
+      settings = {
+        "layers.acceleration.force-enabled" = true;
+        "mailnews.start_page.enabled" = true;
+        "mailnews.start_page.url" = "https://thunderbird.net/en-US/thunderbird/${pkgs-unstable.thunderbird.version}/releasenotes/";
+        "mail.identity.default.compose_html" = true;
+        "mail.default_html_action" = 2;
+      };
     };
 
     xdg.autostart.entries = lib.optionals cfg.autostart [

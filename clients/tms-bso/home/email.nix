@@ -45,11 +45,6 @@ in {
     programs.thunderbird.profiles."${mail}" = {
       isDefault = true;
       settings = {
-        "layers.acceleration.force-enabled" = true;
-        "mailnews.start_page.enabled" = true;
-        "mailnews.start_page.url" = "https://thunderbird.net/en-US/thunderbird/${pkgs.thunderbird.version}/releasenotes/";
-        "mail.mst.style" = 1;
-
         "calendar.itip.send_notifications" = false;
         "calendar.itip.notify" = false;
         "calendar.scheduling.show_invite_message" = false;
