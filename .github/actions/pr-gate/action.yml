@@ -1,0 +1,78 @@
+name: PR mergeability gate
+description: Skip expensive PR builds for drafts/closed PRs and fail early on conflicts
+
+inputs:
+  token:
+    description: "Token with pull-requests: read"
+    required: true
+  number:
+    description: Pull request number
+    required: true
+
+outputs:
+  skip:
+    description: "true when the PR is a draft or already closed/merged"
+    value: ${{ steps.gate.outputs.skip }}
+  reason:
+    description: Human-readable reason for skipping
+    value: ${{ steps.gate.outputs.reason }}
+
+runs:
+  using: composite
+  steps:
+    - name: Check PR state and mergeability
+      id: gate
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.token }}
+        PR_NUMBER: ${{ inputs.number }}
+        REPO: ${{ github.repository }}
+        BASE_REF: ${{ github.base_ref }}
+      run: |
+        set -euo pipefail
+
+        fetch() {
+          gh api "repos/${REPO}/pulls/${PR_NUMBER}" \
+            --jq '{state, draft: .isDraft, mergeable, mergeStateStatus}'
+        }
+
+        pr=$(fetch)
+        # GitHub computes mergeable asynchronously; it is often null right after a push.
+        for attempt in 1 2 3 4 5 6; do
+          [ "$(jq -r '.mergeable' <<<"$pr")" != "null" ] && break
+          sleep 5
+          pr=$(fetch)
+        done
+
+        state=$(jq -r '.state' <<<"$pr")
+        draft=$(jq -r '.draft // false' <<<"$pr")
+        mergeable=$(jq -r 'if .mergeable == null then "unknown" else .mergeable end' <<<"$pr")
+        merge_state=$(jq -r '.mergeStateStatus // "UNKNOWN"' <<<"$pr")
+
+        echo "PR state=$state draft=$draft mergeable=$mergeable mergeStateStatus=$merge_state"
+
+        skip=false
+        reason=""
+
+        if [ "$state" != "open" ]; then
+          skip=true
+          reason="PR is $state"
+        elif [ "$draft" = "true" ]; then
+          skip=true
+          reason="PR is a draft"
+        fi
+
+        {
+          echo "skip=$skip"
+          echo "reason=$reason"
+        } >> "$GITHUB_OUTPUT"
+
+        if [ "$mergeable" = "unknown" ]; then
+          echo "::warning title=Mergeability unknown::GitHub has not computed mergeability yet; continuing."
+        fi
+
+        # Conflicts should be visible as a failing check, not silently skipped.
+        if [ "$mergeable" = "false" ] || [ "$merge_state" = "DIRTY" ]; then
+          echo "::error title=PR not mergeable::This PR has conflicts with ${BASE_REF}. Update the branch and re-run."
+          exit 1
+        fi

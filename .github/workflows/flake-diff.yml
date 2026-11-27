@@ -12,18 +12,58 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  diff:
-    name: System diff + summary
+  gate:
+    name: PR mergeability
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     permissions:
       contents: read
-      pull-requests: write
+      pull-requests: read
+    outputs:
+      skip: ${{ steps.gate.outputs.skip }}
+      reason: ${{ steps.gate.outputs.reason }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Check PR
+        id: gate
+        uses: ./.github/actions/pr-gate
+        with:
+          token: ${{ github.token }}
+          number: ${{ github.event.pull_request.number }}
+
+  diff:
+    name: Diff ${{ matrix.host }}
+    needs: gate
+    if: needs.gate.outputs.skip != 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        host: [tms-bso, tower-of-power, hp-430-g7, homelab]
+    permissions:
+      contents: read
       id-token: write
     steps:
       - name: Checkout PR head
         uses: actions/checkout@v7
         with:
           fetch-depth: 0
+
+      - name: Free runner disk space
+        run: |
+          set -euo pipefail
+          df -h / /nix 2>/dev/null || df -h /
+          sudo rm -rf \
+            /usr/local/lib/android \
+            /usr/share/dotnet \
+            /usr/share/swift \
+            /opt/ghc \
+            /opt/hostedtoolcache/CodeQL \
+            /usr/local/share/boost
+          df -h / /nix 2>/dev/null || df -h /
 
       - name: Install Determinate Nix
         uses: DeterminateSystems/determinate-nix-action@v3
@@ -35,32 +75,77 @@ jobs:
           use-flakehub: false
           use-gha-cache: true
 
-      - name: Build base and head systems, then diff them
+      - name: Build base and head, then diff
         env:
           BASE_REF: origin/${{ github.base_ref }}
-          HOSTS: tms-bso tower-of-power hp-430-g7 homelab
+          HOST: ${{ matrix.host }}
         run: |
           set -euo pipefail
 
           git worktree add --detach "$RUNNER_TEMP/base" "$BASE_REF"
           trap 'git worktree remove --force "$RUNNER_TEMP/base" 2>/dev/null || true' EXIT
 
+          {
+            echo "=== $HOST ==="
+            nix build "$RUNNER_TEMP/base#nixosConfigurations.${HOST}.config.system.build.toplevel" \
+              --no-write-lock-file \
+              --out-link "$RUNNER_TEMP/base-$HOST"
+
+            nix build ".#nixosConfigurations.${HOST}.config.system.build.toplevel" \
+              --no-write-lock-file \
+              --out-link "$RUNNER_TEMP/head-$HOST"
+
+            nix shell nixpkgs#nvd -c nvd diff "$RUNNER_TEMP/base-$HOST" "$RUNNER_TEMP/head-$HOST" || true
+          } > "diff-${HOST}.txt" 2>&1
+
+      - name: Upload host diff
+        uses: actions/upload-artifact@v7
+        with:
+          name: flake-diff-${{ matrix.host }}
+          path: diff-${{ matrix.host }}.txt
+          if-no-files-found: error
+
+  summary:
+    name: Diff summary
+    needs: [gate, diff]
+    if: always() && needs.gate.outputs.skip != 'true' && needs.diff.result == 'success'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Download host diffs
+        uses: actions/download-artifact@v8
+        with:
+          pattern: flake-diff-*
+          path: diffs
+          merge-multiple: true
+
+      - name: Combine host diffs
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
           : > diff-all.txt
-
-          for host in $HOSTS; do
-            echo "=== $host ===" | tee -a diff-all.txt
-
-            nix build "$RUNNER_TEMP/base#nixosConfigurations.${host}.config.system.build.toplevel" \
-              --no-write-lock-file \
-              --out-link "$RUNNER_TEMP/base-$host"
-
-            nix build ".#nixosConfigurations.${host}.config.system.build.toplevel" \
-              --no-write-lock-file \
-              --out-link "$RUNNER_TEMP/head-$host"
-
-            nix shell nixpkgs#nvd -c nvd diff "$RUNNER_TEMP/base-$host" "$RUNNER_TEMP/head-$host" \
-              >> diff-all.txt 2>&1 || true
+          for f in diffs/diff-*.txt; do
+            cat "$f" >> diff-all.txt
           done
+
+      - name: Publish diff to job summary
+        run: |
+          set -euo pipefail
+          {
+            echo '### nvd diff'
+            echo '<details><summary>Full diff</summary>'
+            echo ''
+            echo '```text'
+            head -c 50000 diff-all.txt
+            echo '```'
+            echo ''
+            echo '</details>'
+          } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload full diff
         uses: actions/upload-artifact@v7

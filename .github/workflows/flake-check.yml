@@ -9,15 +9,52 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  gate:
+    name: PR mergeability
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      skip: ${{ steps.gate.outputs.skip }}
+      reason: ${{ steps.gate.outputs.reason }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Check PR
+        id: gate
+        uses: ./.github/actions/pr-gate
+        with:
+          token: ${{ github.token }}
+          number: ${{ github.event.pull_request.number }}
+
   check:
     name: Build & Check NixOS Configuration
+    needs: gate
+    if: needs.gate.outputs.skip != 'true'
     runs-on: ubuntu-latest
+    timeout-minutes: 90
     permissions:
       id-token: write
       contents: read
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
+
+      - name: Free runner disk space
+        run: |
+          set -euo pipefail
+          df -h / /nix 2>/dev/null || df -h /
+          sudo rm -rf \
+            /usr/local/lib/android \
+            /usr/share/dotnet \
+            /usr/share/swift \
+            /opt/ghc \
+            /opt/hostedtoolcache/CodeQL \
+            /usr/local/share/boost
+          df -h / /nix 2>/dev/null || df -h /
 
       - name: Install Determinate Nix
         uses: DeterminateSystems/determinate-nix-action@v3
