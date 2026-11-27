@@ -50,7 +50,7 @@ in {
       };
 
       actions = true;
-      anchor = "bottom-center";
+      anchor = "top-right";
       outer-margin = "0,0,16,0";
       border-radius = 4;
       default-timeout = 6000;
